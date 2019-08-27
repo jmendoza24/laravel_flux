@@ -4,8 +4,6 @@
 
 @include('adminlte-templates::common.errors')
 {!! Form::open(['route' => 'productos.store']) !!}
-
     @include('productos.fields')
-
 {!! Form::close() !!}
 @endsection

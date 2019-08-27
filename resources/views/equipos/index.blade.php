@@ -1,18 +1,16 @@
 @extends('layouts.app')
 @section('titulo')
-    Productos 
+    Equipos 
 @endsection
-
 @section('content')
     <div class="col-md-12">
         <h1 class="pull-right">
-           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('productos.create') !!}">Add New</a>
+           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('equipos.create') !!}">+ Equipo</a>
         </h1>
     </div>
     @include('flash::message')
     <div style="overflow-x: scroll;" class="col-md-12">
-    @include('productos.table')
+        @include('equipos.table')
     </div>
-            
 @endsection
 

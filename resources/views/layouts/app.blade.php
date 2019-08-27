@@ -20,6 +20,7 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/buttons.dataTables.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/colReorder.dataTables.min.css') }}">
+  
   <!-- END VENDOR CSS-->
   <!-- BEGIN STACK CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/app.css') }}">
@@ -27,9 +28,11 @@
   <!-- BEGIN Page Level CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/colors/palette-gradient.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/extended/form-extended.css')}}">
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('assets/css/mystyle.css') }}">
   <!-- END Custom CSS-->
 </head>
 
@@ -132,26 +135,28 @@
   <!-- BEGIN VENDOR JS-->
   <!-- BEGIN PAGE VENDOR JS-->
   <script src="{{ url('app-assets/vendors/js/tables/datatable/datatables.min.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.fixedColumns.min.js') }}"
-  type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js') }}"
-  type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.colReorder.min.js') }}"
-  type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js') }}"
-  type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js') }}"
-  type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.fixedColumns.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.colReorder.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/tables/buttons.colVis.min.js') }}" type="text/javascript"></script>
   <!-- END PAGE VENDOR JS-->
   <!-- BEGIN STACK JS-->
+  <script src="{{ url('app-assets/vendors/js/forms/extended/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/forms/extended/typeahead/bloodhound.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/forms/extended/typeahead/handlebars.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/forms/extended/inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/forms/extended/maxlength/bootstrap-maxlength.js') }}" type="text/javascript"></script>
+
   <script src="{{ url('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/core/app.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/forms/extended/form-inputmask.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/forms/extended/form-maxlength.js')}}" type="text/javascript"></script>
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
-  <script src="{{ url('app-assets/js/scripts/tables/datatables-extensions/datatables-colreorder.js') }}"
-  type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/tables/datatables-extensions/datatables-colreorder.js') }}" type="text/javascript"></script>
   <!-- END PAGE LEVEL JS-->
 </body>
 </html>

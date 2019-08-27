@@ -1,24 +1,5 @@
 <div class="form-body" style="">                        
 <div class="row">
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-md-3 label-control" for="nombre">Nombre</label>
-      <div class="col-md-9">
-        {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
-
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-md-3 label-control" for="planta">Planta</label>
-      <div class="col-md-9">
-          {!! Form::number('id_planta', null, ['class' => 'form-control']) !!}
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
     <div class="col-md-6">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput2">Pais</label>
@@ -34,8 +15,7 @@
         {!! Form::text('estado', null, ['class' => 'form-control']) !!}
       </div>
     </div>
-  </div>
-  
+  </div>  
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -66,9 +46,9 @@
   </div>
   <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">Colonia</label>
+      <label class="col-md-3 label-control" for="userinput2">RFC</label>
       <div class="col-md-9">
-        {!! Form::text('colonia', null, ['class' => 'form-control']) !!}
+      {!! Form::text('rfc', null, ['class' => 'form-control']) !!}
       </div>
     </div>
   </div>
@@ -76,9 +56,9 @@
 <div class="row">
     <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">RFC</label>
+      <label class="col-md-3 label-control" for="userinput2">Credito</label>
       <div class="col-md-9">
-      {!! Form::text('rfc', null, ['class' => 'form-control']) !!}
+      {!! Form::text('credito', null, ['class' => 'form-control']) !!}
       </div>
     </div>
   </div>
