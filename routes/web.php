@@ -14,24 +14,25 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => '/api/v1/', 'middleware' => ['auth']], function(){
+	Route::get('get_municipios', 'DashboardController@get_municipios');
+
+});
 
 
-Auth::routes();
+Route::group(['middleware' => ['auth']], function(){
+	Route::get('/home', 'HomeController@index');
+	Route::resource('productos', 'productosController');
+	Route::resource('plantas', 'plantaController');
+	Route::resource('equipos', 'equiposController');
+	Route::resource('proveedores', 'proveedoresController');
+	Route::resource('clientes', 'clientesController');        
+	Route::get('/home', 'HomeController@index')->name('home');
+});
 
-Route::get('/home', 'HomeController@index');
+
+//Auth::routes();
 
 
-
-Route::resource('productos', 'productosController');
-
-Route::resource('plantas', 'plantaController');
-
-Route::resource('equipos', 'equiposController');
-
-Route::resource('proveedores', 'proveedoresController');
-
-Route::resource('clientes', 'clientesController');

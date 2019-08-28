@@ -20,14 +20,21 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/buttons.dataTables.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/colReorder.dataTables.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/icheck/icheck.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/icheck/custom.css') }}">
+
+  
   
   <!-- END VENDOR CSS-->
   <!-- BEGIN STACK CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/app.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/selects/select2.min.css') }}">
+  
   <!-- END STACK CSS-->
   <!-- BEGIN Page Level CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/colors/palette-gradient.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/checkboxes-radios.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/extended/form-extended.css')}}">
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
@@ -148,15 +155,21 @@
   <script src="{{ url('app-assets/vendors/js/forms/extended/typeahead/handlebars.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/extended/inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/extended/maxlength/bootstrap-maxlength.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
 
   <script src="{{ url('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/core/app.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/forms/extended/form-inputmask.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/forms/extended/form-maxlength.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/forms/icheck/icheck.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/forms/select/form-select2.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/forms/checkbox-radio.js')}}" type="text/javascript"></script>
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
   <script src="{{ url('app-assets/js/scripts/tables/datatables-extensions/datatables-colreorder.js') }}" type="text/javascript"></script>
+  <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
   <!-- END PAGE LEVEL JS-->
 </body>
 </html>
+

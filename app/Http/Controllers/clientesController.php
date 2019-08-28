@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class clientesController extends AppBaseController
 {
@@ -40,9 +41,9 @@ class clientesController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('clientes.create');
+    public function create(){
+        $estados = DB::table('tbl_estados')->get();
+        return view('clientes.create',compact('estados'));
     }
 
     /**
