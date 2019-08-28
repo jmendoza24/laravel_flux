@@ -2,6 +2,7 @@
     <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="proveedores-table">
         <thead>
             <tr>
+                <th>Nombre</th>
                 <th>Direccion</th>
                 <th>Pais</th>
                 <th>Estado</th>
@@ -18,6 +19,7 @@
         <tbody>
         @foreach($proveedores as $proveedores)
             <tr>
+                <td>{{ $proveedores->nombre}}</td>
                 <td>{!! $proveedores->direccion !!}</td>
                 <td>{!! $proveedores->pais !!}</td>
                 <td>{!! $proveedores->estado !!}</td>

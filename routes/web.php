@@ -14,10 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Auth::routes();
+Auth::routes(); 
 
-Route::group(['prefix' => '/api/v1/', 'middleware' => ['auth']], function(){
-	Route::get('get_municipios', 'DashboardController@get_municipios');
+Route::group(['prefix' => 'clientes/api/v1/', 'middleware' => ['auth']], function(){
+	Route::get('get_municipios', 'CatalogosController@get_municipios');
+
+});
+Route::group(['prefix' => 'plantas/api/v1/', 'middleware' => ['auth']], function(){
+	Route::get('get_municipios', 'CatalogosController@get_municipios');
 
 });
 

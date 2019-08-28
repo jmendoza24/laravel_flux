@@ -16,14 +16,14 @@ class CreateEquiposTable extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->string('marca');
-            $table->string('modelo');
-            $table->string('serie');
-            $table->string('pedimento');
-            $table->integer('idequipo');
-            $table->integer('tipo');
-            $table->integer('base');
-            $table->string('calibracion');
+            $table->string('marca')->nullable();
+            $table->string('modelo')->nullable();
+            $table->string('serie')->nullable();
+            $table->string('pedimento')->nullable();
+            $table->integer('idequipo')->nullable();
+            $table->integer('tipo')->nullable();
+            $table->integer('base')->nullable();
+            $table->string('calibracion')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

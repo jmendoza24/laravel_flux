@@ -9,7 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
-
+use DB;
 class plantaController extends AppBaseController
 {
     /** @var  plantaRepository */
@@ -18,7 +18,7 @@ class plantaController extends AppBaseController
     public function __construct(plantaRepository $plantaRepo)
     {
         $this->plantaRepository = $plantaRepo;
-    }
+    } 
 
     /**
      * Display a listing of the planta.
@@ -40,9 +40,10 @@ class plantaController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('plantas.create');
+    public function create(){
+
+        $estados = DB::table('tbl_estados')->orderby('estado')->get();
+        return view('plantas.create',compact('estados'));
     }
 
     /**
@@ -99,8 +100,9 @@ class plantaController extends AppBaseController
 
             return redirect(route('plantas.index'));
         }
+        $estados = DB::table('tbl_estados')->orderby('estado')->get();
 
-        return view('plantas.edit')->with('planta', $planta);
+        return view('plantas.edit',compact('planta','estados'));
     }
 
     /**

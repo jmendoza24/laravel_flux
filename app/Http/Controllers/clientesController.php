@@ -42,7 +42,7 @@ class clientesController extends AppBaseController
      * @return Response
      */
     public function create(){
-        $estados = DB::table('tbl_estados')->get();
+        $estados = DB::table('tbl_estados')->orderby('estado')->get();
         return view('clientes.create',compact('estados'));
     }
 
@@ -100,8 +100,9 @@ class clientesController extends AppBaseController
 
             return redirect(route('clientes.index'));
         }
+         $estados = DB::table('tbl_estados')->orderby('estado')->get();
 
-        return view('clientes.edit')->with('clientes', $clientes);
+        return view('clientes.edit', compact('clientes','estados'));
     }
 
     /**

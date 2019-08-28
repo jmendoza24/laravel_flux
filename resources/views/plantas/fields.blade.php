@@ -17,13 +17,16 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
 <div class="row">
     <div class="col-md-6">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput2">Pais</label>
       <div class="col-md-9">
-      {!! Form::number('pais', null, ['class' => 'form-control']) !!}
+        <select class="form-control" name="pais" id="pais">
+          <option value="">Seleccione una opci&oacute;n</option>
+          <option value="1" selected="">M&eacute;xico</option>
+        </select>
       </div>
     </div>
   </div>
@@ -31,7 +34,12 @@
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput1">Estado</label>
       <div class="col-md-9">
-        {!! Form::text('estado', null, ['class' => 'form-control']) !!}
+        <select class="form-control select2" name="estado" id="estado" onchange="get_municipios('estado','municipio')">
+          <option value="">Seleccione una opcion</option>
+          @foreach($estados as $estado)
+          <option value="{{ $estado->id}}">{{ $estado->estado}}</option>
+          @endforeach
+        </select>
       </div>
     </div>
   </div>
@@ -42,7 +50,9 @@
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput2">Municipio</label>
       <div class="col-md-9">
-      {!! Form::text('municipio', null, ['class' => 'form-control']) !!}
+        <select class="form-control select2" name="municipio" id="municipio">
+          <option value="">Seleccione una opcion</option>
+        </select>
       </div>
     </div>
   </div>

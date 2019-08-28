@@ -60,22 +60,25 @@ class clientes extends Model
         'id_proveedor',
         'terminopago',
         'compra_nombre',
-        'telefono',
+        'compra_telefono',
         'correo_compra',
         'recepcion_nombre',
         'recepcion_telefono',
         'recepcion_correo',
         'fac_nombre',
         'fac_calle',
-        'numero',
+        'fac_numero',
         'fac_estado',
+        'fac_municipio',
         'fac_pais',
         'fac_cp',
         'doc_nombre',
         'doc_correo',
         'imp_factura',
         'imp_porcentaje',
-        'imp_nocertificado'
+        'imp_nocertificado',
+        'nota_marcado',
+        'nota_embarques'
     ];
 
     /**
@@ -96,21 +99,24 @@ class clientes extends Model
         'id_proveedor' => 'integer',
         'terminopago' => 'string',
         'compra_nombre' => 'string',
-        'telefono' => 'string',
+        'compra_telefono' => 'string',
         'correo_compra' => 'string',
         'recepcion_nombre' => 'string',
         'recepcion_telefono' => 'string',
         'recepcion_correo' => 'string',
         'fac_nombre' => 'string',
-        'numero' => 'integer',
+        'fac_numero' => 'integer',
         'fac_estado' => 'integer',
+        'fac_municipio'=>'integer',
         'fac_pais' => 'integer',
         'fac_cp' => 'integer',
         'doc_nombre' => 'string',
         'doc_correo' => 'string',
         'imp_factura' => 'integer',
         'imp_porcentaje' => 'integer',
-        'imp_nocertificado' => 'integer'
+        'imp_nocertificado' => 'integer',
+        'nota_marcado'=>'string',
+        'nota_embarques'=>'string'
     ];
 
     /**

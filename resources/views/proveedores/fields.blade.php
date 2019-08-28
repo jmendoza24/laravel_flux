@@ -2,12 +2,22 @@
 <div class="row">
     <div class="col-md-6">
     <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput2">Nombre</label>
+      <div class="col-md-9">
+      {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
+      </div>
+    </div>
+  </div>
+   <div class="col-md-6">
+    <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput2">Pais</label>
       <div class="col-md-9">
       {!! Form::number('pais', null, ['class' => 'form-control']) !!}
       </div>
     </div>
-  </div>
+  </div> 
+</div>
+<div class="row">
   <div class="col-md-6">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput1">Estado</label>
@@ -15,22 +25,12 @@
         {!! Form::text('estado', null, ['class' => 'form-control']) !!}
       </div>
     </div>
-  </div>  
-</div>
-<div class="row">
+  </div> 
     <div class="col-md-6">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput2">Municipio</label>
       <div class="col-md-9">
       {!! Form::text('municipio', null, ['class' => 'form-control']) !!}
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput1">Codigo postal</label>
-      <div class="col-md-9">
-        {!! Form::text('cp', null, ['class' => 'form-control']) !!}
       </div>
     </div>
   </div>
@@ -44,14 +44,15 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
+   <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">RFC</label>
+      <label class="col-md-3 label-control" for="userinput1">Codigo postal</label>
       <div class="col-md-9">
-      {!! Form::text('rfc', null, ['class' => 'form-control']) !!}
+        {!! Form::text('cp', null, ['class' => 'form-control']) !!}
       </div>
     </div>
   </div>
+  
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -59,6 +60,14 @@
       <label class="col-md-3 label-control" for="userinput2">Credito</label>
       <div class="col-md-9">
       {!! Form::text('credito', null, ['class' => 'form-control']) !!}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput2">RFC</label>
+      <div class="col-md-9">
+      {!! Form::text('rfc', null, ['class' => 'form-control']) !!}
       </div>
     </div>
   </div>

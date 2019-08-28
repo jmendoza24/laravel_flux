@@ -33,6 +33,7 @@ class proveedores extends Model
 
     public $fillable = [
         'direccion',
+        'nombre',
         'pais',
         'estado',
         'municipio',
@@ -51,6 +52,7 @@ class proveedores extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'nombre'=>'string',
         'direccion' => 'string',
         'pais' => 'integer',
         'estado' => 'integer',
@@ -69,7 +71,8 @@ class proveedores extends Model
      * @var array
      */
     public static $rules = [
-        'puesto' => 'required'
+        'puesto' => 'required',
+        'nombre'=>'required'
     ];
 
     
