@@ -11,7 +11,9 @@
     </div>
     
     @include('flash::message')
+    <div style="overflow: scroll;" class="col-md-12">
     @include('plantas.table')
+    </div>
     
 @endsection
 

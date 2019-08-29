@@ -1,4 +1,3 @@
-<br/><br/><br/>
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="productos-table">
     <thead>
         <tr>
