@@ -6,7 +6,7 @@
           <li class="nav-item">
             <a class="navbar-brand" href="index.html">
               <img class="brand-logo" alt="stack admin logo" src="{{ url('app-assets/images/logo/stack-logo-light.png') }}">
-              <h2 class="brand-text">Stack</h2>
+              <h2 class="brand-text">Fluxmetal</h2>
             </a>
           </li>
           <li class="nav-item d-md-none">
@@ -145,12 +145,12 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
+            <!--<li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
             <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
               <div class="search-input">
                 <input class="input" type="text" placeholder="Explore Stack...">
               </div>
-            </li>
+            </li>--->
           </ul>
           <ul class="nav navbar-nav float-right">
             <!--
@@ -316,7 +316,7 @@
               <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                 <span class="avatar avatar-online">
                   <img src=" {{ url('app-assets/images/portrait/small/avatar-s-1.png') }}" alt="avatar"><i></i></span>
-                <span class="user-name">John Doe</span>
+                <span class="user-name">{{ Auth::user()->name }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="user-profile.html"><i class="ft-user"></i> Edit Profile</a>
                 <a class="dropdown-item" href="email-application.html"><i class="ft-mail"></i> My Inbox</a>

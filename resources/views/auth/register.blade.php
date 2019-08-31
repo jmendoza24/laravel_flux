@@ -1,124 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html class="loading" lang="en" data-textdirection="ltr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Snappath | software</title>
-
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-
-    <!-- Theme style -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/css/skins/_all-skins.min.css">
-
-    <!-- iCheck -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description" content="Stack admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+  <meta name="keywords" content="admin template, stack admin template, dashboard template, flat admin template, responsive admin template, web app">
+  <meta name="author" content="PIXINVENT">
+  <title>Fluxmetal registro</title>
+  <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png') }}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url('app-assets/images/ico/favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i"
+  rel="stylesheet">
+  <!-- BEGIN VENDOR CSS-->
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/vendors.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/icheck/icheck.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/icheck/custom.css') }}">
+  <!-- END VENDOR CSS-->
+  <!-- BEGIN STACK CSS-->
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/app.css') }}">
+  <!-- END STACK CSS-->
+  <!-- BEGIN Page Level CSS-->
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/colors/palette-gradient.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/pages/login-register.css') }}">
+  <!-- END Page Level CSS-->
+  <!-- BEGIN Custom CSS-->
+  <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
+  <!-- END Custom CSS-->
 </head>
-<body class="hold-transition register-page">
-<div class="register-box">
-    <div class="register-logo">
-        <a href="{{ url('/home') }}"><b>Snappath </b>software</a>
-    </div>
-
-    <div class="register-box-body">
-        <p class="login-box-msg">Crear una cuenta</p>
-
-        <form method="post" action="{{ url('/register') }}">
-
-            {!! csrf_field() !!}
-
-            <div class="form-group has-feedback{{ $errors->has('name') ? ' has-error' : '' }}">
-                <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nombre">
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-
-                @if ($errors->has('name'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('name') }}</strong>
-                    </span>
-                @endif
-            </div>
-
-            <div class="form-group has-feedback{{ $errors->has('email') ? ' has-error' : '' }}">
-                <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-
-                @if ($errors->has('email'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
-            </div>
-
-            <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
-                <input type="password" class="form-control" name="password" placeholder="Password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-
-                @if ($errors->has('password'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
-            </div>
-
-            <div class="form-group has-feedback{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-
-                @if ($errors->has('password_confirmation'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                    </span>
-                @endif
-            </div>
-
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox"> Estoy de acuerdo con los <a href="#">terminos</a>
-                        </label>
-                    </div>
+<body class="vertical-layout vertical-menu 1-column bg-lighten-2 menu-expanded blank-page blank-page" data-open="click" data-menu="vertical-menu" data-col="1-column" style="background: #518a87;">
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  <div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div class="content-body">
+        <section class="flexbox-container">
+          <div class="col-12 d-flex align-items-center justify-content-center">
+            <div class="col-md-4 col-10 box-shadow-2 p-0">
+              <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                <div class="card-header border-0 pb-0">
+                  <div class="card-title text-center">
+                    <h4><b><img class="brand-logo" alt="stack admin logo" src="{{ url('app-assets/images/logo/stack-logo.png') }}"> &nbsp;Fluxmetal</b></h4>
+                  </div>
                 </div>
-                <!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Registrarme</button>
+                <div class="card-content">
+                  <div class="card-body pt-0">
+                    <form class="form-horizontal" method="post" action="{{ url('/register') }}">
+                        {!! csrf_field() !!}
+                      <fieldset class="form-group floating-label-form-group">
+                        <label for="user-name">Nombre</label>
+                        <input type="text" class="form-control" id="name"  name="name" value="{{ old('name') }}" required="" placeholder="Tu nombre">
+                      </fieldset>
+                      <fieldset class="form-group floating-label-form-group">
+                        <label for="user-email">Correo Electronico</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required="" placeholder="Tu Email">
+                      </fieldset>
+                      <fieldset class="form-group floating-label-form-group mb-1">
+                        <label for="user-password">Contreseña</label>
+                        <input type="password" class="form-control" id="password" min="8" name="password" required="" placeholder="">
+                      </fieldset>
+                      <fieldset class="form-group floating-label-form-group mb-1">
+                        <label for="user-password">Repite tu contreseña</label>
+                        <input type="password" class="form-control" id="password_confirmation" min="8" required="" name="password_confirmation" placeholder="">
+                      </fieldset>
+                      <div class="form-group row">
+                        <div class="col-12">
+                          <fieldset >
+                            <label for="remember-me" style="width: 100%">
+                             <input type="checkbox" id="remember-me" class="chk-remember">
+                             Estoy de acuerdo con los <a href="#">terminos</a></label>
+                          </fieldset>
+                        </div>
+                        <!--
+                        <div class="col-md-6 col-12 float-sm-left text-center text-sm-right">
+                            <a href="recover-password.html" class="card-link">Forgot Password?</a>
+                        </div>-->
+                      </div>
+                      <button type="submit" class="btn btn-outline-primary btn-block"><i class="ft-user"></i> Registro</button>
+                    </form>
+                  </div>
+                  <div class="card-body pt-0">
+                    <a href="{{ url('/login') }}" class="btn btn-outline-danger btn-block"><i class="ft-unlock"></i> Login</a>
+                  </div>
                 </div>
-                <!-- /.col -->
+              </div>
             </div>
-        </form>
-
-        <a href="{{ url('/login') }}" class="text-center">Ya tengo cuenta</a>
+          </div>
+        </section>
+      </div>
     </div>
-    <!-- /.form-box -->
-</div>
-<!-- /.register-box -->
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- AdminLTE App -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/js/adminlte.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
-
-<script>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  <!-- BEGIN VENDOR JS-->
+  <script src="{{ url('app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
+  <!-- BEGIN VENDOR JS-->
+  <!-- BEGIN PAGE VENDOR JS-->
+  <script src="{{ url('app-assets/vendors/js/forms/icheck/icheck.min.js') }}" type="text/javascript"></script>
+  <!-- END PAGE VENDOR JS-->
+  <!-- BEGIN STACK JS-->
+  <script src="{{ url('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/core/app.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
+  <!-- END STACK JS-->
+  <!-- BEGIN PAGE LEVEL JS-->
+  <script src="{{ url('app-assets/js/scripts/forms/form-login-register.js') }}" type="text/javascript"></script>
+  <script>
     $(function () {
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
@@ -127,5 +115,6 @@
         });
     });
 </script>
+  <!-- END PAGE LEVEL JS-->
 </body>
 </html>

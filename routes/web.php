@@ -11,21 +11,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'HomeController@index');
+
 Auth::routes(); 
 
-Route::group(['prefix' => 'clientes/api/v1/', 'middleware' => ['auth']], function(){
+Route::group(['middleware' => ['auth']], function(){
 	Route::get('get_municipios', 'CatalogosController@get_municipios');
 
 });
-Route::group(['prefix' => 'plantas/api/v1/', 'middleware' => ['auth']], function(){
+/**
+Route::group(['prefix' => 'api/v1/', 'middleware' => ['auth']], function(){
 	Route::get('get_municipios', 'CatalogosController@get_municipios');
 
 });
-
-
+*/
 Route::group(['middleware' => ['auth']], function(){
 	Route::get('/home', 'HomeController@index');
 	Route::resource('productos', 'productosController');

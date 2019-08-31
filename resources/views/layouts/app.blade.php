@@ -39,7 +39,6 @@
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url('assets/css/mystyle.css') }}">
   <!-- END Custom CSS-->
 </head>
 
@@ -87,9 +86,9 @@
   <!-- ////////////////////////////////////////////////////////////////////////////-->
           <footer class="footer footer-static footer-light navbar-border">
             <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
-              <span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2018 <a class="text-bold-800 grey darken-2" href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent"
-                target="_blank">PIXINVENT </a>, All rights reserved. </span>
-              <span class="float-md-right d-block d-md-inline-block d-none d-lg-block">Hand-crafted & Made with <i class="ft-heart pink"></i></span>
+              <span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2019 <a class="text-bold-800 grey darken-2" href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent"
+                target="_blank">Snappath </a>, All rights reserved. </span>
+              <!--<span class="float-md-right d-block d-md-inline-block d-none d-lg-block">Hand-crafted & Made with <i class="ft-heart pink"></i></span>-->
             </p>
           </footer>
 @else
