@@ -28,9 +28,13 @@ class clientesController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
-    {
-        $clientes = $this->clientesRepository->all();
+    public function index(Request $request){ 
+        $clientes = DB::table('clientes as c')
+                      ->leftjoin('tbl_estados as e','e.id','=','c.estado')
+                      ->leftjoin('tbl_municipios as m','m.id','=','c.municipio')
+                      ->leftjoin('proveedores as p','p.id','=','c.id_proveedor')
+                      ->selectraw("c.*,e.estado as nestado, if(c.pais=1,'México','') as npais, m.municipio as nmunicipio, p.nombre as nproveedor")
+                      ->get();
 
         return view('clientes.index')
             ->with('clientes', $clientes);
@@ -43,7 +47,11 @@ class clientesController extends AppBaseController
      */
     public function create(){
         $estados = DB::table('tbl_estados')->orderby('estado')->get();
-        return view('clientes.create',compact('estados'));
+        
+        $logisticas = array();
+        $data = (object)['logisticas'=>''];
+
+        return view('clientes.create',compact('estados','logisticas'));
     }
 
     /**
@@ -94,15 +102,23 @@ class clientesController extends AppBaseController
     public function edit($id)
     {
         $clientes = $this->clientesRepository->find($id);
-
+        $id_estado = $clientes->estado;
         if (empty($clientes)) {
             Flash::error('Clientes not found');
 
             return redirect(route('clientes.index'));
         }
-         $estados = DB::table('tbl_estados')->orderby('estado')->get();
 
-        return view('clientes.edit', compact('clientes','estados'));
+         $proveedores = DB::table('proveedores')->get();
+         $estados = DB::table('tbl_estados')->orderby('estado')->get();
+         $logisticas = DB::table('logisticas')->where('id_producto',$id)->get();
+         $municipios = DB::table('tbl_estadosmun as em')
+                          ->join('tbl_municipios as m','em.municipios_id','=','m.id') 
+                          ->selectraw('m.*')
+                          ->where('em.estados_id',$id_estado)
+                          ->get(); 
+
+        return view('clientes.edit', compact('clientes','estados','logisticas','municipios','proveedores'));
     }
 
     /**
@@ -154,5 +170,20 @@ class clientesController extends AppBaseController
         Flash::success('Clientes deleted successfully.');
 
         return redirect(route('clientes.index'));
+    }
+    function save_address(Request $request){
+        dd($request->$id_producto);
+        DB::table('logisticas')
+         ->insert(['id_producto' => $request->$id_producto, 
+                   'nombre'      => $request->$nombre_log, 
+                   'telefono'    => $request->$telefono_log, 
+                   'correo'      => $request->$correo_log, 
+                   'pais'        => $request->$pais_log, 
+                   'estado'      => $request->$estado_log, 
+                   'municipio'   => $request->$municipio_log, 
+                   'calle'       => $request->$calle_log, 
+                   'numero'      => $request->$numero_log, 
+                   'cp'          => $request->$cp_log
+                ]);    
     }
 }

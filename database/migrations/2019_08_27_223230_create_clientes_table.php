@@ -24,6 +24,7 @@ class CreateClientesTable extends Migration
             $table->integer('municipio')->nullable();
             $table->string('cp')->nullable();
             $table->integer('id_proveedor')->nullable();
+            $table->integer('linea')->nullable();
             $table->string('terminopago')->nullable();
             $table->string('compra_nombre')->nullable();
             $table->string('compra_telefono')->nullable();

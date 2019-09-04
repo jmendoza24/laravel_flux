@@ -14,3 +14,7 @@
 
 
 
+<li class="{{ Request::is('logisticas*') ? 'active' : '' }}">
+    <a href="{!! route('logisticas.index') !!}"><i class="fa fa-edit"></i><span>Logisticas</span></a>
+</li>
+

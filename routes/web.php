@@ -17,16 +17,6 @@ Route::get('/', 'HomeController@index');
 Auth::routes(); 
 
 Route::group(['middleware' => ['auth']], function(){
-	Route::get('get_municipios', 'CatalogosController@get_municipios');
-
-});
-/**
-Route::group(['prefix' => 'api/v1/', 'middleware' => ['auth']], function(){
-	Route::get('get_municipios', 'CatalogosController@get_municipios');
-
-});
-*/
-Route::group(['middleware' => ['auth']], function(){
 	Route::get('/home', 'HomeController@index');
 	Route::resource('productos', 'productosController');
 	Route::resource('plantas', 'plantaController');
@@ -35,8 +25,23 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::resource('clientes', 'clientesController');        
 	Route::get('/home', 'HomeController@index')->name('home');
 });
+/**
+Route::group(['prefix' => 'api/v1/', 'middleware' => ['auth']], function(){
+	//Route::get('municipio', 'CatalogosController@get_municipios');
+	Route::get('get_municipios', 'HomeController@get_municipios');
+
+});
+*/
+Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
+
+Route::get('get_municipios', 'CatalogosController@get_municipios');
+Route::get('save_address', 'clientesController@save_address');
+});
 
 
 //Auth::routes();
 
 
+
+
+Route::resource('logisticas', 'logisticaController');

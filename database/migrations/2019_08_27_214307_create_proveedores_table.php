@@ -26,6 +26,8 @@ class CreateProveedoresTable extends Migration
             $table->string('telefono')->nullable();
             $table->string('correo')->nullable();
             $table->string('puesto')->nullable();
+            $table->string('carta_pago_imp')->nullable();
+            $table->string('reporte_prod_noconf')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

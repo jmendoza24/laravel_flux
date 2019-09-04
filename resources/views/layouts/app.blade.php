@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta name="description" content="Stack admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
   <meta name="keywords" content="admin template, stack admin template, dashboard template, flat admin template, responsive admin template, web app">
-  <meta name="author" content="PIXINVENT">
+  <meta name="author" content="Fluxmetal">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>Fluxmetal</title>
   <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ url('app-assets/images/ico/favicon.ico') }}">
@@ -36,9 +37,11 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/colors/palette-gradient.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/checkboxes-radios.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/extended/form-extended.css')}}">
+  <script src="{{ url('app-assets/js/scripts/modal/components-modal.js') }}" type="text/javascript"></script>
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
+  <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
   <!-- END Custom CSS-->
 </head>
 
@@ -167,7 +170,7 @@
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
   <script src="{{ url('app-assets/js/scripts/tables/datatables-extensions/datatables-colreorder.js') }}" type="text/javascript"></script>
-  <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
+  
   <!-- END PAGE LEVEL JS-->
 </body>
 </html>
