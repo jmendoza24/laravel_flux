@@ -115,7 +115,8 @@ class clientesController extends AppBaseController
 
          $proveedores = DB::table('proveedores')->get();
          $estados = DB::table('tbl_estados')->orderby('estado')->get();
-         $logisticas_fields = array('nombre'=>'',
+         $logisticas_fields = array('id'=>'',
+                                    'nombre'=>'',
                                     'telefono'=>'',
                                     'correo'=>'',
                                     'calle'=>'',
@@ -123,7 +124,8 @@ class clientesController extends AppBaseController
                                     'numero'=>'',
                                     'estado'=>'',
                                     'pais'=>'',
-                                    'municipio'=>''
+                                    'municipio'=>'',
+                                    'id_producto'=>''
                                 );
 
          $logisticas_fields = (object)$logisticas_fields;
@@ -218,5 +220,6 @@ class clientesController extends AppBaseController
          $options = view("logisticas.table",compact('logisticas'))->render();    
          return json_encode($options);
     }
+
 }
 

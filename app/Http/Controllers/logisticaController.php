@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatelogisticaRequest;
 use App\Repositories\logisticaRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use View;
 use Flash;
 use Response;
 use DB;
@@ -104,9 +105,6 @@ class logisticaController extends AppBaseController
 
         
         $logisticas = DB::table('logisticas')
-                    #->leftjoin('tbl_estados as e','e.id','=','a.estado')
-                    #->leftjoin('tbl_municipios as m','m.id','=','a.municipio')
-                    #->selectraw("a.*, if(pais=1,'México','') as npais, e.estado as nestado, m.municipio as nmunicipio")
                     ->where('id',$request->id_logistica)
                     ->get();
 
@@ -134,21 +132,30 @@ class logisticaController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdatelogisticaRequest $request)
-    {
-        $logistica = $this->logisticaRepository->find($id);
+    public function update(Request $request){
+        DB::table('logisticas')
+        ->where('id', $request->id_direccion)
+        ->update([ 'nombre'      => $request->nombre_log, 
+                   'telefono'    => $request->telefono_log, 
+                   'correo'      => $request->correo_log, 
+                   'pais'        => $request->pais_log, 
+                   'estado'      => $request->estado_log, 
+                   'municipio'   => $request->municipio_log, 
+                   'calle'       => $request->calle_log, 
+                   'numero'      => $request->numero_log, 
+                   'cp'          => $request->cp_log
+                ]);    
 
-        if (empty($logistica)) {
-            Flash::error('Logistica not found');
+         $logisticas = DB::table('logisticas as a')
+                    ->leftjoin('tbl_estados as e','e.id','=','a.estado')
+                    ->leftjoin('tbl_municipios as m','m.id','=','a.municipio')
+                    ->selectraw("a.*, if(pais=1,'México','') as npais, e.estado as nestado, m.municipio as nmunicipio")
+                    ->where('id_producto',$request->id_producto)
+                    ->get();
 
-            return redirect(route('logisticas.index'));
-        }
-
-        $logistica = $this->logisticaRepository->update($request->all(), $id);
-
-        Flash::success('Logistica updated successfully.');
-
-        return redirect(route('logisticas.index'));
+         $options = view("logisticas.table",compact('logisticas'))->render();    
+         return json_encode($options);
+        
     }
 
     /**
@@ -160,20 +167,18 @@ class logisticaController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
-    {
-        $logistica = $this->logisticaRepository->find($id);
+    public function eliminar(Request $request){
+      
+        DB::table('logisticas')->where('id',$request->id_logistica)->delete();
 
-        if (empty($logistica)) {
-            Flash::error('Logistica not found');
+        $logisticas = DB::table('logisticas as a')
+                    ->leftjoin('tbl_estados as e','e.id','=','a.estado')
+                    ->leftjoin('tbl_municipios as m','m.id','=','a.municipio')
+                    ->selectraw("a.*, if(pais=1,'México','') as npais, e.estado as nestado, m.municipio as nmunicipio")
+                    ->where('id_producto',$request->id_producto)
+                    ->get();                    
 
-            return redirect(route('logisticas.index'));
-        }
-
-        $this->logisticaRepository->delete($id);
-
-        Flash::success('Logistica deleted successfully.');
-
-        return redirect(route('logisticas.index'));
+         $options = view("logisticas.table",compact('logisticas'))->render();    
+         return json_encode($options);
     }
 }

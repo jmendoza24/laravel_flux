@@ -20,13 +20,10 @@
             <td>{!! $logistica->nestado !!}</td>
             <td>{!! $logistica->nmunicipio !!}</td>
             <td>
-                {!! Form::open(['route' => ['logisticas.destroy', $logistica->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <!---<a href="{!! route('logisticas.show', [$logistica->id]) !!}" class='btn btn-float btn-outline-secondary btn-round'><i class="fa fa-thumbs-o-up"></i></a>--->
-                    <a href="" data-toggle="modal" data-target="#large_logistic" onclick="show_logistica({{$logistica->id}})"  class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></a>
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-float btn-outline-danger btn-round', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                    <a href="" data-toggle="modal" data-target="#large" onclick="show_logistica({{$logistica->id}})"  class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></a>
+                    <a onclick="delete_logistica({{$logistica->id}},{{$logistica->id_producto}})"  class='btn btn-float btn-outline-danger btn-round'><i class="fa fa-trash"></i></a>
                 </div>
-                {!! Form::close() !!}
             </td>
         </tr>
     @endforeach

@@ -37,12 +37,11 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 Route::get('get_municipios', 'CatalogosController@get_municipios');
 Route::get('save_address', 'clientesController@save_address');
 Route::get('show_logistica', 'logisticaController@edit');
+Route::get('update_address', 'logisticaController@update');
+Route::get('delete_logistica', 'logisticaController@eliminar');
 });
 
 
 //Auth::routes();
-
-
-
 
 Route::resource('logisticas', 'logisticaController');

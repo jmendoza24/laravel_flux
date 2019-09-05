@@ -7,14 +7,3 @@
         <li class="{{ Request::is('proveedores*') ? 'active' : '' }}"><a href="{!! route('proveedores.index') !!}"><span>Proveedores</span></a></li>
     </ul>
 </li>
-
-
-
-
-
-
-
-<li class="{{ Request::is('logisticas*') ? 'active' : '' }}">
-    <a href="{!! route('logisticas.index') !!}"><i class="fa fa-edit"></i><span>Logisticas</span></a>
-</li>
-
