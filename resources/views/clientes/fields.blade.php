@@ -9,7 +9,7 @@
   </li>
   @if($editar ==1)
   <li class="nav-item">
-    <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt2" aria-controls="linkOpt2"><i class="fa fa-truck"></i> Logistica {{ $editar }}</a>
+    <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt2" aria-controls="linkOpt2"><i class="fa fa-truck"></i> Logistica</a>
   </li>
   @endif
 </ul>
@@ -363,7 +363,7 @@
            <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#large" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Direcci&oacute;n</a>
         </h1>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12" id="logisticas" style="overflow-x: scroll;">
         @include('logisticas.table')
       </div>
     </div>
@@ -391,92 +391,26 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="row">
-            <div class="col-md-12">
-                <div class="form-group row">
-                  <div class="col-md-12">
-                  <input type="text" name="nombre_log" id="nombre_log" class="form-control" placeholder="Nombre">
-                  </div>
-                </div>
-            </div>
-              
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <input type="text" name="telefono_log" id="telefono_log" class="form-control phone-inputmask" placeholder="Telefono">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <input type="text" name="correo_log" id="correo_log" class="form-control email-inputmask" placeholder="Correo electronico">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row">
-                <div class="col-md-12">
-                <select class="form-control" name="pais_log" id="pais_log" >
-                  <option value="">Pais</option>
-                  <option value="1" selected="">M&eacute;xico</option>
-                </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <select class="form-control select2" style="width: 100%;" name="estado_log" id="estado_log" onchange="get_municipios('estado_log','municipio_log')">
-                    <option value="">Estado</option>
-                    @foreach($estados as $estado)
-                    <option value="{{ $estado->id}}">{{ $estado->estado}}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-              <div class="col-md-6">
-              <div class="form-group row">
-                <div class="col-md-12">
-                <select class="form-control select2" style="width: 100%;" name="municipio_log" id="municipio_log">
-                    <option value="">Municipio</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <input type="text" name="calle_log" id="calle_log" class="form-control" placeholder="Calle">
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <input type="text" name="cp_log" id="cp_log" class="form-control" placeholder="Codigo postal">
-                </div>
-              </div>
-            </div>
-              
-            <div class="col-md-6">
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <input type="text" name="numero_log" id="numero_log" class="form-control" placeholder="Numero">
-                </div>
-              </div>
-            </div>  
-          </div>
+          @include('logisticas.fields')
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-outline-primary" onclick="guarda_direccion({{ $clientes->id}})">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade text-left" id="large_logistic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel17">+ Direcci&oacute;n de envio</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="campos_logistica">
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cancelar</button>

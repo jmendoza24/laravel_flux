@@ -33,9 +33,30 @@ function guarda_direccion(id_producto){
             url:   '/api/v1/save_address',
             dataType: 'json',
             type:  'get',
-            success:  function (response) { 
-              console.log(response);
-                  
+            success:  function (response) {         
+              $("#logisticas").html(response); 
+              $("#logisticas-table").dataTable();
+              $("#large").modal('hide');//ocultamos el modal
+              $('#form_logistica')[0].reset();
+            }
+        }); 
+
+}
+
+function show_logistica(id_logistica){
+  var parameters = {"id_logistica":id_logistica};
+
+  $.ajax({
+            data: parameters,
+            url:   '/api/v1/show_logistica',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) {   
+           // console.log(response);      
+              $("#campos_logistica").html(response); 
+              /* $("#logisticas-table").dataTable();
+              $("#large").modal('hide');//ocultamos el modal
+              $('#form_logistica')[0].reset();*/
             }
         }); 
 
