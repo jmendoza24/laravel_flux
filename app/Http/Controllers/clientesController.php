@@ -181,22 +181,12 @@ class clientesController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
-    {
-        $clientes = $this->clientesRepository->find($id);
-
-        if (empty($clientes)) {
-            Flash::error('Clientes not found');
-
-            return redirect(route('clientes.index'));
-        }
-
-        $this->clientesRepository->delete($id);
-
-        Flash::success('Clientes deleted successfully.');
+    public function destroy($id){
+        DB::table('clientes')->where('id',$id)->delete();
 
         return redirect(route('clientes.index'));
     }
+    
     function save_address(Request $request){
         DB::table('logisticas')
          ->insert(['id_producto' => $request->id_producto, 

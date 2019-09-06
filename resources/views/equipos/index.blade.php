@@ -8,7 +8,6 @@
            <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('equipos.create') !!}">+ Equipo</a>
         </h1>
     </div>
-    @include('flash::message')
     <div style="overflow-x: scroll;" class="col-md-12">
         @include('equipos.table')
     </div>

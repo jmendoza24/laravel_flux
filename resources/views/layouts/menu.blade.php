@@ -7,3 +7,7 @@
         <li class="{{ Request::is('proveedores*') ? 'active' : '' }}"><a href="{!! route('proveedores.index') !!}"><span>Proveedores</span></a></li>
     </ul>
 </li>
+<li class="{{ Request::is('equipoHistorials*') ? 'active' : '' }}">
+    <a href="{!! route('equipoHistorials.index') !!}"><i class="fa fa-edit"></i><span>Equipo Historials</span></a>
+</li>
+

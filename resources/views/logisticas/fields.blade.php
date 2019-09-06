@@ -97,7 +97,7 @@
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
-            <input type="text" name="numero_log" id="numero_log" class="form-control" value="{{ $logisticas_fields->numero}}" placeholder='Numero'>
+            <input type="number" min="0" name="numero_log" id="numero_log" class="form-control" value="{{ $logisticas_fields->numero}}" placeholder='Numero'>
           </div>
         </div>
       </div>  

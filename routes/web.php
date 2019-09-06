@@ -45,3 +45,5 @@ Route::get('delete_logistica', 'logisticaController@eliminar');
 //Auth::routes();
 
 Route::resource('logisticas', 'logisticaController');
+
+Route::resource('equipoHistorials', 'equipo_historialController');

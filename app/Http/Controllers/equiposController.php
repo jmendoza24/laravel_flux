@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class equiposController extends AppBaseController
 {
@@ -40,9 +41,35 @@ class equiposController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('equipos.create');
+    public function create(){
+        $equipoHistorials  = array('id'=>'',
+                                    'historial_tipo'=>'',
+                                    'fecha'=>'',
+                                    'responsable'=>'',
+                                    'descripcion'=>'',
+                                    'vencimiento'=>'',
+                                    'activo'=>''
+                                    );
+        $equipoHistPrev  = array('id'=>'',
+                                    'historial_tipo'=>'',
+                                    'fecha'=>'',
+                                    'responsable'=>'',
+                                    'descripcion'=>'',
+                                    'vencimiento'=>'',
+                                    'activo'=>''
+                                    );
+        $equipoHistCorrect  = array('id'=>'',
+                                    'historial_tipo'=>'',
+                                    'fecha'=>'',
+                                    'responsable'=>'',
+                                    'descripcion'=>'',
+                                    'vencimiento'=>'',
+                                    'activo'=>''
+                                    );
+
+        $equipoHistorials  = (object)$equipoHistorials ;
+
+        return view('equipos.create',compact('equipoHistorials','equipoHistPrev','equipoHistCorrect'));
     }
 
     /**
@@ -93,6 +120,15 @@ class equiposController extends AppBaseController
     public function edit($id)
     {
         $equipos = $this->equiposRepository->find($id);
+        $equipoHistorials  = DB::table('equipo_historials')
+                                ->where([['id',$id],['historial_tipo',1]])
+                                ->get();
+        $equipoHistPrev    = DB::table('equipo_historials')
+                                ->where([['id',$id],['historial_tipo',2]])
+                                ->get();
+        $equipoHistCorrect  = DB::table('equipo_historials')
+                                ->where([['id',$id],['historial_tipo',3]])
+                                ->get();
 
         if (empty($equipos)) {
             Flash::error('Equipos not found');
@@ -100,7 +136,7 @@ class equiposController extends AppBaseController
             return redirect(route('equipos.index'));
         }
 
-        return view('equipos.edit')->with('equipos', $equipos);
+        return view('equipos.edit',compact('equipos','equipoHistorials','equipoHistPrev','equipoHistCorrect'));
     }
 
     /**
