@@ -112,10 +112,10 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a  data-toggle="modal" data-target="#equipo_historials" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</a>
+                     <a  data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(1)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</a>
                   </h1>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12" id="equipo_historial">
                 @include('equipo_historials.table')
               </div>
             </div>
@@ -125,10 +125,10 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a data-toggle="modal" data-target="#equipo_historials" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Preventivo</a>
+                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(2)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Preventivo</a>
                   </h1>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12" id="equipo_histPrev">
                 @include('equipo_historials.table_preventivo')
               </div>
             </div>
@@ -138,10 +138,10 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a data-toggle="modal" data-target="#equipo_historials" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Correctivo</a>
+                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(3)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Correctivo</a>
                   </h1>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12" id="equipo_histCorrect">
                 @include('equipo_historials.table_correctivo')
               </div>
             </div>
@@ -182,7 +182,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-outline-primary" onclick="guarda_direccion({{$equipos->id}})">Guardar</button>
+              <button type="button" class="btn btn-outline-primary" onclick="guarda_historial({{$equipos->id}})">Guardar</button>
             </div>
           </div>
       </form>

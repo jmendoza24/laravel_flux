@@ -17,8 +17,8 @@
             <td>{!! $equipoHistorial->activo !!}</td>
             <td>
                 <div class='btn-group'>
-                    <a href="" data-toggle="modal" data-target="#large" onclick="show_logistica(1)"  class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></a>
-                    <a onclick="delete_logistica(1)"  class='btn btn-float btn-outline-danger btn-round'><i class="fa fa-trash"></i></a>
+                    <a data-toggle="modal" data-target="#equipo_historials" onclick="show_historial({{ $equipoHistorial->id}})"  class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></a>
+                    <a onclick="delete_historial({{ $equipoHistorial->id}},{{$equipoHistorial->tipo}},{{$equipoHistorial->historial_tipo}})"  class='btn btn-float btn-outline-danger btn-round'><i class="fa fa-trash"></i></a>
                 </div>
             </td>
         </tr>

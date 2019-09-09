@@ -42,31 +42,6 @@ class equiposController extends AppBaseController
      * @return Response
      */
     public function create(){
-        $equipoHistorials  = array('id'=>'',
-                                    'historial_tipo'=>'',
-                                    'fecha'=>'',
-                                    'responsable'=>'',
-                                    'descripcion'=>'',
-                                    'vencimiento'=>'',
-                                    'activo'=>''
-                                    );
-        $equipoHistPrev  = array('id'=>'',
-                                    'historial_tipo'=>'',
-                                    'fecha'=>'',
-                                    'responsable'=>'',
-                                    'descripcion'=>'',
-                                    'vencimiento'=>'',
-                                    'activo'=>''
-                                    );
-        $equipoHistCorrect  = array('id'=>'',
-                                    'historial_tipo'=>'',
-                                    'fecha'=>'',
-                                    'responsable'=>'',
-                                    'descripcion'=>'',
-                                    'vencimiento'=>'',
-                                    'activo'=>''
-                                    );
-
         $equipoHistorials  = (object)$equipoHistorials ;
 
         return view('equipos.create',compact('equipoHistorials','equipoHistPrev','equipoHistCorrect'));
@@ -120,14 +95,25 @@ class equiposController extends AppBaseController
     public function edit($id)
     {
         $equipos = $this->equiposRepository->find($id);
+         $eqHistofields  = array(   'id'=>'',
+                                    'historial_tipo'=>'',
+                                    'fecha'=>'',
+                                    'responsable'=>'',
+                                    'descripcion'=>'',
+                                    'vencimiento'=>'',
+                                    'activo'=>'',
+                                    'tipo'=>$id
+                                    );
+        $eqHistofields = (object)$eqHistofields;
+
         $equipoHistorials  = DB::table('equipo_historials')
-                                ->where([['id',$id],['historial_tipo',1]])
+                                ->where([['tipo',$id],['historial_tipo',1]])
                                 ->get();
         $equipoHistPrev    = DB::table('equipo_historials')
-                                ->where([['id',$id],['historial_tipo',2]])
+                                ->where([['tipo',$id],['historial_tipo',2]])
                                 ->get();
         $equipoHistCorrect  = DB::table('equipo_historials')
-                                ->where([['id',$id],['historial_tipo',3]])
+                                ->where([['tipo',$id],['historial_tipo',3]])
                                 ->get();
 
         if (empty($equipos)) {
@@ -136,7 +122,7 @@ class equiposController extends AppBaseController
             return redirect(route('equipos.index'));
         }
 
-        return view('equipos.edit',compact('equipos','equipoHistorials','equipoHistPrev','equipoHistCorrect'));
+        return view('equipos.edit',compact('equipos','equipoHistorials','equipoHistPrev','equipoHistCorrect','eqHistofields'));
     }
 
     /**

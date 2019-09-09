@@ -15,6 +15,7 @@ class CreateEquipoHistorialsTable extends Migration
     {
         Schema::create('equipo_historials', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('tipo');
             $table->integer('historial_tipo');
             $table->date('fecha');
             $table->string('responsable');

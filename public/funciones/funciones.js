@@ -136,7 +136,127 @@ function delete_logistica(id_logistica, id_producto){
                 }
             }
         });
+}
 
-   
+function agrega_historial(tipo){
+  $("#historia_tipo").val(tipo);
+}
 
+
+function guarda_historial(tipo){
+    var parameters = {"tipo":tipo,
+                      "historia_tipo":$("#historia_tipo").val(),
+                      "responsable":$("#responsable").val(),
+                      "fecha":$("#fecha").val(),
+                      "descripcion":$("#descripcion").val(),
+                      "vencimiento":$("#vencimiento").val(),
+                      "activo":$("#activo").val()
+                    };
+    $.ajax({
+            data: parameters,
+            url: '/api/v1/guarda_historial',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) {  
+              $.alert('Historial guardado');
+              if($("#historia_tipo").val()==1){
+                $("#equipo_historial").html(response); 
+                $("#equipoHistorials-table").dataTable();
+              }else if($("#historia_tipo").val()==2){
+                $("#equipo_histPrev").html(response); 
+                $("#equipoHistorials_prev-table").dataTable();
+              }else if($("#historia_tipo").val()==3){
+                $("#equipo_histCorrect").html(response); 
+                $("#equipoHistorials_corect-table").dataTable();
+              }
+
+             // 
+            }
+        });                  
+}
+
+function show_historial(id_historia){
+  var parameters = {"id_historia":id_historia};
+
+  $.ajax({
+            data: parameters,
+            url:   '/api/v1/show_historia',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) {     
+              $("#campos_equipos").html(response); 
+            }
+        }); 
+
+}
+
+function actualiza_historia(id_historia){
+  var parameters = {  "tipo":$("#id_tipo").val(),
+                      "id_historia":id_historia,
+                      "historial_tipo":$("#historia_tipo").val(),
+                      "responsable":$("#responsable").val(),
+                      "fecha":$("#fecha").val(),
+                      "descripcion":$("#descripcion").val(),
+                      "vencimiento":$("#vencimiento").val(),
+                      "activo":$("#activo").val()
+                    };
+    $.ajax({
+            data: parameters,
+            url: '/api/v1/actualiza_historial',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) {  
+              $.alert('Historial actualizado');
+              if($("#historia_tipo").val()==1){
+                $("#equipo_historial").html(response); 
+                $("#equipoHistorials-table").dataTable();
+              }else if($("#historia_tipo").val()==2){
+                $("#equipo_histPrev").html(response); 
+                $("#equipoHistorials_prev-table").dataTable();
+              }else if($("#historia_tipo").val()==3){
+                $("#equipo_histCorrect").html(response); 
+                $("#equipoHistorials_corect-table").dataTable();
+              }
+
+             // 
+            }
+        });      
+}
+
+function delete_historial(id_historia, tipo, historia_tipo){
+  var parameters = {  "tipo":tipo,
+                      "id_historia":id_historia,
+                      "historial_tipo":historia_tipo
+                    };
+      $.confirm({
+            title: 'Confirmar!',
+            content: 'Estas seguro que deseas eliminar este historial?',
+            buttons: {
+                confirmar: function () {
+                                 $.ajax({
+                                          data: parameters,
+                                          url: '/api/v1/delete_historial',
+                                          dataType: 'json',
+                                          type:  'get',
+                                          success:  function (response) {  
+                                            if(historia_tipo==1){
+                                              $("#equipo_historial").html(response); 
+                                              $("#equipoHistorials-table").dataTable();
+                                            }else if(historia_tipo==2){
+                                              $("#equipo_histPrev").html(response); 
+                                              $("#equipoHistorials_prev-table").dataTable();
+                                            }else if(historia_tipo==3){
+                                              $("#equipo_histCorrect").html(response); 
+                                              $("#equipoHistorials_corect-table").dataTable();
+                                            } 
+                                          }
+                                      }); 
+                                 $.alert('Historial actualizado');
+                            },
+                            cancelar: function () {
+                                $.alert('Canceledo!');
+
+                            }
+                        }
+                    });
 }

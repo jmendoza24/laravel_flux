@@ -39,6 +39,11 @@ Route::get('save_address', 'clientesController@save_address');
 Route::get('show_logistica', 'logisticaController@edit');
 Route::get('update_address', 'logisticaController@update');
 Route::get('delete_logistica', 'logisticaController@eliminar');
+Route::get('guarda_historial', 'equipo_historialController@store');
+Route::get('show_historia', 'equipo_historialController@edit');
+Route::get('actualiza_historial', 'equipo_historialController@update');
+Route::get('delete_historial', 'equipo_historialController@destroy');
+
 });
 
 
