@@ -1,28 +1,25 @@
-<div class="table-responsive">
-    <table class="table" id="tipoEquipos-table">
-        <thead>
-            <tr>
-                <th>Equipo</th>
-        <th>Descripcion</th>
-                <th colspan="3">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach($tipoEquipos as $tipoEquipo)
-            <tr>
-                <td>{!! $tipoEquipo->equipo !!}</td>
+<table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="tipoEquipos-table">
+    <thead>
+        <tr>
+            <th>Equipo</th>
+            <th>Descripcion</th>
+            <th colspan=""></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach($tipoEquipos as $tipoEquipo)
+        <tr>
+            <td>{!! $tipoEquipo->equipo !!}</td>
             <td>{!! $tipoEquipo->descripcion !!}</td>
-                <td>
-                    {!! Form::open(['route' => ['tipoEquipos.destroy', $tipoEquipo->id], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
-                        <a href="{!! route('tipoEquipos.show', [$tipoEquipo->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                        <a href="{!! route('tipoEquipos.edit', [$tipoEquipo->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
-                    </div>
-                    {!! Form::close() !!}
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-</div>
+            <td>
+                {!! Form::open(['route' => ['tipoEquipos.destroy', $tipoEquipo->id], 'method' => 'delete']) !!}
+                <div class='btn-group'>
+                    <a href="{!! route('tipoEquipos.edit', [$tipoEquipo->id]) !!}" class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></a>
+                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-float btn-outline-danger btn-round', 'onclick' => "return confirm('Estas seguro deseas eliminar este tipo?')"]) !!}
+                </div>
+                {!! Form::close() !!}
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>

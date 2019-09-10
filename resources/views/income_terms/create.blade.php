@@ -1,24 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Nuevo Income @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Income Terms
-        </h1>
-    </section>
-    <div class="content">
-        @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
-
-            <div class="box-body">
-                <div class="row">
-                    {!! Form::open(['route' => 'incomeTerms.store']) !!}
-
-                        @include('income_terms.fields')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+{!! Form::open(['route' => 'incomeTerms.store','class'=>'needs-validation','novalidate']) !!}
+    @include('income_terms.fields')
+{!! Form::close() !!}
 @endsection

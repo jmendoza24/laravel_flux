@@ -1,23 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Editar subproceso @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Subprocesos
-        </h1>
-   </section>
-   <div class="content">
-       @include('adminlte-templates::common.errors')
-       <div class="box box-primary">
-           <div class="box-body">
-               <div class="row">
-                   {!! Form::model($subprocesos, ['route' => ['subprocesos.update', $subprocesos->id], 'method' => 'patch']) !!}
-
-                        @include('subprocesos.fields')
-
-                   {!! Form::close() !!}
-               </div>
-           </div>
-       </div>
-   </div>
+{!! Form::model($subprocesos, ['route' => ['subprocesos.update', $subprocesos->id], 'method' => 'patch','class'=>'needs-validation','novalidate']) !!}
+    @include('subprocesos.fields')
+{!! Form::close() !!}               
 @endsection

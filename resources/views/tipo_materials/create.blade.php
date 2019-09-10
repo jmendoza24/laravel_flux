@@ -1,24 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Nuevo tipo material @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Tipo Material
-        </h1>
-    </section>
-    <div class="content">
-        @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
-
-            <div class="box-body">
-                <div class="row">
-                    {!! Form::open(['route' => 'tipoMaterials.store']) !!}
-
-                        @include('tipo_materials.fields')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+{!! Form::open(['route' => 'tipoMaterials.store','class'=>'needs-validation','novalidate']) !!}
+    @include('tipo_materials.fields')
+{!! Form::close() !!}
 @endsection

@@ -1,24 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Nuevo subproceso @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Subprocesos
-        </h1>
-    </section>
-    <div class="content">
-        @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
-
-            <div class="box-body">
-                <div class="row">
-                    {!! Form::open(['route' => 'subprocesos.store']) !!}
-
-                        @include('subprocesos.fields')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+{!! Form::open(['route' => 'subprocesos.store','class'=>'needs-validation','novalidate']) !!}
+    @include('subprocesos.fields')
+{!! Form::close() !!}
 @endsection

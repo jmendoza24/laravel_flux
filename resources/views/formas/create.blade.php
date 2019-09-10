@@ -1,24 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Nueva forma @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Forma
-        </h1>
-    </section>
-    <div class="content">
-        @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
-
-            <div class="box-body">
-                <div class="row">
-                    {!! Form::open(['route' => 'formas.store']) !!}
-
-                        @include('formas.fields')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+{!! Form::open(['route' => 'formas.store','class'=>'needs-validation','novalidate']) !!}
+    @include('formas.fields')
+{!! Form::close() !!}
 @endsection

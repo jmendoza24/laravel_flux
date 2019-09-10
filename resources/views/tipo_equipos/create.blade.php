@@ -1,24 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Nuevo tipo equipo @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Tipo Equipo
-        </h1>
-    </section>
-    <div class="content">
-        @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
-
-            <div class="box-body">
-                <div class="row">
-                    {!! Form::open(['route' => 'tipoEquipos.store']) !!}
-
-                        @include('tipo_equipos.fields')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+{!! Form::open(['route' => 'tipoEquipos.store','class'=>'needs-validation','novalidate']) !!}
+    @include('tipo_equipos.fields')
+{!! Form::close() !!}
 @endsection

@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class DepartamentosController extends AppBaseController
 {
@@ -29,7 +30,9 @@ class DepartamentosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $departamentos = $this->departamentosRepository->all();
+        $departamentos = DB::table('departamentos as d')
+                             ->leftjoin('familias as f','d.id_familia','f.id')
+                             ->get();
 
         return view('departamentos.index')
             ->with('departamentos', $departamentos);
@@ -40,9 +43,9 @@ class DepartamentosController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('departamentos.create');
+    public function create(){
+        $familias = DB::table('familias')->get();
+        return view('departamentos.create',compact('familias'));
     }
 
     /**
@@ -99,8 +102,8 @@ class DepartamentosController extends AppBaseController
 
             return redirect(route('departamentos.index'));
         }
-
-        return view('departamentos.edit')->with('departamentos', $departamentos);
+        $familias = DB::table('familias')->get();
+        return view('departamentos.edit',compact('departamentos','familias'));
     }
 
     /**
@@ -137,20 +140,8 @@ class DepartamentosController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
-    {
-        $departamentos = $this->departamentosRepository->find($id);
-
-        if (empty($departamentos)) {
-            Flash::error('Departamentos not found');
-
-            return redirect(route('departamentos.index'));
-        }
-
-        $this->departamentosRepository->delete($id);
-
-        Flash::success('Departamentos deleted successfully.');
-
+    public function destroy($id){
+        DB::table('departamentos')->where('id',$id)->delete();
         return redirect(route('departamentos.index'));
     }
 }

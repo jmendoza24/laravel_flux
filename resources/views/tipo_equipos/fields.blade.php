@@ -1,17 +1,28 @@
-<!-- Equipo Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('equipo', 'Equipo:') !!}
-    {!! Form::text('equipo', null, ['class' => 'form-control']) !!}
+<div class="row">
+  <div class="col-md-8">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput1">Equipo</label>
+      <div class="col-md-9">
+        {!! Form::text('equipo', null, ['class' => 'form-control','required']) !!}
+        <div class="invalid-feedback">Este campo es requerido.</div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<!-- Descripcion Field -->
-<div class="form-group col-sm-12 col-lg-12">
-    {!! Form::label('descripcion', 'Descripcion:') !!}
-    {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
+<div class="row">
+ 
+  <div class="col-md-8">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput1">Descripción</label>
+      <div class="col-md-9">
+        {!! Form::textarea('descripcion', null, ['class' => 'form-control','required']) !!}
+        <div class="invalid-feedback">Este campo es requerido.</div>
+      </div>
+    </div>
+  </div>  
 </div>
-
-<!-- Submit Field -->
-<div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('tipoEquipos.index') !!}" class="btn btn-default">Cancel</a>
+<hr/>
+<div class="form-group col-sm-8" style="text-align: right;">
+    <a href="{!! route('tipoEquipos.index') !!}" class="btn btn-warning mr-1">Cancelar</a>
+        {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
 </div>

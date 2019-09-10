@@ -1,23 +1,47 @@
-<!-- Id Familia Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('id_familia', 'Id Familia:') !!}
-    {!! Form::number('id_familia', null, ['class' => 'form-control']) !!}
+<div class="row">
+  <div class="col-md-8">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput1">Familia</label>
+      <div class="col-md-9">
+        <select class="form-control" name="id_familia" required="">
+        	<option value="">Seleccione una opción</option>
+        	@foreach($familias as $fam)
+              <option value="{{ $fam->id}}" 
+                @if(!empty($departamentos->id_familia))
+                  {{ ($fam->id == $departamentos->id_familia) ? 'selected' : '' }}
+                @endif >
+                {{ $fam->familia}}</option>
+              @endforeach
+        </select>
+        <div class="invalid-feedback">Este campo es requerido.</div>
+      </div>
+    </div>
+  </div>
+  </div>  
+  <div class="row">
+  <div class="col-md-8">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput1">Departamento</label>
+      <div class="col-md-9">
+        {!! Form::text('departamento', null, ['class' => 'form-control','required']) !!}
+        <div class="invalid-feedback">Este campo es requerido.</div>
+      </div>
+    </div>
+  </div>  
 </div>
-
-<!-- Departamento Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('departamento', 'Departamento:') !!}
-    {!! Form::text('departamento', null, ['class' => 'form-control']) !!}
+<div class="row">
+  <div class="col-md-8">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput1">Descripción</label>
+      <div class="col-md-9">
+        {!! Form::textarea('descripcion', null, ['class' => 'form-control','required']) !!}
+        <div class="invalid-feedback">Este campo es requerido.</div>
+      </div>
+    </div>
+  </div> 
 </div>
-
-<!-- Descripcion Field -->
-<div class="form-group col-sm-12 col-lg-12">
-    {!! Form::label('descripcion', 'Descripcion:') !!}
-    {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Submit Field -->
-<div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('departamentos.index') !!}" class="btn btn-default">Cancel</a>
+<hr/>
+<div class="form-group col-sm-8" style="text-align: right;">
+    <a href="{!! route('departamentos.index') !!}" class="btn btn-warning mr-1">Cancelar</a>
+    {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
 </div>

@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class ProcesosController extends AppBaseController
 {
@@ -29,7 +30,7 @@ class ProcesosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $procesos = $this->procesosRepository->all();
+        $procesos = DB::table('procesos')->get();
 
         return view('procesos.index')
             ->with('procesos', $procesos);
@@ -90,16 +91,9 @@ class ProcesosController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
-    {
-        $procesos = $this->procesosRepository->find($id);
-
-        if (empty($procesos)) {
-            Flash::error('Procesos not found');
-
-            return redirect(route('procesos.index'));
-        }
-
+    public function edit($id){
+        $procesos = DB::table('procesos')->where('id',$id)->get();
+        $procesos = $procesos[0];
         return view('procesos.edit')->with('procesos', $procesos);
     }
 

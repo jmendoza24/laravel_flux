@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class PuestoController extends AppBaseController
 {
@@ -137,20 +138,9 @@ class PuestoController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
-    {
-        $puesto = $this->puestoRepository->find($id);
+    public function destroy($id){
 
-        if (empty($puesto)) {
-            Flash::error('Puesto not found');
-
-            return redirect(route('puestos.index'));
-        }
-
-        $this->puestoRepository->delete($id);
-
-        Flash::success('Puesto deleted successfully.');
-
+        DB::table('puestos')->where('id',$id)->delete();
         return redirect(route('puestos.index'));
     }
 }

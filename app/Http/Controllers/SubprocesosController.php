@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class SubprocesosController extends AppBaseController
 {
@@ -29,7 +30,9 @@ class SubprocesosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $subprocesos = $this->subprocesosRepository->all();
+        $subprocesos = DB::table('subprocesos as s')
+                        ->leftjoin('procesos as p','p.id','s.idproceso')
+                        ->get();
 
         return view('subprocesos.index')
             ->with('subprocesos', $subprocesos);
@@ -40,9 +43,9 @@ class SubprocesosController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('subprocesos.create');
+    public function create(){
+        $procesos = DB::table('procesos')->orderby('procesos')->get();
+        return view('subprocesos.create',compact('procesos'));
     }
 
     /**
@@ -99,8 +102,10 @@ class SubprocesosController extends AppBaseController
 
             return redirect(route('subprocesos.index'));
         }
+        $procesos = DB::table('procesos')->orderby('procesos')->get();
+        //$procesos = $procesos[0];
 
-        return view('subprocesos.edit')->with('subprocesos', $subprocesos);
+        return view('subprocesos.edit',compact('subprocesos','procesos'));
     }
 
     /**
@@ -139,17 +144,7 @@ class SubprocesosController extends AppBaseController
      */
     public function destroy($id)
     {
-        $subprocesos = $this->subprocesosRepository->find($id);
-
-        if (empty($subprocesos)) {
-            Flash::error('Subprocesos not found');
-
-            return redirect(route('subprocesos.index'));
-        }
-
-        $this->subprocesosRepository->delete($id);
-
-        Flash::success('Subprocesos deleted successfully.');
+        DB:table('subprocesos')->where('id',$id)->delete();
 
         return redirect(route('subprocesos.index'));
     }

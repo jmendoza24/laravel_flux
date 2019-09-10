@@ -1,24 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Nuevo departamento @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Departamentos
-        </h1>
-    </section>
-    <div class="content">
-        @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
-
-            <div class="box-body">
-                <div class="row">
-                    {!! Form::open(['route' => 'departamentos.store']) !!}
-
-                        @include('departamentos.fields')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+{!! Form::open(['route' => 'departamentos.store','class'=>'needs-validation','novalidate']) !!}
+    @include('departamentos.fields')
+{!! Form::close() !!}            
 @endsection

@@ -1,23 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Editar grado @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Grado
-        </h1>
-   </section>
-   <div class="content">
-       @include('adminlte-templates::common.errors')
-       <div class="box box-primary">
-           <div class="box-body">
-               <div class="row">
-                   {!! Form::model($grado, ['route' => ['grados.update', $grado->id], 'method' => 'patch']) !!}
-
-                        @include('grados.fields')
-
-                   {!! Form::close() !!}
-               </div>
-           </div>
-       </div>
-   </div>
+ {!! Form::model($grado, ['route' => ['grados.update', $grado->id], 'method' => 'patch','class'=>'needs-validation','novalidate']) !!}
+      @include('grados.fields')
+ {!! Form::close() !!}
 @endsection
