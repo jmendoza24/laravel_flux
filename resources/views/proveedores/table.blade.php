@@ -21,9 +21,9 @@
             <tr>
                 <td>{{ $proveedores->nombre}}</td>
                 <td>{!! $proveedores->direccion !!}</td>
-                <td>{!! $proveedores->pais !!}</td>
-                <td>{!! $proveedores->estado !!}</td>
-                <td>{!! $proveedores->municipio !!}</td>
+                <td>{!! $proveedores->npais !!}</td>
+                <td>{!! $proveedores->nestado !!}</td>
+                <td>{!! $proveedores->nmunicipio !!}</td>
                 <td>{!! $proveedores->cp !!}</td>
                 <td>{!! $proveedores->rfc !!}</td>
                 <td>{!! $proveedores->credito !!}</td>

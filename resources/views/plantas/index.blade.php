@@ -9,8 +9,6 @@
            <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('plantas.create') !!}">+ Planta</a>
         </h1>
     </div>
-    
-    @include('flash::message')
     <div style="overflow: scroll;" class="col-md-12">
     @include('plantas.table')
     </div>

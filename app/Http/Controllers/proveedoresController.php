@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class proveedoresController extends AppBaseController
 {
@@ -29,7 +30,11 @@ class proveedoresController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $proveedores = $this->proveedoresRepository->all();
+        $proveedores = DB::table('proveedores as p')
+                      ->leftjoin('tbl_estados as e','e.id','=','p.estado')
+                      ->leftjoin('tbl_municipios as m','m.id','=','p.municipio')
+                      ->selectraw("p.*,e.estado as nestado, if(p.pais=1,'México','') as npais, m.municipio as nmunicipio")
+                      ->get();
 
         return view('proveedores.index')
             ->with('proveedores', $proveedores);
@@ -40,9 +45,11 @@ class proveedoresController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('proveedores.create');
+    public function create(){
+        $estados = DB::table('tbl_estados')->orderby('estado')->get();
+        $municipios = array();
+
+        return view('proveedores.create',compact('estados','municipios'));
     }
 
     /**
@@ -90,9 +97,15 @@ class proveedoresController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $proveedores = $this->proveedoresRepository->find($id);
+        $estados = DB::table('tbl_estados')->orderby('estado')->get();
+        $municipios = DB::table('tbl_estadosmun as em')
+                          ->join('tbl_municipios as m','em.municipios_id','=','m.id') 
+                          ->selectraw('m.*')
+                          ->where('em.estados_id',$proveedores->estado)
+                          ->get(); 
+
 
         if (empty($proveedores)) {
             Flash::error('Proveedores not found');
@@ -100,7 +113,7 @@ class proveedoresController extends AppBaseController
             return redirect(route('proveedores.index'));
         }
 
-        return view('proveedores.edit')->with('proveedores', $proveedores);
+        return view('proveedores.edit',compact('proveedores','estados', 'municipios'));
     }
 
     /**
@@ -139,17 +152,7 @@ class proveedoresController extends AppBaseController
      */
     public function destroy($id)
     {
-        $proveedores = $this->proveedoresRepository->find($id);
-
-        if (empty($proveedores)) {
-            Flash::error('Proveedores not found');
-
-            return redirect(route('proveedores.index'));
-        }
-
-        $this->proveedoresRepository->delete($id);
-
-        Flash::success('Proveedores deleted successfully.');
+       DB::table('proveedores')->where('id',$id)->delete();
 
         return redirect(route('proveedores.index'));
     }

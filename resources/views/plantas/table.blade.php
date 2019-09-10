@@ -15,8 +15,8 @@
     <tr>
         <td>{!! $planta->nombre !!}</td>
         <td>{!! $planta->id_planta !!}</td>
-        <td>{!! $planta->estado !!}</td>
-        <td>{!! $planta->municipio !!}</td>
+        <td>{!! $planta->nestado !!}</td>
+        <td>{!! $planta->nmunicipio !!}</td>
         <td>{!! $planta->cp !!}</td>
         <td>{!! $planta->telefono !!}</td>
         <td>

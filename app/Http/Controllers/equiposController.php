@@ -42,7 +42,19 @@ class equiposController extends AppBaseController
      * @return Response
      */
     public function create(){
+
+        $equipoHistorials  = array(   'id'=>'',
+                                    'historial_tipo'=>'',
+                                    'fecha'=>'',
+                                    'responsable'=>'',
+                                    'descripcion'=>'',
+                                    'vencimiento'=>'',
+                                    'activo'=>'',
+                                    'tipo'=>''
+                                    );
+
         $equipoHistorials  = (object)$equipoHistorials ;
+
 
         return view('equipos.create',compact('equipoHistorials','equipoHistPrev','equipoHistCorrect'));
     }

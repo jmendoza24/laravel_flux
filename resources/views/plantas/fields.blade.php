@@ -36,9 +36,13 @@
       <div class="col-md-9">
         <select class="form-control select2" name="estado" id="estado" onchange="get_municipios('estado','municipio')">
           <option value="">Seleccione una opcion</option>
-          @foreach($estados as $estado)
-          <option value="{{ $estado->id}}">{{ $estado->estado}}</option>
-          @endforeach
+              @foreach($estados as $estado)
+              <option value="{{ $estado->id}}" 
+                @if(!empty($planta->estado))
+                  {{ ($planta->estado == $estado->id) ? 'selected' : '' }}
+                @endif >
+                {{ $estado->estado}}</option>
+              @endforeach
         </select>
       </div>
     </div>
@@ -52,7 +56,15 @@
       <div class="col-md-9">
         <select class="form-control select2" name="municipio" id="municipio">
           <option value="">Seleccione una opcion</option>
-        </select>
+          @foreach($municipios as $muni)
+              <option value="{{ $muni->id}}" 
+              @if(!empty($planta->municipio))
+                  {{ ($planta->municipio == $muni->id) ? 'selected' : '' }}
+               @endif >
+               {{ $muni->municipio}}
+             </option>
+            @endforeach
+          </select>
       </div>
     </div>
   </div>

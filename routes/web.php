@@ -52,3 +52,23 @@ Route::get('delete_historial', 'equipo_historialController@destroy');
 Route::resource('logisticas', 'logisticaController');
 
 Route::resource('equipoHistorials', 'equipo_historialController');
+
+Route::resource('procesos', 'ProcesosController');
+
+Route::resource('subprocesos', 'SubprocesosController');
+
+Route::resource('puestos', 'PuestoController');
+
+Route::resource('departamentos', 'DepartamentosController');
+
+Route::resource('familias', 'FamiliaController');
+
+Route::resource('tipoEquipos', 'TipoEquipoController');
+
+Route::resource('tipoMaterials', 'TipoMaterialController');
+
+Route::resource('grados', 'GradoController');
+
+Route::resource('formas', 'FormaController');
+
+Route::resource('incomeTerms', 'IncomeTermsController');

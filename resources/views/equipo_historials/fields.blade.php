@@ -1,9 +1,9 @@
 @if(!empty($eqHistofields->id))
 <div class="modal-body">
 @endif
-<input type="text" id="id_historia" value="{{ $eqHistofields->id}}">
-<input type="text" id="historia_tipo" value="{{ $eqHistofields->historial_tipo}}">
-<input type="text" id="id_tipo" value="{{ $eqHistofields->tipo}}">
+<input type="hidden" id="id_historia" value="{{ $eqHistofields->id}}">
+<input type="hidden" id="historia_tipo" value="{{ $eqHistofields->historial_tipo}}">
+<input type="hidden" id="id_tipo" value="{{ $eqHistofields->tipo}}">
 <div class="row">
   <div class="col-md-6">
       <div class="form-group row">

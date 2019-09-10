@@ -17,11 +17,11 @@ class CreateEquipoHistorialsTable extends Migration
             $table->increments('id');
             $table->integer('tipo');
             $table->integer('historial_tipo');
-            $table->date('fecha');
-            $table->string('responsable');
-            $table->string('descripcion');
-            $table->date('vencimiento');
-            $table->integer('activo');
+            $table->date('fecha')->nullable();
+            $table->string('responsable')->nullable();
+            $table->string('descripcion')->nullable();
+            $table->date('vencimiento')->nullable();
+            $table->integer('activo')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -7,7 +7,21 @@
         <li class="{{ Request::is('proveedores*') ? 'active' : '' }}"><a href="{!! route('proveedores.index') !!}"><span>Proveedores</span></a></li>
     </ul>
 </li>
-<li class="{{ Request::is('equipoHistorials*') ? 'active' : '' }}">
-    <a href="{!! route('equipoHistorials.index') !!}"><i class="fa fa-edit"></i><span>Equipo Historials</span></a>
+<li class=" nav-item"><a href="#"><i class="ft-folder"></i><span class="menu-title" data-i18n="">Subcatalogos</span></a>
+    <ul class="menu-content">       
+        <li class="{{ Request::is('procesos*') ? 'active' : '' }}"><a href="{!! route('procesos.index') !!}">Procesos</span></a></li>
+        <li class="{{ Request::is('subprocesos*') ? 'active' : '' }}"><a href="{!! route('subprocesos.index') !!}"><span>Subprocesos</span></a></li>
+        <li class="{{ Request::is('puestos*') ? 'active' : '' }}"><a href="{!! route('puestos.index') !!}"><span>Puestos</span></a></li>
+        <li class="{{ Request::is('departamentos*') ? 'active' : '' }}"><a href="{!! route('departamentos.index') !!}"><span>Departamentos</span></a></li>
+        <li class="{{ Request::is('familias*') ? 'active' : '' }}"><a href="{!! route('familias.index') !!}"><span>Familias</span></a></li>
+        <li class="{{ Request::is('tipoEquipos*') ? 'active' : '' }}"><a href="{!! route('tipoEquipos.index') !!}">Tipo Equipos</span></a></li>
+        <li class="{{ Request::is('tipoMaterials*') ? 'active' : '' }}"><a href="{!! route('tipoMaterials.index') !!}">Tipo Materials</span></a></li>
+        <li class="{{ Request::is('grados*') ? 'active' : '' }}"><a href="{!! route('grados.index') !!}">Grados</span></a></li>
+        <li class="{{ Request::is('formas*') ? 'active' : '' }}"><a href="{!! route('formas.index') !!}">Formas</span></a></li>
+        <li class="{{ Request::is('incomeTerms*') ? 'active' : '' }}"><a href="{!! route('incomeTerms.index') !!}">Income Terms</span></a></li>
+    </ul>
 </li>
+
+
+
 

@@ -44,7 +44,7 @@
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
-              <select class="form-control select2" style="width: 100%;" name="estado" id="estado_log" onchange="get_municipios('estado_log','municipio_log')">
+              <select class="form-control select2" style="width: 100%;" name="lestado" id="estado_log" onchange="get_municipios('estado_log','municipio_log')">
                 <option value="">Seleccione una opcion</option>
                 @foreach($estados as $estado)
                 <option value="{{ $estado->id}}" 
@@ -62,7 +62,7 @@
         <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
-              <select class="form-control select2" style="width: 100%;"  name="municipio" id="municipio_log">
+              <select class="form-control select2" style="width: 100%;"  name="lmunicipio" id="municipio_log">
                 <option value="">Seleccione una opcion</option>
                 @foreach($municipios as $muni)
                   <option value="{{ $muni->id}}" 

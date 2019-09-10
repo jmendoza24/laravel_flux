@@ -40,7 +40,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Pais</label>
           <div class="col-md-9">
-          <select class="form-control" name="pais" id="pais" required="">
+          <select class="form-control" name="pais" id="pais" required=""> 
             <option value="">Seleccione una opci&oacute;n</option>
             <option value="1" selected="">M&eacute;xico</option>
           </select>

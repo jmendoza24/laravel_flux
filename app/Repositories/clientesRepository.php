@@ -26,24 +26,28 @@ class clientesRepository extends BaseRepository
         'municipio',
         'cp',
         'id_proveedor',
+        'linea',
         'terminopago',
         'compra_nombre',
-        'telefono',
+        'compra_telefono',
         'correo_compra',
         'recepcion_nombre',
         'recepcion_telefono',
         'recepcion_correo',
         'fac_nombre',
         'fac_calle',
-        'numero',
+        'fac_numero',
         'fac_estado',
+        'fac_municipio',
         'fac_pais',
         'fac_cp',
         'doc_nombre',
         'doc_correo',
         'imp_factura',
         'imp_porcentaje',
-        'imp_nocertificado'
+        'imp_nocertificado',
+        'nota_marcado',
+        'nota_embarques'
     ];
 
     /**

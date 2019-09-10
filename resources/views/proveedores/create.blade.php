@@ -3,7 +3,7 @@
 @section('content')
     
 @include('adminlte-templates::common.errors')
-    {!! Form::open(['route' => 'proveedores.store']) !!}
+    {!! Form::open(['route' => 'proveedores.store','class'=>'needs-validation','novalidate']) !!}
         @include('proveedores.fields')
     {!! Form::close() !!}
 @endsection

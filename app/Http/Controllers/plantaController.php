@@ -29,7 +29,12 @@ class plantaController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $plantas = $this->plantaRepository->all();
+        $plantas = DB::table('plantas as p')
+                ->leftjoin('tbl_estados as e', 'e.id','p.estado')
+                ->leftjoin('tbl_municipios as m', 'm.id','p.municipio')
+                ->selectraw('p.*, m.municipio as nmunicipio, e.estado as nestado')
+                ->get();
+
 
         return view('plantas.index')
             ->with('plantas', $plantas);
@@ -100,9 +105,15 @@ class plantaController extends AppBaseController
 
             return redirect(route('plantas.index'));
         }
+        $municipios = DB::table('tbl_estadosmun as em')
+                          ->join('tbl_municipios as m','em.municipios_id','=','m.id') 
+                          ->selectraw('m.*')
+                          ->where('em.estados_id',$planta->estado)
+                          ->get(); 
+
         $estados = DB::table('tbl_estados')->orderby('estado')->get();
 
-        return view('plantas.edit',compact('planta','estados'));
+        return view('plantas.edit',compact('planta','estados','municipios'));
     }
 
     /**
