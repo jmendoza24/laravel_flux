@@ -260,3 +260,42 @@ function delete_historial(id_historia, tipo, historia_tipo){
                         }
                     });
 }
+
+
+function agrega_proceso(id_proceso,id_producto){
+  $.confirm({
+            title: 'Confirmar!',
+            content: 'Estas seguro que deseas agregar este proceso?',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          data: {"id_proceso":id_proceso,"id_producto":id_producto},
+                          url: '/api/v1/agrega_proceso',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                            $.alert('Proceso agregado');
+                          }
+                      }); 
+
+                },
+                cancelar: function () {
+                    $.alert('Canceledo!');
+
+                }
+              }
+          });
+}
+
+function ver_proceso(id_proceso,id_producto){
+  $.ajax({
+        data: {"id_proceso":id_proceso,"id_producto":id_producto},
+        url: '/api/v1/show_proceso',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          console.log(response);
+          $("#listasubprocesos").html(response);
+        }
+    }); 
+}

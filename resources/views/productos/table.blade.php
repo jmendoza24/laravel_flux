@@ -16,9 +16,9 @@
         <tr>
             <td>{!! $productos->descripcion !!}</td>
             <td>{!! $productos->familia !!}</td>
-            <td>{!! $productos->id_empresa !!}</td>
-            <td>{!! $productos->id_acero !!}</td>
-            <td>{!! $productos->id_estructura !!}</td>
+            <td>{!! $productos->nombre_corto !!}</td>
+            <td>{!! $productos->acero !!}</td>
+            <td>{!! $productos->estructura !!}</td>
             <td>{!! $productos->espesor !!}</td> 
             <td>{!! $productos->ancho !!}</td>
                 <td>

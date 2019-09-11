@@ -1,23 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Editar condición @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Condiciones
-        </h1>
-   </section>
-   <div class="content">
-       @include('adminlte-templates::common.errors')
-       <div class="box box-primary">
-           <div class="box-body">
-               <div class="row">
-                   {!! Form::model($condiciones, ['route' => ['condiciones.update', $condiciones->id], 'method' => 'patch']) !!}
-
-                        @include('condiciones.fields')
-
-                   {!! Form::close() !!}
-               </div>
-           </div>
-       </div>
-   </div>
+{!! Form::model($condiciones, ['route' => ['condiciones.update', $condiciones->id], 'method' => 'patch','class'=>'needs-validation','novalidate']) !!}
+    @include('condiciones.fields')
+{!! Form::close() !!}
 @endsection

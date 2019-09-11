@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="procesos-table">
+<table class="table table-striped table-bordered datacol-basic-initialisation"  id="procesos-table">
 <thead>
     <tr>
         <th>Procesos</th>

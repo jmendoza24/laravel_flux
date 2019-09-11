@@ -1,23 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Editar tipo estructura @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Tipoestructura
-        </h1>
-   </section>
-   <div class="content">
-       @include('adminlte-templates::common.errors')
-       <div class="box box-primary">
-           <div class="box-body">
-               <div class="row">
-                   {!! Form::model($tipoestructura, ['route' => ['tipoestructuras.update', $tipoestructura->id], 'method' => 'patch']) !!}
-
-                        @include('tipoestructuras.fields')
-
-                   {!! Form::close() !!}
-               </div>
-           </div>
-       </div>
-   </div>
+{!! Form::model($tipoestructura, ['route' => ['tipoestructuras.update', $tipoestructura->id], 'method' => 'patch','class'=>'needs-validation','novalidate']) !!}
+      @include('tipoestructuras.fields')
+ {!! Form::close() !!}
 @endsection

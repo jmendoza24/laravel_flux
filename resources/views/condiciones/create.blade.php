@@ -1,24 +1,7 @@
 @extends('layouts.app')
-
+@section('titulo')Nueva condición @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Condiciones
-        </h1>
-    </section>
-    <div class="content">
-        @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
-
-            <div class="box-body">
-                <div class="row">
-                    {!! Form::open(['route' => 'condiciones.store']) !!}
-
-                        @include('condiciones.fields')
-
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+{!! Form::open(['route' => 'condiciones.store','class'=>'needs-validation','novalidate']) !!}
+    @include('condiciones.fields')
+{!! Form::close() !!}
 @endsection

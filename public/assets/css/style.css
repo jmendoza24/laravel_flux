@@ -14,3 +14,8 @@ textarea{height: 65px;
 
 
 .navbar-dark{background: #518A87; }
+
+.btn-outline-success{
+	border-color: #518A87;
+	color: #518A87;
+}

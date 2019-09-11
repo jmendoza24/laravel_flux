@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateCondicionesTable extends Migration
+class ProductosProcesos extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -13,10 +13,10 @@ class CreateCondicionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('condiciones', function (Blueprint $table) {
+         Schema::create('productos_procesos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tipo');
-            $table->text('condicion');
+            $table->integer('id_producto');
+            $table->integer('id_proceso');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +29,6 @@ class CreateCondicionesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('condiciones');
+       Schema::drop('productos_procesos');
     }
 }

@@ -43,7 +43,8 @@ Route::get('guarda_historial', 'equipo_historialController@store');
 Route::get('show_historia', 'equipo_historialController@edit');
 Route::get('actualiza_historial', 'equipo_historialController@update');
 Route::get('delete_historial', 'equipo_historialController@destroy');
-
+Route::get('agrega_proceso', 'productosController@agrega_proceso');
+Route::get('show_proceso', 'productosController@show_proceso');
 });
 
 

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use DB;
 use Response;
+use View;
 
 class productosController extends AppBaseController
 {
@@ -28,9 +29,14 @@ class productosController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
-    {
-        $productos = $this->productosRepository->all();
+    public function index(Request $request){
+        $productos = DB::table('productos as p')
+                        ->leftjoin('familias as f', 'f.id','p.familia')
+                        ->leftjoin('clientes as c', 'c.id','p.id_empresa')
+                        ->leftjoin('tipoaceros as t', 't.id','p.id_acero')
+                        ->leftjoin('tipoestructuras as a', 'a.id','p.id_estructura')
+                        ->selectraw('p.*, f.familia, c.nombre_corto, t.acero, a.estructura')
+                        ->get();
 
         return view('productos.index')
             ->with('productos', $productos);
@@ -44,7 +50,10 @@ class productosController extends AppBaseController
     public function create(){
 
         $familias = DB::table('familias')->get();
-        return view('productos.create',compact('familias'));
+        $clientes = DB::table('clientes')->get();
+        $tipoacero = DB::table('tipoaceros')->get();
+        $tipoestructura = DB::table('tipoestructuras')->get();
+        return view('productos.create',compact('familias','clientes','tipoacero','tipoestructura'));
     }
 
     /**
@@ -93,10 +102,20 @@ class productosController extends AppBaseController
      */
     public function edit($id){
          $productos = DB::table('productos')->where('id',$id)->get();
+         $clientes = DB::table('clientes')->get();
          $familias = DB::table('familias')->get();
-         $productos = $productos[0];
+         $tipoacero = DB::table('tipoaceros')->get();
+         $tipoestructura = DB::table('tipoestructuras')->get();
+         $productoDibujos = DB::table('producto_dibujos')->where('id_producto',$id)->get();
+         $procesos = DB::table('procesos as p')
+                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$id)
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->get();
 
-        return view('productos.edit',compact('productos','familias'));
+         $productos = $productos[0];
+         $id_producto = $id;
+
+        return view('productos.edit',compact('productos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto'));
     }
 
     /**
@@ -133,8 +152,7 @@ class productosController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         $productos = $this->productosRepository->find($id);
 
         if (empty($productos)) {
@@ -149,4 +167,38 @@ class productosController extends AppBaseController
 
         return redirect(route('productos.index'));
     }
+
+    function agrega_proceso(Request $request){
+
+        $existe = DB::table('productos_procesos')
+                    ->selectraw('count(*) as existe')
+                    ->where('id_proceso',$request->id_proceso)
+                    ->get();
+        if($existe[0]->existe >0 ){
+            return 1;
+        }else{
+            DB::table('productos_procesos')
+                ->insert(['id_producto'=>$request->id_producto,
+                          'id_proceso'=>$request->id_proceso]);
+            $procesos = DB::table('procesos as p')
+                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->get();
+            $id_producto = $request->id_producto;
+            return json_encode('productos.productos_procesos',compact('procesos','id_producto'));
+        }
+
+    }
+    
+
+    function show_proceso(Request $request){
+        $procesos = DB::table('procesos as p')
+                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->get();
+
+        $id_producto = $request->id_producto;
+        $options = view('productos.productos_procesos',compact('procesos','id_producto'))->render();    
+        return json_encode($options);
+    }    
 }

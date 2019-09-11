@@ -20,4 +20,6 @@ class CatalogosController extends Controller{
     					->get();
         return $municipios;
     }
+
+    
 }
