@@ -42,7 +42,7 @@
               <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
                 <div class="card-header border-0 pb-0">
                   <div class="card-title text-center">
-                    <h4><b><img class="brand-logo" alt="stack admin logo" src="{{ url('app-assets/images/logo/stack-logo.png') }}"> &nbsp;Fluxmetal</b></h4>
+                    <h4><b><img class="brand-logo" alt="stack admin logo" src="{{ url('app-assets/images/logo/stack-logo.png') }}"> &nbsp;Fluxmetals</b></h4>
                   </div>
                 </div>
                 <div class="card-content">

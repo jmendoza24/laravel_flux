@@ -42,10 +42,13 @@ class CreateClientesTable extends Migration
             $table->string('doc_nombre')->nullable();
             $table->string('doc_correo')->nullable();
             $table->string('imp_factura')->nullable();
+            $table->string('log_nombre')->nullable();
+            $table->string('log_correo')->nullable();
             $table->string('imp_porcentaje')->nullable();
             $table->integer('imp_nocertificado')->nullable();
             $table->text('nota_marcado')->nullable();
             $table->text('nota_embarques')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

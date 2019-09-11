@@ -41,9 +41,10 @@ class productosController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('productos.create');
+    public function create(){
+
+        $familias = DB::table('familias')->get();
+        return view('productos.create',compact('familias'));
     }
 
     /**
@@ -90,16 +91,12 @@ class productosController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
-    {
-         $productos = $this->productosRepository->find($id);
-        if (empty($productos)) {
-            Flash::error('Productos not found');
+    public function edit($id){
+         $productos = DB::table('productos')->where('id',$id)->get();
+         $familias = DB::table('familias')->get();
+         $productos = $productos[0];
 
-            return redirect(route('productos.index'));
-        }
-
-        return view('productos.edit',compact('productos'));
+        return view('productos.edit',compact('productos','familias'));
     }
 
     /**

@@ -66,7 +66,7 @@ class logistica extends Model
      * @var array
      */
     public static $rules = [
-        'nombre' => 'required'
+       
     ];
 
     

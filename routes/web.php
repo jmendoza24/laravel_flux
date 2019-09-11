@@ -72,3 +72,15 @@ Route::resource('grados', 'GradoController');
 Route::resource('formas', 'FormaController');
 
 Route::resource('incomeTerms', 'IncomeTermsController');
+
+Route::resource('actividades', 'ActividadesController');
+
+Route::resource('documentos', 'DocumentosController');
+
+Route::resource('condiciones', 'condicionesController');
+
+Route::resource('tipoaceros', 'tipoaceroController');
+
+Route::resource('tipoestructuras', 'tipoestructuraController');
+
+Route::resource('productoDibujos', 'producto_dibujoController');

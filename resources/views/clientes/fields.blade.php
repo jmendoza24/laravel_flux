@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs nav-underline no-hover-bg nav-justified">
   <li class="nav-item">
     <a class="nav-link active" id="active-tab32" data-toggle="tab" href="#active32" aria-controls="active32"
-    aria-expanded="true"><i class="ft-user"></i> Informacion General</a>
+    aria-expanded="true"><i class="ft-user"></i> Información General</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="link-tab32" data-toggle="tab" href="#link32" aria-controls="link32"
@@ -38,16 +38,22 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">Pais</label>
+          <label class="col-md-3 label-control" for="userinput2">Calle</label>
           <div class="col-md-9">
-          <select class="form-control" name="pais" id="pais" required=""> 
-            <option value="">Seleccione una opci&oacute;n</option>
-            <option value="1" selected="">M&eacute;xico</option>
-          </select>
-          <div class="invalid-feedback">Este campo es requerido.</div>
+          {!! Form::text('calle', null, ['class' => 'form-control']) !!}
           </div>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Numero</label>
+          <div class="col-md-9">
+            {!! Form::text('numero', null, ['class' => 'form-control']) !!}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-6">
          @if(!empty($clientes->estado))
 
@@ -69,11 +75,9 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">Municipio</label>
+          <label class="col-md-3 label-control" for="userinput2">Ciudad</label>
           <div class="col-md-9">
           <select class="form-control select2" name="municipio" id="municipio" required="">
               <option value="">Seleccione una opcion</option>
@@ -89,42 +93,37 @@
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">Calle</label>
-          <div class="col-md-9">
-          {!! Form::text('calle', null, ['class' => 'form-control']) !!}
-          </div>
-        </div>
-      </div>
-      
+      </div>     
     </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Codigo postal</label>
+          <label class="col-md-3 label-control" for="userinput2">País</label>
+          <div class="col-md-9">
+          <select class="form-control" name="pais" id="pais" required=""> 
+            <option value="">Seleccione una opci&oacute;n</option>
+            <option value="1" selected="">M&eacute;xico</option>
+          </select>
+          <div class="invalid-feedback">Este campo es requerido.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Código postal</label>
           <div class="col-md-9">
             {!! Form::text('cp', null, ['class' => 'form-control']) !!}
           </div>
         </div>
-      </div>
-        
-      <div class="col-md-6">
-        <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Numero</label>
-          <div class="col-md-9">
-            {!! Form::text('numero', null, ['class' => 'form-control']) !!}
-          </div>
-        </div>
-      </div>  
+      </div>    
     </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="empresa">Proveedor</label>
+          <label class="col-md-3 label-control" for="empresa">Numero proveedor</label>
           <div class="col-md-9">
-            <select class="form-control select2" name="id_proveedor" id="id_proveedor">
+            <input type="text" name="id_proveedor" id="id_proveedor" class="form-control">
+            <!--- <select class="form-control select2" name="id_proveedor" id="id_proveedor">
               <option value="">Seleccione una opcion</option>
               @foreach($proveedores as $prov)
               <option value="{{ $prov->id}}" 
@@ -133,13 +132,13 @@
                 @endif >
                 {{ $prov->nombre}}</option>
               @endforeach
-              </select>
+              </select>--->
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">Termino pago</label>
+          <label class="col-md-3 label-control" for="userinput2">Término pago</label>
           <div class="col-md-9">
           {!! Form::text('terminopago', null, ['class' => 'form-control']) !!}
           </div>
@@ -149,7 +148,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="empresa">Linea</label>
+          <label class="col-md-3 label-control" for="empresa">Línea</label>
           <div class="col-md-9">
             {!! Form::number('linea', null, ['class' => 'form-control','required']) !!}
           </div>
@@ -237,7 +236,7 @@
         </div>
       </div>
     </div>
-    <h4 class="form-section"><i class="ft-mail"></i>Recepcion facturas</h4> 
+    <h4 class="form-section"><i class="ft-mail"></i>Recepción facturas</h4> 
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
@@ -249,7 +248,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Telefono</label>
+          <label class="col-md-3 label-control" for="userinput1">Teléfono</label>
           <div class="col-md-9">
             {!! Form::text('recepcion_telefono', null, ['class' => 'form-control phone-inputmask']) !!}
           </div>
@@ -276,17 +275,24 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">Pais</label>
+          <label class="col-md-3 label-control" for="userinput2">Calle</label>
           <div class="col-md-9">
-            <select class="form-control" name="fac_pais" id="fac_pais">
-            <option value="">Seleccione una opci&oacute;n</option>
-            <option value="1" selected="">M&eacute;xico</option>
-          </select>
+          {!! Form::text('fac_calle', null, ['class' => 'form-control']) !!}
           </div>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Número</label>
+          <div class="col-md-9">
+            {!! Form::text('fac_numero', null, ['class' => 'form-control']) !!}
+          </div>
+        </div>
+      </div>  
     </div>
     <div class="row">
       <div class="col-md-6">
@@ -304,7 +310,7 @@
       </div>
         <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">Municipio</label>
+          <label class="col-md-3 label-control" for="userinput2">Ciudad</label>
           <div class="col-md-9">
             <select class="form-control select2" style="width: 100%;" name="fac_municipio" id="fac_municipio">
               <option value="">Seleccione una opcion</option>
@@ -313,28 +319,22 @@
         </div>
       </div>
     </div>
+    
     <div class="row">
-      <div class="col-md-6">
+       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">Calle</label>
+          <label class="col-md-3 label-control" for="userinput2">País</label>
           <div class="col-md-9">
-          {!! Form::text('fac_calle', null, ['class' => 'form-control']) !!}
+            <select class="form-control" name="fac_pais" id="fac_pais">
+            <option value="">Seleccione una opci&oacute;n</option>
+            <option value="1" selected="">M&eacute;xico</option>
+          </select>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Numero</label>
-          <div class="col-md-9">
-            {!! Form::text('fac_numero', null, ['class' => 'form-control']) !!}
-          </div>
-        </div>
-      </div>  
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Codigo postal</label>
+          <label class="col-md-3 label-control" for="userinput1">Código postal</label>
           <div class="col-md-9">
             {!! Form::text('fac_cp', null, ['class' => 'form-control']) !!}
           </div>
@@ -356,6 +356,25 @@
           <label class="col-md-3 label-control" for="userinput1">Correo</label>
           <div class="col-md-9">
             {!! Form::text('doc_correo', null, ['class' => 'form-control email-inputmask']) !!}
+          </div>
+        </div>
+      </div>
+    </div>
+    <h4 class="form-section"><i class="ft-mail"></i>Contacto logistica</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput2">Nombre</label>
+          <div class="col-md-9">
+          {!! Form::text('log_nombre', null, ['class' => 'form-control']) !!}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Correo</label>
+          <div class="col-md-9">
+            {!! Form::text('log_correo', null, ['class' => 'form-control email-inputmask']) !!}
           </div>
         </div>
       </div>
@@ -391,7 +410,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel17">+ Direcci&oacute;n de envio</h4>
+          <h4 class="modal-title" id="myModalLabel17">+ Direcci&oacute;n de envío</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

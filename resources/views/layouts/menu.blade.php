@@ -19,8 +19,15 @@
         <li class="{{ Request::is('grados*') ? 'active' : '' }}"><a href="{!! route('grados.index') !!}">Grados</span></a></li>
         <li class="{{ Request::is('formas*') ? 'active' : '' }}"><a href="{!! route('formas.index') !!}">Formas</span></a></li>
         <li class="{{ Request::is('incomeTerms*') ? 'active' : '' }}"><a href="{!! route('incomeTerms.index') !!}">Income Terms</span></a></li>
+        <li class="{{ Request::is('actividades*') ? 'active' : '' }}"><a href="{!! route('actividades.index') !!}"><span>Actividades</span></a></li>
+        <li class="{{ Request::is('documentos*') ? 'active' : '' }}"><a href="{!! route('documentos.index') !!}"><span>Documentos</span></a></li>
+        <li class="{{ Request::is('condiciones*') ? 'active' : '' }}"><a href="{!! route('condiciones.index') !!}"><span>Condiciones</span></a></li>
+        <li class="{{ Request::is('tipoaceros*') ? 'active' : '' }}"><a href="{!! route('tipoaceros.index') !!}"><span>Tipoaceros</span></a></li>
+        <li class="{{ Request::is('tipoestructuras*') ? 'active' : '' }}"><a href="{!! route('tipoestructuras.index') !!}"><span>Tipoestructuras</span></a></li>
+        <li class="{{ Request::is('productoDibujos*') ? 'active' : '' }}"><a href="{!! route('productoDibujos.index') !!}"><span>Producto Dibujos</span></a></li>
     </ul>
 </li>
+
 
 
 

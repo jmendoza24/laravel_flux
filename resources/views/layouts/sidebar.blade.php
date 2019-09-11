@@ -6,7 +6,7 @@
           <li class="nav-item">
             <a class="navbar-brand" href="">
               <img class="brand-logo" alt="stack admin logo" src="{{ url('app-assets/images/logo/stack-logo-light.png') }}">
-              <h2 class="brand-text">Fluxmetal</h2>
+              <h2 class="brand-text">Fluxmetals</h2>
             </a>
           </li>
           <li class="nav-item d-md-none">

@@ -1,14 +1,14 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="productos-table">
     <thead>
         <tr>
-            <th>Descripcion</th>
+            <th>Descripción</th>
             <th>Familia</th>
-            <th>Id Empresa</th>
-            <th>Id Acero</th>
-            <th>Id Estructura</th>
+            <th>Cliente</th>
+            <th>Acero</th>
+            <th>Estructura</th>
             <th>Espesor</th>
             <th>Ancho</th>
-            <th colspan="">Action</th>
+            <th colspan=""></th>
         </tr>
     </thead>
     <tbody>

@@ -7,7 +7,7 @@
                 <th>Serie</th>
                 <th>Tipo</th>
                 <th>Base</th>
-                <th>Calibracion</th>
+                <th>Calibración</th>
                 <th colspan="">Action</th>
             </tr>
         </thead>

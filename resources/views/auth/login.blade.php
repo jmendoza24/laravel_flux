@@ -7,7 +7,7 @@
   <meta name="description" content="Stack admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
   <meta name="keywords" content="admin template, stack admin template, dashboard template, flat admin template, responsive admin template, web app">
   <meta name="author" content="PIXINVENT">
-  <title>Fluxmetal Login</title>
+  <title>Fluxmetals Login</title>
   <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png')}}">
   <link rel="shortcut icon" type="image/x-icon" href="app-assets/images/ico/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i"
@@ -44,7 +44,7 @@
                   <div class="card-title text-center">
                     <div class="p-1">
                       
-                        <h4><b><img class="brand-logo" alt="stack admin logo" src="{{ url('app-assets/images/logo/stack-logo.png') }}"> &nbsp;Fluxmetal</b></h4>
+                        <h4><b><img class="brand-logo" alt="stack admin logo" src="{{ url('app-assets/images/logo/stack-logo.png') }}"> &nbsp;Fluxmetals</b></h4>
                       
                     </div>
                   </div>
@@ -77,7 +77,7 @@
                     </form>
                   </div>
                   <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1">
-                    <span>Eres nuevo en Fluxmetal ?</span>
+                    <span>Eres nuevo en Fluxmetals ?</span>
                   </p>
                   <div class="card-body">
                     <a href="{{ url('/register') }}" class="btn btn-outline-danger btn-block"><i class="ft-user"></i> Registro</a>

@@ -81,7 +81,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="userinput1">Calibracion</label>
+            <label class="col-md-3 label-control" for="userinput1">Calibración</label>
             <div class="col-md-9">
               {!! Form::text('base', null, ['class' => 'form-control']) !!}
             </div>
@@ -170,7 +170,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel17">+ Direcci&oacute;n de envio</h4>
+          <h4 class="modal-title" id="myModalLabel17">+ Direcci&oacute;n de envío</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

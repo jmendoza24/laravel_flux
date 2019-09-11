@@ -36,9 +36,9 @@ function get_municipios(estado,municipio){
 
 function guarda_direccion(id_producto){
   var parameters = {"id_producto":id_producto,
-                    "nombre_log":$("#nombre_log").val(),
+                    "nombre_log":'',
                     "telefono_log":$("#telefono_log").val(),
-                    "correo_log":$("#correo_log").val(),
+                    "correo_log":'',
                     "pais_log":$("#pais_log").val(),
                     "estado_log":$("#estado_log").val(),
                     "municipio_log":$("#municipio_log").val(),
@@ -66,9 +66,9 @@ function guarda_direccion(id_producto){
 function actualiza_direccion(){
   var parameters = {"id_producto":$("#id_producto").val(),
                     "id_direccion":$("#id_logistica").val(),
-                    "nombre_log":$("#nombre_log").val(),
+                    "nombre_log":'',
                     "telefono_log":$("#telefono_log").val(),
-                    "correo_log":$("#correo_log").val(),
+                    "correo_log":'',
                     "pais_log":$("#pais_log").val(),
                     "estado_log":$("#estado_log").val(),
                     "municipio_log":$("#municipio_log").val(),

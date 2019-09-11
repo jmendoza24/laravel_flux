@@ -11,7 +11,7 @@
   </div>
    <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">Pais</label>
+      <label class="col-md-3 label-control" for="userinput2">País</label>
       <div class="col-md-9">
         <select class="form-control" name="pais" id="pais">
           <option value="">Seleccione una opci&oacute;n</option>
@@ -71,7 +71,7 @@
   </div>
    <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput1">Codigo postal</label>
+      <label class="col-md-3 label-control" for="userinput1">Código postal</label>
       <div class="col-md-9">
         {!! Form::text('cp', null, ['class' => 'form-control', 'required']) !!}
         <div class="invalid-feedback">Este campo es requerido.</div>
@@ -83,7 +83,7 @@
 <div class="row">
     <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">Credito</label>
+      <label class="col-md-3 label-control" for="userinput2">Crédito</label>
       <div class="col-md-9">
       {!! Form::text('credito', null, ['class' => 'form-control','required']) !!}
       <div class="invalid-feedback">Este campo es requerido.</div>
@@ -103,7 +103,7 @@
 <div class="row">
     <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput1">Telefono</label>
+      <label class="col-md-3 label-control" for="userinput1">Teléfono</label>
       <div class="col-md-9">
         {!! Form::text('telefono', null, ['class' => 'form-control phone-inputmask']) !!}
       </div>
