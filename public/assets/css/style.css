@@ -13,7 +13,35 @@ textarea{height: 65px;
 		resize: none;}
 
 
-.navbar-dark{background: #518A87; }
+.navbar-dark{
+	background: #518a87;
+}
+.nav.nav-tabs.nav-underline{
+	border-bottom: 1px solid #518a87;
+}
+.nav.nav-tabs.nav-underline .nav-item a.nav-link{
+	color: #518a87;
+}
+.nav.nav-tabs.nav-underline .nav-item a.nav-link:hover, .nav.nav-tabs.nav-underline .nav-item a.nav-link:focus{
+	color: #518a87;
+}
+
+.nav.nav-tabs.nav-underline .nav-item a.nav-link:before{
+	background: #518a87;
+}
+.main-menu.menu-light .navigation > li ul .active > a{
+	color: #518a87;
+}
+
+.btn-primary{
+	background: #518a87;
+}
+.nav-vertical .nav-left.nav-tabs.nav-border-left li.nav-item a.nav-link.active{
+	border-left: 3px solid #518a87;
+}
+.nav-vertical .nav-left.nav-tabs.nav-border-left li.nav-item a.nav-link{
+	color: #518a87;
+}
 
 .btn-outline-success{
 	border-color: #518A87;
