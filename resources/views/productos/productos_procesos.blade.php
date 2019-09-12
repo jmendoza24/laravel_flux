@@ -1,62 +1,64 @@
-<div style="height: 600px; background-color: #FAF7F7;">
-  <div class="sidebar-left sidebar" style="max-height: 450px; padding: 5px;">
+<div style="height: 600px;">
+  <div class="sidebar-left sidebar" style="max-height: 450px;">
     <div class="sidebar">
       <div class="sidebar-content card d-none d-lg-block">
-        <div class="card-body chat-fixed-search" style="background: #FAF7F7;">
-          <fieldset class="form-group position-relative has-icon-left m-0" style="color: #518A87; text-align: center;  border-radius: 1px;  border: 3px solid #518A87;">
-            <h4><b>Procesos</b></h4>
+        <div class="card-body chat-fixed-search" style="">
+          <fieldset class="form-group position-relative has-icon-left m-0" >
+              <h5 style="color:#518A87;"><b>Procesos</b></h5>
           </fieldset>
         </div>
         <div id="users-list" class="list-group position-relative ps-scrollbar-y" style="overflow-y: scroll; max-height: 500px;">
           <div class="users-list-padding media-list">
-            @foreach($procesos as $proc)
-            <div class="media border-0">
-              <div class="media-left pr-1">
-                  <button type="button" onclick="ver_proceso({{$proc->id}},{{$id_producto}})" class="btn btn-{{ ($proc->asignado==1)?'success':'secondary' }}"><i class="fa fa-{{ ($proc->asignado==1)?'check':'' }}"></i> {{ $proc->procesos }}</button>
-              </div>
-              <div class="media-body w-100">
+            <table style="width: 100%;">        
+              @foreach($procesos as $proc)
+              <tr>
+                <td>
+               <h4> {{ $proc->procesos }}</h4>
+              </td>
+              <td>
+              <div style="float: right; text-align: right;">
+                  <a onclick="ver_proceso({{$proc->id}},{{$id_producto}})" class='btn btn-xs btn-float btn-outline-info btn-round'><i class="fa fa-eye"></i></a>
                 
-                <h4 class="list-group-item-heading">
-                <span class="list-group-item-text text-muted mb-0">
                   <a  onclick="@if($proc->asignado==1)
-                                    quitar_proceso({{$proc->id}},{{$id_producto}})
-                                  @else
-                                  agrega_proceso({{$proc->id}},{{$id_producto}})
-                                  @endif" 
-
-                    class="float-right">
-                    <i class="font-medium-1 icon-pin lighten-3" style="{{ ($proc->asignado==1)?'color:#008385':'color:silver' }}"></i>
+                                quitar_proceso({{$proc->id}},{{$id_producto}})
+                              @else
+                              agrega_proceso({{$proc->id}},{{$id_producto}})
+                              @endif" 
+                    class="btn btn-float btn-xs btn-round btn-outline-{{ ($proc->asignado==1)?'danger':'success' }}" >
+                    <i class="fa fa-{{ ($proc->asignado==1)?'trash':'check-square-o' }}"></i>
                   </a>
-                </span>
-                </h4>
               </div>
-            </div>
+              </td>
+            </tr>
             @endforeach
+          </table>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="content-right" style="overflow-y: scroll; height:550px; ">
+  </div/>
+  <div class="content-right" style="overflow-y: scroll; max-height:550px; ">
     <div class="content-wrapper">
       <div class="content-header row">
       </div>
       <div class="content-body">
-        <section class="chat-app-window">
-          <div class="badge badge-default mb-1"><b style="color:#518A87; "><h5>Subprocesos</h5></b></div>
+        <section class="chat-app-window" >
+          <div class="badge badge-default" style="width: 100%;">
+            <b style="color:#518A87; "><h5>Subprocesos</h5></b>
+          </div>
           <div class="chats">
             <div class="chats">
               <ul class="list-group icheck-task row skin skin-flat">
+                @foreach($subprocesos as $sub)
                 <li class="list-group-item">
-                  <input type="checkbox" id="input-1"> Cras justo odio</li>
-                <li class="list-group-item">
-                  <input type="checkbox" id="input-2" checked> Dapibus ac facilisis in</li>
-                <li class="list-group-item">
-                  <input type="checkbox" id="input-3"> Morbi leo risus</li>
-                <li class="list-group-item">
-                  <input type="checkbox" id="input-4" disabled checked> Porta ac consectetur ac</li>
-                <li class="list-group-item">
-                  <input type="checkbox" id="input-5"> Vestibulum at eros</li>
+                  <a onclick="@if($sub->asignado==1)
+                                quitar_subproceso({{$sub->id}},{{$sub->idproceso}},{{$id_producto}})
+                              @else
+                                agrega_subproceso({{$sub->id}},{{$sub->idproceso}},{{$id_producto}})
+                              @endif"  class='btn btn-float btn-outline-{{ ($sub->asignado ==1)? 'danger':'success' }} btn-round'><i class="fa fa-{{ ($sub->asignado ==1)? 'trash':'check' }}"></i></a>
+                  &nbsp; {{ $sub->subproceso}}
+                </li>
+                @endforeach
               </ul>
             </div>
           </div>

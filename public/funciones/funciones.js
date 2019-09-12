@@ -274,6 +274,7 @@ function agrega_proceso(id_proceso,id_producto){
                           dataType: 'json',
                           type:  'get',
                           success:  function (response) {  
+                            $("#listasubprocesos").html(response);
                             $.alert('Proceso agregado');
                           }
                       }); 
@@ -291,6 +292,58 @@ function ver_proceso(id_proceso,id_producto){
   $.ajax({
         data: {"id_proceso":id_proceso,"id_producto":id_producto},
         url: '/api/v1/show_proceso',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          console.log(response);
+          $("#listasubprocesos").html(response);
+        }
+    }); 
+}
+
+function quitar_proceso(id_proceso,id_producto){
+  $.ajax({
+        data: {"id_proceso":id_proceso,"id_producto":id_producto},
+        url: '/api/v1/quitar_proceso',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          console.log(response);
+          $("#listasubprocesos").html(response);
+        }
+    }); 
+}
+
+function agrega_subproceso(id_subproceso,id_proceso,id_producto){
+  $.confirm({
+            title: 'Confirmar!',
+            content: 'Estas seguro que deseas agregar este subproceso?',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          data: {"id_subproceso":id_subproceso,"id_producto":id_producto, "id_proceso":id_proceso},
+                          url: '/api/v1/agrega_subproceso',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                            $("#listasubprocesos").html(response);
+                            $.alert('Subroceso agregado');
+                          }
+                      }); 
+
+                },
+                cancelar: function () {
+                    $.alert('Canceledo!');
+
+                }
+              }
+          });
+}
+
+function quitar_subproceso(id_subproceso,id_proceso,id_producto){
+  $.ajax({
+        data: {"id_subproceso":id_subproceso,"id_producto":id_producto, "id_proceso":id_proceso},
+        url: '/api/v1/quitar_subproceso',
         dataType: 'json',
         type:  'get',
         success:  function (response) {  

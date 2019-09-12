@@ -45,7 +45,14 @@ Route::get('actualiza_historial', 'equipo_historialController@update');
 Route::get('delete_historial', 'equipo_historialController@destroy');
 Route::get('agrega_proceso', 'productosController@agrega_proceso');
 Route::get('show_proceso', 'productosController@show_proceso');
+Route::get('quitar_proceso', 'productosController@quitar_proceso');
+Route::get('agrega_subproceso', 'productosController@agrega_subproceso');
+Route::get('quitar_subproceso', 'productosController@quitar_subproceso');
 });
+
+Route::get('/ajax_upload', 'productosController@subir_imagen');
+
+Route::put('/ajax_upload/action', 'productosController@action')->name('ajaxupload.action');
 
 
 //Auth::routes();
@@ -85,3 +92,4 @@ Route::resource('tipoaceros', 'tipoaceroController');
 Route::resource('tipoestructuras', 'tipoestructuraController');
 
 Route::resource('productoDibujos', 'producto_dibujoController');
+

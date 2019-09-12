@@ -124,8 +124,11 @@
   <div class="tab-pane" id="link32" role="tabpanel" aria-labelledby="link-tab32" aria-expanded="false">
     @include('producto_dibujos.table')
   </div>
-  <div class="tab-pane" id="linkOpt2" role="tabpanel" aria-labelledby="linkOpt-tab2" aria-expanded="false" id="listasubprocesos">
-    @include('productos.productos_procesos')
+  <div class="tab-pane" id="linkOpt2" role="tabpanel" aria-labelledby="linkOpt-tab2" aria-expanded="false" id="">
+    <div id="listasubprocesos">
+      @include('productos.productos_procesos')
+    </div>
+    
   </div>
   @endif
 </div>

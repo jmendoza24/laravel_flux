@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateproductosRequest;
 use App\Repositories\productosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Validator;
 use Flash;
 use DB;
 use Response;
@@ -101,6 +102,7 @@ class productosController extends AppBaseController
      * @return Response
      */
     public function edit($id){
+         $subprocesos = array();
          $productos = DB::table('productos')->where('id',$id)->get();
          $clientes = DB::table('clientes')->get();
          $familias = DB::table('familias')->get();
@@ -115,7 +117,7 @@ class productosController extends AppBaseController
          $productos = $productos[0];
          $id_producto = $id;
 
-        return view('productos.edit',compact('productos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto'));
+        return view('productos.edit',compact('productos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos'));
     }
 
     /**
@@ -183,9 +185,16 @@ class productosController extends AppBaseController
             $procesos = DB::table('procesos as p')
                         ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
                         ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->get(); 
+            $subprocesos = DB::table('subprocesos as p')
+                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                        ->where('p.idproceso',$request->id_proceso)
                         ->get();
+
             $id_producto = $request->id_producto;
-            return json_encode('productos.productos_procesos',compact('procesos','id_producto'));
+            $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+            return json_encode($options);
         }
 
     }
@@ -197,8 +206,117 @@ class productosController extends AppBaseController
                         ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
                         ->get();
 
+        $subprocesos = DB::table('subprocesos as p')
+                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                        ->where('p.idproceso',$request->id_proceso)
+                        ->get();
+        //dd($subprocesos);
         $id_producto = $request->id_producto;
-        $options = view('productos.productos_procesos',compact('procesos','id_producto'))->render();    
+        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
         return json_encode($options);
     }    
+
+    function quitar_proceso(Request $request){
+        // $wherearray= array('id_producto' => $request->id_producto, 'id_proceso' => $request->id_proceso);
+
+        DB::update('delete from productos_procesos where id_producto = '.$request->id_producto .' and id_proceso = '. $request->id_proceso);
+        DB::update('delete from productos_subprocesos where id_producto = '.$request->id_producto .' and id_proceso = '. $request->id_proceso);
+
+        $procesos = DB::table('procesos as p')
+                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->get();
+
+        $subprocesos = DB::table('subprocesos as p')
+                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                        ->where('p.idproceso',$request->id_proceso)
+                        ->get();
+        //dd($subprocesos);
+        $id_producto = $request->id_producto;
+        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+        return json_encode($options);
+    }    
+
+    function agrega_subproceso(Request $request){
+        $existe = DB::table('productos_subprocesos')
+                    ->selectraw('count(*) as existe')
+                    ->where('id_subproceso',$request->id_subproceso)
+                    ->get();
+        if($existe[0]->existe >0 ){
+            return 1;
+        }else{
+            DB::table('productos_subprocesos')
+                ->insert(['id_producto'=>$request->id_producto,
+                          'id_subproceso'=>$request->id_subproceso,
+                          'id_proceso'=>$request->id_proceso]);
+
+            $procesos = DB::table('procesos as p')
+                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->get(); 
+            $subprocesos = DB::table('subprocesos as p')
+                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                        ->where('p.idproceso',$request->id_proceso)
+                        ->get();
+
+            $id_producto = $request->id_producto;
+            $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+            return json_encode($options);
+        }
+    }
+
+    function quitar_subproceso(Request $request){
+        #DB::update('delete from productos_procesos where id_producto = '.$request->id_producto .' and id_proceso = '. $request->id_proceso);
+        DB::update('delete from productos_subprocesos where id_producto = '.$request->id_producto .' and id_subproceso = '. $request->id_subproceso);
+
+        $procesos = DB::table('procesos as p')
+                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->get();
+
+        $subprocesos = DB::table('subprocesos as p')
+                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                        ->where('p.idproceso',$request->id_proceso)
+                        ->get();
+        //dd($subprocesos);
+        $id_producto = $request->id_producto;
+        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+        return json_encode($options);
+    }
+
+    function subir_imagen(){
+        return view('productos.uploadFile');
+    }
+    
+    function action(Request $request){
+     $validation = Validator::make($request->all(), [
+      'select_file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+     ]);
+     if($validation->passes())
+     {
+      $image = $request->file('select_file');
+      $new_name = rand() . '.' . $image->getClientOriginalExtension();
+      $image->move(public_path('images'), $new_name);
+      return response()->json([
+       'message'   => 'Image Upload Successfully',
+       'uploaded_image' => '<img src="/images/'.$new_name.'" class="img-thumbnail" width="300" />',
+       'class_name'  => 'alert-success'
+      ]);
+     }
+     else
+     {
+      return response()->json([
+       'message'   => $validation->errors()->all(),
+       'uploaded_image' => '',
+       'class_name'  => 'alert-danger'
+      ]);
+     }
+    }
+
+
+
 }
