@@ -6,9 +6,8 @@
 @section('content')
 
 <div class="alert" id="message" style="display: none"></div>
-	<form method="POST" id="upload_form" enctype="multipart/form-data">
-	 {{ csrf_field() }}
-<input type="hidden" name="_method" value="PUT">
+	<form method="post" action="{{ route('ajaxupload.action')}}" class="form-horizontal" enctype='multipart/form-data'>
+		<input type="hidden" name="_token" value="{{ csrf_token()}}">
 		<div class="form-group">
 			<table class="table">
 				<tr>
@@ -22,35 +21,15 @@
 					<td width="30%" align="left"></td>
 				</tr>
 			</table>
+
 	</div>
 	</form>
 
 <br />
-<span id="uploaded_image"></span>
+<span id="uploaded_image">
+	{{ $url }}
+	<img src="{{ url($url)}}" alt="" />
+	
+</span>
 </div>     
 @endsection
-<script type="text/javascript">
-	$(document).ready(function(){
-
- $('#upload_form').on('submit', function(event){
-  event.preventDefault();
-  $.ajax({
-   url:"{{ route('ajaxupload.action') }}",
-   method:"POST",
-   data:new FormData(this),
-   dataType:'JSON',
-   contentType: false,
-   cache: false,
-   processData: false,
-   success:function(data)
-   {
-    $('#message').css('display', 'block');
-    $('#message').html(data.message);
-    $('#message').addClass(data.class_name);
-    $('#uploaded_image').html(data.uploaded_image);
-   }
-  })
- });
-
-});
-</script>

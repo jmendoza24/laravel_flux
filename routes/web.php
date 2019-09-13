@@ -48,11 +48,12 @@ Route::get('show_proceso', 'productosController@show_proceso');
 Route::get('quitar_proceso', 'productosController@quitar_proceso');
 Route::get('agrega_subproceso', 'productosController@agrega_subproceso');
 Route::get('quitar_subproceso', 'productosController@quitar_subproceso');
+Route::get('/ajax_upload', 'productosController@subir_imagen');
+Route::post('/ajax_upload/action', 'productosController@action')->name('ajaxupload.action');
+
 });
 
-Route::get('/ajax_upload', 'productosController@subir_imagen');
 
-Route::put('/ajax_upload/action', 'productosController@action')->name('ajaxupload.action');
 
 
 //Auth::routes();

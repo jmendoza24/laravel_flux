@@ -7,11 +7,13 @@ use App\Http\Requests\UpdateproductosRequest;
 use App\Repositories\productosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Flash;
 use DB;
 use Response;
 use View;
+
 
 class productosController extends AppBaseController
 {
@@ -289,32 +291,21 @@ class productosController extends AppBaseController
     }
 
     function subir_imagen(){
-        return view('productos.uploadFile');
+         $url = "/storage/dibujos/ufL230SOxaUzCDRkd1tvldT0ih7StRlIAQZZPO3W.jpeg";
+
+        #$contents = Storage::get('gB3EnXcMdVQP4V1RFlT64EpdgqFXc3uqyooUOVTv.png');
+        $contents = '';
+        return view('productos.uploadFile',compact('contents','url'));
     }
     
+    
     function action(Request $request){
-     $validation = Validator::make($request->all(), [
-      'select_file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-     ]);
-     if($validation->passes())
-     {
-      $image = $request->file('select_file');
-      $new_name = rand() . '.' . $image->getClientOriginalExtension();
-      $image->move(public_path('images'), $new_name);
-      return response()->json([
-       'message'   => 'Image Upload Successfully',
-       'uploaded_image' => '<img src="/images/'.$new_name.'" class="img-thumbnail" width="300" />',
-       'class_name'  => 'alert-success'
-      ]);
-     }
-     else
-     {
-      return response()->json([
-       'message'   => $validation->errors()->all(),
-       'uploaded_image' => '',
-       'class_name'  => 'alert-danger'
-      ]);
-     }
+        $file_img = $request->file('select_file');
+        $img = Storage::url($file_img->store('dibujos', 'public'));
+     #   dd($img);
+        /**
+         $file = $request->file('select_file');
+         Storage::disk('public')->putFile('dibujos', $file);*/
     }
 
 
