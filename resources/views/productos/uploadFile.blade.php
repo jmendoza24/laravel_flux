@@ -1,35 +1,37 @@
-@extends('layouts.app')
-@section('titulo')
-    Productos 
-@endsection
-
-@section('content')
-
-<div class="alert" id="message" style="display: none"></div>
-	<form method="post" action="{{ route('ajaxupload.action')}}" class="form-horizontal" enctype='multipart/form-data'>
-		<input type="hidden" name="_token" value="{{ csrf_token()}}">
-		<div class="form-group">
-			<table class="table">
-				<tr>
-					<td width="40%" align="right"><label>Select File for Upload</label></td>
-					<td width="30"><input type="file" name="select_file" id="select_file" /></td>
-					<td width="30%" align="left"><input type="submit" name="upload" id="upload" class="btn btn-primary" value="Upload"></td>
-				</tr>
-				<tr>
-					<td width="40%" align="right"></td>
-					<td width="30"><span class="text-muted">jpg, png, gif</span></td>
-					<td width="30%" align="left"></td>
-				</tr>
-			</table>
-
-	</div>
-	</form>
-
-<br />
-<span id="uploaded_image">
-	{{ $url }}
-	<img src="{{ url($url)}}" alt="" />
-	
-</span>
-</div>     
-@endsection
+<form method="post" action="{{ route('ajaxupload.action')}}" class="form-horizontal needs-validation novalidate" enctype='multipart/form-data'>
+	<input type="hidden" name="_token" value="{{ csrf_token()}}">
+	<input type="hidden" name="idproducto" id="idproducto" value="">
+	 <div class="row">
+      <div class="col-md-12">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="empresa">Tiempo de entrega</label>
+          <div class="col-md-9">
+            <input type="number" min="0" name="tiempoentrega" id="tiempoentrega" required=""  class="form-control" value="{{ $producto_dibujos->tiempo_entrega }}">
+            <div class="invalid-feedback">Este campo es requerido.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput2">Revisión</label>
+          <div class="col-md-9">
+           	<input type="number" min="0" name="revision" id="revision" class="form-control" value="{{ $producto_dibujos->revision }}">
+           	<div class="invalid-feedback">Este campo es requerido.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="empresa">Dibujo</label>
+          <a href="{{ $producto_dibujos->dibujo }} " target="_blank">Ver_dibujo</a>
+          <div class="col-md-9">
+            <input type="file" name="select_file" id="select_file" class="form-control" required="" />
+            <div class="invalid-feedback">Este campo es requerido.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+          	<hr>
+              <input type="submit" name="upload" id="upload" class="btn btn-primary" value="Guardar">
+          </div>
+    </div></form>

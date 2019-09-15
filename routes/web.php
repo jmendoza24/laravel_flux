@@ -50,6 +50,9 @@ Route::get('agrega_subproceso', 'productosController@agrega_subproceso');
 Route::get('quitar_subproceso', 'productosController@quitar_subproceso');
 Route::get('/ajax_upload', 'productosController@subir_imagen');
 Route::post('/ajax_upload/action', 'productosController@action')->name('ajaxupload.action');
+Route::get('/show_dibujo', 'productosController@show_dibujo');
+Route::get('/nuevo_dibujo', 'productosController@nuevo_dibujo');
+Route::get('/editar_dibujo', 'productosController@editar_dibujo');
 
 });
 

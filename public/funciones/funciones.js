@@ -352,3 +352,49 @@ function quitar_subproceso(id_subproceso,id_proceso,id_producto){
         }
     }); 
 }
+
+function show_dibujo(dibujo){   
+      $("#modal_large").addClass('modal-lg');   
+      $("#img_dibujo").html('');
+      $.ajax({
+        data: {"dibujo":dibujo},
+        url: '/api/v1/show_dibujo',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          $("#img_dibujo").html('');
+          $("#img_dibujo").html(response);
+        }
+    }); 
+}
+
+function nuevo_dibujo(id_producto){
+  $("#modal_large").removeClass('modal-lg');  
+  $("#img_dibujo").html(''); 
+      $.ajax({
+        data: {"id_producto":id_producto},
+        url: '/api/v1/nuevo_dibujo',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          $("#img_dibujo").html('');
+          $("#img_dibujo").html(response);
+        }
+    }); 
+}
+
+function edita_dibujo(id_dibujo,id_producto ){
+  $("#modal_large").removeClass('modal-lg');   
+  $("#img_dibujo").html('');
+      $.ajax({
+        data: {"id_producto":id_producto,"id_dibujo":id_dibujo},
+        url: '/api/v1/editar_dibujo',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          console.log(response);
+          $("#img_dibujo").html('');
+          $("#img_dibujo").html(response);
+        }
+    }); 
+}
