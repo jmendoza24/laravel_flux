@@ -122,7 +122,18 @@
   </div>
   @if($editar ==1)
   <div class="tab-pane" id="link32" role="tabpanel" aria-labelledby="link-tab32" aria-expanded="false">
-    @include('producto_dibujos.table')
+    
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="pull-right">
+           <a class="btn btn-primary pull-right" onclick="nuevo_dibujo({{ $productos->id }})" data-toggle="modal" data-target="#large" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Dibujo</a>
+        </h1>
+      </div>
+      <div class="col-md-12" id="dibujos_table" style="overflow-x: scroll;">
+          @include('producto_dibujos.table')
+      </div>
+    </div>
+
   </div>
   <div class="tab-pane" id="linkOpt2" role="tabpanel" aria-labelledby="linkOpt-tab2" aria-expanded="false" id="">
     <div id="listasubprocesos">

@@ -352,3 +352,111 @@ function quitar_subproceso(id_subproceso,id_proceso,id_producto){
         }
     }); 
 }
+
+function show_dibujo(dibujo){   
+      $("#modal_large").addClass('modal-lg');   
+      $("#img_dibujo").html('');
+      $.ajax({
+        data: {"dibujo":dibujo},
+        url: '/api/v1/show_dibujo',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          $("#img_dibujo").html('');
+          $("#img_dibujo").html(response);
+        }
+    }); 
+}
+
+function nuevo_dibujo(id_producto){
+  $("#modal_large").removeClass('modal-lg');  
+  $("#img_dibujo").html(''); 
+      $.ajax({
+        data: {"id_producto":id_producto},
+        url: '/api/v1/nuevo_dibujo', 
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          $("#img_dibujo").html('');
+          $("#img_dibujo").html(response);
+        }
+    }); 
+}
+
+function edita_dibujo(id_dibujo,id_producto ){
+  $("#modal_large").removeClass('modal-lg');   
+  $("#img_dibujo").html('');
+      $.ajax({
+        data: {"id_producto":id_producto,"id_dibujo":id_dibujo},
+        url: '/api/v1/editar_dibujo',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          console.log(response);
+          $("#img_dibujo").html('');
+          $("#img_dibujo").html(response);
+        }
+    }); 
+}
+
+function showcampos(){
+  var forma = $("#forma").val();
+  var campos = [1,2,3,4,5,6,7,8];
+    for (x=0;x<campos.length;x++){
+      $("#cam"+campos[x]).hide();
+    }
+
+  if(forma ==''){
+    $("#medidas").hide();
+    $("#medida_div").hide();
+  }else if(forma ==1 || forma ==2){
+    $("#medidas").show();
+    $("#medida_div").show();
+    var campos = [1,5,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+campos[x]).show();
+    }
+  }else if(forma ==3 || forma == 4 || forma == 14){
+    $("#medidas").show();
+    $("#medida_div").show();
+    var campos = [1,2,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+campos[x]).show();
+    }
+  }else if(forma ==5 || forma ==6){
+    $("#medidas").show();
+    $("#medida_div").show();
+    var campos = [1,2,3,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+campos[x]).show();
+    }
+  }else if(forma ==7 || forma ==8 || forma ==9 || forma ==10){
+    $("#medidas").show();
+    $("#medida_div").show();
+    var campos = [3,4,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+campos[x]).show();
+    }
+  }else if(forma ==11 || forma ==12){
+    $("#medidas").show();
+    $("#medida_div").show();
+    var campos = [2,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+campos[x]).show();
+    }
+  }else if(forma ==13){
+    $("#medidas").show();
+    $("#medida_div").show();
+    var campos = [1,4,5,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+campos[x]).show();
+    }
+  }
+
+}
