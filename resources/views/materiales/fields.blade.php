@@ -90,18 +90,15 @@
         <input type="number" name="peso_pieza" id="peso_pieza" class="form-control" min="0" step="any">
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('precion_nacional', 'Precion Nacional:') !!}
+        {!! Form::label('precion_nacional', 'Precio en moneda nacional:') !!}
         <input type="number" name="precion_nacional" id="precion_nacional" class="form-control" min="0" step="any">
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('fecha', 'Fecha:') !!}
+        {!! Form::label('fecha', 'Fecha de orden de compra:') !!}
         {!! Form::date('fecha', null, ['class' => 'form-control','id'=>'fecha']) !!}
     </div>
-</div>
-
-<div class="row">
     <div class="form-group col-sm-6">
-        {!! Form::label('num_orden', 'Num Orden:') !!}
+        {!! Form::label('num_orden', 'No. orden de compra:') !!}
         {!! Form::text('num_orden', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
@@ -117,19 +114,15 @@
             @endforeach
         </select>
     </div>
-</div>
-<div class="row">
     <div class="form-group col-sm-6">
         {!! Form::label('molino', 'Molino:') !!}
         {!! Form::text('molino', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('pais', 'Pais:') !!}
+        {!! Form::label('pais', 'País de procedendia:') !!}
         {!! Form::text('pais', null, ['class' => 'form-control']) !!}
     </div>
-</div>
 
-<div class="row">
     <div class="form-group col-sm-6">
         {!! Form::label('colada_numero', 'Colada Numero:') !!}
         {!! Form::number('colada_numero', null, ['class' => 'form-control']) !!}
@@ -138,37 +131,28 @@
         {!! Form::label('fecha_entrega', 'Fecha Entrega:') !!}
         {!! Form::date('fecha_entrega', null, ['class' => 'form-control','id'=>'fecha_entrega']) !!}
     </div>
-</div>
-
-<div class="row">
     <div class="form-group col-sm-6">
-        {!! Form::label('num_embarque', 'Num Embarque:') !!}
+        {!! Form::label('num_embarque', 'No. Embarque:') !!}
         {!! Form::text('num_embarque', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('certificado_mat', 'Certificado Mat:') !!}
+        {!! Form::label('certificado_mat', 'Certificado de material:') !!}
         {!! Form::text('certificado_mat', null, ['class' => 'form-control']) !!}
     </div>
-</div>
-
-<div class="row">
     <div class="form-group col-sm-6">
-        {!! Form::label('ordencompra', 'Ordencompra:') !!}
+        {!! Form::label('ordencompra', 'Orden de compra:') !!}
         {!! Form::text('ordencompra', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('remisionprov', 'Remisionprov:') !!}
+        {!! Form::label('remisionprov', 'Remisión de proveedor:') !!}
         {!! Form::text('remisionprov', null, ['class' => 'form-control']) !!}
     </div>
-</div>
-
-<div class="row">
     <div class="form-group col-sm-6">
-        {!! Form::label('reporteprod', 'Reporteprod:') !!}
+        {!! Form::label('reporteprod', 'Reporte no. de producto:') !!}
         {!! Form::text('reporteprod', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('resolucionprod', 'Resolucionprod:') !!}
+        {!! Form::label('resolucionprod', 'Resolución de producto:') !!}
         {!! Form::text('resolucionprod', null, ['class' => 'form-control']) !!}
     </div>
 </div>

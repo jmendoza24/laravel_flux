@@ -296,7 +296,7 @@
     offActiveCls: 'btn-danger',
     onActiveCls: 'btn-success',
     offLabel: 'No',
-    onLabel: 'Yes',
+    onLabel: 'Si',
     offTitle: false,
     onTitle: false,
     iconCls: 'glyphicon',

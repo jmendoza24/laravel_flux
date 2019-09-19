@@ -13,7 +13,9 @@
         form.classList.add('was-validated');
       }, false);
     });
+
   }, false);
+
 })();
 
 function get_municipios(estado,municipio){
@@ -275,7 +277,7 @@ function agrega_proceso(id_proceso,id_producto){
                           type:  'get',
                           success:  function (response) {  
                             $("#listasubprocesos").html(response);
-                            $.alert('Proceso agregado');
+                            $('.switch:checkbox').checkboxpicker();
                           }
                       }); 
 
@@ -297,6 +299,7 @@ function ver_proceso(id_proceso,id_producto){
         success:  function (response) {  
           console.log(response);
           $("#listasubprocesos").html(response);
+          $('.switch:checkbox').checkboxpicker();
         }
     }); 
 }
@@ -310,6 +313,7 @@ function quitar_proceso(id_proceso,id_producto){
         success:  function (response) {  
           console.log(response);
           $("#listasubprocesos").html(response);
+          $('.switch:checkbox').checkboxpicker();
         }
     }); 
 }
@@ -327,7 +331,8 @@ function agrega_subproceso(id_subproceso,id_proceso,id_producto){
                           type:  'get',
                           success:  function (response) {  
                             $("#listasubprocesos").html(response);
-                            $.alert('Subroceso agregado');
+                            $('.switch:checkbox').checkboxpicker();
+                           // $.alert('Subroceso agregado');
                           }
                       }); 
 
@@ -347,8 +352,8 @@ function quitar_subproceso(id_subproceso,id_proceso,id_producto){
         dataType: 'json',
         type:  'get',
         success:  function (response) {  
-          console.log(response);
           $("#listasubprocesos").html(response);
+          $('.switch:checkbox').checkboxpicker();
         }
     }); 
 }
@@ -392,11 +397,37 @@ function edita_dibujo(id_dibujo,id_producto ){
         dataType: 'json',
         type:  'get',
         success:  function (response) {  
-          console.log(response);
           $("#img_dibujo").html('');
           $("#img_dibujo").html(response);
         }
     }); 
+}
+
+function elimina_dibujo(id_dibujo,id_producto){
+  $.confirm({
+            title: 'Confirmar!',
+            content: 'Estas seguro que deseas eliminar este dibujo?',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                        data: {"id_producto":id_producto,"id_dibujo":id_dibujo},
+                        url: '/api/v1/elimina_dibujo',
+                        dataType: 'json',
+                        type:  'get',
+                        success:  function (response) {  
+                          $("#dibujos_table").html(response);
+                          $("#productoDibujos-table").dataTable();
+                        }
+                    });
+
+                },
+                cancelar: function () {
+                    $.alert('Canceledo!');
+
+                }
+              }
+          });
+
 }
 
 function showcampos(){

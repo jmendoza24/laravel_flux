@@ -23,7 +23,8 @@ class productosRepository extends BaseRepository
         'id_acero',
         'id_estructura',
         'espesor',
-        'ancho'
+        'ancho',
+        'tiempo_entrega'
     ];
 
     /**

@@ -56,6 +56,11 @@ class productosController extends AppBaseController
         $clientes = DB::table('clientes')->get();
         $tipoacero = DB::table('tipoaceros')->get();
         $tipoestructura = DB::table('tipoestructuras')->get();
+        $producto_dibujos = array('tiempo_entrega'=>'',
+                                    'revision'=>'',
+                                    'dibujo'=>'',
+                                    'id'=>''
+                                    );
         return view('productos.create',compact('familias','clientes','tipoacero','tipoestructura','producto_dibujos'));
     }
 
@@ -344,19 +349,51 @@ class productosController extends AppBaseController
 
          $producto_dibujos = (object)$producto_dibujos;
          $productos = $productos[0];
-        $options = view('productos.uploadFile',compact('productos','producto_dibujos','opcion'))->render();   
-        return json_encode($options); 
+         $options = view('productos.uploadFile',compact('productos','producto_dibujos','opcion'))->render();   
+         return json_encode($options); 
     }
 
     function editar_dibujo(Request $request){
         $opcion = 'editar';
         $productos = DB::table('productos')->where('id',$request->id_producto)->get();
+        $productos = $productos[0];
         $producto_dibujos = DB::table('producto_dibujos')->where('id',$request->id_dibujo)->get();
         $producto_dibujos = $producto_dibujos[0];
         //$producto_dibujos =$request->id_dibujo;
         $options = view('productos.uploadFile',compact('productos','producto_dibujos','opcion'))->render();   
         
         return json_encode($options); 
+    }
+
+    function actualiza(Request $request){
+        $file_img = $request->file('select_file');
+        if(!empty($file_img)){
+            $img = Storage::url($file_img->store('dibujos', 'public'));
+            $imgp = strpos($img,'/storage/');
+            $img = substr($img, $imgp, strlen($img));
+            
+            DB::table('producto_dibujos')
+                ->where('id',$request->iddibujo)
+                ->update(['dibujo'=>$img]);
+
+        }
+
+        $fecha = date("Y-m-d");
+        DB::table('producto_dibujos')
+                ->where('id',$request->iddibujo)
+                ->update(['fecha'=>$fecha,
+                          'revision'=>$request->revision,
+                          'tiempo_entrega'=>$request->tiempoentrega ]);
+
+        return redirect('productos/'.$request->idproducto.'/edit');
+    }
+
+    function elimina_dibujo(Request $request){
+        DB::table('producto_dibujos')->where('id',$request->id_dibujo)->delete();
+        $productoDibujos = DB::table('producto_dibujos')->where('id_producto',$request->id_producto)->get();
+        $options = view('producto_dibujos.table',compact('productoDibujos'))->render(); 
+
+        return json_encode($options);
     }
 
 

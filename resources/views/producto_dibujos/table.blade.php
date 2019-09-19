@@ -17,7 +17,7 @@
                 <div class='btn-group'>
                     <a class="btn btn-float btn-outline-info btn-round" onclick="show_dibujo('{{ $productoDibujo->dibujo }}')" data-toggle="modal" data-target="#large"><i class="fa fa-eye"></i></a>
                     <a class="btn btn-float btn-outline-success btn-round" data-toggle="modal" onclick="edita_dibujo({{ $productoDibujo->id }}, {{ $productoDibujo->id_producto }})" data-target="#large"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-float btn-outline-danger btn-round" data-toggle="modal" onclick="elimina_dibujo({{ $productoDibujo->id }})" data-target="#large"><i class="fa fa-trash"></i></a>
+                    <a class="btn btn-float btn-outline-danger btn-round"  onclick="elimina_dibujo({{ $productoDibujo->id }}, {{ $productoDibujo->id_producto }})" ><i class="fa fa-trash"></i></a>
                 </div>
             </td>
         </tr>

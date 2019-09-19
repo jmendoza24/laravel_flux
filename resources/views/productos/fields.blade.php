@@ -117,6 +117,14 @@
           </div>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Tiempo de entrega(dias)</label>
+          <div class="col-md-9">
+            {{ Form::number('tiempo_entrega', null, ['placeholder'=>'', 'class' => 'form-control border-primary','min'=>'0']) }}       
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>

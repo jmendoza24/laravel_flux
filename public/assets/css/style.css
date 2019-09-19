@@ -47,3 +47,11 @@ textarea{height: 65px;
 	border-color: #518A87;
 	color: #518A87;
 }
+
+
+.tableFixHead          { overflow-y: auto; height: 100px; }
+.tableFixHead thead th { position: sticky; top: 0; }
+
+/* Just common table stuff. Really. */
+.tableFixHead th, td { padding: 8px 16px; }
+.tableFixHead th {background:#eee; }

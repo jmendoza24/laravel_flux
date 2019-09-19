@@ -16,13 +16,12 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-          <div id="">
-            <div class="modal-body">
-              <form method="post" id="img_dibujo" action="{{ route('ajaxupload.action')}}" class="form-horizontal needs-validation novalidate" enctype='multipart/form-data'>
-              @include('productos.uploadFile')
-            </form>
-            </div>
+          <div class="modal-body" id="img_dibujo">
+            
+            @include('productos.uploadFile')
+          
           </div>
+          
       </div>
     </div>
   </div>

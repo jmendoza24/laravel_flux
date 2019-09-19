@@ -22,6 +22,7 @@ class CreateProductosTable extends Migration
             $table->integer('id_estructura')->nullable();
             $table->decimal('espesor',20,3)->nullable();
             $table->decimal('ancho',20,3)->nullable();
+            $table->integer('tiempo_entrega')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

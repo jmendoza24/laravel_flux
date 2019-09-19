@@ -35,7 +35,8 @@ class productos extends Model
         'id_acero',
         'id_estructura',
         'espesor',
-        'ancho'
+        'ancho',
+        'tiempo_entrega'
     ];
 
     /**
@@ -51,7 +52,8 @@ class productos extends Model
         'id_acero' => 'integer',
         'id_estructura' => 'integer',
         'espesor' => 'float',
-        'ancho' => 'float'
+        'ancho' => 'float',
+        'tiempo_entrega'=>'integer'
     ];
 
     /**
