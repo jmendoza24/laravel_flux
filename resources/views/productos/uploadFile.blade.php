@@ -1,6 +1,6 @@
-<form method="post" action="{{ route('ajaxupload.action')}}" class="form-horizontal needs-validation novalidate" enctype='multipart/form-data'>
+
 	<input type="hidden" name="_token" value="{{ csrf_token()}}">
-	<input type="hidden" name="idproducto" id="idproducto" value="">
+	<input type="text" name="idproducto" id="idproducto" value="{{ $productos->id }}">
 	 <div class="row">
       <div class="col-md-12">
         <div class="form-group row">
@@ -33,5 +33,5 @@
       <div class="col-md-12">
           	<hr>
               <input type="submit" name="upload" id="upload" class="btn btn-primary" value="Guardar">
-          </div>
-    </div></form>
+      </div>
+    </div>

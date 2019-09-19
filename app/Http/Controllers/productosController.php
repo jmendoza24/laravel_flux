@@ -343,6 +343,7 @@ class productosController extends AppBaseController
                                     );
 
          $producto_dibujos = (object)$producto_dibujos;
+         $productos = $productos[0];
         $options = view('productos.uploadFile',compact('productos','producto_dibujos','opcion'))->render();   
         return json_encode($options); 
     }
