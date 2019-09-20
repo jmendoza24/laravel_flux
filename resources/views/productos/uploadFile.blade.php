@@ -25,10 +25,17 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="empresa">Dibujo</label>
           <div class="col-md-9">
+<<<<<<< Updated upstream
             <input type="file" name="select_file" id="select_file" class="form-control"  />
             @if(!empty($producto_dibujos->dibujo))
           <a href="{{ $producto_dibujos->dibujo }} " target="_blank">Ver_dibujo</a>
           @endif
+=======
+            <input type="file" name="select_file" id="select_file" class="form-control" required="" />
+            @if(!empty($producto_dibujos->dibujo))
+            <a href="{{ $producto_dibujos->dibujo }} " target="_blank">Ver_dibujo</a>
+            @endif
+>>>>>>> Stashed changes
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
 
