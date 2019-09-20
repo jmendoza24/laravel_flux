@@ -60,6 +60,7 @@ $(".steps-validation").steps({
     headerTag: "h6",
     bodyTag: "fieldset",
     transitionEffect: "fade",
+    stepsOrientation: "vertical",
     titleTemplate: '<span class="step">#index#</span> #title#',
     labels: {
         finish: 'Submit'

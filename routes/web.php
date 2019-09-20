@@ -102,3 +102,5 @@ Route::resource('productoDibujos', 'producto_dibujoController');
 
 
 Route::resource('materiales', 'MaterialesController');
+
+Route::resource('cotizaciones', 'cotizacionesController');

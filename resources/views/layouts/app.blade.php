@@ -30,15 +30,16 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/app.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/selects/select2.min.css') }}">
   
-  <!-- END STACK CSS-->
-  <!-- BEGIN Page Level CSS-->
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/pickers/daterange/daterangepicker.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/pickers/pickadate/pickadate.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/colors/palette-gradient.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/checkboxes-radios.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/extended/form-extended.css')}}">
-  
-
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/switch.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/wizard.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/pickers/daterange/daterange.css')}}">
+
   
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
@@ -164,9 +165,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-  <script src="{{ url('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/js/core/app.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
+  
   <script src="{{ url('app-assets/js/scripts/forms/extended/form-inputmask.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/forms/extended/form-maxlength.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/icheck/icheck.min.js') }}" type="text/javascript"></script>
@@ -176,7 +175,21 @@
   <script src="{{ url('app-assets/js/scripts/modal/components-modal.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/toggle/switchery.min.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/js/scripts/forms/switch.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/forms/switch.js') }}" type="text/javascript"></script> 
+  
+  
+  <script src="{{ url('app-assets/vendors/js/extensions/jquery.steps.min.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/pickers/pickadate/picker.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/pickers/pickadate/picker.date.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/forms/validation/jquery.validate.min.js') }}" type="text/javascript"></script>
+
+  <script src="{{ url('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/core/app.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
+
+  <script src="{{ url('app-assets/js/scripts/forms/wizard-steps.js')}}" type="text/javascript"></script>
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
   
@@ -184,4 +197,3 @@
   <!-- END PAGE LEVEL JS-->
 </body>
 </html>
-
