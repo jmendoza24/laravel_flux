@@ -36,6 +36,7 @@ class cotizaciones extends Model
 
     public $fillable = [
         'fecha',
+        'producto',
         'cliente',
         'numero_parte',
         'descripcion',
@@ -57,6 +58,7 @@ class cotizaciones extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'producto'=>'integer',
         'fecha' => 'date',
         'cliente' => 'integer',
         'numero_parte' => 'string',

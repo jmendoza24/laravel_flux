@@ -33,8 +33,11 @@ class cotizacionesController extends AppBaseController
         $cotizaciones = $this->cotizacionesRepository->all();
         $clientes = DB::table('clientes')->get();
         $dibujos = DB::table('producto_dibujos')->get();
+        $condiciones = DB::table('condiciones')->where('tipo',1)->get();
+        $income = DB::table('income_terms')->get();
+        $productos = DB::table('productos')->get();
 
-        return view('cotizaciones.index',compact('cotizaciones','clientes','dibujos'));
+        return view('cotizaciones.index',compact('cotizaciones','clientes','dibujos','condiciones','income','productos'));
     }
 
     /**

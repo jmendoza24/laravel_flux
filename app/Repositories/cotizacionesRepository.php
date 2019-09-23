@@ -17,6 +17,7 @@ class cotizacionesRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
+        'producto',
         'fecha',
         'cliente',
         'numero_parte',

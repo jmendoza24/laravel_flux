@@ -8,10 +8,32 @@
   <h6>General</h6>
   <fieldset>
     <div class="row">
+      <div class="col-md-6"></div>
       <div class="col-md-6"> 
         <div class="form-group">  
-          <label for="firstName4">Fecha :</label>
-          <input type="date" class="form-control" id="fecha" name="fecha" value="{{ date('Y-m-d') }}" readonly="">
+          <label for="firstName4"><b>Fecha :</b> {{ date('Y-m-d') }}</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="lastName4">Producto :</label>
+          <select class="form-control custom-select required" name="producto" id="producto">
+              <option value="">Seleccione una opcion</option>
+              @foreach($productos as $prod)
+              <option value="{{ $prod->id}}" 
+                @if(!empty($cotizacion->producto))
+                  {{ ($cotizacion->producto == $prod->id) ? 'selected' : '' }}
+                @endif >
+                {{ $prod->descripcion}}
+              </option>
+              @endforeach
+            </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          {!! Form::label('numero_parte', 'Numero Parte:') !!}
+          {!! Form::text('numero_parte', null, ['class' => 'form-control required']) !!}
         </div>
       </div>
       <div class="col-md-6">
@@ -32,12 +54,6 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          {!! Form::label('numero_parte', 'Numero Parte:') !!}
-          {!! Form::text('numero_parte', null, ['class' => 'form-control required']) !!}
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
           <label for="lastName4">Dibujo :</label>
           <select class="form-control custom-select required" name="dibujo" id="dibujo">
               <option value="">Seleccione una opcion</option>
@@ -54,9 +70,17 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="lastName4">Notas :</label>
+          <label for="lastName4">Condiciones :</label>
           <select class="form-control custom-select required" name="id_notas" id="id_notas">
               <option value="">Seleccione una opcion</option>
+              @foreach($condiciones as $cond)
+              <option value="{{ $cond->id}}" 
+                @if(!empty($cotizacion->id_notas))
+                  {{ ($cotizacion->id_notas == $cond->id) ? 'selected' : '' }}
+                @endif >
+                {{ 'Condiciones cotización'}}
+              </option>
+              @endforeach
             </select>
         </div>
       </div>
@@ -65,12 +89,20 @@
           <label for="lastName4">Income terms :</label>
           <select class="form-control custom-select required" name="income" id="income">
               <option value="">Seleccione una opcion</option>
+              @foreach($income as $inco)
+              <option value="{{ $inco->id}}" 
+                @if(!empty($cotizacion->income))
+                  {{ ($cotizacion->income == $inco->id) ? 'selected' : '' }}
+                @endif >
+                {{ $inco->income}}
+              </option>
+              @endforeach
             </select>
         </div>
       </div>
       <div class="form-group col-sm-6">
         {!! Form::label('descripcion', 'Tiempo entrega:') !!}
-        {!! Form::number('tiempo', null, ['class' => 'form-control required']) !!}
+        {!! Form::number('tiempo', null, ['class' => 'form-control']) !!}
       </div>
       <div class="form-group col-sm-6">
         {!! Form::label('descripcion', 'Descripcion:') !!}
