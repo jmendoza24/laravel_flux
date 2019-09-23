@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class cotizacionesController extends AppBaseController
 {
@@ -30,9 +31,10 @@ class cotizacionesController extends AppBaseController
     public function index(Request $request)
     {
         $cotizaciones = $this->cotizacionesRepository->all();
+        $clientes = DB::table('clientes')->get();
+        $dibujos = DB::table('producto_dibujos')->get();
 
-        return view('cotizaciones.index')
-            ->with('cotizaciones', $cotizaciones);
+        return view('cotizaciones.index',compact('cotizaciones','clientes','dibujos'));
     }
 
     /**

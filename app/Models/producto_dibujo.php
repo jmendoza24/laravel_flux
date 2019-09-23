@@ -31,7 +31,8 @@ class producto_dibujo extends Model
         'dibujo',
         'fecha',
         'revision',
-        'tiempo_entrega'
+        'tiempo_entrega',
+        'dibujo_nombre'
     ];
 
     /**
@@ -45,7 +46,8 @@ class producto_dibujo extends Model
         'dibujo' => 'string',
         'fecha' => 'date',
         'revision' => 'integer',
-        'tiempo_entrega' => 'integer'
+        'tiempo_entrega' => 'integer',
+        'dibujo_nombre'=>'string'
     ];
 
     /**

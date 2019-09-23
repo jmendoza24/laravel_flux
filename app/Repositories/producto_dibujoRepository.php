@@ -21,7 +21,8 @@ class producto_dibujoRepository extends BaseRepository
         'dibujo',
         'fecha',
         'revision',
-        'tiempo_entrega'
+        'tiempo_entrega',
+        'dibujo_nombre'
     ];
 
     /**

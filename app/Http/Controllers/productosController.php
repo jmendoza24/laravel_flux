@@ -114,7 +114,8 @@ class productosController extends AppBaseController
          $producto_dibujos = array('tiempo_entrega'=>'',
                                     'revision'=>'',
                                     'dibujo'=>'',
-                                    'id'=>''
+                                    'id'=>'',
+                                    'dibujo_nombre'=>''
                                     );
 
          $producto_dibujos = (object)$producto_dibujos;
@@ -327,7 +328,8 @@ class productosController extends AppBaseController
                           'dibujo'=>$img,
                           'fecha'=>$fecha,
                           'revision'=>$request->revision,
-                          'tiempo_entrega'=>$request->tiempoentrega ]);
+                          'tiempo_entrega'=>$request->tiempoentrega,
+                          'dibujo_nombre'=>$request->dibujo_nombre ]);
 
         return redirect('productos/'.$request->idproducto.'/edit');
     }
@@ -344,6 +346,7 @@ class productosController extends AppBaseController
          $producto_dibujos = array('tiempo_entrega'=>'',
                                     'revision'=>'',
                                     'dibujo'=>'',
+                                    'dibujo_nombre'=>'',
                                     'id'=>''
                                     );
 
@@ -383,7 +386,8 @@ class productosController extends AppBaseController
                 ->where('id',$request->iddibujo)
                 ->update(['fecha'=>$fecha,
                           'revision'=>$request->revision,
-                          'tiempo_entrega'=>$request->tiempoentrega ]);
+                          'tiempo_entrega'=>$request->tiempoentrega,
+                          'dibujo_nombre'=>$request->dibujo_nombre ]);
 
         return redirect('productos/'.$request->idproducto.'/edit');
     }

@@ -5,6 +5,13 @@
 	 <div class="row">
       <div class="col-md-12">
         <div class="form-group row">
+          <label class="col-md-3 label-control" for="empresa">Nombre</label>
+          <div class="col-md-9">
+            <input type="text" min="0" name="dibujo_nombre" id="dibujo_nombre" required=""  class="form-control" value="{{ $producto_dibujos->dibujo_nombre }}">
+            <div class="invalid-feedback">Este campo es requerido.</div>
+          </div>
+        </div>
+        <div class="form-group row">
           <label class="col-md-3 label-control" for="empresa">Tiempo de entrega</label>
           <div class="col-md-9">
             <input type="number" min="0" name="tiempoentrega" id="tiempoentrega" required=""  class="form-control" value="{{ $producto_dibujos->tiempo_entrega }}">
@@ -25,17 +32,10 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="empresa">Dibujo</label>
           <div class="col-md-9">
-<<<<<<< Updated upstream
             <input type="file" name="select_file" id="select_file" class="form-control"  />
             @if(!empty($producto_dibujos->dibujo))
           <a href="{{ $producto_dibujos->dibujo }} " target="_blank">Ver_dibujo</a>
           @endif
-=======
-            <input type="file" name="select_file" id="select_file" class="form-control" required="" />
-            @if(!empty($producto_dibujos->dibujo))
-            <a href="{{ $producto_dibujos->dibujo }} " target="_blank">Ver_dibujo</a>
-            @endif
->>>>>>> Stashed changes
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
 

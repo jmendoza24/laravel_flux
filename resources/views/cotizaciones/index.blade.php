@@ -8,50 +8,73 @@
   <h6>General</h6>
   <fieldset>
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="firstName4">First Name :</label>
-          <input type="text" class="form-control required" id="firstName4">
+      <div class="col-md-6"> 
+        <div class="form-group">  
+          <label for="firstName4">Fecha :</label>
+          <input type="date" class="form-control" id="fecha" name="fecha" value="{{ date('Y-m-d') }}" readonly="">
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="lastName4">Last Name :</label>
-          <input type="text" class="form-control" id="lastName4">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="emailAddress7">Email Address :</label>
-          <input type="email" class="form-control" id="emailAddress7">
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="location3">Select City :</label>
-          <select class="custom-select form-control" id="location3" name="location">
-            <option value="">Select City</option>
-            <option value="Amsterdam">Amsterdam</option>
-            <option value="Berlin">Berlin</option>
-            <option value="Frankfurt">Frankfurt</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="phoneNumber4">Phone Number :</label>
-          <input type="tel" class="form-control" id="phoneNumber4">
+          <label for="lastName4">Cliente :</label>
+          <select class="form-control custom-select required" name="Cliente" id="Cliente">
+              <option value="">Seleccione una opcion</option>
+              @foreach($clientes as $cliente)
+              <option value="{{ $cliente->id}}" 
+                @if(!empty($cotizacion->cliente))
+                  {{ ($cotizacion->cliente == $cliente->id) ? 'selected' : '' }}
+                @endif >
+                {{ $cliente->nombre_corto}}
+              </option>
+              @endforeach
+            </select>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="date4">Date of Birth :</label>
-          <input type="date" class="form-control" id="date4">
+          {!! Form::label('numero_parte', 'Numero Parte:') !!}
+          {!! Form::text('numero_parte', null, ['class' => 'form-control required']) !!}
         </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="lastName4">Dibujo :</label>
+          <select class="form-control custom-select required" name="dibujo" id="dibujo">
+              <option value="">Seleccione una opcion</option>
+              @foreach($dibujos as $dibujo)
+              <option value="{{ $dibujo->id}}" 
+                @if(!empty($cotizacion->dibujo))
+                  {{ ($cotizacion->dibujo == $dibujo->id) ? 'selected' : '' }}
+                @endif >
+                {{ $dibujo->dibujo_nombre}}
+              </option>
+              @endforeach
+            </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="lastName4">Notas :</label>
+          <select class="form-control custom-select required" name="id_notas" id="id_notas">
+              <option value="">Seleccione una opcion</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="lastName4">Income terms :</label>
+          <select class="form-control custom-select required" name="income" id="income">
+              <option value="">Seleccione una opcion</option>
+            </select>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        {!! Form::label('descripcion', 'Tiempo entrega:') !!}
+        {!! Form::number('tiempo', null, ['class' => 'form-control required']) !!}
+      </div>
+      <div class="form-group col-sm-6">
+        {!! Form::label('descripcion', 'Descripcion:') !!}
+        {!! Form::textarea('descripcion', null, ['class' => 'form-control required']) !!}
       </div>
     </div>
   </fieldset>

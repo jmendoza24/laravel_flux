@@ -27,14 +27,6 @@
         <li class="{{ Request::is('tipoestructuras*') ? 'active' : '' }}"><a href="{!! route('tipoestructuras.index') !!}"><span>Tipos de estructuras</span></a></li>
     </ul>
 </li>
-
-
-
-
-
-
-
-
 <li class="{{ Request::is('cotizaciones*') ? 'active' : '' }}">
     <a href="{!! route('cotizaciones.index') !!}"><i class="fa fa-edit"></i><span>Cotizaciones</span></a>
 </li>
