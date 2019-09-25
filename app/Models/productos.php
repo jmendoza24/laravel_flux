@@ -36,7 +36,11 @@ class productos extends Model
         'id_estructura',
         'espesor',
         'ancho',
-        'tiempo_entrega'
+        'tiempo_entrega',
+        'costo_material',
+        'peso',
+        'costo_produccion',
+        'planta'
     ];
 
     /**
@@ -53,7 +57,11 @@ class productos extends Model
         'id_estructura' => 'integer',
         'espesor' => 'float',
         'ancho' => 'float',
-        'tiempo_entrega'=>'integer'
+        'tiempo_entrega'=>'integer',
+        'costo_material'=>'float',
+        'peso'=>'float',
+        'costo_produccion'=>'float',
+        'planta'=>'integer'
     ];
 
     /**

@@ -17,13 +17,15 @@ Route::get('/', 'HomeController@index');
 Auth::routes(); 
 
 Route::group(['middleware' => ['auth']], function(){
-	Route::get('/home', 'HomeController@index');
+	Route::get('/home', 'HomeController@index')->name('home');
+	
 	Route::resource('productos', 'productosController');
 	Route::resource('plantas', 'plantaController');
 	Route::resource('equipos', 'equiposController');
 	Route::resource('proveedores', 'proveedoresController');
 	Route::resource('clientes', 'clientesController');        
-	Route::get('/home', 'HomeController@index')->name('home');
+	
+
 });
 /**
 Route::group(['prefix' => 'api/v1/', 'middleware' => ['auth']], function(){
@@ -62,45 +64,29 @@ Route::get('/elimina_dibujo', 'productosController@elimina_dibujo');
 
 
 //Auth::routes();
-
-Route::resource('logisticas', 'logisticaController');
-
-Route::resource('equipoHistorials', 'equipo_historialController');
-
-Route::resource('procesos', 'ProcesosController');
-
-Route::resource('subprocesos', 'SubprocesosController');
-
-Route::resource('puestos', 'PuestoController');
-
-Route::resource('departamentos', 'DepartamentosController');
-
-Route::resource('familias', 'FamiliaController');
-
-Route::resource('tipoEquipos', 'TipoEquipoController');
-
-Route::resource('tipoMaterials', 'TipoMaterialController');
-
-Route::resource('grados', 'GradoController');
-
-Route::resource('formas', 'FormaController');
-
-Route::resource('incomeTerms', 'IncomeTermsController');
-
-Route::resource('actividades', 'ActividadesController');
-
-Route::resource('documentos', 'DocumentosController');
-
-Route::resource('condiciones', 'condicionesController');
-
-Route::resource('tipoaceros', 'tipoaceroController');
-
-Route::resource('tipoestructuras', 'tipoestructuraController');
-
-Route::resource('productoDibujos', 'producto_dibujoController');
+	Route::resource('logisticas', 'logisticaController');
+	Route::resource('equipoHistorials', 'equipo_historialController');
+	Route::resource('procesos', 'ProcesosController');
+	Route::resource('subprocesos', 'SubprocesosController');
+	Route::resource('puestos', 'PuestoController');
+	Route::resource('departamentos', 'DepartamentosController');
+	Route::resource('familias', 'FamiliaController');
+	Route::resource('tipoEquipos', 'TipoEquipoController');
+	Route::resource('tipoMaterials', 'TipoMaterialController');
+	Route::resource('grados', 'GradoController');
+	Route::resource('formas', 'FormaController');
+	Route::resource('incomeTerms', 'IncomeTermsController');
+	Route::resource('actividades', 'ActividadesController');
+	Route::resource('documentos', 'DocumentosController');
+	Route::resource('condiciones', 'condicionesController');
+	Route::resource('tipoaceros', 'tipoaceroController');
+	Route::resource('tipoestructuras', 'tipoestructuraController');
+	Route::resource('productoDibujos', 'producto_dibujoController');
+	Route::resource('materiales', 'MaterialesController');
+	Route::resource('cotizaciones', 'cotizacionesController');
 
 
 
-Route::resource('materiales', 'MaterialesController');
 
-Route::resource('cotizaciones', 'cotizacionesController');
+
+Route::resource('listaMateriales', 'ListaMaterialesController');

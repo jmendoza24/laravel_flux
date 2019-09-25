@@ -1,15 +1,18 @@
 <ul class="nav nav-tabs nav-underline no-hover-bg nav-justified">
   <li class="nav-item">
     <a class="nav-link active" id="active-tab32" data-toggle="tab" href="#active32" aria-controls="active32"
-    aria-expanded="true"><i class="ft-user"></i> Información General</a>
+    aria-expanded="true"><i class="fa fa-info-circle"></i> Información General</a>
   </li>
   @if($editar ==1)
   <li class="nav-item">
     <a class="nav-link" id="link-tab32" data-toggle="tab" href="#link32" aria-controls="link32"
-    aria-expanded="false"><i class="ft-mail"></i> Dibujos</a>
+    aria-expanded="false"><i class="fa fa-picture-o"></i> Dibujos</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt2" aria-controls="linkOpt2"><i class="fa fa-truck"></i> Procesos</a>
+    <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt2" aria-controls="linkOpt2"><i class="fa fa-tasks"></i> Procesos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt3" aria-controls="linkOpt3"><i class="fa fa-truck"></i> Materiales</a>
   </li>
   @endif
 </ul>
@@ -103,7 +106,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Espesor</label>
           <div class="col-md-9">
-           {{ Form::number('espesor', null, ['placeholder'=>'', 'class' => 'form-control border-primary','min'=>'0','step'=>'any']) }}       
+           {{ Form::number('espesor', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','step'=>'any']) }}       
           </div>
         </div>
       </div>
@@ -113,7 +116,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Ancho</label>
           <div class="col-md-9">
-            {{ Form::number('ancho', null, ['placeholder'=>'', 'class' => 'form-control border-primary','min'=>'0','step'=>'any']) }}       
+            {{ Form::number('ancho', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','step'=>'any']) }}       
           </div>
         </div>
       </div>
@@ -121,7 +124,43 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Tiempo de entrega(dias)</label>
           <div class="col-md-9">
-            {{ Form::number('tiempo_entrega', null, ['placeholder'=>'', 'class' => 'form-control border-primary','min'=>'0']) }}       
+            {{ Form::number('tiempo_entrega', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','required']) }}       
+            <div class="invalid-feedback">Este campo es requerido.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Costo material(Dolares x Kg.)</label>
+          <div class="col-md-9">
+            {{ Form::number('costo_material', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','required']) }}       
+            <div class="invalid-feedback">Este campo es requerido.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Peso(Libras)</label>
+          <div class="col-md-9">
+            {{ Form::number('peso', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','required']) }}   
+            <div class="invalid-feedback">Este campo es requerido.</div>    
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Costo producción</label>
+          <div class="col-md-9">
+            {{ Form::number('costo_produccion', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','step'=>'any']) }}       
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Planta</label>
+          <div class="col-md-9">
+            {{ Form::number('planta', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','required']) }}       
+            <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
       </div>
@@ -148,6 +187,11 @@
       @include('productos.productos_procesos')
     </div>
     
+  </div>
+  <div class="tab-pane" id="linkOpt3" role="tabpanel" aria-labelledby="linkOpt-tab3" aria-expanded="false" id="">
+    <div id="listasubprocesos">
+      @include('productos.productos_materiales')
+    </div>
   </div>
   @endif
 </div>

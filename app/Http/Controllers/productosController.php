@@ -131,11 +131,16 @@ class productosController extends AppBaseController
                         ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$id)
                         ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
                         ->get();
+          $materiales = DB::table('materiales as m')
+                          ->leftjoin('producto_materiales as pm','pm.id_material','m.id')
+                          ->selectraw('m.*, if(pm.id_producto>0,1,0) as asignado')
+                          ->get();
+
 
          $productos = $productos[0];
          $id_producto = $id;
 
-        return view('productos.edit',compact('productos','opcion', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos'));
+        return view('productos.edit',compact('productos','opcion', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales'));
     }
 
     /**

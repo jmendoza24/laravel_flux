@@ -1,6 +1,7 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" id="materiales-table">
     <thead>
         <tr>
+            <th>Material</th>
             <th>Tipo Acero</th>
             <th>Forma</th>
             <th>Grado</th>
@@ -16,6 +17,7 @@
     <tbody>
     @foreach($materiales as $materiales)
         <tr>
+            <td>{!! $materiales->material !!}</td>
             <td>{!! $materiales->tipo_acero !!}</td>
             <td>{!! $materiales->forma !!}</td>
             <td>{!! $materiales->grado !!}</td>

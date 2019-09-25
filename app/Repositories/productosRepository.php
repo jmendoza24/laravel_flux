@@ -24,7 +24,11 @@ class productosRepository extends BaseRepository
         'id_estructura',
         'espesor',
         'ancho',
-        'tiempo_entrega'
+        'tiempo_entrega',
+        'costo_material',
+        'peso',
+        'costo_produccion',
+        'planta'
     ];
 
     /**

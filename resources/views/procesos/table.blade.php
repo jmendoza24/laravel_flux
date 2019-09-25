@@ -2,7 +2,8 @@
 <thead>
     <tr>
         <th>Procesos</th>
-        <th>Descripcion</th>
+        <th>Descripción</th>
+        <th>Horas hombre</th>
         <th colspan=""></th>
     </tr>
     </thead>
@@ -10,6 +11,7 @@
     @foreach($procesos as $procesos)
         <tr>
             <td>{!! $procesos->procesos !!}</td>
+            <td>{!! $procesos->horas !!} horas</td>
             <td>{!! $procesos->descripcion !!}</td>
             <td>
                 {!! Form::open(['route' => ['procesos.destroy', $procesos->id], 'method' => 'delete']) !!}

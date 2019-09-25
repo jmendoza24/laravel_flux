@@ -18,7 +18,8 @@ class ProcesosRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'procesos',
-        'descripcion'
+        'descripcion',
+        'horas'
     ];
 
     /**

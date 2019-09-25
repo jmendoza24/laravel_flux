@@ -23,6 +23,10 @@ class CreateProductosTable extends Migration
             $table->decimal('espesor',20,3)->nullable();
             $table->decimal('ancho',20,3)->nullable();
             $table->integer('tiempo_entrega')->nullable();
+            $table->decimal('costo_material',20,3)->nullable();
+            $table->decimal('peso',20,3)->nullable();
+            $table->decimal('costo_produccion',20,3)->nullable();
+            $table->integer('planta')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

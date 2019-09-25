@@ -17,6 +17,7 @@ class CreateProcesosTable extends Migration
             $table->increments('id');
             $table->string('procesos');
             $table->text('descripcion');
+            $table->integer('horas');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,6 +15,7 @@ class CreateMaterialesTable extends Migration
     {
         Schema::create('materiales', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('material');
             $table->integer('tipo_acero');
             $table->integer('forma');
             $table->integer('grado');

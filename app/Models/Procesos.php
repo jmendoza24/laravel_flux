@@ -25,7 +25,8 @@ class Procesos extends Model
 
     public $fillable = [
         'procesos',
-        'descripcion'
+        'descripcion',
+        'horas'
     ];
 
     /**
@@ -36,7 +37,8 @@ class Procesos extends Model
     protected $casts = [
         'id' => 'integer',
         'procesos' => 'string',
-        'descripcion' => 'string'
+        'descripcion' => 'string',
+        'horas' => 'integer'
     ];
 
     /**
@@ -46,7 +48,9 @@ class Procesos extends Model
      */
     public static $rules = [
         'procesos' => 'required',
-        'descripcion' => 'required'
+        'descripcion' => 'required',
+        'horas' => 'required'
+
     ];
 
     

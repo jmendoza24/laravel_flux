@@ -60,8 +60,9 @@ class MaterialesController extends AppBaseController
     public function store(CreateMaterialesRequest $request)
     {
         $input = $request->all();
-
+        dd($input);
         $materiales = $this->materialesRepository->create($input);
+
 
         Flash::success('Materiales saved successfully.');
 
@@ -117,12 +118,12 @@ class MaterialesController extends AppBaseController
     public function update($id, UpdateMaterialesRequest $request)
     {
         $materiales = $this->materialesRepository->find($id);
-
         if (empty($materiales)) {
             Flash::error('Materiales not found');
 
             return redirect(route('materiales.index'));
         }
+
 
         $materiales = $this->materialesRepository->update($request->all(), $id);
 

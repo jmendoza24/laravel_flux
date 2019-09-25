@@ -36,5 +36,6 @@ $factory->define(Materiales::class, function (Faker $faker) {
         'resolucionprod' => $faker->text,
         'created_at' => $faker->date('Y-m-d H:i:s'),
         'updated_at' => $faker->date('Y-m-d H:i:s')
+
     ];
 });

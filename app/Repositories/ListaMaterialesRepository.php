@@ -2,21 +2,22 @@
 
 namespace App\Repositories;
 
-use App\Models\Materiales;
+use App\Models\ListaMateriales;
 use App\Repositories\BaseRepository;
 
 /**
- * Class MaterialesRepository
+ * Class ListaMaterialesRepository
  * @package App\Repositories
- * @version September 18, 2019, 5:27 pm UTC
+ * @version September 25, 2019, 10:21 pm UTC
 */
 
-class MaterialesRepository extends BaseRepository
+class ListaMaterialesRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
+        'material',
         'tipo_acero',
         'forma',
         'grado',
@@ -44,7 +45,7 @@ class MaterialesRepository extends BaseRepository
         'reporteprod',
         'resolucionprod' 
     ];
-
+ 
     /**
      * Return searchable fields
      *
@@ -60,6 +61,6 @@ class MaterialesRepository extends BaseRepository
      **/
     public function model()
     {
-        return Materiales::class;
+        return ListaMateriales::class;
     }
 }
