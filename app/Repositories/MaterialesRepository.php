@@ -17,6 +17,7 @@ class MaterialesRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
+        'material',
         'tipo_acero',
         'forma',
         'grado',

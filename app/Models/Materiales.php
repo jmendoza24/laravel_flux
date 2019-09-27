@@ -48,6 +48,7 @@ class Materiales extends Model
 
 
     public $fillable = [
+        'material',
         'tipo_acero',
         'forma',
         'grado',
@@ -83,6 +84,7 @@ class Materiales extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'material'=>'string',
         'tipo_acero' => 'integer',
         'forma' => 'integer',
         'grado' => 'integer',
@@ -117,10 +119,6 @@ class Materiales extends Model
      * @var array
      */
     public static $rules = [
-        'tipo_acero' => 'required',
-        'forma' => 'required',
-        'grado' => 'required',
-        'ancho' => 'required'
     ];
 
     

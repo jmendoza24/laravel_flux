@@ -1,5 +1,9 @@
 <div class="row">
     <div class="form-group col-sm-6">
+        {!! Form::label('materiales', 'Material') !!}
+        {!! Form::text('material', null, ['class' => 'form-control','required']) !!}
+    </div>
+    <div class="form-group col-sm-6">
         {!! Form::label('tipo_acero', 'Tipo Acero:') !!}
         <select class="form-control" id="tipo_acero" name="tipo_acero" required="">
             <option value="">Seleccione una opción</option>
@@ -15,7 +19,7 @@
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('forma', 'Forma:') !!}
-        <select class="form-control" id="forma" name="forma" required="" onchange="showcampos()">
+        <select class="form-control" id="forma" name="forma" required="" onchange="">
             <option value="">Seleccione una opción</option>
             @foreach($formas as $forma)
               <option value="{{ $forma->id}}" 
@@ -27,11 +31,8 @@
         </select>
         <div class="invalid-feedback">Este campo es requerido.</div>
     </div>
-</div>
-<!-- Grado Field -->
-<div class="row">
     <div class="form-group col-sm-6">
-        {!! Form::label('grado', 'Grado:') !!}
+        {!! Form::label('grado', 'Grado:') !!} 
         <select class="form-control" id="grado" name="grado" required="">
             <option value="">Seleccione una opción</option>
             @foreach($grados as $grad)
@@ -45,41 +46,41 @@
         <div class="invalid-feedback">Este campo es requerido.</div>
     </div>
 </div>
-<h4 class="form-section" id="medida_div" style="display: none;"><i class="ft-mail"></i>Medidas</h4> <br/>
-<div class="row" style="display: none;" id="medidas">
+<h4 class="form-section" id="medida_div" style=""><i class="ft-mail"></i>Medidas</h4> <br/>
+<div class="row" style="" id="medidas">
     
-    <div class="form-group col-sm-6" style="display: none;" id="cam1">
+    <div class="form-group col-sm-6" style="" id="cam1">
         {!! Form::label('espesor', 'Espesor (Thickness):') !!}
-        <input type="number" name="espesor" id="espesor" class="form-control" min="0" step="any">
+        {!! Form::number('espesor', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
     <!-- Ancho Field -->
-    <div class="form-group col-sm-6" style="display: none;" id="cam2">
+    <div class="form-group col-sm-6" style="" id="cam2">
         {!! Form::label('ancho', 'Ancho (Wide):') !!}
-        <input type="number" name="ancho" id="ancho" class="form-control" min="0" step="any">
+        {!! Form::number('ancho', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
-     <div class="form-group col-sm-6" style="display: none;" id="cam3">
+     <div class="form-group col-sm-6" style="" id="cam3">
         {!! Form::label('altura', 'Altura (Wide2):') !!}
-        <input type="number" name="altura" id="altura" class="form-control" min="0" step="any">
+        {!! Form::number('altura', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
-    <div class="form-group col-sm-6" style="display: none;" id="cam4">
+    <div class="form-group col-sm-6" style="" id="cam4">
         {!! Form::label('peso_distancia', 'Peso por Distancia:') !!}
-        <input type="number" name="peso_distancia" id="peso_distancia" class="form-control" min="0" step="any">
+        {!! Form::number('peso_distancia', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
-     <div class="form-group col-sm-6" style="display: none;" id="cam5">
+     <div class="form-group col-sm-6" style="" id="cam5">
         {!! Form::label('wide', 'Ancho (Wide):') !!}
-        <input type="number" name="wide" id="wide" class="form-control" min="0" step="any">
+        {!! Form::number('wide', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
-    <div class="form-group col-sm-6" style="display: none;" id="cam6">
+    <div class="form-group col-sm-6" style="" id="cam6">
         {!! Form::label('lenght', 'Largo (Length):') !!}
-        <input type="number" name="lenght" id="lenght" class="form-control" min="0" step="any">
+        {!! Form::number('lenght', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
-    <div class="form-group col-sm-6" style="display: none;" id="cam7">
+    <div class="form-group col-sm-6" style="" id="cam7">
         {!! Form::label('weight', 'Peso (Weight):') !!}
-        <input type="number" name="weight" id="weight" class="form-control" min="0" step="any">
+        {!! Form::number('weight', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
-    <div class="form-group col-sm-6" style="display: none;" id="cam8">
+    <div class="form-group col-sm-6" style="" id="cam8">
         {!! Form::label('precio', 'Precio:') !!}
-        <input type="number" name="precio" id="precio" class="form-control" min="0" step="any">
+        {!! Form::number('precio', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
 </div>
 <h4 class="form-section"></h4>
@@ -87,15 +88,15 @@
 <div class="row">
     <div class="form-group col-sm-6" >
         {!! Form::label('peso_pieza', 'Peso Pieza:') !!}
-        <input type="number" name="peso_pieza" id="peso_pieza" class="form-control" min="0" step="any">
+        {!! Form::number('peso_pieza', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('precion_nacional', 'Precio en moneda nacional:') !!}
-        <input type="number" name="precion_nacional" id="precion_nacional" class="form-control" min="0" step="any">
+        {!! Form::number('precion_nacional', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('fecha', 'Fecha de orden de compra:') !!}
-        {!! Form::date('fecha', null, ['class' => 'form-control','id'=>'fecha']) !!}
+        {!! Form::date('fecha', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('num_orden', 'No. orden de compra:') !!}
@@ -129,7 +130,7 @@
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('fecha_entrega', 'Fecha Entrega:') !!}
-        {!! Form::date('fecha_entrega', null, ['class' => 'form-control','id'=>'fecha_entrega']) !!}
+        {!! Form::date('fecha_entrega', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('num_embarque', 'No. Embarque:') !!}

@@ -30,7 +30,12 @@ class MaterialesController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $materiales = $this->materialesRepository->all();
+        $materiales = DB::table('materiales as m')
+                      ->leftjoin('tipoaceros as t','t.id','m.tipo_acero')
+                      ->leftjoin('formas as f','f.id','m.forma')
+                      ->leftjoin('proveedores as p','p.id','m.id_proveedor')
+                      ->selectraw('m.*, f.forma as nforma, p.nombre, t.acero as nacero')
+                      ->get();
 
         return view('materiales.index')
             ->with('materiales', $materiales);
@@ -60,7 +65,6 @@ class MaterialesController extends AppBaseController
     public function store(CreateMaterialesRequest $request)
     {
         $input = $request->all();
-        dd($input);
         $materiales = $this->materialesRepository->create($input);
 
 
@@ -97,8 +101,9 @@ class MaterialesController extends AppBaseController
      * @return Response
      */
     public function edit($id){
-        $materiales = $this->materialesRepository->find($id);
-
+        #$materiales = $this->materialesRepository->find($id);
+        $materiales = DB::table('materiales')->where('id',$id)->get();
+        $materiales = $materiales[0];
         $aceros = DB::table('tipoaceros')->orderby('acero')->get();
         $formas = DB::table('formas')->orderby('forma')->get();
         $grados = DB::table('grados')->orderby('grado')->get();
@@ -126,6 +131,7 @@ class MaterialesController extends AppBaseController
 
 
         $materiales = $this->materialesRepository->update($request->all(), $id);
+       # dd($materiales);
 
         Flash::success('Materiales updated successfully.');
 

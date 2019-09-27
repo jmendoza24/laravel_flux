@@ -2,15 +2,12 @@
     <thead>
         <tr>
             <th>Material</th>
+            <th>Proveedor</th>
             <th>Tipo Acero</th>
             <th>Forma</th>
-            <th>Grado</th>
             <th>Fecha</th>
             <th>Num Orden</th>
-            <th>Id Proveedor</th>
-            <th>Fecha Entrega</th>
             <th>Num Embarque</th>
-            <th>Certificado Mat</th>
             <th></th>
         </tr>
     </thead>
@@ -18,15 +15,12 @@
     @foreach($materiales as $materiales)
         <tr>
             <td>{!! $materiales->material !!}</td>
-            <td>{!! $materiales->tipo_acero !!}</td>
-            <td>{!! $materiales->forma !!}</td>
-            <td>{!! $materiales->grado !!}</td>
+            <td>{!! $materiales->nombre !!}</td>
+            <td>{!! $materiales->nacero !!}</td>
+            <td>{!! $materiales->nforma !!}</td>
             <td>{!! $materiales->fecha !!}</td>
             <td>{!! $materiales->num_orden !!}</td>
-            <td>{!! $materiales->id_proveedor !!}</td>
-            <td>{!! $materiales->fecha_entrega !!}</td>
             <td>{!! $materiales->num_embarque !!}</td>
-            <td>{!! $materiales->certificado_mat !!}</td>
             <td>
                 {!! Form::open(['route' => ['materiales.destroy', $materiales->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
