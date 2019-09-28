@@ -2,8 +2,8 @@
 <thead>
     <tr>
         <th>Procesos</th>
-        <th>Descripción</th>
         <th>Horas hombre</th>
+        <th>Descripción</th>
         <th colspan=""></th>
     </tr>
     </thead>
