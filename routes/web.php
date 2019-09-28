@@ -57,6 +57,8 @@ Route::get('/show_dibujo', 'productosController@show_dibujo');
 Route::get('/nuevo_dibujo', 'productosController@nuevo_dibujo');
 Route::get('/editar_dibujo', 'productosController@editar_dibujo');
 Route::get('/elimina_dibujo', 'productosController@elimina_dibujo');
+Route::get('/agrega_material', 'productosController@agrega_material');
+Route::get('/quitar_material', 'productosController@quitar_material');
 
 });
 

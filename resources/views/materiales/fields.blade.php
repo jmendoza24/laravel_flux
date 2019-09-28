@@ -19,7 +19,7 @@
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('forma', 'Forma:') !!}
-        <select class="form-control" id="forma" name="forma" required="" onchange="">
+        <select class="form-control" id="forma" name="forma" required="" onchange="showcampos()">
             <option value="">Seleccione una opción</option>
             @foreach($formas as $forma)
               <option value="{{ $forma->id}}" 
@@ -158,6 +158,14 @@
     </div>
 </div>
 <div class="form-group col-sm-12"  style="text-align: right;">
+    {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('materiales.index') !!}" class="btn btn-warning mr-1">Cancelar</a>
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+    
 </div>
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function() {
+        showcampos();
+    });
+</script>
+@endsection

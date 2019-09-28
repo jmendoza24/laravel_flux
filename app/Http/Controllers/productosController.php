@@ -149,7 +149,7 @@ class productosController extends AppBaseController
      * @param int $id
      * @param UpdateproductosRequest $request
      *
-     * @return Response
+     * @return Response 
      */
     public function update($id, UpdateproductosRequest $request)
     {
@@ -403,6 +403,35 @@ class productosController extends AppBaseController
         $options = view('producto_dibujos.table',compact('productoDibujos'))->render(); 
 
         return json_encode($options);
+    }
+
+    function agrega_material(Request $request){
+      $existe = DB::table('productos_subprocesos')
+                    ->selectraw('count(*) as existe')
+                    ->where('id_subproceso',$request->id_subproceso)
+                    ->get();
+        if($existe[0]->existe >0 ){
+            return 1;
+        }else{
+            DB::table('productos_subprocesos')
+                ->insert(['id_producto'=>$request->id_producto,
+                          'id_subproceso'=>$request->id_subproceso,
+                          'id_proceso'=>$request->id_proceso]);
+
+            $procesos = DB::table('procesos as p')
+                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->get(); 
+            $subprocesos = DB::table('subprocesos as p')
+                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
+                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                        ->where('p.idproceso',$request->id_proceso)
+                        ->get();
+
+            $id_producto = $request->id_producto;
+            $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+            return json_encode($options);
+        }
     }
 
 

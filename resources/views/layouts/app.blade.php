@@ -4,10 +4,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-  <meta name="description" content="Stack admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-  <meta name="keywords" content="admin template, stack admin template, dashboard template, flat admin template, responsive admin template, web app">
+  <meta name="description" content="Fluxmetal Fluxmetal">
+  <meta name="keywords" content="Fluxmetal">
   <meta name="author" content="Fluxmetal">
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>Fluxmetals</title>
   <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ url('app-assets/images/ico/favicon.ico') }}">
@@ -40,7 +39,6 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/wizard.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/pickers/daterange/daterange.css')}}">
 
-  
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
@@ -190,6 +188,7 @@
   <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
 
   <script src="{{ url('app-assets/js/scripts/forms/wizard-steps.js')}}" type="text/javascript"></script>
+  @yield('script')
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
   
