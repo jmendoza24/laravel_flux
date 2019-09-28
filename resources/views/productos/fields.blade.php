@@ -189,7 +189,7 @@
     
   </div>
   <div class="tab-pane" id="linkOpt3" role="tabpanel" aria-labelledby="linkOpt-tab3" aria-expanded="false" id="">
-    <div id="listasubprocesos">
+    <div id="listamateriales">
       @include('productos.productos_materiales')
     </div>
   </div>

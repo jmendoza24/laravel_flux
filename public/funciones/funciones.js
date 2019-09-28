@@ -13,7 +13,7 @@
         form.classList.add('was-validated');
       }, false);
     });
-
+ 
   }, false);
 
 })();
@@ -491,3 +491,31 @@ function showcampos(){
   }
 
 }
+
+
+function agrega_material(id_material, id_producto){
+  $.confirm({
+            title: 'Confirmar!',
+            content: 'Estas seguro que deseas agregar este material?',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          data: {"id_material":id_proceso,"id_producto":id_producto},
+                          url: '/api/v1/agrega_material',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                            $("#listamateriales").html(response);
+                            $('.switch:checkbox').checkboxpicker();
+                          }
+                      }); 
+
+                },
+                cancelar: function () {
+                    $.alert('Canceledo!');
+
+                }
+              }
+          });
+}
+
