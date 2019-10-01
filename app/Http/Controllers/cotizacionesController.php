@@ -49,23 +49,25 @@ class cotizacionesController extends AppBaseController
             $fecha = date('Y-m-d');
 
             $id = DB::table('cotizaciones')
-                    ->insert(['fecha' => $fecha]);           
+                    ->insert(['fecha' => $fecha,
+                              'producto'=>0]);           
          }
 
-        $cotizacion  = array('producto'=>'',
-                               'nombre_corto'=>'',
-                               'dibujo'=>'',
-                               'id_notas'=>'',
-                               'income'=>'',
-                               'tiempo'=>'');
-        $cotizacion = (object)$cotizacion;
+       $cotizacion = DB::table('cotizaciones as c')
+                        ->leftjoin('productos as p', 'c.producto','p.id')
+                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
+                        ->selectraw('c.*, nombre_corto')
+                        ->where('c.id',$num_cotizacion)
+                        ->get();
+        $cotizacion = $cotizacion[0];
 
-        $dibujos = DB::table('producto_dibujos')->get();
+       
+        $dibujos = DB::table('producto_dibujos')->where('id_producto',$cotizacion->producto)->get();
         $condiciones = DB::table('condiciones')->where('tipo',1)->get();
         $income = DB::table('income_terms')->get();
         $productos = DB::table('productos')->get();
 
-        return view('cotizaciones.index',compact('cotizacion','clientes','dibujos','condiciones','income','productos','num_cotizacion'));
+        return view('cotizaciones.index',compact('cotizacion','dibujos','condiciones','income','productos','num_cotizacion'));
     }
 
     /**
@@ -144,21 +146,16 @@ class cotizacionesController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdatecotizacionesRequest $request)
-    {
-        $cotizaciones = $this->cotizacionesRepository->find($id);
-
-        if (empty($cotizaciones)) {
-            Flash::error('Cotizaciones not found');
-
-            return redirect(route('cotizaciones.index'));
-        }
-
-        $cotizaciones = $this->cotizacionesRepository->update($request->all(), $id);
-
-        Flash::success('Cotizaciones updated successfully.');
-
-        return redirect(route('cotizaciones.index'));
+    public function guarda_informacion(Request $request){
+        DB::table('cotizaciones')
+        ->where('id',$request->id_cotizacion)
+        ->update(['numero_parte'=>$request->numero_parte,
+                  'dibujo'=>$request->dibujo,
+                  'tiempo'=>$request->tiempo,
+                  'id_notas'=>$request->id_notas,
+                  'income'=>$request->income,
+                  'descripcion'=>$request->descripcion
+              ]);
     }
 
     /**
@@ -188,23 +185,16 @@ class cotizacionesController extends AppBaseController
 
     function informacion(Request $request){
         $num_cotizacion = $request->session()->get('num_cot');
-        
-        DB::table('cotizaciones')
-            ->where('id',$num_cotizacion)
-            ->update(['producto'=>$request->id_producto,
-                      'income'=>$request->income,
-                      'numero_parte'=>$request->numero_parte,
-                      'dibujo'=>$request->dibujo,
-                      'descripcion'=>$request->descripcion]);
 
         DB::update('update cotizaciones as  c
-                    inner join productos p on p.id  = c.producto
+                    inner join productos p on p.id  = '.$request->id_producto.'
                     set cliente = p.id_empresa,
-                        costo = p.costo_produccion               
+                        costo = p.costo_produccion,
+                        producto = '.$request->id_producto.'              
                 where  c.id ='. $num_cotizacion);
            
         $productos = DB::table('productos')->get();
-        $dibujos = DB::table('producto_dibujos')->get();
+        $dibujos = DB::table('producto_dibujos')->where('id_producto',$request->id_producto)->get();
         $condiciones = DB::table('condiciones')->where('tipo',1)->get();
         $income = DB::table('income_terms')->get();
         $cotizacion = DB::table('cotizaciones as c')
@@ -213,12 +203,21 @@ class cotizacionesController extends AppBaseController
                         ->selectraw('c.*, nombre_corto')
                         ->where('c.id',$num_cotizacion)
                         ->get();
-        $cotizacion = $cotizacion[0];
+        $list_prod = '';
 
-        $arr = array('cotizacion' => $cotizacion);
+        foreach ($dibujos as $key) {
+            $list_prod .= "<option value='".$key->id."'>".$key->dibujo_nombre."</option>";
+        }
 
-         $options = view('cotizaciones.fields',compact('cotizacion','clientes','dibujos','condiciones','income','productos','num_cotizacion'))->render();    
-         return json_encode($options);
+        $arr = array('cotizacion' => $cotizacion,
+                     'dibujos'=>$list_prod);
 
+         return json_encode($arr);
+
+    }
+
+    function informacion_dibujo(Request $request){
+        $info = DB::table('producto_dibujos')->where('id',$request->dibujo)->get();
+        return json_encode($info[0]->tiempo_entrega);        
     }
 }

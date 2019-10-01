@@ -24,50 +24,6 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::resource('equipos', 'equiposController');
 	Route::resource('proveedores', 'proveedoresController');
 	Route::resource('clientes', 'clientesController');        
-	
-
-});
-/**
-Route::group(['prefix' => 'api/v1/', 'middleware' => ['auth']], function(){
-	//Route::get('municipio', 'CatalogosController@get_municipios');
-	Route::get('get_municipios', 'HomeController@get_municipios');
-
-});
-*/
-Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
-
-Route::get('get_municipios', 'CatalogosController@get_municipios');
-Route::get('save_address', 'clientesController@save_address');
-Route::get('show_logistica', 'logisticaController@edit');
-Route::get('update_address', 'logisticaController@update');
-Route::get('delete_logistica', 'logisticaController@eliminar');
-Route::get('guarda_historial', 'equipo_historialController@store');
-Route::get('show_historia', 'equipo_historialController@edit');
-Route::get('actualiza_historial', 'equipo_historialController@update');
-Route::get('delete_historial', 'equipo_historialController@destroy');
-Route::get('agrega_proceso', 'productosController@agrega_proceso');
-Route::get('show_proceso', 'productosController@show_proceso');
-Route::get('quitar_proceso', 'productosController@quitar_proceso');
-Route::get('agrega_subproceso', 'productosController@agrega_subproceso');
-Route::get('quitar_subproceso', 'productosController@quitar_subproceso');
-Route::get('/ajax_upload', 'productosController@subir_imagen');
-Route::post('/ajax_upload/action', 'productosController@action')->name('ajaxupload.action');
-Route::post('/ajax_upload/actualiza', 'productosController@actualiza')->name('ajaxupload.actualiza');
-Route::get('/show_dibujo', 'productosController@show_dibujo');
-Route::get('/nuevo_dibujo', 'productosController@nuevo_dibujo');
-Route::get('/editar_dibujo', 'productosController@editar_dibujo');
-Route::get('/elimina_dibujo', 'productosController@elimina_dibujo');
-Route::get('/agrega_material', 'productosController@agrega_material');
-Route::get('/quitar_material', 'productosController@quitar_material');
-Route::get('/informacion_cotizacion', 'cotizacionesController@informacion');
-
-
-});
-
-
-
-
-//Auth::routes();
 	Route::resource('logisticas', 'logisticaController');
 	Route::resource('equipoHistorials', 'equipo_historialController');
 	Route::resource('procesos', 'ProcesosController');
@@ -88,9 +44,44 @@ Route::get('/informacion_cotizacion', 'cotizacionesController@informacion');
 	Route::resource('productoDibujos', 'producto_dibujoController');
 	Route::resource('materiales', 'MaterialesController');
 	Route::resource('cotizaciones', 'cotizacionesController');
+	Route::resource('listaMateriales', 'ListaMaterialesController');
+
+});
+
+Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
+
+	Route::get('get_municipios', 'CatalogosController@get_municipios');
+	Route::get('save_address', 'clientesController@save_address');
+	Route::get('show_logistica', 'logisticaController@edit');
+	Route::get('update_address', 'logisticaController@update');
+	Route::get('delete_logistica', 'logisticaController@eliminar');
+	Route::get('guarda_historial', 'equipo_historialController@store');
+	Route::get('show_historia', 'equipo_historialController@edit');
+	Route::get('actualiza_historial', 'equipo_historialController@update');
+	Route::get('delete_historial', 'equipo_historialController@destroy');
+	Route::get('agrega_proceso', 'productosController@agrega_proceso');
+	Route::get('show_proceso', 'productosController@show_proceso');
+	Route::get('quitar_proceso', 'productosController@quitar_proceso');
+	Route::get('agrega_subproceso', 'productosController@agrega_subproceso');
+	Route::get('quitar_subproceso', 'productosController@quitar_subproceso');
+	Route::get('/ajax_upload', 'productosController@subir_imagen');
+	Route::post('/ajax_upload/action', 'productosController@action')->name('ajaxupload.action');
+	Route::post('/ajax_upload/actualiza', 'productosController@actualiza')->name('ajaxupload.actualiza');
+	Route::get('/show_dibujo', 'productosController@show_dibujo');
+	Route::get('/nuevo_dibujo', 'productosController@nuevo_dibujo');
+	Route::get('/editar_dibujo', 'productosController@editar_dibujo');
+	Route::get('/elimina_dibujo', 'productosController@elimina_dibujo');
+	Route::get('/agrega_material', 'productosController@agrega_material');
+	Route::get('/quitar_material', 'productosController@quitar_material');
+	Route::get('/informacion_cotizacion', 'cotizacionesController@informacion');
+	Route::get('/informacion_dibujo', 'cotizacionesController@informacion_dibujo');
+	Route::get('/guarda_informacion', 'cotizacionesController@guarda_informacion');
+
+
+});
 
 
 
 
-
-Route::resource('listaMateriales', 'ListaMaterialesController');
+//Auth::routes();
+	

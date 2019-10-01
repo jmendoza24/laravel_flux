@@ -6,6 +6,7 @@
     <div class="col-md-6"> 
       <div class="form-group">  
         <label for="firstName4"><b>Fecha :</b> {{ date('Y-m-d') }} -Cot: {{ $num_cotizacion }}</label>
+        <input type="hidden" id="cotizacion_id" value="{{ $num_cotizacion }}">
       </div>
     </div>
     <div class="col-md-6">
@@ -27,7 +28,7 @@
     <div class="col-md-6">
       <div class="form-group">
         {!! Form::label('numero_parte', 'Numero Parte:') !!}
-        {!! Form::text('numero_parte', null, ['class' => 'form-control required']) !!}
+        {!! Form::text('numero_parte', null, ['class' => 'form-control required','id'=>'numero_parte']) !!}
       </div>
     </div>
     <div class="col-md-6">
@@ -39,7 +40,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Dibujo :</label>
-        <select class="form-control custom-select required" name="dibujo" id="dibujo">
+        <select class="form-control custom-select required" name="dibujo" id="dibujo" onchange="dibujo_info()">
             <option value="">Seleccione una opcion</option>
             @foreach($dibujos as $dibujo)
             <option value="{{ $dibujo->id}}" 
@@ -51,6 +52,10 @@
             @endforeach
           </select>
       </div>
+    </div>
+    <div class="form-group col-sm-6">
+      {!! Form::label('descripcion', 'Tiempo entrega:') !!}
+      {!! Form::text('tiempo', null, ['class' => 'form-control','id'=>'tiempo','readonly']) !!}
     </div>
     <div class="col-md-6">
       <div class="form-group">
@@ -84,13 +89,10 @@
           </select>
       </div>
     </div>
-    <div class="form-group col-sm-6">
-      {!! Form::label('descripcion', 'Tiempo entrega:') !!}
-      {!! Form::number('tiempo', null, ['class' => 'form-control']) !!}
-    </div>
+    
     <div class="form-group col-sm-6">
       {!! Form::label('descripcion', 'Descripcion:') !!}
-      {!! Form::textarea('descripcion', null, ['class' => 'form-control required']) !!}
+      {!! Form::textarea('descripcion', null, ['class' => 'form-control required','id'=>'descripcion']) !!}
     </div>
   </div>
 </fieldset>

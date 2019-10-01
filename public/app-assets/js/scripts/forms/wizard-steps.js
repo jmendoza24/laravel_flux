@@ -63,18 +63,18 @@ $(".steps-validation").steps({
     stepsOrientation: "vertical",
     titleTemplate: '<span class="step">#index#</span> #title#',
     labels: {
-        finish: 'Submit'
+        finish: 'Enviar'
     },
-    onStepChanging: function (event, currentIndex, newIndex)
-    {
+    onStepChanging: function (event, currentIndex, newIndex){
+
         // Allways allow previous action even if the current form is not valid!
-        if (currentIndex > newIndex)
-        {
+        if (currentIndex > newIndex){
+
             return true;
+
         }
         // Forbid next action on "Warning" step if the user is to young
-        if (newIndex === 3 && Number($("#age-2").val()) < 18)
-        {
+        if (newIndex === 3 && Number($("#age-2").val()) < 18){
             return false;
         }
         // Needed in some cases if the user went back (clean up)
@@ -84,7 +84,9 @@ $(".steps-validation").steps({
             form.find(".body:eq(" + newIndex + ") label.error").remove();
             form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
         }
+
         form.validate().settings.ignore = ":disabled,:hidden";
+        guarda_informacion();
         return form.valid();
     },
     onFinishing: function (event, currentIndex)

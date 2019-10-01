@@ -536,12 +536,7 @@ function quitar_material(id_material, id_producto){
 
 function cotizacion_info(id_cotizacion){
   var producto = $("#producto").val();
-  var parameters = {"id_producto":producto,
-                    "income":$("#income").val(),
-                    "dibujo":$("#dibujo").val(),
-                    "numero_parte":$("#numero_parte").val(),
-                    "descripcion":$("#descripcion").val()
-                  };
+  var parameters = {"id_producto":producto};
 
    $.ajax({
           data: parameters,
@@ -549,9 +544,45 @@ function cotizacion_info(id_cotizacion){
           dataType: 'json',
           type:  'get',
           success:  function (response) {  
-            $("#cotizacion_form").html(response);
+            $("#cliente").val(response.cotizacion[0].nombre_corto);
+            $("#numero_parte").val(response.cotizacion[0].numero_parte);
+            $("#descripcion").val(response.cotizacion[0].descripcion);
+            $("#dibujo").html(response.dibujos);
           }
       }); 
   
+}
+
+function dibujo_info(){
+  $.ajax({
+          data: {"dibujo":$("#dibujo").val()},
+          url: '/api/v1/informacion_dibujo',
+          dataType: 'json',
+          type:  'get',
+          success:  function (response) {  
+            $("#tiempo").val(response);
+          }
+      }); 
+  
+}
+
+function guarda_informacion(){
+  var parameters = { "id_cotizacion":$("#cotizacion_id").val(),
+                     "numero_parte":$("#numero_parte").val(),
+                     "dibujo":$("#dibujo").val(),
+                     "tiempo":$("#tiempo").val(),
+                     "id_notas":$("#id_notas").val(),
+                     "income":$("#income").val(),
+                     "descripcion":$("#descripcion").val()  
+                    };
+  $.ajax({
+          data: parameters,
+          url: '/api/v1/guarda_informacion',
+          dataType: 'json',
+          type:  'get',
+          success:  function (response) {  
+            $("#tiempo").val(response);
+          }
+      }); 
 }
 

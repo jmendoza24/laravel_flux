@@ -16,6 +16,7 @@ class CreateProductoDibujosTable extends Migration
         Schema::create('producto_dibujos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_producto');
+            $table->string('dibujo_nombre');
             $table->string('dibujo');
             $table->date('fecha');
             $table->integer('revision');
