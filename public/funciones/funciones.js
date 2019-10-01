@@ -500,7 +500,7 @@ function agrega_material(id_material, id_producto){
             buttons: {
                 confirmar: function () {
                   $.ajax({
-                          data: {"id_material":id_proceso,"id_producto":id_producto},
+                          data: {"id_material":id_material,"id_producto":id_producto},
                           url: '/api/v1/agrega_material',
                           dataType: 'json',
                           type:  'get',
@@ -517,5 +517,41 @@ function agrega_material(id_material, id_producto){
                 }
               }
           });
+}
+
+function quitar_material(id_material, id_producto){
+
+  $.ajax({
+          data: {"id_material":id_material,"id_producto":id_producto},
+          url: '/api/v1/quitar_material',
+          dataType: 'json',
+          type:  'get',
+          success:  function (response) {  
+            $("#listamateriales").html(response);
+            $('.switch:checkbox').checkboxpicker();
+          }
+      }); 
+}
+
+
+function cotizacion_info(id_cotizacion){
+  var producto = $("#producto").val();
+  var parameters = {"id_producto":producto,
+                    "income":$("#income").val(),
+                    "dibujo":$("#dibujo").val(),
+                    "numero_parte":$("#numero_parte").val(),
+                    "descripcion":$("#descripcion").val()
+                  };
+
+   $.ajax({
+          data: parameters,
+          url: '/api/v1/informacion_cotizacion',
+          dataType: 'json',
+          type:  'get',
+          success:  function (response) {  
+            $("#cotizacion_form").html(response);
+          }
+      }); 
+  
 }
 

@@ -59,6 +59,8 @@ Route::get('/editar_dibujo', 'productosController@editar_dibujo');
 Route::get('/elimina_dibujo', 'productosController@elimina_dibujo');
 Route::get('/agrega_material', 'productosController@agrega_material');
 Route::get('/quitar_material', 'productosController@quitar_material');
+Route::get('/informacion_cotizacion', 'cotizacionesController@informacion');
+
 
 });
 

@@ -197,7 +197,7 @@ class productosController extends AppBaseController
 
         $existe = DB::table('productos_procesos')
                     ->selectraw('count(*) as existe')
-                    ->where('id_proceso',$request->id_proceso)
+                    ->where([['id_proceso',$request->id_proceso],['id_producto',$request->id_producto]])
                     ->get();
         if($existe[0]->existe >0 ){
             return 1;
@@ -265,7 +265,7 @@ class productosController extends AppBaseController
     function agrega_subproceso(Request $request){
         $existe = DB::table('productos_subprocesos')
                     ->selectraw('count(*) as existe')
-                    ->where('id_subproceso',$request->id_subproceso)
+                    ->where([['id_subproceso',$request->id_subproceso],['id_producto',$request->id_producto]])
                     ->get();
         if($existe[0]->existe >0 ){
             return 1;
@@ -406,34 +406,44 @@ class productosController extends AppBaseController
     }
 
     function agrega_material(Request $request){
-      $existe = DB::table('productos_subprocesos')
+      $existe = DB::table('producto_materiales')
                     ->selectraw('count(*) as existe')
-                    ->where('id_subproceso',$request->id_subproceso)
+                    ->where([['id_material',$request->id_material],
+                            ['id_producto',$request->id_producto]])
                     ->get();
+
         if($existe[0]->existe >0 ){
-            return 1;
+            return 1; 
         }else{
-            DB::table('productos_subprocesos')
+            DB::table('producto_materiales')
                 ->insert(['id_producto'=>$request->id_producto,
-                          'id_subproceso'=>$request->id_subproceso,
-                          'id_proceso'=>$request->id_proceso]);
+                          'id_material'=>$request->id_material]);
 
-            $procesos = DB::table('procesos as p')
-                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
-                        ->get(); 
-            $subprocesos = DB::table('subprocesos as p')
-                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
-                        ->where('p.idproceso',$request->id_proceso)
-                        ->get();
-
+             $materiales = DB::table('materiales as m')
+                          ->leftjoin('producto_materiales as pm','pm.id_material','m.id')
+                          ->selectraw('m.*, if(pm.id_producto>0,1,0) as asignado')
+                          ->get();
             $id_producto = $request->id_producto;
-            $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+            $options = view('productos.productos_materiales',compact('materiales','id_producto'))->render();    
             return json_encode($options);
         }
     }
 
+    function quitar_material(Request $request){
+      DB::table('producto_materiales')
+      ->where([['id_material',$request->id_material],
+                            ['id_producto',$request->id_producto]])
+      ->delete();
+      $materiales = DB::table('materiales as m')
+                          ->leftjoin('producto_materiales as pm','pm.id_material','m.id')
+                          ->selectraw('m.*, if(pm.id_producto>0,1,0) as asignado')
+                          ->get();
+                          
+      $id_producto = $request->id_producto;
+      $options = view('productos.productos_materiales',compact('materiales','id_producto'))->render();    
+      return json_encode($options);
+
+    }
 
 
 }
