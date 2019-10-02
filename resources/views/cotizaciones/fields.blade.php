@@ -28,7 +28,7 @@
     <div class="col-md-6">
       <div class="form-group">
         {!! Form::label('numero_parte', 'Numero Parte:') !!}
-        {!! Form::text('numero_parte', null, ['class' => 'form-control required','id'=>'numero_parte']) !!}
+        <input type="text" name="numero_parte" class="form-control" id="numero_parte" value="{{ $cotizacion->numero_parte}}">
       </div>
     </div>
     <div class="col-md-6">
@@ -55,7 +55,7 @@
     </div>
     <div class="form-group col-sm-6">
       {!! Form::label('descripcion', 'Tiempo entrega:') !!}
-      {!! Form::text('tiempo', null, ['class' => 'form-control','id'=>'tiempo','readonly']) !!}
+      <input type="text" name="tiempo" id="tiempo" class="form-control" value="{{ $cotizacion->tiempo }}" readonly="">
     </div>
     <div class="col-md-6">
       <div class="form-group">
@@ -92,7 +92,7 @@
     
     <div class="form-group col-sm-6">
       {!! Form::label('descripcion', 'Descripcion:') !!}
-      {!! Form::textarea('descripcion', null, ['class' => 'form-control required','id'=>'descripcion']) !!}
+      <textarea class="form-control" id="descripcion" name="descripcion">{{ $cotizacion->descripcion}}</textarea>
     </div>
   </div>
 </fieldset>
@@ -100,29 +100,25 @@
 <h6>Cotizar</h6>
 <fieldset>
   <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="proposalTitle4">Proposal Title :</label>
-        <input type="text" class="form-control" id="proposalTitle4">
-      </div>
-      <div class="form-group">
-        <label for="emailAddress8">Email Address :</label>
-        <input type="email" class="form-control" id="emailAddress8">
-      </div>
-      <div class="form-group">
-        <label for="videoUrl4">Video URL :</label>
-        <input type="url" class="form-control" id="videoUrl4">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="jobTitle6">Job Title :</label>
-        <input type="text" class="form-control" id="jobTitle6">
-      </div>
-      <div class="form-group">
-        <label for="shortDescription4">Short Description :</label>
-        <textarea name="shortDescription" id="shortDescription4" rows="4" class="form-control"></textarea>
-      </div>
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead class="bg-success">
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+            <td>********</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </fieldset>
