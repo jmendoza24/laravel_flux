@@ -56,7 +56,7 @@ class cotizacionesController extends AppBaseController
        $cotizacion = DB::table('cotizaciones as c')
                         ->leftjoin('productos as p', 'c.producto','p.id')
                         ->leftjoin('clientes as cl','cl.id','p.id_empresa')
-                        ->selectraw('c.*, nombre_corto')
+                        ->selectraw('c.*, p.*,nombre_corto')
                         ->where('c.id',$num_cotizacion)
                         ->get();
         $cotizacion = $cotizacion[0];
@@ -200,7 +200,7 @@ class cotizacionesController extends AppBaseController
         $cotizacion = DB::table('cotizaciones as c')
                         ->leftjoin('productos as p', 'c.producto','p.id')
                         ->leftjoin('clientes as cl','cl.id','p.id_empresa')
-                        ->selectraw('c.*, nombre_corto')
+                        ->selectraw('c.*, p.*, nombre_corto')
                         ->where('c.id',$num_cotizacion)
                         ->get();
         $list_prod = '';

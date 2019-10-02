@@ -14,7 +14,6 @@
         "laravel/tinker": "^1.0",
         "infyomlabs/laravel-generator": "5.8.x-dev",
         "laravelcollective/html": "^5.8.0",
-        "infyomlabs/adminlte-templates": "5.8.x-dev"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

@@ -101,24 +101,44 @@
 <fieldset>
   <div class="row">
     <div class="col-md-12">
+      <h5 style="">Cotización <b> {{ $num_cotizacion }} </b></h5>
+      <hr>
       <table class="table table-bordered">
-        <thead class="bg-success">
+        <thead class="" style="background: #518a87; border: 1px solid #518a87; color: white;">
           <tr>
-            <th>Producto</th>
+            <th>Número parte</th>
+            <th>Descripción</th>
             <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Total</th>
+            <th>Precio unitario</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-            <td>********</td>
+            <td id="nparte">{{ $cotizacion->numero_parte }}</td>
+            <td>{{ $cotizacion->descripcion }}</td>
+            <td><input type="number"  name="cantida" id="cantidad" class="form-control required" value="{{ $cotizacion->cantidad }}"></td>
+            <td>{{ number_format($cotizacion->costo) }}</td>
           </tr>
         </tbody>
       </table>
+      <h5>Check List Información<hr/></h5>
+      <div id="daily-activity" class="table-responsive height-350">
+          <table class="table table-bordered table-hover mb-0">
+            <tbody>
+              @for($i=1; $i<=10; $i++)
+              <tr>
+                <td>
+                  <div class="d-inline-block custom-control custom-checkbox">
+                    <input type="checkbox" name="status4" class="custom-control-input required" required="">
+                    <label class="custom-control-label" for="staffing4">Staffing</label>
+                  </div>
+                </td>
+                <td>Bricks Walking</td>
+              </tr>
+              @endfor
+            </tbody>
+          </table>
+        </div>
     </div>
   </div>
 </fieldset>
