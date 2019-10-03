@@ -41,6 +41,8 @@ class productosController extends AppBaseController
                         ->selectraw('p.*, f.familia, c.nombre_corto, t.acero, a.estructura')
                         ->get();
 
+
+
         return view('productos.index')
             ->with('productos', $productos);
     }
@@ -61,7 +63,8 @@ class productosController extends AppBaseController
                                     'dibujo'=>'',
                                     'id'=>''
                                     );
-        return view('productos.create',compact('familias','clientes','tipoacero','tipoestructura','producto_dibujos'));
+        $info_producto = array('');        
+        return view('productos.create',compact('familias','clientes','tipoacero','tipoestructura','producto_dibujos','info_producto'));
     }
 
     /**
@@ -140,7 +143,24 @@ class productosController extends AppBaseController
          $productos = $productos[0];
          $id_producto = $id;
 
-        return view('productos.edit',compact('productos','opcion', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales'));
+         $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
+                                      FROM productos p
+                                      LEFT JOIN familias f ON f.id = p.familia 
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                      LEFT JOIN (
+                                                SELECT SUM(horas) AS sumahora, id_producto
+                                                from productos_procesos  p
+                                                INNER JOIN procesos pp ON pp.id = p.id_proceso
+                                                WHERE p.id_producto = '. $id_producto.'
+                                                group by p.id_producto) s ON s.id_producto = p.id
+                                      where p.id ='. $id_producto);
+          
+          $info_producto = $info_producto[0];         
+
+        return view('productos.edit',compact('productos','opcion', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto'));
     }
 
     /**

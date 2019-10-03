@@ -14,6 +14,9 @@
   <li class="nav-item">
     <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt3" aria-controls="linkOpt3"><i class="fa fa-truck"></i> Materiales</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt4" aria-controls="linkOpt4"><i class="fa fa-money"></i> Costeo</a>
+  </li>
   @endif
 </ul>
 <div class="tab-content px-1 pt-1">
@@ -191,6 +194,154 @@
   <div class="tab-pane" id="linkOpt3" role="tabpanel" aria-labelledby="linkOpt-tab3" aria-expanded="false" id="">
     <div id="listamateriales">
       @include('productos.productos_materiales')
+    </div>
+  </div>
+  <div class="tab-pane" id="linkOpt4" role="tabpanel" aria-labelledby="linkOpt-tab4" aria-expanded="false" id="">
+    <div id="costeos">
+        <table class="table table-bordered table-striped">
+          <tr style="background: #518a87; color: white;">
+              <td colspan="3">Información de costeo</td>
+          </tr>
+          <tr>
+            <td>Dibujo actual</td>
+            <td>{{ $info_producto->dibujo_nombre }}</td>
+            <td> @if($info_producto->dibujo_nombre != '')
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+            </td>
+          </tr>
+          <tr>
+            <td>Revision</td>
+            <td>{{ $info_producto->revision }}</td>
+            <td>
+              @if($info_producto->revision != '')
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+            </td>
+          </tr>
+          <tr>
+            <td>Pasos de producción </td>
+            <td> <ul> 
+               @foreach($procesos as $pro)               
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="agenda4" class="custom-control-input" id="item42" checked="">
+                      <label class="custom-control-label" for="item42">{{ $pro->procesos }}</label>
+                    </div>
+                  </li>
+                  @endforeach
+                  </ul></td>
+            <td>
+               @if(!empty($procesos))
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+            </td>
+          </tr>
+          <tr>
+            <td>Familia </td>
+            <td>{{ $info_producto->nfamilia }}</td>
+            <td>
+              @if(!empty($info_producto->nfamilia))
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+
+            </td>
+          </tr>
+          <tr>
+            <td>Materiales </td>
+            <td>
+              <ul> 
+               @foreach($materiales as $mat)               
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="agenda4" class="custom-control-input" id="item42" checked="">
+                      <label class="custom-control-label" for="item42">{{ $mat->material }}</label>
+                    </div>
+                  </li>
+                  @endforeach
+              </ul>
+            </td>
+            <td>
+                @if(!empty($materiales))
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+
+            </td>
+          </tr>
+          <tr>
+            <td>Horas hombre</td>
+            <td>{{ $info_producto->sumahora }} horas</td>
+            <td>
+                @if(!empty($info_producto->sumahora))
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+
+            </td>
+          </tr>
+          <tr>
+            <td>Precio unitario</td>
+            <td>${{ number_format($info_producto->costo_produccion,2) }}</td>
+            <td>
+                @if(!empty($info_producto->costo_produccion))
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+
+            </td>
+          </tr>
+          <tr>
+            <td>Precios material (dls x kilo) </td>
+             <td>${{ number_format($info_producto->costo_material,2) }}</td>
+            <td>
+                @if(!empty($info_producto->costo_material))
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+
+            </td>
+          </tr>
+          <tr>
+            <td>Peso (libras)</td>
+            <td>{{ $info_producto->peso }}</td>
+            <td>
+                @if($info_producto->peso!='')
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+            </td>
+          </tr>   
+          <tr>
+            <td>Tiempo de manufactura</td>
+            <td>{{ $info_producto->tiempo_entrega   }}</td>
+            <td>
+                @if($info_producto->tiempo_entrega != '')
+                  <span class="badge badge-default badge-success">Ok</span>
+                  @else
+                  <span class="badge badge-default badge-warning">No valido</span>
+                  @endif
+            </td>
+          </tr>  
+          <tr>
+            <td>Costo total</td>
+            <td>${{ number_format($info_producto->costo_produccion,2) }}</td>
+            <td></td>
+          </tr>  
+      </table>
     </div>
   </div>
   @endif
