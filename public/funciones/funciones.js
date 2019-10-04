@@ -586,3 +586,49 @@ function guarda_informacion(){
       }); 
 }
 
+
+function obtiene_producto(){
+
+
+  var cliente_cot = $("#cliente_cot").val();  
+    if(cliente_cot ==''){cliente_cot = 0};
+    
+  var cliente = $("#cliente").val();
+  alert(cliente + ' - ' + cliente_cot);
+  if(cliente !=cliente_cot && cliente_cot != 0){
+  $.confirm({
+            title: 'Confirmar!',
+            content: 'Estas seguro que deseas cambiar de cliente, si cambias se perdera la informacion de los productos seleccionados?',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          data: {"cliente":cliente},
+                          url: '/api/v1/obtiene_producto',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                            console.log(response)
+                          }
+                      }); 
+
+                },
+                cancelar: function () {
+                    //$.alert('Canceledo!');
+
+                }
+              }
+          });
+
+    }else if(cliente == cliente_cot || cliente_cot ==0){
+      $.ajax({
+              data: {"cliente":cliente},
+              url: '/api/v1/obtiene_producto',
+              dataType: 'json',
+              type:  'get',
+              success:  function (response) {  
+                console.log(response)
+              }
+          }); 
+    }
+}
+

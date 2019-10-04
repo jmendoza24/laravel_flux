@@ -55,3 +55,10 @@ textarea{height: 65px;
 /* Just common table stuff. Really. */
 .tableFixHead th, td { padding: 8px 16px; }
 .tableFixHead th {background:#eee; }
+
+ .custom-select:focus {
+    border-color: #518a87;
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075), 0 0 1px rgba(57, 252, 255, 0.5); }
+    .custom-select:focus::-ms-value {
+      color: #4E5154;
+      background-color: #fff; }

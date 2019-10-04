@@ -15,15 +15,8 @@ class CreateCotizacionesTable extends Migration
     {
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('producto');
             $table->date('fecha');
             $table->integer('cliente');
-            $table->string('numero_parte');
-            $table->text('descripcion');
-            $table->integer('dibujo');
-            $table->integer('cantidad');
-            $table->decimal('costo');
-            $table->decimal('precio_usd');
             $table->integer('id_notas');
             $table->integer('tiempo');
             $table->integer('income');

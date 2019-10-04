@@ -53,21 +53,26 @@ class cotizacionesController extends AppBaseController
                               'producto'=>0]);           
          }
 
-       $cotizacion = DB::table('cotizaciones as c')
+
+        $cotizacion = DB::table('cotizaciones as c')
+                        ->where('c.id',$num_cotizacion)
+                        ->get();
+        $detalle = DB::table('cotizacion_detalle as c')
                         ->leftjoin('productos as p', 'c.producto','p.id')
                         ->leftjoin('clientes as cl','cl.id','p.id_empresa')
                         ->selectraw('c.*, p.*,nombre_corto')
-                        ->where('c.id',$num_cotizacion)
+                        ->where('c.id_cotizacion',$num_cotizacion)
                         ->get();
+               
         $cotizacion = $cotizacion[0];
-
+        $clientes = db::table('clientes')->get();
        
-        $dibujos = DB::table('producto_dibujos')->where('id_producto',$cotizacion->producto)->get();
+       // $dibujos = DB::table('producto_dibujos')->where('id_producto',$cotizacion->producto)->get();
         $condiciones = DB::table('condiciones')->where('tipo',1)->get();
         $income = DB::table('income_terms')->get();
         $productos = DB::table('productos')->get();
 
-        return view('cotizaciones.index',compact('cotizacion','dibujos','condiciones','income','productos','num_cotizacion'));
+        return view('cotizaciones.index',compact('cotizacion','condiciones','income','productos','num_cotizacion','clientes','detalle'));
     }
 
     /**
@@ -219,5 +224,28 @@ class cotizacionesController extends AppBaseController
     function informacion_dibujo(Request $request){
         $info = DB::table('producto_dibujos')->where('id',$request->dibujo)->get();
         return json_encode($info[0]->tiempo_entrega);        
+    }
+
+    function obtiene_producto(Request $request){
+
+        $num_cotizacion = $request->session()->get('num_cot');
+
+        $cliente = DB::table('cotizaciones')
+                ->selectraw('distinct cliente')
+                ->get();
+
+        if($cliente != $request->cliente){
+            db::table('cotizacion_detalle')
+            ->where('id_cotizacion',$num_cotizacion)
+            ->delete();
+        }
+        
+        $productos = DB::table('productos')
+                    ->where('id_empresa',$request->cliente)
+                    ->get();
+
+        return json_encode($productos);
+   
+
     }
 }

@@ -4,9 +4,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-  <meta name="description" content="Stack admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-  <meta name="keywords" content="admin template, stack admin template, dashboard template, flat admin template, responsive admin template, web app">
-  <meta name="author" content="PIXINVENT">
+  <meta name="description" content="Fluxmetals">
+  <meta name="keywords" content="Fluxmetals">
+  
   <title>Fluxmetals Login</title>
   <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png')}}">
   <link rel="shortcut icon" type="image/x-icon" href="app-assets/images/ico/favicon.ico">
@@ -103,7 +103,7 @@
   <script src="{{ url('app-assets/js/scripts/customizer.js')}}" type="text/javascript"></script>
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
-  <script src="{{ url('app-assets/js/scripts/forms/form-login-register.js')}}" type="text/javascript"></script>
+  <!--<script src="{{ url('app-assets/js/scripts/forms/form-login-register.js')}}" type="text/javascript"></script>-->
   <!-- END PAGE LEVEL JS-->
   <script>
     $(function () {
