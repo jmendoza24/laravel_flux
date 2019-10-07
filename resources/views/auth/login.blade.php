@@ -44,7 +44,7 @@
                   <div class="card-title text-center">
                     <div class="p-1">
                       
-                        <h4><b><img class="brand-logo" alt="stack admin logo" src="{{ url('app-assets/images/logo/stack-logo.png') }}"> &nbsp;Fluxmetals</b></h4>
+                        <h4><b><img class="brand-logo" alt="stack admin logo"  style="width: 50%;" src="{{ url('app-assets/images/logo/flux.png') }}"></b></h4>
                       
                     </div>
                   </div>

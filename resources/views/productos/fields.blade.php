@@ -225,18 +225,11 @@
           </tr>
           <tr>
             <td>Pasos de producción </td>
-            <td> <ul> 
-               @foreach($procesos as $pro)               
-                  <li>
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="agenda4" class="custom-control-input" id="item42" checked="">
-                      <label class="custom-control-label" for="item42">{{ $pro->procesos }}</label>
-                    </div>
-                  </li>
-                  @endforeach
-                  </ul></td>
+            <td> 
+              <?php echo ($info_proceso !='[]') ?  $info_proceso :'';?>  
+            </td>
             <td>
-               @if(!empty($procesos))
+               @if($info_proceso !='[]')
                   <span class="badge badge-default badge-success">Ok</span>
                   @else
                   <span class="badge badge-default badge-warning">No valido</span>
@@ -258,19 +251,10 @@
           <tr>
             <td>Materiales </td>
             <td>
-              <ul> 
-               @foreach($materiales as $mat)               
-                  <li>
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="agenda4" class="custom-control-input" id="item42" checked="">
-                      <label class="custom-control-label" for="item42">{{ $mat->material }}</label>
-                    </div>
-                  </li>
-                  @endforeach
-              </ul>
+              <?php echo ($info_mat !='[]') ?  $info_mat :'';?> 
             </td>
             <td>
-                @if(!empty($materiales))
+                @if($info_mat !='[]')
                   <span class="badge badge-default badge-success">Ok</span>
                   @else
                   <span class="badge badge-default badge-warning">No valido</span>
@@ -341,7 +325,7 @@
             <td>${{ number_format($info_producto->costo_produccion,2) }}</td>
             <td></td>
           </tr>  
-      </table>
+        </table>
     </div>
   </div>
   @endif

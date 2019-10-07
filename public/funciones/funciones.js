@@ -567,14 +567,7 @@ function dibujo_info(){
 }
 
 function guarda_informacion(){
-  var parameters = { "id_cotizacion":$("#cotizacion_id").val(),
-                     "numero_parte":$("#numero_parte").val(),
-                     "dibujo":$("#dibujo").val(),
-                     "tiempo":$("#tiempo").val(),
-                     "id_notas":$("#id_notas").val(),
-                     "income":$("#income").val(),
-                     "descripcion":$("#descripcion").val()  
-                    };
+  var parameters = { "income":$("#income").val()};
   $.ajax({
           data: parameters,
           url: '/api/v1/guarda_informacion',
@@ -588,13 +581,16 @@ function guarda_informacion(){
 
 
 function obtiene_producto(){
+  if($("#cliente").val()==''){
+      $.alert('Seleccione un cliente valido');
+  }else{
 
 
   var cliente_cot = $("#cliente_cot").val();  
     if(cliente_cot ==''){cliente_cot = 0};
     
   var cliente = $("#cliente").val();
-  alert(cliente + ' - ' + cliente_cot);
+
   if(cliente !=cliente_cot && cliente_cot != 0){
   $.confirm({
             title: 'Confirmar!',
@@ -613,7 +609,7 @@ function obtiene_producto(){
 
                 },
                 cancelar: function () {
-                    //$.alert('Canceledo!');
+                  $("#cliente").val(cliente_cot);
 
                 }
               }
@@ -630,5 +626,76 @@ function obtiene_producto(){
               }
           }); 
     }
+  }
 }
 
+
+function agrega_producto(){
+  
+    var parameters = {"producto":$("#producto").val(),
+                      "cliente":$("#cliente").val()}
+
+     if($("#producto").val()==''){
+        $.alert('Seleccione un producto');
+
+     }else{                 
+    $.ajax({
+              data: parameters,
+              url: '/api/v1/agrega_producto',
+              dataType: 'json',
+              type:  'get',
+              success:  function (response) {  
+                if(response==1){
+                    $.alert('El producto ya se encuentra agregado');
+                }else{
+                  $("#detalle_cotiza").html(response);
+                }
+                
+              }
+          }); 
+  }
+}
+
+
+function borra_producto(id){
+
+    $.confirm({
+            title: 'Confirmar!',
+            content: 'Estas seguro que deseas eliminar este producto?',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          data: {"id_prod":id},
+                          url: '/api/v1/delete_producto',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                             $("#detalle_cotiza").html(response);
+                          }
+                      }); 
+
+                },
+                cancelar: function () {
+                    //$.alert('Canceledo!');
+
+                }
+              }
+          });
+}
+
+function actualiza_producto(producto){
+
+  $.ajax({
+    data: {"producto":producto,"cantidad":$("#cantidad"+producto).val()},
+    url: '/api/v1/actualiza_producto',
+    dataType: 'json',
+    type:  'get',
+    success:  function (response) {  
+       $("#detalle_cotiza").html(response);
+    },error(a,b,c){
+      console.log(a);
+      console.log(b);
+      console.log(c);
+    }
+}); 
+}

@@ -50,21 +50,32 @@ class cotizacionesController extends AppBaseController
 
             $id = DB::table('cotizaciones')
                     ->insert(['fecha' => $fecha,
-                              'producto'=>0]);           
+                              'cliente'=>0,
+                              'id_notas'=>0,
+                              'tiempo'=>0,
+                              'income'=>0,
+                              'termino_pago'=>' ',
+                              'vendedor'=>0]);           
          }
 
-
+        $tipo = 1;
         $cotizacion = DB::table('cotizaciones as c')
+                        ->leftjoin('condiciones as co',function($join)use($tipo){
+                                        $join->on('co.id','c.id_notas')
+                                            ->where('co.tipo',$tipo);})
+                        ->leftjoin('income_terms as ic','ic.id','c.income')
                         ->where('c.id',$num_cotizacion)
+                        ->selectraw('c.*, co.condicion as notas')
                         ->get();
         $detalle = DB::table('cotizacion_detalle as c')
                         ->leftjoin('productos as p', 'c.producto','p.id')
                         ->leftjoin('clientes as cl','cl.id','p.id_empresa')
-                        ->selectraw('c.*, p.*,nombre_corto')
+                        ->selectraw('c.*, p.*,nombre_corto ,c.id as idc')
                         ->where('c.id_cotizacion',$num_cotizacion)
                         ->get();
                
         $cotizacion = $cotizacion[0];
+
         $clientes = db::table('clientes')->get();
        
        // $dibujos = DB::table('producto_dibujos')->where('id_producto',$cotizacion->producto)->get();
@@ -72,7 +83,27 @@ class cotizacionesController extends AppBaseController
         $income = DB::table('income_terms')->get();
         $productos = DB::table('productos')->get();
 
-        return view('cotizaciones.index',compact('cotizacion','condiciones','income','productos','num_cotizacion','clientes','detalle'));
+        $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
+                                      FROM cotizacion_detalle cd
+                                      inner join productos p on p.id = cd.producto
+                                      LEFT JOIN familias f ON f.id = p.familia 
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                      LEFT JOIN (
+                                                SELECT SUM(horas) AS sumahora, id_producto
+                                                from productos_procesos  p
+                                                inner join cotizacion_detalle cd on p.id_producto = cd.producto
+                                                INNER JOIN procesos pp ON pp.id = p.id_proceso
+                                                WHERE cd.id_cotizacion ='. $num_cotizacion.'
+                                                group by p.id_producto) s ON s.id_producto = p.id
+                                      where cd.id_cotizacion ='. $num_cotizacion);
+          
+          #$info_producto = $info_producto[0];
+
+
+        return view('cotizaciones.index',compact('cotizacion','info_producto','condiciones','income','productos','num_cotizacion','clientes','detalle'));
     }
 
     /**
@@ -152,15 +183,11 @@ class cotizacionesController extends AppBaseController
      * @return Response
      */
     public function guarda_informacion(Request $request){
+        $num_cotizacion = $request->session()->get('num_cot');
+
         DB::table('cotizaciones')
-        ->where('id',$request->id_cotizacion)
-        ->update(['numero_parte'=>$request->numero_parte,
-                  'dibujo'=>$request->dibujo,
-                  'tiempo'=>$request->tiempo,
-                  'id_notas'=>$request->id_notas,
-                  'income'=>$request->income,
-                  'descripcion'=>$request->descripcion
-              ]);
+        ->where('id',$num_cotizacion)
+        ->update(['income'=>$request->income]);
     }
 
     /**
@@ -193,19 +220,17 @@ class cotizacionesController extends AppBaseController
 
         DB::update('update cotizaciones as  c
                     inner join productos p on p.id  = '.$request->id_producto.'
-                    set cliente = p.id_empresa,
-                        costo = p.costo_produccion,
-                        producto = '.$request->id_producto.'              
+                    set cliente = p.id_empresa           
                 where  c.id ='. $num_cotizacion);
            
         $productos = DB::table('productos')->get();
         $dibujos = DB::table('producto_dibujos')->where('id_producto',$request->id_producto)->get();
         $condiciones = DB::table('condiciones')->where('tipo',1)->get();
         $income = DB::table('income_terms')->get();
+
         $cotizacion = DB::table('cotizaciones as c')
-                        ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
-                        ->selectraw('c.*, p.*, nombre_corto')
+                        ->leftjoin('clientes as cl','cl.id','c.cliente')
+                        ->selectraw('c.*, nombre_corto')
                         ->where('c.id',$num_cotizacion)
                         ->get();
         $list_prod = '';
@@ -246,6 +271,92 @@ class cotizacionesController extends AppBaseController
 
         return json_encode($productos);
    
+
+    }
+
+    function agrega_producto(Request $request){
+        $num_cotizacion = $request->session()->get('num_cot');
+
+        $existe = DB::table('cotizacion_detalle')
+                ->where([['id_cotizacion',$num_cotizacion],['producto',$request->producto]])
+                ->selectraw('count(*) as existe')
+                ->get();
+
+        if($existe[0]->existe > 0){
+            return json_encode(1);
+        }else{
+
+        $num_cotizacion = $request->session()->get('num_cot');
+
+        $info_producto  = DB::select('SELECT p.descripcion, p.tiempo_entrega,p.id_empresa, p.peso, ifnull(p.costo_material,0) as costo_material, ifnull(p.costo_produccion,0) as costo_produccion, p.costo_material,dibujo_nombre, revision,d.id
+                                      FROM productos p
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto,id
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                      where p.id ='. $request->producto);
+          
+
+          DB::table('cotizacion_detalle')
+          ->insert(['id_cotizacion'=>$num_cotizacion,
+                    'producto'=>$request->producto,
+                    'dibujo'=>$info_producto[0]->id,
+                    'cantidad'=>1,
+                    'costo'=>$info_producto[0]->costo_produccion,
+                    'precio_usd'=>$info_producto[0]->costo_material
+                ]);
+
+          db::table('cotizaciones')
+          ->where('id',$num_cotizacion)
+          ->update(['cliente'=>$info_producto[0]->id_empresa]);
+
+          $detalle = DB::table('cotizacion_detalle as c')
+                        ->leftjoin('productos as p', 'c.producto','p.id')
+                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
+                        ->selectraw('c.*, p.*,nombre_corto ,c.id as idc')
+                        ->where('c.id_cotizacion',$num_cotizacion)
+                        ->get();
+
+            $options = view('cotizaciones.detalle',compact('detalle'))->render();    
+             return json_encode($options);
+         }
+
+    }
+
+    function delete_producto(Request $request){
+        $num_cotizacion = $request->session()->get('num_cot');
+        DB::table('cotizacion_detalle')
+        ->where([['id_cotizacion',$num_cotizacion],['id',$request->id_prod]])
+        ->delete();
+
+        $detalle = DB::table('cotizacion_detalle as c')
+                        ->leftjoin('productos as p', 'c.producto','p.id')
+                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
+                        ->selectraw('c.*, p.*,nombre_corto ,c.id as idc')
+                        ->where('c.id_cotizacion',$num_cotizacion)
+                        ->get();
+
+        $options = view('cotizaciones.detalle',compact('detalle'))->render();    
+         return json_encode($options);
+
+    }
+
+    function actualiza_producto(Request $request){
+        $num_cotizacion = $request->session()->get('num_cot');
+
+        DB::table('cotizacion_detalle')
+        ->where('id',$request->producto)
+        ->update(['cantidad'=>$request->cantidad]);
+
+        $detalle = DB::table('cotizacion_detalle as c')
+                        ->leftjoin('productos as p', 'c.producto','p.id')
+                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
+                        ->selectraw('c.*, p.*,nombre_corto ,c.id as idc')
+                        ->where('c.id_cotizacion',$num_cotizacion)
+                        ->get();
+
+        $options = view('cotizaciones.detalle',compact('detalle'))->render();    
+         return json_encode($options);
 
     }
 }

@@ -137,6 +137,7 @@ class productosController extends AppBaseController
           $materiales = DB::table('materiales as m')
                           ->leftjoin('producto_materiales as pm','pm.id_material','m.id')
                           ->selectraw('m.*, if(pm.id_producto>0,1,0) as asignado')
+                          ->where('id_producto',$id)
                           ->get();
 
 
@@ -158,9 +159,26 @@ class productosController extends AppBaseController
                                                 group by p.id_producto) s ON s.id_producto = p.id
                                       where p.id ='. $id_producto);
           
-          $info_producto = $info_producto[0];         
+          $info_producto = $info_producto[0];   
 
-        return view('productos.edit',compact('productos','opcion', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto'));
+          $info_proceso = DB::table('productos_procesos') 
+                         ->where('id_producto',$id_producto)  
+                         ->get();   
+          $info_material = DB::table('producto_materiales as pm') 
+                          ->join('materiales as m','m.id','pm.id_material')
+                         ->where('id_producto',$id_producto)  
+                         ->get(); 
+        $info_pro = '';
+        $info_mat = '';
+         foreach ($info_proceso as $pro) {
+            $info_pro .= '<span class="badge badge-pill badge-primary">'.$pro->proceso.'</span>&nbsp;';  
+         }
+
+         foreach ($info_material as $mate) {
+            $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
+         }
+
+        return view('productos.edit',compact('productos','info_mat','info_proceso','opcion', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto'));
     }
 
     /**

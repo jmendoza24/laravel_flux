@@ -77,6 +77,10 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/informacion_dibujo', 'cotizacionesController@informacion_dibujo');
 	Route::get('/guarda_informacion', 'cotizacionesController@guarda_informacion');
 	Route::get('/obtiene_producto', 'cotizacionesController@obtiene_producto');
+	Route::get('/agrega_producto', 'cotizacionesController@agrega_producto');
+	Route::get('/delete_producto', 'cotizacionesController@delete_producto');
+	Route::get('/actualiza_producto', 'cotizacionesController@actualiza_producto');
+	
 });
 
 
