@@ -58,6 +58,7 @@ class cotizacionesController extends AppBaseController
                               'vendedor'=>0]);           
          }
 
+
         $tipo = 1;
         $cotizacion = DB::table('cotizaciones as c')
                         ->leftjoin('condiciones as co',function($join)use($tipo){
@@ -75,6 +76,7 @@ class cotizacionesController extends AppBaseController
                         ->get();
                
         $cotizacion = $cotizacion[0];
+        
 
         $clientes = db::table('clientes')->get();
        

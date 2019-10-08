@@ -161,24 +161,29 @@ class productosController extends AppBaseController
           
           $info_producto = $info_producto[0];   
 
-          $info_proceso = DB::table('productos_procesos') 
+          $info_proceso = DB::table('productos_procesos as pp') 
+                        ->leftjoin('procesos as p','p.id','pp.id_proceso' )
                          ->where('id_producto',$id_producto)  
+                         ->selectraw('p.*')
                          ->get();   
+
           $info_material = DB::table('producto_materiales as pm') 
                           ->join('materiales as m','m.id','pm.id_material')
                          ->where('id_producto',$id_producto)  
                          ->get(); 
+
+                       
         $info_pro = '';
         $info_mat = '';
          foreach ($info_proceso as $pro) {
-            $info_pro .= '<span class="badge badge-pill badge-primary">'.$pro->proceso.'</span>&nbsp;';  
+            $info_pro .= '<span class="badge badge-pill badge-primary">'.$pro->procesos.'</span>&nbsp;';  
          }
 
          foreach ($info_material as $mate) {
             $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
          }
 
-        return view('productos.edit',compact('productos','info_mat','info_proceso','opcion', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto'));
+        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto'));
     }
 
     /**

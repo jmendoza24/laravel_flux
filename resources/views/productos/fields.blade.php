@@ -226,10 +226,10 @@
           <tr>
             <td>Pasos de producción </td>
             <td> 
-              <?php echo ($info_proceso !='[]') ?  $info_proceso :'';?>  
+              <?php echo ($info_pro !='[]') ?  $info_pro :'';?>  
             </td>
             <td>
-               @if($info_proceso !='[]')
+               @if($info_pro !='[]')
                   <span class="badge badge-default badge-success">Ok</span>
                   @else
                   <span class="badge badge-default badge-warning">No valido</span>
