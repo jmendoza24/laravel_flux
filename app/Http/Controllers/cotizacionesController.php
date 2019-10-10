@@ -92,11 +92,11 @@ class cotizacionesController extends AppBaseController
                                       LEFT JOIN (
                                              SELECT dibujo_nombre, revision, id_producto
                                              FROM producto_dibujos
-                                             WHERE id IN (SELECT MAX(id)  
-                                             FROM producto_dibujos 
-                                             inner join cotizacion_detalle cd on m.id_producto = cd.producto
-                                                where cd.id_cotizacion ='. $num_cotizacion.'
-                                                group by cd.id_producto
+                                             WHERE id IN (SELECT MAX(pd.id) 
+                                                            FROM producto_dibujos as pd
+                                                            inner join cotizacion_detalle cd on pd.id_producto = cd.producto 
+                                                            where cd.id_cotizacion ='. $num_cotizacion.'
+                                                group by cd.producto
                                              )) d ON d.id_producto = p.id
                                       LEFT JOIN (
                                                 SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
@@ -110,7 +110,7 @@ class cotizacionesController extends AppBaseController
                                                 from producto_materiales m
                                                 inner join cotizacion_detalle cd on m.id_producto = cd.producto
                                                 where cd.id_cotizacion ='. $num_cotizacion.'
-                                                group by cd.id_producto)  as pm on pm.id_producto = p.id 
+                                                group by cd.producto)  as pm on pm.id_producto = p.id 
                                       where cd.id_cotizacion ='. $num_cotizacion);
           #dd($info_producto);
           /**foreach ($info_producto as $info) {
