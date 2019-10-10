@@ -1,28 +1,33 @@
 <div style="height: 600px;">
-  <div class="sidebar-left sidebar" style="max-height: 450px;">
-    <div class="sidebar">
+  <div class="sidebar-left col-md-6" style="max-height: 450px;">
+    <div class="sidebar" style=" border: 0px solid red; width: 100%;">
       <div class="sidebar-content card d-none d-lg-block">
         <div id="users-list" class="list-group position-relative ps-scrollbar-y" style=" overflow-y: scroll; max-height: 500px;">
-          <div class="users-list-padding media-list">
-            <table class="table table-striped table-bordered table-procesos tableFixHead">  
+          <div class="users-list-padding media-list" >
+            <table class="table table-striped table-bordered table-procesos tableFixHead">   
             <thead>
               <tr>
-                <th>Procesos</th>
+                <th colspan="2">Procesos</th>
+                <th>Horas</th>
               </tr>
             </thead>   
             <tbody>
               @foreach($procesos as $proc)
               <tr>
+
                 <td style="{{ ($proc->asignado==1)?'color:#518a87; font-weight: bold;':'' }}">
-                  <input type="checkbox" class="switch" id="switch5" data-group-cls="btn-group-sm" {{ ($proc->asignado ==1)? 'checked':'' }} 
+                 <input type="checkbox" class="switch" id="switch5" data-group-cls="btn-group-sm" {{ ($proc->asignado ==1)? 'checked':'' }} 
                     onchange="@if($proc->asignado==1)
                                 quitar_proceso({{$proc->id}},{{$id_producto}})
                               @else
                               agrega_proceso({{$proc->id}},{{$id_producto}})
                               @endif" 
                   >
-                  <a onclick="ver_proceso({{$proc->id}},{{$id_producto}})"> &nbsp;&nbsp;&nbsp;{{ $proc->procesos }}</a>
                 </td>
+                <td style="text-align: left;">
+                 <a onclick="ver_proceso({{$proc->id}},{{$id_producto}})">{{ $proc->procesos }}</a>
+               </td>
+                <td><input type="number" onchange="@if($proc->asignado==1) actualiza_proceso({{$proc->id}},{{$id_producto}}) @endif" style="width: 100px;" name="horas{{$proc->id}}" class="form-control"  id="horas{{$proc->id}}" value="{{ $proc->horasp}}" min="0"></td>
             </tr>
             @endforeach
             </tbody>   
@@ -32,7 +37,7 @@
       </div>
     </div>
   </div/>
-  <div class="content-right" style="overflow-y: scroll; max-height:550px; padding-left: 3px; ">
+  <div class="content-right col-md-6" style="overflow-y: scroll; max-height:550px; padding-left: 3px; ">
       <div class="content-body">
         <table class="table table-striped table-bordered table-procesos tableFixHead">
           <thead>

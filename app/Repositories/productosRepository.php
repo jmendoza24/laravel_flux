@@ -28,7 +28,8 @@ class productosRepository extends BaseRepository
         'costo_material',
         'peso',
         'costo_produccion',
-        'planta'
+        'planta',
+        'numero_parte'
     ];
 
     /**

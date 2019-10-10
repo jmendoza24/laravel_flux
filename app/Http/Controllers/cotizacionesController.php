@@ -85,24 +85,38 @@ class cotizacionesController extends AppBaseController
         $income = DB::table('income_terms')->get();
         $productos = DB::table('productos')->get();
 
-        $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
+        $info_producto  = DB::select('SELECT p.numero_parte, p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision, if(pm.conteo >0,1,0) as prodmat
                                       FROM cotizacion_detalle cd
                                       inner join productos p on p.id = cd.producto
                                       LEFT JOIN familias f ON f.id = p.familia 
                                       LEFT JOIN (
                                              SELECT dibujo_nombre, revision, id_producto
                                              FROM producto_dibujos
-                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                             WHERE id IN (SELECT MAX(id)  
+                                             FROM producto_dibujos 
+                                             inner join cotizacion_detalle cd on m.id_producto = cd.producto
+                                                where cd.id_cotizacion ='. $num_cotizacion.'
+                                                group by cd.id_producto
+                                             )) d ON d.id_producto = p.id
                                       LEFT JOIN (
-                                                SELECT SUM(horas) AS sumahora, id_producto
+                                                SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
                                                 from productos_procesos  p
                                                 inner join cotizacion_detalle cd on p.id_producto = cd.producto
                                                 INNER JOIN procesos pp ON pp.id = p.id_proceso
                                                 WHERE cd.id_cotizacion ='. $num_cotizacion.'
                                                 group by p.id_producto) s ON s.id_producto = p.id
+                                      left join (
+                                                select count(*) as conteo, id_producto
+                                                from producto_materiales m
+                                                inner join cotizacion_detalle cd on m.id_producto = cd.producto
+                                                where cd.id_cotizacion ='. $num_cotizacion.'
+                                                group by cd.id_producto)  as pm on pm.id_producto = p.id 
                                       where cd.id_cotizacion ='. $num_cotizacion);
-          
-          #$info_producto = $info_producto[0];
+          #dd($info_producto);
+          /**foreach ($info_producto as $info) {
+              dd($info->tiempo_entrega);
+          }*/
+
 
 
         return view('cotizaciones.index',compact('cotizacion','info_producto','condiciones','income','productos','num_cotizacion','clientes','detalle'));
@@ -290,7 +304,7 @@ class cotizacionesController extends AppBaseController
 
         $num_cotizacion = $request->session()->get('num_cot');
 
-        $info_producto  = DB::select('SELECT p.descripcion, p.tiempo_entrega,p.id_empresa, p.peso, ifnull(p.costo_material,0) as costo_material, ifnull(p.costo_produccion,0) as costo_produccion, p.costo_material,dibujo_nombre, revision,d.id
+        $info_producto  = DB::select('SELECT p.descripcion, p.tiempo_entrega,p.id_empresa, p.peso, ifnull(p.costo_material,0) as costo_material, ifnull(p.costo_produccion,0) as costo_produccion, p.costo_material,dibujo_nombre, revision,ifnull(d.id,0) as id
                                       FROM productos p
                                       LEFT JOIN (
                                              SELECT dibujo_nombre, revision, id_producto,id

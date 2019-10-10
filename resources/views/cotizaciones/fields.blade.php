@@ -89,9 +89,11 @@
 <h6>Check List</h6>
 <fieldset>
   <div class="row">
-    {{ var_dump($info_producto)}}
-    <div class="col-md-12">
     
+    <div class="col-md-12">
+      {{ var_dump($info_producto)}}
+      @include('cotizaciones.costeo')
+      
     </div>
     
   </div>

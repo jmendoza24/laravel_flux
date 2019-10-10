@@ -27,6 +27,7 @@ class CreateProductosTable extends Migration
             $table->decimal('peso',20,3)->nullable();
             $table->decimal('costo_produccion',20,3)->nullable();
             $table->integer('planta')->nullable();
+            $table->string('numero_parte')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -131,14 +131,18 @@ class productosController extends AppBaseController
          // $producto_dibujos = DB::table('producto_dibujos')->where('id',$id)->get();
          $productoDibujos = DB::table('producto_dibujos')->where('id_producto',$id)->get();
          $procesos = DB::table('procesos as p')
-                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$id)
-                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->leftjoin('productos_procesos as pp',function($join)use($id){
+                            $join->on('pp.id_proceso','p.id')
+                            ->where('pp.id_producto',$id);})
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado , if(pp.horas > 0, pp.horas,p.horas) as horasp')
                         ->get();
+
           $materiales = DB::table('materiales as m')
-                          ->leftjoin('producto_materiales as pm','pm.id_material','m.id')
-                          ->selectraw('m.*, if(pm.id_producto>0,1,0) as asignado')
-                          ->where('id_producto',$id)
-                          ->get();
+                            ->leftjoin('producto_materiales as pm',function($join)use($id){
+                                $join->on('pm.id_material','m.id')
+                                ->where('pm.id_producto',$id);})
+                            ->selectraw('m.*, if(pm.id_producto>0,1,0) as asignado')
+                            ->get();
 
 
          $productos = $productos[0];
@@ -152,14 +156,14 @@ class productosController extends AppBaseController
                                              FROM producto_dibujos
                                              WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
                                       LEFT JOIN (
-                                                SELECT SUM(horas) AS sumahora, id_producto
+                                                SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
                                                 from productos_procesos  p
                                                 INNER JOIN procesos pp ON pp.id = p.id_proceso
                                                 WHERE p.id_producto = '. $id_producto.'
                                                 group by p.id_producto) s ON s.id_producto = p.id
                                       where p.id ='. $id_producto);
           
-          $info_producto = $info_producto[0];   
+          $info_producto = $info_producto[0]; 
 
           $info_proceso = DB::table('productos_procesos as pp') 
                         ->leftjoin('procesos as p','p.id','pp.id_proceso' )
@@ -247,37 +251,93 @@ class productosController extends AppBaseController
         }else{
             DB::table('productos_procesos')
                 ->insert(['id_producto'=>$request->id_producto,
-                          'id_proceso'=>$request->id_proceso]);
+                          'id_proceso'=>$request->id_proceso,
+                          'horas'=>$request->horas]);
+            $id = $request->id_producto;
             $procesos = DB::table('procesos as p')
-                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
-                        ->get(); 
+                            ->leftjoin('productos_procesos as pp',function($join)use($id){
+                                $join->on('pp.id_proceso','p.id')
+                                ->where('pp.id_producto',$id);})
+                            ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado, if(p.horas > 0, p.horas , pp.horas) as horasp')
+                            ->get();
             $subprocesos = DB::table('subprocesos as p')
-                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
-                        ->where('p.idproceso',$request->id_proceso)
-                        ->get();
+                               ->leftjoin('productos_subprocesos as s',function($join)use($id){
+                                $join->on('s.id_subproceso','p.id')
+                                ->where('s.id_producto',$id);}) 
+                                ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                                ->where('p.idproceso',$request->id_proceso)
+                                ->get();
 
             $id_producto = $request->id_producto;
+
             $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
-            return json_encode($options);
+
+            $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
+                                      FROM productos p
+                                      LEFT JOIN familias f ON f.id = p.familia 
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                      LEFT JOIN (
+                                                SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
+                                                from productos_procesos  p
+                                                INNER JOIN procesos pp ON pp.id = p.id_proceso
+                                                WHERE p.id_producto = '. $id_producto.'
+                                                group by p.id_producto) s ON s.id_producto = p.id
+                                      where p.id ='. $id_producto);
+          
+          $info_producto = $info_producto[0];   
+
+          $info_proceso = DB::table('productos_procesos as pp') 
+                        ->leftjoin('procesos as p','p.id','pp.id_proceso' )
+                         ->where('id_producto',$id_producto)  
+                         ->selectraw('p.*')
+                         ->get();   
+
+          $info_material = DB::table('producto_materiales as pm') 
+                          ->join('materiales as m','m.id','pm.id_material')
+                         ->where('id_producto',$id_producto)  
+                         ->get(); 
+
+                       
+        $info_pro = '';
+        $info_mat = '';
+         foreach ($info_proceso as $pro) {
+            $info_pro .= '<span class="badge badge-pill badge-primary">'.$pro->procesos.'</span>&nbsp;';  
+         }
+
+         foreach ($info_material as $mate) {
+            $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
+         }
+
+         $costeo = view('productos.costeo',compact('info_mat','info_pro','info_producto'))->render();    
+
+         $array  = array('costeo' => $costeo , 
+                        'options' => $options);
+
+            return json_encode($array);
         }
 
     }
     
 
     function show_proceso(Request $request){
+        $id = $request->id_producto;
         $procesos = DB::table('procesos as p')
-                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->leftjoin('productos_procesos as pp',function($join)use($id){
+                            $join->on('pp.id_proceso','p.id')
+                            ->where('pp.id_producto',$id);})
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado , if(p.horas > 0, p.horas , pp.horas) as horasp')
                         ->get();
-
         $subprocesos = DB::table('subprocesos as p')
-                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
-                        ->where('p.idproceso',$request->id_proceso)
-                        ->get();
-        //dd($subprocesos);
+                           ->leftjoin('productos_subprocesos as s',function($join)use($id){
+                                $join->on('s.id_subproceso','p.id')
+                                ->where('s.id_producto',$id);}) 
+                            ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                            ->where('p.idproceso',$request->id_proceso)
+                            ->get();
+
         $id_producto = $request->id_producto;
         $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
         return json_encode($options);
@@ -289,28 +349,79 @@ class productosController extends AppBaseController
         DB::update('delete from productos_procesos where id_producto = '.$request->id_producto .' and id_proceso = '. $request->id_proceso);
         DB::update('delete from productos_subprocesos where id_producto = '.$request->id_producto .' and id_proceso = '. $request->id_proceso);
 
-        $procesos = DB::table('procesos as p')
-                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
-                        ->get();
+        $id = $request->id_producto;
 
-        $subprocesos = DB::table('subprocesos as p')
-                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
-                        ->where('p.idproceso',$request->id_proceso)
+        $procesos = DB::table('procesos as p')
+                        ->leftjoin('productos_procesos as pp',function($join)use($id){
+                            $join->on('pp.id_proceso','p.id')
+                            ->where('pp.id_producto',$id);})
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado , if(pp.horas > 0, pp.horas,p.horas) as horasp')
                         ->get();
+        $subprocesos = DB::table('subprocesos as p')
+                           ->leftjoin('productos_subprocesos as s',function($join)use($id){
+                                $join->on('s.id_subproceso','p.id')
+                                ->where('s.id_producto',$id);}) 
+                            ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                            ->where('p.idproceso',$request->id_proceso)
+                            ->get();
         //dd($subprocesos);
         $id_producto = $request->id_producto;
         $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
-        return json_encode($options);
+
+        $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
+                                      FROM productos p
+                                      LEFT JOIN familias f ON f.id = p.familia 
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                      LEFT JOIN (
+                                                SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
+                                                from productos_procesos  p
+                                                INNER JOIN procesos pp ON pp.id = p.id_proceso
+                                                WHERE p.id_producto = '. $id_producto.'
+                                                group by p.id_producto) s ON s.id_producto = p.id
+                                      where p.id ='. $id_producto);
+          
+          $info_producto = $info_producto[0];   
+
+          $info_proceso = DB::table('productos_procesos as pp') 
+                        ->leftjoin('procesos as p','p.id','pp.id_proceso' )
+                         ->where('id_producto',$id_producto)  
+                         ->selectraw('p.*')
+                         ->get();   
+
+          $info_material = DB::table('producto_materiales as pm') 
+                          ->join('materiales as m','m.id','pm.id_material')
+                         ->where('id_producto',$id_producto)  
+                         ->get(); 
+
+                       
+        $info_pro = '';
+        $info_mat = '';
+         foreach ($info_proceso as $pro) {
+            $info_pro .= '<span class="badge badge-pill badge-primary">'.$pro->procesos.'</span>&nbsp;';  
+         }
+
+         foreach ($info_material as $mate) {
+            $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
+         }
+
+         $costeo = view('productos.costeo',compact('info_mat','info_pro','info_producto'))->render();    
+
+         $array  = array('costeo' => $costeo , 
+                        'options' => $options);
+
+        return json_encode($array);
     }    
 
     function agrega_subproceso(Request $request){
-        $existe = DB::table('productos_subprocesos')
-                    ->selectraw('count(*) as existe')
-                    ->where([['id_subproceso',$request->id_subproceso],['id_producto',$request->id_producto]])
+        $existe = DB::table('productos_procesos')
+                    ->selectraw('ifnull(count(*),0)  as existe')
+                    ->where([['id_proceso',$request->id_proceso],['id_producto',$request->id_producto]])
                     ->get();
-        if($existe[0]->existe >0 ){
+        //return json_encode($existe[0]->existe);
+        if($existe[0]->existe == 0 ){
             return 1;
         }else{
             DB::table('productos_subprocesos')
@@ -318,15 +429,20 @@ class productosController extends AppBaseController
                           'id_subproceso'=>$request->id_subproceso,
                           'id_proceso'=>$request->id_proceso]);
 
+            $id = $request->id_producto;
             $procesos = DB::table('procesos as p')
-                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
-                        ->get(); 
+                            ->leftjoin('productos_procesos as pp',function($join)use($id){
+                                $join->on('pp.id_proceso','p.id')
+                                ->where('pp.id_producto',$id);})
+                            ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado, if(p.horas > 0, p.horas , pp.horas) as horasp')
+                            ->get();
             $subprocesos = DB::table('subprocesos as p')
-                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
-                        ->where('p.idproceso',$request->id_proceso)
-                        ->get();
+                               ->leftjoin('productos_subprocesos as s',function($join)use($id){
+                                    $join->on('s.id_subproceso','p.id')
+                                    ->where('s.id_producto',$id);}) 
+                                ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                                ->where('p.idproceso',$request->id_proceso)
+                                ->get();
 
             $id_producto = $request->id_producto;
             $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
@@ -338,16 +454,20 @@ class productosController extends AppBaseController
         #DB::update('delete from productos_procesos where id_producto = '.$request->id_producto .' and id_proceso = '. $request->id_proceso);
         DB::update('delete from productos_subprocesos where id_producto = '.$request->id_producto .' and id_subproceso = '. $request->id_subproceso);
 
+        $id = $request->id_producto;
         $procesos = DB::table('procesos as p')
-                        ->leftjoin('productos_procesos as pp','pp.id_proceso','p.id','pp.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado')
+                        ->leftjoin('productos_procesos as pp',function($join)use($id){
+                            $join->on('pp.id_proceso','p.id')
+                            ->where('pp.id_producto',$id);})
+                        ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado , if(pp.horas > 0, pp.horas,p.horas) as horasp')
                         ->get();
-
         $subprocesos = DB::table('subprocesos as p')
-                        ->leftjoin('productos_subprocesos as s','p.id','s.id_subproceso','s.id_producto',$request->id_producto)
-                        ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
-                        ->where('p.idproceso',$request->id_proceso)
-                        ->get();
+                           ->leftjoin('productos_subprocesos as s',function($join)use($id){
+                                $join->on('s.id_subproceso','p.id')
+                                ->where('s.id_producto',$id);}) 
+                            ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                            ->where('p.idproceso',$request->id_proceso)
+                            ->get();
         //dd($subprocesos);
         $id_producto = $request->id_producto;
         $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
@@ -468,7 +588,54 @@ class productosController extends AppBaseController
                           ->get();
             $id_producto = $request->id_producto;
             $options = view('productos.productos_materiales',compact('materiales','id_producto'))->render();    
-            return json_encode($options);
+
+            $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
+                                      FROM productos p
+                                      LEFT JOIN familias f ON f.id = p.familia 
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                      LEFT JOIN (
+                                                SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
+                                                from productos_procesos  p
+                                                INNER JOIN procesos pp ON pp.id = p.id_proceso
+                                                WHERE p.id_producto = '. $id_producto.'
+                                                group by p.id_producto) s ON s.id_producto = p.id
+                                      where p.id ='. $id_producto);
+          
+          $info_producto = $info_producto[0];   
+
+          $info_proceso = DB::table('productos_procesos as pp') 
+                        ->leftjoin('procesos as p','p.id','pp.id_proceso' )
+                         ->where('id_producto',$id_producto)  
+                         ->selectraw('p.*')
+                         ->get();   
+
+          $info_material = DB::table('producto_materiales as pm') 
+                          ->join('materiales as m','m.id','pm.id_material')
+                         ->where('id_producto',$id_producto)  
+                         ->get(); 
+
+                           
+            $info_pro = '';
+            $info_mat = '';
+             foreach ($info_proceso as $pro) {
+                $info_pro .= '<span class="badge badge-pill badge-primary">'.$pro->procesos.'</span>&nbsp;';  
+             }
+
+             foreach ($info_material as $mate) {
+                $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
+             }
+
+             $costeo = view('productos.costeo',compact('info_mat','info_pro','info_producto'))->render();    
+
+             $array  = array('costeo' => $costeo , 
+                            'options' => $options);
+             
+            return json_encode($array);
+
+            #return json_encode($options);
         }
     }
 
@@ -483,9 +650,126 @@ class productosController extends AppBaseController
                           ->get();
                           
       $id_producto = $request->id_producto;
-      $options = view('productos.productos_materiales',compact('materiales','id_producto'))->render();    
-      return json_encode($options);
+      $options = view('productos.productos_materiales',compact('materiales','id_producto'))->render();  
 
+       $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
+                                      FROM productos p
+                                      LEFT JOIN familias f ON f.id = p.familia 
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                      LEFT JOIN (
+                                                SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
+                                                from productos_procesos  p
+                                                INNER JOIN procesos pp ON pp.id = p.id_proceso
+                                                WHERE p.id_producto = '. $id_producto.'
+                                                group by p.id_producto) s ON s.id_producto = p.id
+                                      where p.id ='. $id_producto);
+          
+          $info_producto = $info_producto[0];   
+
+          $info_proceso = DB::table('productos_procesos as pp') 
+                        ->leftjoin('procesos as p','p.id','pp.id_proceso' )
+                         ->where('id_producto',$id_producto)  
+                         ->selectraw('p.*')
+                         ->get();   
+
+          $info_material = DB::table('producto_materiales as pm') 
+                          ->join('materiales as m','m.id','pm.id_material')
+                         ->where('id_producto',$id_producto)  
+                         ->get(); 
+
+                           
+            $info_pro = '';
+            $info_mat = '';
+             foreach ($info_proceso as $pro) {
+                $info_pro .= '<span class="badge badge-pill badge-primary">'.$pro->procesos.'</span>&nbsp;';  
+             }
+
+             foreach ($info_material as $mate) {
+                $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
+             }
+
+             $costeo = view('productos.costeo',compact('info_mat','info_pro','info_producto'))->render();    
+
+             $array  = array('costeo' => $costeo , 
+                            'options' => $options);
+             
+            return json_encode($array);  
+
+
+      #return json_encode($options);
+
+    }
+
+    function actualiza_proceso(Request $request){
+            DB::table('productos_procesos')
+                ->where([['id_proceso',$request->id_proceso],['id_producto',$request->id_producto]])
+                ->update(['horas'=>$request->horas]);
+
+            $id_producto = $request->id_producto;
+            $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
+                                      FROM productos p
+                                      LEFT JOIN familias f ON f.id = p.familia 
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                      LEFT JOIN (
+                                                SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
+                                                from productos_procesos  p
+                                                INNER JOIN procesos pp ON pp.id = p.id_proceso
+                                                WHERE p.id_producto = '. $id_producto.'
+                                                group by p.id_producto) s ON s.id_producto = p.id
+                                      where p.id ='. $id_producto);
+          
+          $info_producto = $info_producto[0];   
+
+          $info_proceso = DB::table('productos_procesos as pp') 
+                        ->leftjoin('procesos as p','p.id','pp.id_proceso' )
+                         ->where('id_producto',$id_producto)  
+                         ->selectraw('p.*')
+                         ->get();   
+
+          $info_material = DB::table('producto_materiales as pm') 
+                          ->join('materiales as m','m.id','pm.id_material')
+                         ->where('id_producto',$id_producto)  
+                         ->get(); 
+
+                           
+            $info_pro = '';
+            $info_mat = '';
+             foreach ($info_proceso as $pro) {
+                $info_pro .= '<span class="badge badge-pill badge-primary">'.$pro->procesos.'</span>&nbsp;';  
+             }
+
+             foreach ($info_material as $mate) {
+                $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
+             }
+
+             $subprocesos = DB::table('subprocesos as p')
+                           ->leftjoin('productos_subprocesos as s',function($join)use($id_producto){
+                                $join->on('s.id_subproceso','p.id')
+                                ->where('s.id_producto',$id_producto);}) 
+                            ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
+                            ->where('p.idproceso',$request->id_proceso)
+                            ->get();
+
+             $procesos = DB::table('procesos as p')
+                            ->leftjoin('productos_procesos as pp',function($join)use($id_producto){
+                                $join->on('pp.id_proceso','p.id')
+                                ->where('pp.id_producto',$id_producto);})
+                            ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado, if(pp.horas > 0, pp.horas,p.horas) as horasp')
+                            ->get();
+             $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+
+             $costeo = view('productos.costeo',compact('info_mat','info_pro','info_producto'))->render();    
+
+             $array  = array('costeo' => $costeo , 
+                            'options' => $options);
+             
+            return json_encode($array);
     }
 
 

@@ -40,7 +40,8 @@ class productos extends Model
         'costo_material',
         'peso',
         'costo_produccion',
-        'planta'
+        'planta',
+        'numero_parte'
     ];
 
     /**
@@ -61,7 +62,8 @@ class productos extends Model
         'costo_material'=>'float',
         'peso'=>'float',
         'costo_produccion'=>'float',
-        'planta'=>'integer'
+        'planta'=>'integer',
+        'numero_parte'=>'string'
     ];
 
     /**

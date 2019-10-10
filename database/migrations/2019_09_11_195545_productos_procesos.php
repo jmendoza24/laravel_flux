@@ -17,6 +17,7 @@ class ProductosProcesos extends Migration
             $table->increments('id');
             $table->integer('id_producto');
             $table->integer('id_proceso');
+            $table->integer('horas');
             $table->timestamps();
             $table->softDeletes();
         });

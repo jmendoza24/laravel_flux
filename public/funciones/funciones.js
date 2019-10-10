@@ -265,19 +265,27 @@ function delete_historial(id_historia, tipo, historia_tipo){
 
 
 function agrega_proceso(id_proceso,id_producto){
+  var horas = $("#horas"+id_proceso).val();
+  alert(horas);
   $.confirm({
             title: 'Confirmar!',
             content: 'Estas seguro que deseas agregar este proceso?',
             buttons: {
                 confirmar: function () {
                   $.ajax({
-                          data: {"id_proceso":id_proceso,"id_producto":id_producto},
+                          data: {"id_proceso":id_proceso,"id_producto":id_producto,"horas":horas},
                           url: '/api/v1/agrega_proceso',
                           dataType: 'json',
                           type:  'get',
                           success:  function (response) {  
-                            $("#listasubprocesos").html(response);
+                            $("#listasubprocesos").html(response.options);
+                            $("#costeos").html(response.costeo);
+                            
                             $('.switch:checkbox').checkboxpicker();
+                          },error(a,b,c){
+                            console.log(a);
+                            console.log(b);
+                            console.log(c);
                           }
                       }); 
 
@@ -312,7 +320,9 @@ function quitar_proceso(id_proceso,id_producto){
         type:  'get',
         success:  function (response) {  
           console.log(response);
-          $("#listasubprocesos").html(response);
+          //$("#listasubprocesos").html(response);
+          $("#listasubprocesos").html(response.options);
+          $("#costeos").html(response.costeo);
           $('.switch:checkbox').checkboxpicker();
         }
     }); 
@@ -329,9 +339,15 @@ function agrega_subproceso(id_subproceso,id_proceso,id_producto){
                           url: '/api/v1/agrega_subproceso',
                           dataType: 'json',
                           type:  'get',
-                          success:  function (response) {  
-                            $("#listasubprocesos").html(response);
-                            $('.switch:checkbox').checkboxpicker();
+                           success:  function (response) {
+                           console.log(response);  
+                            if(response==1){
+                              $.alert('El proceso debe se estar agregado poder agregar los subprocesos');
+                            }else{
+                              $("#listasubprocesos").html(response);
+                              $('.switch:checkbox').checkboxpicker();  
+                            }
+                            
                            // $.alert('Subroceso agregado');
                           }
                       }); 
@@ -505,7 +521,8 @@ function agrega_material(id_material, id_producto){
                           dataType: 'json',
                           type:  'get',
                           success:  function (response) {  
-                            $("#listamateriales").html(response);
+                            $("#listamateriales").html(response.options);
+                            $("#costeos").html(response.costeo);
                             $('.switch:checkbox').checkboxpicker();
                           }
                       }); 
@@ -527,7 +544,8 @@ function quitar_material(id_material, id_producto){
           dataType: 'json',
           type:  'get',
           success:  function (response) {  
-            $("#listamateriales").html(response);
+            $("#listamateriales").html(response.options);
+            $("#costeos").html(response.costeo);
             $('.switch:checkbox').checkboxpicker();
           }
       }); 
@@ -698,4 +716,23 @@ function actualiza_producto(producto){
       console.log(c);
     }
 }); 
+}
+
+function actualiza_proceso(proceso, producto){
+   $.ajax({
+        data: {"id_producto":producto,"id_proceso":proceso,"horas":$("#horas"+proceso).val()},
+        url: '/api/v1/actualiza_proceso',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          console.log(response);
+          $("#listasubprocesos").html(response.options);
+          $("#costeos").html(response.costeo);
+          $('.switch:checkbox').checkboxpicker();
+        },error(a,b,c){
+          console.log(a);
+          console.log(b);
+          console.log(c);
+        }
+    }); 
 }
