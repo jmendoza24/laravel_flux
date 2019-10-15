@@ -42,6 +42,8 @@ class CreateMaterialesTable extends Migration
             $table->text('remisionprov')->nullable();
             $table->text('reporteprod')->nullable();
             $table->text('resolucionprod')->nullable();
+            $table->integer('cantidad')->nullable();
+            $table->integer('metros')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

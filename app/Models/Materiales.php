@@ -74,7 +74,9 @@ class Materiales extends Model
         'ordencompra',
         'remisionprov',
         'reporteprod',
-        'resolucionprod'
+        'resolucionprod',
+        'cantidad',
+        'metros'
     ];
 
     /**
@@ -110,7 +112,9 @@ class Materiales extends Model
         'ordencompra' => 'string',
         'remisionprov' => 'string',
         'reporteprod' => 'string',
-        'resolucionprod' => 'string'
+        'resolucionprod' => 'string',
+        'cantidad' => 'integer',
+        'metros' => 'integer'
     ];
 
     /**

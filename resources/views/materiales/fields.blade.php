@@ -45,6 +45,14 @@
         </select>
         <div class="invalid-feedback">Este campo es requerido.</div>
     </div>
+     <div class="form-group col-sm-6">
+        {!! Form::label('cantidad', 'Cantidad:') !!}
+        {!! Form::number('cantidad', null, ['class' => 'form-control','min'=>'0']) !!}
+    </div>
+     <div class="form-group col-sm-6">
+        {!! Form::label('metros', 'Metros:') !!}
+        {!! Form::number('metros', null, ['class' => 'form-control','min'=>'0']) !!}
+    </div>
 </div>
 <h4 class="form-section" id="medida_div" style=""><i class="ft-mail"></i>Medidas</h4> <br/>
 <div class="row" style="" id="medidas">

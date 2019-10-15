@@ -56,21 +56,19 @@
           $display8 = "";
          }
 
-
         ?>
-
       <tr>
         <td>
             <label>{{ $mat->nforma }} {{ $mat->forma}}</label>
-          </td>
-        <td><input  type="number" id="cam{{ $mat->id}}1" {{ $display1 }}  class="form-control" step="any" min="0" name="a1"></td>
-        <td><input  type="number" id="cam{{ $mat->id}}2" {{ $display2}}  class="form-control" step="any" min="0" name="a2"></td>
-        <td><input  type="number" id="cam{{ $mat->id}}3" {{ $display3 }}  class="form-control" step="any" min="0" name="a4"></td>
-        <td><input  type="number" id="cam{{ $mat->id}}4" {{ $display4 }}  class="form-control" step="any" min="0" name="s2"></td>
-        <td><input  type="number" id="cam{{ $mat->id}}5" {{ $display5 }}  class="form-control" step="any" min="0" name="ss"></td>
-        <td><input  type="number" id="cam{{ $mat->id}}6" {{ $display6 }}  class="form-control" step="any" min="0" name="sss"></td>
-        <td><input  type="number" id="cam{{ $mat->id}}7" {{ $display7 }}  class="form-control" step="any" min="0" name="ssss"></td>
-        <td><input  type="number" id="cam{{ $mat->id}}8" {{ $display8 }}  style="width: 110px;" class="form-control" step="any" min="0" name="ssss"></td>
+        </td>
+        <td><input  type="number" id="espesor{{ $mat->id}}" {{ $display1 }}  class="form-control" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'espesor')" value="{{$mat->espesor}}"></td>
+        <td><input  type="number" id="ancho{{ $mat->id}}" {{ $display2}}   class="form-control" step="any" min="0"  onchange="guarda_materialforma({{ $mat->id}},'ancho')" value="{{ $mat->ancho}}"></td>
+        <td><input  type="number" id="altura{{ $mat->id}}" {{ $display3 }}  class="form-control" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'altura')" value="{{ $mat->altura}}"></td>
+        <td><input  type="number" id="peso_distancia{{ $mat->id}}" {{ $display4 }}  class="form-control" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'peso_distancia')" value="{{$mat->peso_distancia}}"></td>
+        <td><input  type="number" id="wide{{ $mat->id}}" {{ $display5 }}  class="form-control" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'wide')" value="{{$mat->wide}}"></td>
+        <td><input  type="number" id="lenght{{ $mat->id}}" {{ $display6 }}  class="form-control" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'lenght')" value="{{ $mat->lenght}}"></td>
+        <td><input  type="number" id="weight{{ $mat->id}}" {{ $display7 }}  class="form-control" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'weight')" value="{{ $mat->weight}}"></td>
+        <td><input  type="number" id="precio{{ $mat->id}}" {{ $display8 }}  style="width: 110px;" class="form-control" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'precio')" value="{{ $mat->precio}}"></td>
         <td>
           <span class="btn btn-float btn-outline-danger btn-round" onclick="elimina_producforma({{ $mat->id }},{{ $mat->id_producto }})"><i class="fa fa-trash"></i></span>
         </td>

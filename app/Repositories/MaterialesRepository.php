@@ -43,7 +43,9 @@ class MaterialesRepository extends BaseRepository
         'ordencompra',
         'remisionprov',
         'reporteprod',
-        'resolucionprod' 
+        'resolucionprod',
+        'cantidad',
+        'metros' 
     ];
 
     /**

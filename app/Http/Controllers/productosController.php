@@ -834,5 +834,12 @@ class productosController extends AppBaseController
 
     }
 
+    function guarda_materialforma(Request $request){
+        db::table('producto_materialesforma')
+        ->where('id',$request->id)
+        ->update([$request->columna=>$request->campo]);
+
+    }
+
 
 }

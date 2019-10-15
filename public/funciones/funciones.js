@@ -839,3 +839,15 @@ function elimina_producforma(id_mat, id_producto){
               }
           });
 }
+
+function guarda_materialforma(id, campo){
+  $.ajax({
+          data: {"id":id, "campo":$("#"+campo+id).val(),"columna":campo},
+          url: '/api/v1/guarda_materialforma',
+          dataType: 'json',
+          type:  'get',
+          success:  function (response) {  
+            //$("#listamateriales").html(response);
+          }
+      });
+}
