@@ -798,3 +798,44 @@ function showcampos(id_mat){
   }
 
 }
+
+function agrega_material_forma(id_producto){
+  if($("#idforma").val() !=""){
+  $.ajax({
+        data: {"id_producto":id_producto,"id_forma":$("#idforma").val()},
+        url: '/api/v1/agrega_material_forma',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          $("#listamateriales").html(response);
+        }
+    }); 
+}else{
+  $.alert("Seleccione una forma");
+}
+}
+
+function elimina_producforma(id_mat, id_producto){
+  $.confirm({
+            title: 'Fluxmetals',
+            content: 'Estas seguro que deseas eliminar esta forma?',
+            buttons: {
+                confirmar: function () {
+                   $.ajax({
+                          data: {"id_producto":id_producto,"id_forma":id_mat},
+                          url: '/api/v1/elimina_producforma',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                            $("#listamateriales").html(response);
+                          }
+                      }); 
+
+                },
+                cancelar: function () {
+                   
+
+                }
+              }
+          });
+}

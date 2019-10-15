@@ -115,6 +115,12 @@ class productosController extends AppBaseController
     public function edit($id){
          $subprocesos = array();
          $opcion = 'nada';
+         $materialesformas = DB::table('producto_materialesforma as p')
+                            ->join('formas as f','p.forma','f.id')
+                            ->where('p.id_producto',$id)
+                            ->selectraw('p.*, f.forma as nforma')
+                            ->get();
+
          $producto_dibujos = array('tiempo_entrega'=>'',
                                     'revision'=>'',
                                     'dibujo'=>'',
@@ -190,7 +196,7 @@ class productosController extends AppBaseController
 
          $plantas = DB::table('plantas')->get();
          $formas = DB::table('formas')->get();
-        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas'));
+        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas','materialesformas'));
     }
 
     /**
@@ -792,7 +798,39 @@ class productosController extends AppBaseController
                       'costo'=>$request->costo]);
         }
 
+    }
 
+    function agrega_material_forma(Request $request){
+        DB::table('producto_materialesforma')
+        ->insert(['id_producto'=>$request->id_producto,
+                   'forma'=>$request->id_forma]);
+
+        $materialesformas = DB::table('producto_materialesforma as p')
+                            ->join('formas as f','p.forma','f.id')
+                            ->where('p.id_producto',$request->id_producto)
+                            ->selectraw('p.*, f.forma as nforma')
+                            ->get();
+
+        $options = view('productos.productos_materiales',compact('materialesformas'))->render();    
+
+        return json_encode($options);
+
+    }
+
+    function elimina_producforma(Request $request){
+        DB::table('producto_materialesforma')
+        ->where('id',$request->id_forma)
+        ->delete();
+
+        $materialesformas = DB::table('producto_materialesforma as p')
+                            ->join('formas as f','p.forma','f.id')
+                            ->where('p.id_producto',$request->id_producto)
+                            ->selectraw('p.*, f.forma as nforma')
+                            ->get();
+
+        $options = view('productos.productos_materiales',compact('materialesformas'))->render();    
+
+        return json_encode($options);
 
     }
 

@@ -245,12 +245,12 @@
           </select>
         </td>
         <td>
-          <span class="btn btn-primary">Aregar</span>
+          <span class="btn btn-primary" onclick="agrega_material_forma({{ $productos->id }})">Agregar</span>
         </td>
       </tr>
     </table>
     </div>
-    <div id="listamateriales" style="overflow: scroll;">
+    <div id="listamateriales" style="overflow: scroll; max-height: 600px;">
       @include('productos.productos_materiales')
     </div>
   </div>

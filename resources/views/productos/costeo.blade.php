@@ -47,7 +47,7 @@
           @endif
 
     </td>
-  </tr>--->
+  </tr>
   <tr>
     <td>Materiales </td>
     <td>
@@ -61,7 +61,7 @@
           @endif
 
     </td>
-  </tr>
+  </tr>--->
   <tr>
     <td>Horas hombre</td>
     <td>{{ $info_producto->sumahora }} horas</td>
