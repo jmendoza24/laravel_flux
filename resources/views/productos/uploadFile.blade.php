@@ -5,23 +5,23 @@
 	 <div class="row">
       <div class="col-md-12">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="empresa">Nombre</label>
+          <label class="col-md-3 label-control" for="empresa">Id Dibujo:</label>
           <div class="col-md-9">
             <input type="text" min="0" name="dibujo_nombre" id="dibujo_nombre" required=""  class="form-control" value="{{ $producto_dibujos->dibujo_nombre }}">
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="empresa">Tiempo de entrega</label>
+          <label class="col-md-3 label-control" for="empresa">Fecha de revisión:</label>
           <div class="col-md-9">
-            <input type="number" min="0" name="tiempoentrega" id="tiempoentrega" required=""  class="form-control" value="{{ $producto_dibujos->tiempo_entrega }}">
+            <input type="date" min="0" name="tiempoentrega" id="tiempoentrega" required=""  class="form-control" value="{{ $producto_dibujos->tiempo_entrega }}">
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">Revisión</label>
+          <label class="col-md-3 label-control" for="userinput2">Número de revisión:</label>
           <div class="col-md-9">
            	<input type="number" min="0" name="revision" id="revision" class="form-control" value="{{ $producto_dibujos->revision }}">
            	<div class="invalid-feedback">Este campo es requerido.</div>
@@ -30,7 +30,7 @@
       </div>
       <div class="col-md-12">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="empresa">Dibujo</label>
+          <label class="col-md-3 label-control" for="empresa">Dibujo:</label>
           <div class="col-md-9">
             <input type="file" name="select_file" id="select_file" class="form-control"  />
             @if(!empty($producto_dibujos->dibujo))

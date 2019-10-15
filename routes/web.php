@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/delete_producto', 'cotizacionesController@delete_producto');
 	Route::get('/actualiza_producto', 'cotizacionesController@actualiza_producto');
 	Route::get('/actualiza_proceso', 'productosController@actualiza_proceso');
+	Route::get('/actualiza_costoplanta', 'productosController@actualiza_costoplanta');
 
 	
 });

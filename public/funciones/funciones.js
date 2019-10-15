@@ -736,3 +736,65 @@ function actualiza_proceso(proceso, producto){
         }
     }); 
 }
+
+function guarda_horas(id_planta, id_prod){
+  $.ajax({
+        data: {"id_producto":id_prod,"id_planta":id_planta,"costo":$("#plantacosto"+id_planta).val()},
+        url: '/api/v1/actualiza_costoplanta',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+           console.log(response);
+          //$("#listasubprocesos").html(response);
+        }
+    }); 
+}
+
+function showcampos(id_mat){
+  var forma = $("#tipoforma").val();
+  var campos = [1,2,3,4,5,6,7,8];
+    for (x=0;x<campos.length;x++){
+      $("#cam"+id_mat+campos[x]).hide();
+    }
+
+  if(forma ==''){
+    $.alert("Seleccione una forma")
+  }else if(forma ==1 || forma ==2){
+    var campos = [1,5,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+id_mat+campos[x]).show();
+    }
+  }else if(forma ==3 || forma == 4 || forma == 14){
+    var campos = [1,2,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+id_mat+campos[x]).show();
+    }
+  }else if(forma ==5 || forma ==6){
+    var campos = [1,2,3,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+id_mat+campos[x]).show();
+    }
+  }else if(forma ==7 || forma ==8 || forma ==9 || forma ==10){
+    var campos = [3,4,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+id_mat+campos[x]).show();
+    }
+  }else if(forma ==11 || forma ==12){
+    var campos = [2,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+id_mat+campos[x]).show();
+    }
+  }else if(forma ==13){
+    var campos = [1,4,5,6,7,8];
+
+    for (x=0;x<campos.length;x++){
+      $("#cam"+id_mat+campos[x]).show();
+    }
+  }
+
+}

@@ -63,6 +63,7 @@ class productosController extends AppBaseController
                                     'dibujo'=>'',
                                     'id'=>''
                                     );
+       # $plantas  = DB::table('plantas')->get();
         $info_producto = array('');        
         return view('productos.create',compact('familias','clientes','tipoacero','tipoestructura','producto_dibujos','info_producto'));
     }
@@ -154,7 +155,7 @@ class productosController extends AppBaseController
                                       LEFT JOIN (
                                              SELECT dibujo_nombre, revision, id_producto
                                              FROM producto_dibujos
-                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = '.$id_producto.')) d ON d.id_producto = p.id
                                       LEFT JOIN (
                                                 SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
                                                 from productos_procesos  p
@@ -187,7 +188,9 @@ class productosController extends AppBaseController
             $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
          }
 
-        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto'));
+         $plantas = DB::table('plantas')->get();
+         $formas = DB::table('formas')->get();
+        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas'));
     }
 
     /**
@@ -770,6 +773,27 @@ class productosController extends AppBaseController
                             'options' => $options);
              
             return json_encode($array);
+    }
+
+    function actualiza_costoplanta(Request $request){
+        $existe = DB::table('planta_horas')->where([['id_producto',$request->id_producto],['id_planta',$request->id_planta]])->selectraw('count(*) as existe')->get();
+        $existe = $existe[0];
+
+        
+
+        if($existe->existe>0){
+            db::table('planta_horas')
+            ->where([['id_producto',$request->id_producto],['id_planta',$request->id_planta]])
+            ->update(['costo'=>$request->costo]);
+        }else{
+            db::table('planta_horas')
+            ->insert(['id_producto'=>$request->id_producto,
+                      'id_planta'=>$request->id_planta,
+                      'costo'=>$request->costo]);
+        }
+
+
+
     }
 
 

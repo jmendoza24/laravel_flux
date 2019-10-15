@@ -27,7 +27,7 @@
                 <td style="text-align: left;">
                  <a onclick="ver_proceso({{$proc->id}},{{$id_producto}})">{{ $proc->procesos }}</a>
                </td>
-                <td><input type="number" onchange="@if($proc->asignado==1) actualiza_proceso({{$proc->id}},{{$id_producto}}) @endif" style="width: 100px;" name="horas{{$proc->id}}" class="form-control"  id="horas{{$proc->id}}" value="{{ $proc->horasp}}" min="0"></td>
+                <td><input type="number" onchange="@if($proc->asignado==1) actualiza_proceso({{$proc->id}},{{$id_producto}}) @endif" style="width: 100px;" name="horas{{$proc->id}}" class="form-control"  id="horas{{$proc->id}}" value="{{ $proc->horasp}}" min="0" max="100"></td>
             </tr>
             @endforeach
             </tbody>   
