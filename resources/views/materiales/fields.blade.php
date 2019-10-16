@@ -50,7 +50,7 @@
         {!! Form::number('cantidad', null, ['class' => 'form-control','min'=>'0']) !!}
     </div>
      <div class="form-group col-sm-6">
-        {!! Form::label('metros', 'Metros:') !!}
+        {!! Form::label('metros', 'Metros inventario:') !!}
         {!! Form::number('metros', null, ['class' => 'form-control','min'=>'0']) !!}
     </div>
 </div>

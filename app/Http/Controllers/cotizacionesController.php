@@ -70,8 +70,8 @@ class cotizacionesController extends AppBaseController
                         ->get();
         $detalle = DB::table('cotizacion_detalle as c')
                         ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
-                        ->selectraw('c.*, p.*,nombre_corto ,c.id as idc')
+                        ->leftjoin('familias as f','f.id','p.familia')
+                        ->selectraw('c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia')
                         ->where('c.id_cotizacion',$num_cotizacion)
                         ->get();
                
@@ -83,43 +83,10 @@ class cotizacionesController extends AppBaseController
        // $dibujos = DB::table('producto_dibujos')->where('id_producto',$cotizacion->producto)->get();
         $condiciones = DB::table('condiciones')->where('tipo',1)->get();
         $income = DB::table('income_terms')->get();
-        $productos = DB::table('productos')->get();
-
-        $info_producto  = DB::select('SELECT p.numero_parte, p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision, if(pm.conteo >0,1,0) as prodmat
-                                      FROM cotizacion_detalle cd
-                                      inner join productos p on p.id = cd.producto
-                                      LEFT JOIN familias f ON f.id = p.familia 
-                                      LEFT JOIN (
-                                             SELECT dibujo_nombre, revision, id_producto
-                                             FROM producto_dibujos
-                                             WHERE id IN (SELECT MAX(pd.id) 
-                                                            FROM producto_dibujos as pd
-                                                            inner join cotizacion_detalle cd on pd.id_producto = cd.producto 
-                                                            where cd.id_cotizacion ='. $num_cotizacion.'
-                                                group by cd.producto
-                                             )) d ON d.id_producto = p.id
-                                      LEFT JOIN (
-                                                SELECT SUM(if(p.horas > 0, p.horas , pp.horas)) AS sumahora, id_producto
-                                                from productos_procesos  p
-                                                inner join cotizacion_detalle cd on p.id_producto = cd.producto
-                                                INNER JOIN procesos pp ON pp.id = p.id_proceso
-                                                WHERE cd.id_cotizacion ='. $num_cotizacion.'
-                                                group by p.id_producto) s ON s.id_producto = p.id
-                                      left join (
-                                                select count(*) as conteo, id_producto
-                                                from producto_materiales m
-                                                inner join cotizacion_detalle cd on m.id_producto = cd.producto
-                                                where cd.id_cotizacion ='. $num_cotizacion.'
-                                                group by cd.producto)  as pm on pm.id_producto = p.id 
-                                      where cd.id_cotizacion ='. $num_cotizacion);
-          #dd($info_producto);
-          /**foreach ($info_producto as $info) {
-              dd($info->tiempo_entrega);
-          }*/
+        $productos = DB::table('productos')->get();      
 
 
-
-        return view('cotizaciones.index',compact('cotizacion','info_producto','condiciones','income','productos','num_cotizacion','clientes','detalle'));
+        return view('cotizaciones.index',compact('cotizacion','condiciones','income','productos','num_cotizacion','clientes','detalle'));
     }
 
     /**
@@ -328,8 +295,8 @@ class cotizacionesController extends AppBaseController
 
           $detalle = DB::table('cotizacion_detalle as c')
                         ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
-                        ->selectraw('c.*, p.*,nombre_corto ,c.id as idc')
+                        ->leftjoin('familias as f','f.id','p.familia')
+                        ->selectraw('c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia')
                         ->where('c.id_cotizacion',$num_cotizacion)
                         ->get();
 
@@ -347,8 +314,8 @@ class cotizacionesController extends AppBaseController
 
         $detalle = DB::table('cotizacion_detalle as c')
                         ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
-                        ->selectraw('c.*, p.*,nombre_corto ,c.id as idc')
+                        ->leftjoin('familias as f','f.id','p.familia')
+                        ->selectraw('c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia')
                         ->where('c.id_cotizacion',$num_cotizacion)
                         ->get();
 
@@ -366,8 +333,8 @@ class cotizacionesController extends AppBaseController
 
         $detalle = DB::table('cotizacion_detalle as c')
                         ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('clientes as cl','cl.id','p.id_empresa')
-                        ->selectraw('c.*, p.*,nombre_corto ,c.id as idc')
+                        ->leftjoin('familias as f','f.id','p.familia')
+                        ->selectraw('c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia')
                         ->where('c.id_cotizacion',$num_cotizacion)
                         ->get();
 

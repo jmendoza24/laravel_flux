@@ -1,6 +1,10 @@
 @section('titulo')
     Cotización FX-000{{ $num_cotizacion }} | <b>Fecha :</b> {{ date('Y-m-d') }}
 @endsection
+
+<!-- Step 1 -->
+<h6>Cotizar</h6>
+<fieldset>
   <div class="row ">
     <div class="col-md-5">
       <div class="form-group">
@@ -77,8 +81,64 @@
     <br>
     
   </div>
-  <hr>
-  <div class="form-group col-sm-12" style="text-align: right;">
-    <a href="" class="btn btn-warning mr-1">Cancelar</a>
-    <a href="" class="btn btn-primary">Enviar cotización</a>
-</div>
+  
+</fieldset>
+<!-- Step 2 -->
+<h6>Check List</h6>
+<fieldset>
+  <div class="row">
+    
+    <div class="col-md-12">
+      
+      
+      
+    </div>
+    
+  </div>
+</fieldset>
+
+<h6>Invoice</h6>
+<fieldset>
+  <div class="row">
+    <div class="col-md-12">
+      <h5 style="">Cotización <b> {{ $num_cotizacion }} </b></h5>
+      <hr>
+      <table class="table table-bordered">
+        <thead class="" style="background: #518a87; border: 1px solid #518a87; color: white;">
+          <tr>
+            <th>Número parte</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="nparte"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <h5>Check List Información<hr/></h5>
+      <div id="daily-activity" class="table-responsive height-350">
+          <table class="table table-bordered table-hover mb-0">
+            <tbody>
+              @for($i=1; $i<=10; $i++)
+              <tr>
+                <td>
+                  <div class="d-inline-block custom-control custom-checkbox">
+                    <input type="checkbox" name="status4" class="custom-control-input required" required="">
+                    <label class="custom-control-label" for="staffing4">Staffing</label>
+                  </div>
+                </td>
+                <td>Bricks Walking</td>
+              </tr>
+              @endfor
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>
+</fieldset>
