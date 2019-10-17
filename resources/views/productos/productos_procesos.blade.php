@@ -27,7 +27,12 @@
                 <td style="text-align: left;">
                  <a onclick="ver_proceso({{$proc->id}},{{$id_producto}})">{{ $proc->procesos }}</a>
                </td>
-                <td><input type="number" onchange="@if($proc->asignado==1) actualiza_proceso({{$proc->id}},{{$id_producto}}) @endif" style="width: 100px;" name="horas{{$proc->id}}" class="form-control"  id="horas{{$proc->id}}" value="{{ $proc->horasp}}" min="0" max="100"></td>
+                <td>
+                  <select class="form-control" onchange="@if($proc->asignado==1) actualiza_proceso({{$proc->id}},{{$id_producto}}) @endif" name="horas{{$proc->id}}" class="form-control"  id="horas{{$proc->id}}">
+                    @for($i = 0 ; $i <=200; $i++)
+                    <option value="{{ $i * .5}}" {{($i * .5==$proc->horasp)? 'selected' :''}} >{{ number_format( $i * .5,1)}}</option>
+                    @endfor
+                  </select>
             </tr>
             @endforeach
             </tbody>   

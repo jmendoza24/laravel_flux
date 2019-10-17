@@ -4,6 +4,7 @@
         <th>Número parte</th>
         <th>Descripción</th>
         <th>Familia</th>
+        <th>Id Dibujo</th> 
         <th>Cantidad</th>
         <th>Tiempo entrega (dias)</th>
         <th>Costo unitario</th>
@@ -17,6 +18,7 @@
         <td>{{ $det->numero_parte }}</td>
         <td>{{ $det->descripcion}}</td>
         <td>{{ $det->nfamilia }}</td>
+        <td>{{ $det->dibujo_nombre}}</td>
         <td><input type="number" style="text-align: right;" name="cantidad{{$det->id}}" id="cantidad{{$det->id}}" class="form-control" min="1" value="{{ $det->cantidad}}" onchange="actualiza_producto({{ $det->id}})"></td>
         <td style="text-align: center;">{{ $det->tiempo_entrega }}</td>
         <td style="text-align: right;">${{ number_format($det->costo_produccion,2)}}</td>

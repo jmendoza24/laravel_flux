@@ -61,19 +61,26 @@ class cotizacionesController extends AppBaseController
 
         $tipo = 1;
         $cotizacion = DB::table('cotizaciones as c')
-                        ->leftjoin('condiciones as co',function($join)use($tipo){
-                                        $join->on('co.id','c.id_notas')
-                                            ->where('co.tipo',$tipo);})
                         ->leftjoin('income_terms as ic','ic.id','c.income')
+                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw('c.*, co.condicion as notas')
+                        ->selectraw('c.*, nombre_corto,id_proveedor , correo_compra, compra_telefono')
                         ->get();
-        $detalle = DB::table('cotizacion_detalle as c')
-                        ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('familias as f','f.id','p.familia')
-                        ->selectraw('c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia')
-                        ->where('c.id_cotizacion',$num_cotizacion)
-                        ->get();
+
+        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from cotizacion_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                where c.id_cotizacion = '.$num_cotizacion);
                
         $cotizacion = $cotizacion[0];
         
@@ -83,7 +90,7 @@ class cotizacionesController extends AppBaseController
        // $dibujos = DB::table('producto_dibujos')->where('id_producto',$cotizacion->producto)->get();
         $condiciones = DB::table('condiciones')->where('tipo',1)->get();
         $income = DB::table('income_terms')->get();
-        $productos = DB::table('productos')->get();      
+        $productos = DB::table('productos')->where('id_empresa',$cotizacion->cliente)->get();      
 
 
         return view('cotizaciones.index',compact('cotizacion','condiciones','income','productos','num_cotizacion','clientes','detalle'));
@@ -239,10 +246,10 @@ class cotizacionesController extends AppBaseController
         $num_cotizacion = $request->session()->get('num_cot');
 
         $cliente = DB::table('cotizaciones')
-                ->selectraw('distinct cliente')
-                ->get();
+                    ->where('id',$num_cotizacion)
+                    ->get();
 
-        if($cliente != $request->cliente){
+        if($cliente[0]->cliente != $request->cliente){
             db::table('cotizacion_detalle')
             ->where('id_cotizacion',$num_cotizacion)
             ->delete();
@@ -251,8 +258,33 @@ class cotizacionesController extends AppBaseController
         $productos = DB::table('productos')
                     ->where('id_empresa',$request->cliente)
                     ->get();
+        $prod = '<option value="">Seleccione una opcion</option>';
+        foreach ($productos as $p) {
+            $prod .= '<option value="'.$p->id.'">'.$p->numero_parte.'</option>';
+        }
+        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from cotizacion_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                where c.id_cotizacion = '.$num_cotizacion);
 
-        return json_encode($productos);
+        $options = view('cotizaciones.detalle',compact('detalle'))->render();
+
+        $clientes = DB::table('clientes')->where('id',$request->cliente)->get();
+        $arrayName = array('productos' => $prod , 
+                            'clientes'=>$clientes,
+                            'options'=>$options);
+
+        return json_encode($arrayName);
    
 
     }
@@ -276,7 +308,7 @@ class cotizacionesController extends AppBaseController
                                       LEFT JOIN (
                                              SELECT dibujo_nombre, revision, id_producto,id
                                              FROM producto_dibujos
-                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = 1)) d ON d.id_producto = p.id
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = '.$request->producto.')) d ON d.id_producto = p.id
                                       where p.id ='. $request->producto);
           
 
@@ -293,15 +325,27 @@ class cotizacionesController extends AppBaseController
           ->where('id',$num_cotizacion)
           ->update(['cliente'=>$info_producto[0]->id_empresa]);
 
-          $detalle = DB::table('cotizacion_detalle as c')
-                        ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('familias as f','f.id','p.familia')
-                        ->selectraw('c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia')
-                        ->where('c.id_cotizacion',$num_cotizacion)
-                        ->get();
+          $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from cotizacion_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                where c.id_cotizacion = '.$num_cotizacion);
 
             $options = view('cotizaciones.detalle',compact('detalle'))->render();    
-             return json_encode($options);
+            $clientes = DB::table('clientes')->where('id',$info_producto[0]->id_empresa)->get();
+
+            $arrayName = array('options' => $options,
+                                'clientes'=>$clientes );
+             return json_encode($arrayName);
          }
 
     }
@@ -312,12 +356,20 @@ class cotizacionesController extends AppBaseController
         ->where([['id_cotizacion',$num_cotizacion],['id',$request->id_prod]])
         ->delete();
 
-        $detalle = DB::table('cotizacion_detalle as c')
-                        ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('familias as f','f.id','p.familia')
-                        ->selectraw('c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia')
-                        ->where('c.id_cotizacion',$num_cotizacion)
-                        ->get();
+        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from cotizacion_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                where c.id_cotizacion = '.$num_cotizacion);
 
         $options = view('cotizaciones.detalle',compact('detalle'))->render();    
          return json_encode($options);
@@ -331,12 +383,20 @@ class cotizacionesController extends AppBaseController
         ->where('id',$request->producto)
         ->update(['cantidad'=>$request->cantidad]);
 
-        $detalle = DB::table('cotizacion_detalle as c')
-                        ->leftjoin('productos as p', 'c.producto','p.id')
-                        ->leftjoin('familias as f','f.id','p.familia')
-                        ->selectraw('c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia')
-                        ->where('c.id_cotizacion',$num_cotizacion)
-                        ->get();
+        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from cotizacion_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                where c.id_cotizacion = '.$num_cotizacion);
 
         $options = view('cotizaciones.detalle',compact('detalle'))->render();    
          return json_encode($options);

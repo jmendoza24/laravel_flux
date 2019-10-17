@@ -611,7 +611,7 @@ function obtiene_producto(){
 
   if(cliente !=cliente_cot && cliente_cot != 0){
   $.confirm({
-            title: 'Confirmar!',
+            title: 'Fluxmetals',
             content: 'Estas seguro que deseas cambiar de cliente, si cambias se perdera la informacion de los productos seleccionados?',
             buttons: {
                 confirmar: function () {
@@ -621,7 +621,12 @@ function obtiene_producto(){
                           dataType: 'json',
                           type:  'get',
                           success:  function (response) {  
-                            console.log(response)
+                            $("#producto").html(response.productos);
+                            $("#clientenombre").html(response.clientes[0].nombre_corto);
+                            $("#numproveedor").html(response.clientes[0].id_proveedor);
+                            $("#email").html(response.clientes[0].correo_compra);
+                            $("#telefono").html(response.clientes[0].compra_telefono);
+                            $("#detalle_cotiza").html(response.options);
                           }
                       }); 
 
@@ -640,7 +645,13 @@ function obtiene_producto(){
               dataType: 'json',
               type:  'get',
               success:  function (response) {  
-                console.log(response)
+                console.log(response);
+                $("#producto").html(response.productos);
+                $("#clientenombre").html(response.clientes.nombre_corto);
+                $("#numproveedor").html(response.clientes.id_proveedor);
+                $("#email").html(response.clientes.correo_compra);
+                $("#telefono").html(response.clientes.compra_telefono);
+                $("#detalle_cotiza").html(response.options);
               }
           }); 
     }
@@ -649,7 +660,6 @@ function obtiene_producto(){
 
 
 function agrega_producto(){
-  
     var parameters = {"producto":$("#producto").val(),
                       "cliente":$("#cliente").val()}
 
@@ -666,7 +676,12 @@ function agrega_producto(){
                 if(response==1){
                     $.alert('El producto ya se encuentra agregado');
                 }else{
-                  $("#detalle_cotiza").html(response);
+                  console.log(response);
+                  $("#detalle_cotiza").html(response.options);
+                  $("#clientenombre").html(response.clientes[0].nombre_corto);
+                  $("#numproveedor").html(response.clientes[0].id_proveedor);
+                  $("#email").html(response.clientes[0].correo_compra);
+                  $("#telefono").html(response.clientes[0].compra_telefono);
                 }
                 
               }

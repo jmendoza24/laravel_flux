@@ -122,17 +122,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="empresa">Numero proveedor</label>
           <div class="col-md-9">
-            <input type="text" name="id_proveedor" id="id_proveedor" class="form-control">
-            <!--- <select class="form-control select2" name="id_proveedor" id="id_proveedor">
-              <option value="">Seleccione una opcion</option>
-              @foreach($proveedores as $prov)
-              <option value="{{ $prov->id}}" 
-                @if(!empty($clientes->id_proveedor))
-                  {{ ($clientes->id_proveedor == $prov->id) ? 'selected' : '' }}
-                @endif >
-                {{ $prov->nombre}}</option>
-              @endforeach
-              </select>--->
+             {!! Form::text('id_proveedor', null, ['class' => 'form-control']) !!}
           </div>
         </div>
       </div>
@@ -221,7 +211,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Telefono</label>
           <div class="col-md-9">
-            {!! Form::text('telefono', null, ['class' => 'form-control phone-inputmask']) !!}
+            {!! Form::text('compra_telefono', null, ['class' => 'form-control phone-inputmask']) !!}
           </div>
         </div>
       </div>
