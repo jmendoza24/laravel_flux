@@ -85,6 +85,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/agrega_material_forma', 'productosController@agrega_material_forma');
 	Route::get('/elimina_producforma', 'productosController@elimina_producforma');
 	Route::get('/guarda_materialforma', 'productosController@guarda_materialforma');
+	Route::get('cotizaciones/enviar_cotizacion', 'cotizacionesController@enviar_cotizacion')->name('cotizacion.enviar');
 	
 });
 

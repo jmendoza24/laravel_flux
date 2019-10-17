@@ -69,7 +69,7 @@
         <textarea class="form-control" id="notas" name="notas"><?php  if($cotizacion->id_notas==''){
                                                                   echo ($condiciones[0]->condicion);
                                                                 }else{
-                                                                   echo ($cotizacion->notas);
+                                                                   echo ($cotizacion->id_notas);
                                                                  } ?></textarea>
       </div>
     </div>
@@ -95,5 +95,5 @@
   <hr>
   <div class="form-group col-sm-12" style="text-align: right;">
     <a href="" class="btn btn-warning mr-1">Cancelar</a>
-    <a href="" class="btn btn-primary">Enviar cotización</a>
+    <a href="{{ route('cotizacion.enviar') }}"  class="btn btn-primary">Enviar cotización</a>
 </div>

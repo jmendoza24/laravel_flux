@@ -12,6 +12,7 @@ use Response;
 use DB;
 use Sesion;
 use view;
+use PDF;
 
 class cotizacionesController extends AppBaseController
 {
@@ -401,5 +402,39 @@ class cotizacionesController extends AppBaseController
         $options = view('cotizaciones.detalle',compact('detalle'))->render();    
          return json_encode($options);
 
+    }
+
+    function enviar_cotizacion(Request $request){
+        $num_cotizacion = $request->session()->get('num_cot');
+
+        $cotizacion = DB::table('cotizaciones as c')
+                        ->leftjoin('income_terms as ic','ic.id','c.income')
+                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
+                        ->leftjoin('tbl_estados as e', 'e.id', 'cl.estado')
+                        ->leftjoin('tbl_municipios as m','m.id','cl.municipio')
+                        ->where('c.id',$num_cotizacion)
+                        ->selectraw("c.*, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', m.municipio,', ', e.estado) as direccion")
+                        ->get();
+        $cotizacion = $cotizacion[0];
+
+        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from cotizacion_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                where c.id_cotizacion = '.$num_cotizacion);
+
+            #return view('cotizaciones.cotizacion_envio',compact('cotizacion','detalle'));
+
+         $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle'))->setPaper('A4-L','landscape');
+         return $pdf->download('ejemplo.pdf');
     }
 }
