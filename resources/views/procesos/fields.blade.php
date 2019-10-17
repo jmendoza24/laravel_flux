@@ -8,17 +8,18 @@
       </div>
     </div>
   </div>
-  <div class="col-md-8">
+<input type="hidden" name="horas" id="horas" class="form-control" required="" min="0" value="0">
+  <!--<div class="col-md-8">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput1">Horas hombre</label>
       <div class="col-md-9">
-        <input type="number" name="horas" id="horas" class="form-control" required="" min="0">
+        
         <div class="invalid-feedback">Este campo es requerido.</div>
       </div>
     </div>
   </div>
-</div>
- <div class="row">   
+</div>--->
+  
   <div class="col-md-8">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput1">Descripción</label>

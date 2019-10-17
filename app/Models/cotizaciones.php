@@ -38,12 +38,6 @@ class cotizaciones extends Model
         'fecha',
         'producto',
         'cliente',
-        'numero_parte',
-        'descripcion',
-        'dibujo',
-        'cantidad',
-        'costo',
-        'precio_usd',
         'id_notas',
         'tiempo',
         'income',
@@ -61,13 +55,7 @@ class cotizaciones extends Model
         'producto'=>'integer',
         'fecha' => 'date',
         'cliente' => 'integer',
-        'numero_parte' => 'string',
-        'descripcion' => 'string',
-        'dibujo' => 'integer',
-        'cantidad' => 'integer',
-        'costo' => 'float',
-        'precio_usd' => 'float',
-        'id_notas' => 'integer',
+        'id_notas' => 'string',
         'tiempo' => 'integer',
         'income' => 'integer',
         'termino_pago' => 'string',
@@ -81,15 +69,7 @@ class cotizaciones extends Model
      */
     public static $rules = [
         'fecha' => 'required',
-        'cliente' => 'required',
-        'numero_parte' => 'required',
-        'dibujo' => 'required',
-        'cantidad' => 'required',
-        'costo' => 'required',
-        'precio_usd' => 'required',
-        'tiempo' => 'required',
-        'income' => 'required',
-        'vendedor' => 'required'
+        'cliente' => 'required'
     ];
 
     

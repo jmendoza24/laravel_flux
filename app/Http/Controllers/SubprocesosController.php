@@ -32,6 +32,7 @@ class SubprocesosController extends AppBaseController
     {
         $subprocesos = DB::table('subprocesos as s')
                         ->leftjoin('procesos as p','p.id','s.idproceso')
+                        ->selectraw('s.* , p.procesos')
                         ->get();
 
         return view('subprocesos.index')

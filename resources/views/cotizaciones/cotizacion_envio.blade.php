@@ -1,11 +1,13 @@
+@if($envio==1)
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+@endif
 <table class="table table-bordered">
 	<tr>
-		<td style="border-right: 1px solid white; "><img src="{{ url('app-assets/images/logo/flux.png') }}" style="width: 140px;"/></td>
+		<td style="border-right: 1px solid white; "><img src="{{ asset('app-assets/images/logo/flux.png') }}" style="width: 140px;"/></td>
 		<td style="border-right: 1px solid white; "><h4>Quotation</h4></td>
 		<td><h6>Quotation ID: <b>00{{ $cotizacion->id }}</b></h6>
 			<h6>Date: <b>{{  date("m-d-Y", strtotime($cotizacion->fecha)) }}</h6>
-			<h6>Created by: </h6></td>
+			<h6>Created by: {{$cotizacion->name}} </h6></td>
 	</tr>
 	<tr>
 		<td>Client:{{ $cotizacion->nombre_corto }} <br/>
@@ -15,7 +17,7 @@
 	</tr>
 	<tr>
 		<td colspan="3">
-			<table class="table" style="font-size: 11px;">
+			<table class="table" style="">
 			    <thead class="" style="background: #518a87; border: 1px solid #518a87; color: white;">
 			      <tr>
 			        <th>Item</th>
@@ -47,3 +49,10 @@
 		</td>
 	</tr>
 </table>
+@if($envio==0)
+<hr>
+<div class="form-group col-sm-12" style="text-align: right;">
+    <a href="{!! route('cotizaciones.historia') !!}" class="btn btn-warning mr-1">Cancelar</a>
+    <button class="btn btn-primary">Convertir a OCC</button>
+</div>
+@endif

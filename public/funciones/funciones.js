@@ -266,7 +266,6 @@ function delete_historial(id_historia, tipo, historia_tipo){
 
 function agrega_proceso(id_proceso,id_producto){
   var horas = $("#horas"+id_proceso).val();
-  alert(horas);
   $.confirm({
             title: 'Confirmar!',
             content: 'Estas seguro que deseas agregar este proceso?',
@@ -797,7 +796,7 @@ function showcampos(id_mat){
 
     for (x=0;x<campos.length;x++){
       $("#cam"+id_mat+campos[x]).show();
-    }
+    } 
   }else if(forma ==11 || forma ==12){
     var campos = [2,6,7,8];
 
@@ -859,6 +858,18 @@ function guarda_materialforma(id, campo){
   $.ajax({
           data: {"id":id, "campo":$("#"+campo+id).val(),"columna":campo},
           url: '/api/v1/guarda_materialforma',
+          dataType: 'json',
+          type:  'get',
+          success:  function (response) {  
+            //$("#listamateriales").html(response);
+          }
+      });
+}
+
+function guarda_informacion(cotizacion){
+  $.ajax({
+          data: {"cotizacion":cotizacion, "notas":$("#notas").val(),"income":$("#income").val()},
+          url: '/api/v1/guarda_informacion_cot',
           dataType: 'json',
           type:  'get',
           success:  function (response) {  

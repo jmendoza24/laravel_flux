@@ -1,50 +1,33 @@
-<div class="table-responsive">
-    <table class="table" id="cotizaciones-table">
+@extends('layouts.app')
+@section('content')
+<div class="col-md-12">
+    <table class="table table-striped table-bordered datacol-basic-initialisation" id="cotizaciones-table">
         <thead>
             <tr>
+                <th>Cotización</th>
+                <th>Cliente</th>
                 <th>Fecha</th>
-        <th>Cliente</th>
-        <th>Numero Parte</th>
-        <th>Descripcion</th>
-        <th>Dibujo</th>
-        <th>Cantidad</th>
-        <th>Costo</th>
-        <th>Precio Usd</th>
-        <th>Id Notas</th>
-        <th>Tiempo</th>
-        <th>Income</th>
-        <th>Termino Pago</th>
-        <th>Vendedor</th>
-                <th colspan="3">Action</th>
+                <th>Vendedor</th>
+                <th colspan="">Action</th>
             </tr>
         </thead>
         <tbody>
         @foreach($cotizaciones as $cotizaciones)
             <tr>
-                <td>{!! $cotizaciones->fecha !!}</td>
-            <td>{!! $cotizaciones->cliente !!}</td>
-            <td>{!! $cotizaciones->numero_parte !!}</td>
-            <td>{!! $cotizaciones->descripcion !!}</td>
-            <td>{!! $cotizaciones->dibujo !!}</td>
-            <td>{!! $cotizaciones->cantidad !!}</td>
-            <td>{!! $cotizaciones->costo !!}</td>
-            <td>{!! $cotizaciones->precio_usd !!}</td>
-            <td>{!! $cotizaciones->id_notas !!}</td>
-            <td>{!! $cotizaciones->tiempo !!}</td>
-            <td>{!! $cotizaciones->income !!}</td>
-            <td>{!! $cotizaciones->termino_pago !!}</td>
-            <td>{!! $cotizaciones->vendedor !!}</td>
+                <td>FX-00{!! $cotizaciones->id !!}</td>
+                <td>{!! $cotizaciones->nombre_corto !!}</td>
+                <td>{{  date("m-d-Y", strtotime($cotizaciones->fecha)) }}</td>
+                <td>{!! $cotizaciones->name !!}</td>
                 <td>
-                    {!! Form::open(['route' => ['cotizaciones.destroy', $cotizaciones->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
-                        <a href="{!! route('cotizaciones.show', [$cotizaciones->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                        <a href="{!! route('cotizaciones.edit', [$cotizaciones->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                        {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        <a href="{!! route('cotizaciones.show', [$cotizaciones->id]) !!}" class='btn btn-float btn-outline-info btn-round'><i class="fa fa-window-restore"></i></a>
+                        <a href="#" class='btn btn-float btn-outline-primary btn-round'><i class="fa fa-cc"></i></a>
+                        <a href="#" class='btn btn-float btn-outline-danger btn-round'><i class="fa fa-trash"></i></a>
                     </div>
-                    {!! Form::close() !!}
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
-</div>
+ </div>
+@endsection

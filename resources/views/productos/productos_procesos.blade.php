@@ -25,7 +25,7 @@
                   >
                 </td>
                 <td style="text-align: left;">
-                 <a onclick="ver_proceso({{$proc->id}},{{$id_producto}})">{{ $proc->procesos }}</a>
+                 <a onclick="ver_proceso({{$proc->id}},{{$id_producto}})" style="{{($idproceso==$proc->id) ?'font-weight: bold; color:#518a87;':''}}">{{ $proc->procesos }}</a>
                </td>
                 <td>
                   <select class="form-control" onchange="@if($proc->asignado==1) actualiza_proceso({{$proc->id}},{{$id_producto}}) @endif" name="horas{{$proc->id}}" class="form-control"  id="horas{{$proc->id}}">

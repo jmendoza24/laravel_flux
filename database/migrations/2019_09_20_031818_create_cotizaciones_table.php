@@ -17,7 +17,7 @@ class CreateCotizacionesTable extends Migration
             $table->increments('id');
             $table->date('fecha');
             $table->integer('cliente');
-            $table->integer('id_notas');
+            $table->string('id_notas');
             $table->integer('tiempo');
             $table->integer('income');
             $table->string('termino_pago');

@@ -56,7 +56,7 @@ class cotizacionesController extends AppBaseController
                               'tiempo'=>0,
                               'income'=>0,
                               'termino_pago'=>' ',
-                              'vendedor'=>0]);           
+                              'vendedor'=>auth()->id()]);           
          }
 
 
@@ -84,7 +84,6 @@ class cotizacionesController extends AppBaseController
                                 where c.id_cotizacion = '.$num_cotizacion);
                
         $cotizacion = $cotizacion[0];
-        
 
         $clientes = db::table('clientes')->get();
        
@@ -95,6 +94,16 @@ class cotizacionesController extends AppBaseController
 
 
         return view('cotizaciones.index',compact('cotizacion','condiciones','income','productos','num_cotizacion','clientes','detalle'));
+    }
+
+    function historia(Request $request){
+        $cotizaciones = db::table('cotizaciones as c')
+                        ->leftjoin('users as u','u.id','c.vendedor')
+                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
+                        ->selectraw('c.*, name, cl.nombre_corto')
+                        ->get();
+
+        return view('cotizaciones.table',compact('cotizaciones'));
     }
 
     /**
@@ -132,17 +141,37 @@ class cotizacionesController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
-    {
-        $cotizaciones = $this->cotizacionesRepository->find($id);
+    public function show($id){
+        $num_cotizacion = $id;
 
-        if (empty($cotizaciones)) {
-            Flash::error('Cotizaciones not found');
+        $cotizacion = DB::table('cotizaciones as c')
+                        ->leftjoin('income_terms as ic','ic.id','c.income')
+                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
+                        ->leftjoin('tbl_estados as e', 'e.id', 'cl.estado')
+                        ->leftjoin('tbl_municipios as m','m.id','cl.municipio')
+                        ->leftjoin('users as u','u.id','c.vendedor')
+                        ->where('c.id',$num_cotizacion)
+                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', m.municipio,', ', e.estado) as direccion")
+                        ->get();
+        $cotizacion = $cotizacion[0];
 
-            return redirect(route('cotizaciones.index'));
-        }
+        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from cotizacion_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                where c.id_cotizacion = '.$num_cotizacion);
+        $envio = 0;
 
-        return view('cotizaciones.show')->with('cotizaciones', $cotizaciones);
+        return view('cotizaciones.show',compact('cotizacion','detalle','envio'));
     }
 
     /**
@@ -412,8 +441,9 @@ class cotizacionesController extends AppBaseController
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
                         ->leftjoin('tbl_estados as e', 'e.id', 'cl.estado')
                         ->leftjoin('tbl_municipios as m','m.id','cl.municipio')
+                        ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', m.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', m.municipio,', ', e.estado) as direccion")
                         ->get();
         $cotizacion = $cotizacion[0];
 
@@ -432,9 +462,17 @@ class cotizacionesController extends AppBaseController
                                             inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
                                 where c.id_cotizacion = '.$num_cotizacion);
 
-            #return view('cotizaciones.cotizacion_envio',compact('cotizacion','detalle'));
+           # return view('cotizaciones.cotizacion_envio',compact('cotizacion','detalle'));
+        $envio = 1;
+         $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->setPaper('A4-L','landscape');
+         $request->session()->forget('num_cot');
+         return $pdf->download('Cotizacion_'.$num_cotizacion.'.pdf');
+    }
 
-         $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle'))->setPaper('A4-L','landscape');
-         return $pdf->download('ejemplo.pdf');
+    function guarda_informacion_cot(Request $request){
+        db::table('cotizaciones')
+        ->where('id',$request->cotizacion)
+        ->update(['id_notas'=>$request->notas,
+                  'income'=>$request->income]);
     }
 }

@@ -1,19 +1,5 @@
 @extends('layouts.app')
-
+@section('titulo')Cotización detalle @endsection
 @section('content')
-    <section class="content-header">
-        <h1>
-            Cotizaciones
-        </h1>
-    </section>
-    <div class="content">
-        <div class="box box-primary">
-            <div class="box-body">
-                <div class="row" style="padding-left: 20px">
-                    @include('cotizaciones.show_fields')
-                    <a href="{!! route('cotizaciones.index') !!}" class="btn btn-default">Back</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('cotizaciones.cotizacion_envio')
 @endsection

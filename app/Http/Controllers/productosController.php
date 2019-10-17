@@ -196,7 +196,8 @@ class productosController extends AppBaseController
 
          $plantas = DB::table('plantas')->get();
          $formas = DB::table('formas')->get();
-        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas','materialesformas'));
+         $idproceso = '';
+        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas','materialesformas','idproceso'));
     }
 
     /**
@@ -348,7 +349,8 @@ class productosController extends AppBaseController
                             ->get();
 
         $id_producto = $request->id_producto;
-        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+        $idproceso = $request->id_proceso;
+        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos','idproceso'))->render();    
         return json_encode($options);
     }    
 
@@ -375,7 +377,8 @@ class productosController extends AppBaseController
                             ->get();
         //dd($subprocesos);
         $id_producto = $request->id_producto;
-        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+        $idproceso = $request->id_proceso;
+        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos','idproceso'))->render();    
 
         $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
                                       FROM productos p
@@ -454,7 +457,8 @@ class productosController extends AppBaseController
                                 ->get();
 
             $id_producto = $request->id_producto;
-            $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+            $idproceso = $request->id_proceso;
+            $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos','idproceso'))->render();    
             return json_encode($options);
         }
     }
@@ -479,7 +483,8 @@ class productosController extends AppBaseController
                             ->get();
         //dd($subprocesos);
         $id_producto = $request->id_producto;
-        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+        $idproceso = $request->id_proceso;
+        $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos','idproceso'))->render();    
         return json_encode($options);
     }
 

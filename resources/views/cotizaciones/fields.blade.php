@@ -66,7 +66,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Notas : </label>
-        <textarea class="form-control" id="notas" name="notas"><?php  if($cotizacion->id_notas==''){
+        <textarea class="form-control" id="notas" name="notas" onchange="guarda_informacion({{ $num_cotizacion }})"><?php  if($cotizacion->id_notas==''){
                                                                   echo ($condiciones[0]->condicion);
                                                                 }else{
                                                                    echo ($cotizacion->id_notas);
@@ -76,7 +76,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Income terms : </label>
-        <select class="form-control custom-select required" style="width: 100%;"name="income" id="income">
+        <select class="form-control custom-select required" style="width: 100%;"name="income" id="income" onchange="guarda_informacion({{ $num_cotizacion }})">
             <option value="">Seleccione una opcion</option>
             @foreach($income as $inco)
             <option value="{{ $inco->id}}" 

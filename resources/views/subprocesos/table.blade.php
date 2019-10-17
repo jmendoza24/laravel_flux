@@ -1,7 +1,7 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="subprocesos-table">
     <thead>
         <tr>
-            <th>Idproceso</th>
+            <th>Proceso</th>
             <th>Subproceso</th>
             <th>Descripcion</th>
             <th colspan=""></th>
