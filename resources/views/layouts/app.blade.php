@@ -43,6 +43,8 @@
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
   <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
+  <script src="{{ url('funciones/ordenes_compra.js') }}" type="text/javascript"></script>
+  
   <!-- END Custom CSS-->
 </head>
 

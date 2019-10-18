@@ -27,13 +27,13 @@
         </li>
     </ul>
 </li>
-<li class=" nav-item"><a href="#"><i class="ft-folder"></i><span class="menu-title" data-i18n="">Cotizaciones</span></a>
+<li class=" nav-item"><a href="#"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Cotizaciones</span></a>
     <ul class="menu-content">       
         <li class="{{ Request::is('cotizaciones*') ? 'active' : '' }}"><a href="{!! route('cotizaciones.index') !!}"><span>Nueva cotización</span></a></li>
         <li class="{{ Request::is('historia*') ? 'active' : '' }}"><a href="{!! route('cotizaciones.historia') !!}"><span>Historial</span></a></li>
     </ul>
 </li>
-
-
-
+<li class="{{ Request::is('ordenesCompras*') ? 'active' : '' }}">
+    <a href="{!! route('ordenesCompras.index') !!}"><i class="ft-bar-chart-2"></i><span>Ordenes Compras</span></a>
+</li>
 

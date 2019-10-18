@@ -116,7 +116,7 @@ function delete_logistica(id_logistica, id_producto){
                     "id_producto":id_producto};
   
   $.confirm({
-            title: 'Confirmar!',
+            title: 'Fluxmetals',
             content: 'Estas seguro que deseas eliminar esta dirección de envio?',
             buttons: {
                 confirmar: function () {
@@ -231,7 +231,7 @@ function delete_historial(id_historia, tipo, historia_tipo){
                       "historial_tipo":historia_tipo
                     };
       $.confirm({
-            title: 'Confirmar!',
+            title: 'Fluxmetals',
             content: 'Estas seguro que deseas eliminar este historial?',
             buttons: {
                 confirmar: function () {
@@ -267,7 +267,7 @@ function delete_historial(id_historia, tipo, historia_tipo){
 function agrega_proceso(id_proceso,id_producto){
   var horas = $("#horas"+id_proceso).val();
   $.confirm({
-            title: 'Confirmar!',
+            title: 'Fluxmetals',
             content: 'Estas seguro que deseas agregar este proceso?',
             buttons: {
                 confirmar: function () {
@@ -329,7 +329,7 @@ function quitar_proceso(id_proceso,id_producto){
 
 function agrega_subproceso(id_subproceso,id_proceso,id_producto){
   $.confirm({
-            title: 'Confirmar!',
+            title: 'Fluxmetals',
             content: 'Estas seguro que deseas agregar este subproceso?',
             buttons: {
                 confirmar: function () {
@@ -420,7 +420,7 @@ function edita_dibujo(id_dibujo,id_producto ){
 
 function elimina_dibujo(id_dibujo,id_producto){
   $.confirm({
-            title: 'Confirmar!',
+            title: 'Fluxmetals',
             content: 'Estas seguro que deseas eliminar este dibujo?',
             buttons: {
                 confirmar: function () {
@@ -510,7 +510,7 @@ function showcampos(){
 
 function agrega_material(id_material, id_producto){
   $.confirm({
-            title: 'Confirmar!',
+            title: 'Fluxmetals',
             content: 'Estas seguro que deseas agregar este material?',
             buttons: {
                 confirmar: function () {
@@ -692,7 +692,7 @@ function agrega_producto(){
 function borra_producto(id){
 
     $.confirm({
-            title: 'Confirmar!',
+            title: 'Fluxmetals',
             content: 'Estas seguro que deseas eliminar este producto?',
             buttons: {
                 confirmar: function () {
@@ -876,4 +876,30 @@ function guarda_informacion(cotizacion){
             //$("#listamateriales").html(response);
           }
       });
+}
+
+
+function elimina_cotizacion(id_cotizacion){
+  $.confirm({
+            title: 'Fluxmetals',
+            content: 'Estas seguro que deseas eliminar esta cotizacion?',
+            buttons: {
+                confirmar: function () {
+                   $.ajax({
+                          data: {"id":id_cotizacion},
+                          url: '/api/v1/elimina_cotizacion',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                              $("#table_cotizacion").html(response);
+                          }
+                      }); 
+
+                },
+                cancelar: function () {
+                   
+
+                }
+              }
+          });
 }

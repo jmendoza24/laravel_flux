@@ -20,6 +20,7 @@ class MaterialesRepository extends BaseRepository
         'material',
         'tipo_acero',
         'forma',
+        'planta',
         'grado',
         'espesor',
         'ancho',

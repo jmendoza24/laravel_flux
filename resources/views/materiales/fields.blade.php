@@ -32,6 +32,20 @@
         <div class="invalid-feedback">Este campo es requerido.</div>
     </div>
     <div class="form-group col-sm-6">
+        {!! Form::label('forma', 'Planta:') !!}
+        <select class="form-control" id="planta" name="planta" required="">
+            <option value="">Seleccione una opción</option>
+            @foreach($plantas as $planta)
+              <option value="{{ $planta->id}}" 
+                @if(!empty($materiales->planta))
+                  {{ ($planta->id == $materiales->planta) ? 'selected' : '' }}
+                @endif >
+                {{ $planta->nombre }} </option>
+            @endforeach
+        </select>
+        <div class="invalid-feedback">Este campo es requerido.</div>
+    </div>
+    <div class="form-group col-sm-6">
         {!! Form::label('grado', 'Grado:') !!} 
         <select class="form-control" id="grado" name="grado" required="">
             <option value="">Seleccione una opción</option>
