@@ -873,7 +873,32 @@ function guarda_informacion(cotizacion){
           dataType: 'json',
           type:  'get',
           success:  function (response) {  
-            //$("#listamateriales").html(response);
+
           }
       });
+}
+
+function elimina_cotizacion(id_cotizacion){
+  $.confirm({
+            title: 'Fluxmetals',
+            content: 'Estas seguro que deseas eliminar esta cotizacion?',
+            buttons: {
+                confirmar: function () {
+                   $.ajax({
+                          data: {"id":id_cotizacion},
+                          url: '/api/v1/elimina_cotizacion',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                              $("#table_cotizacion").html(response);
+                          }
+                      }); 
+
+                },
+                cancelar: function () {
+                   
+
+                }
+              }
+          });
 }

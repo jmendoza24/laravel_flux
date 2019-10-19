@@ -51,8 +51,9 @@ class MaterialesController extends AppBaseController
         $formas = DB::table('formas')->orderby('forma')->get();
         $grados = DB::table('grados')->orderby('grado')->get();
         $proveedores = DB::table('proveedores')->orderby('nombre')->get();
+        $plantas = db::table('plantas')->get();
 
-        return view('materiales.create',compact('aceros','formas','grados','proveedores'));
+        return view('materiales.create',compact('aceros','formas','grados','proveedores','plantas'));
     }
 
     /**
@@ -108,8 +109,8 @@ class MaterialesController extends AppBaseController
         $formas = DB::table('formas')->orderby('forma')->get();
         $grados = DB::table('grados')->orderby('grado')->get();
         $proveedores = DB::table('proveedores')->orderby('nombre')->get();
-
-        return view('materiales.edit',compact('materiales','aceros','formas','grados','proveedores'));
+        $plantas = db::table('plantas')->get();
+        return view('materiales.edit',compact('materiales','aceros','formas','grados','proveedores','plantas'));
     }
 
     /**
