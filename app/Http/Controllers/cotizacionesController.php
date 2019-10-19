@@ -38,25 +38,18 @@ class cotizacionesController extends AppBaseController
          $num_cotizacion = $request->session()->get('num_cot');
 
          }else{
-
-            $maxcotizacion=DB::table('cotizaciones')
-                         ->selectraw('ifnull(max(id),0)+1 as cotizacion_num') 
-                         ->where('enviado',1)
-                         ->get();
-
-            $maxcotizacion = $maxcotizacion[0];
-            $request->session()->put('num_cot',$maxcotizacion->cotizacion_num);
-      
-            $num_cotizacion = $request->session()->get('num_cot');
             $fecha = date('Y-m-d');
 
             $id = DB::table('cotizaciones')
-                    ->insert(['fecha' => $fecha,
+                    ->insertGetId(['fecha' => $fecha,
                               'cliente'=>0,
                               'tiempo'=>0,
                               'income'=>0,
                               'termino_pago'=>' ',
-                              'vendedor'=>auth()->id()]);           
+                              'vendedor'=>auth()->id()]);       
+            $request->session()->put('num_cot',$id);
+            $num_cotizacion = $request->session()->get('num_cot');
+
          }
 
 
@@ -82,7 +75,7 @@ class cotizacionesController extends AppBaseController
                                                     group by d.id_producto) a
                                             inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
                                 where c.id_cotizacion = '.$num_cotizacion);
-        //dd($num_cotizacion);
+      #dd($num_cotizacion);
         $cotizacion = $cotizacion[0];
 
         $clientes = db::table('clientes')->get();
@@ -101,7 +94,7 @@ class cotizacionesController extends AppBaseController
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
                         ->selectraw('c.*, name, cl.nombre_corto')
-                        ->where('enviado',1)
+                        ->where('enviado','>',0)
                         ->get();
 
         return view('cotizaciones.table',compact('cotizaciones'));
@@ -471,6 +464,9 @@ class cotizacionesController extends AppBaseController
         
 
          //  return view('cotizaciones.cotizacion_envio',compact('cotizacion','detalle'));
+         $request->session()->forget('num_cot');
+         return redirect('historiaCotizacion');
+
          $envio = 1;
          $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->setPaper('A4-L','landscape');
          $request->session()->forget('num_cot');
@@ -494,7 +490,7 @@ class cotizacionesController extends AppBaseController
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
                         ->selectraw('c.*, name, cl.nombre_corto')
-                        ->where('enviado',1)
+                        ->where('enviado','>',0)
                         ->get();
 
         $options =  view('cotizaciones.table',compact('cotizaciones'))->render();

@@ -90,6 +90,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/enviar_cotizacion', 'cotizacionesController@enviar_cotizacion')->name('cotizacion.enviar');
 	Route::get('/guarda_informacion_cot', 'cotizacionesController@guarda_informacion_cot');
 	Route::get('/elimina_cotizacion', 'cotizacionesController@elimina_cotizacion');
+	Route::get('/convierteocc', 'ordenes_compraController@convierteocc');
+	
 	
 	
 });
@@ -99,3 +101,5 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 
 //Auth::routes();
 	
+
+Route::resource('ordenesCompras', 'ordenes_compraController');

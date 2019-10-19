@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ProductosProcesos extends Migration
+class OrdencompraDetalle extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class ProductosProcesos extends Migration
      */
     public function up()
     {
-         Schema::create('productos_procesos', function (Blueprint $table) {
+        Schema::create('ordencompra_detalle', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_producto');
-            $table->integer('id_proceso');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->integer('id_orden');
+            $table->integer('incremento');
+            $table->integer('producto');
+            $table->integer('dibujo');
+            $table->date('cantidad');
+            $table->decimal('costo');
         });
     }
 
@@ -29,6 +31,7 @@ class ProductosProcesos extends Migration
      */
     public function down()
     {
-       Schema::drop('productos_procesos');
+       Schema::drop('ordencompra_detalle');
     }
 }
+

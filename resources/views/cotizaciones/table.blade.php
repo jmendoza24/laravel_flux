@@ -21,7 +21,7 @@
                 <td>
                     <div class='btn-group'>
                         <a href="{!! route('cotizaciones.show', [$cotizaciones->id]) !!}" class='btn btn-float btn-outline-info btn-round'><i class="fa fa-window-restore"></i></a>
-                        <a href="#" class='btn btn-float btn-outline-primary btn-round'><i class="fa fa-cc"></i></a>
+                        <button onclick="convierte_occ({{$cotizaciones->id}})" {{($cotizaciones->enviado == 3)? 'disabled':''}} class='btn btn-float btn-outline-primary btn-round'><i class="fa fa-cc"></i></button>
                         <a onclick="elimina_cotizacion({{ $cotizaciones->id }})" class='btn btn-float btn-outline-danger btn-round'><i class="fa fa-trash"></i></a>
                     </div>
                 </td>
