@@ -16,10 +16,10 @@ class OrdencompraDetalle extends Migration
         Schema::create('ordencompra_detalle', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_orden');
-            $table->integer('incremento');
-            $table->integer('producto');
-            $table->integer('dibujo');
-            $table->date('cantidad');
+            $table->integer('incremento')->nullable();;
+            $table->integer('producto')->nullable();;
+            $table->integer('dibujo')->nullable();;
+            $table->integer('cantidad')->nulable();
             $table->decimal('costo');
         });
     }

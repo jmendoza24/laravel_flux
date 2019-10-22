@@ -34,6 +34,6 @@
     </ul>
 </li>
 <li class="{{ Request::is('ordenesCompras*') ? 'active' : '' }}">
-    <a href="{!! route('ordenesCompras.index') !!}"><i class="ft-bar-chart-2"></i><span>Ordenes Compras</span></a>
+    <a href="{!! route('ordenesCompras.index') !!}"><i class="ft-bar-chart-2"></i><span>Ordenes de trabajo</span></a>
 </li>
 

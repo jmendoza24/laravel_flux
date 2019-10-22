@@ -1,7 +1,7 @@
 function convierte_occ(id_cotizacion){
 	 $.confirm({
             title: 'Fluxmetals!',
-            content: 'Estas seguro que deseas convertir esta cotización a orden de compra?',
+            content: 'Estas seguro que deseas convertir esta cotización a orden de trabajo?',
             buttons: {
                 confirmar: function () {
                   $.ajax({
@@ -11,7 +11,7 @@ function convierte_occ(id_cotizacion){
                           type:  'get',
                           success:  function (response) {  
                           	console.log(response);
-                          	$.alert('La cotizacion ahora es una orden de compra')
+                          	$.alert('La cotizacion ahora es una orden de trabajo')
                             //window.location.href = 'ordenesCompras';
                             setTimeout(function() {
 								  window.location.href = "ordenesCompras";
