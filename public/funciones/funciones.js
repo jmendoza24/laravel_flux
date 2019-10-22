@@ -873,7 +873,7 @@ function guarda_informacion(cotizacion){
           dataType: 'json',
           type:  'get',
           success:  function (response) {  
-            //$("#listamateriales").html(response);
+
           }
       });
 }
