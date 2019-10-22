@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::resource('cotizaciones', 'cotizacionesController');
 	Route::resource('listaMateriales', 'ListaMaterialesController');
 	Route::get('/historiaCotizacion', 'cotizacionesController@historia')->name('cotizaciones.historia');
+	Route::resource('ordenesCompras', 'ordenes_compraController');
 
 });
 
@@ -102,4 +103,3 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 //Auth::routes();
 	
 
-Route::resource('ordenesCompras', 'ordenes_compraController');

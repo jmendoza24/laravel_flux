@@ -190,7 +190,8 @@ class ordenes_compraController extends AppBaseController
                                       'income'=>$cotizacion->income,
                                       'termino_pago'=>$cotizacion->termino_pago,
                                       'vendedor'=>$cotizacion->vendedor,
-                                      'fecha'=>$cotizacion->fecha]);
+                                      'fecha'=>$cotizacion->fecha,
+                                      'tipo'=>1]);
 
         $detalle_cotiza = db::table('cotizacion_detalle')
                                 ->where('id_cotizacion',$request->id_cotizacion)
