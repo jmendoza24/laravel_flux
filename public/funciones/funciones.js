@@ -38,9 +38,9 @@ function get_municipios(estado,municipio){
 
 function guarda_direccion(id_producto){
   var parameters = {"id_producto":id_producto,
-                    "nombre_log":'',
+                    "nombre_log":'0',
                     "telefono_log":$("#telefono_log").val(),
-                    "correo_log":'',
+                    "correo_log":' ',
                     "pais_log":$("#pais_log").val(),
                     "estado_log":$("#estado_log").val(),
                     "municipio_log":$("#municipio_log").val(),
@@ -60,6 +60,7 @@ function guarda_direccion(id_producto){
 
               $("#large").modal('hide');//ocultamos el modal
               $('#form_logistica')[0].reset();
+              
 
             }
         }); 
@@ -724,10 +725,6 @@ function actualiza_producto(producto){
     type:  'get',
     success:  function (response) {  
        $("#detalle_cotiza").html(response);
-    },error(a,b,c){
-      console.log(a);
-      console.log(b);
-      console.log(c);
     }
 }); 
 }
@@ -902,4 +899,22 @@ function elimina_cotizacion(id_cotizacion){
                 }
               }
           });
+}
+
+function get_estados(pais,estado){
+
+  var parameters = {"pais":$("#"+pais).val()}
+   $.ajax({
+            data: parameters,
+            url:   '/api/v1/get_estados',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) { 
+              var len = response.length;
+              $("#"+estado).html('<option value="0">Seleccione una opción</option>');
+              for (var i = 0; i < len; i++) {
+                  $("#"+estado).append("<option value='"+response[i].id+"'>"+response[i].estado+"</option>");
+              }      
+            }
+        });
 }

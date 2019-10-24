@@ -31,10 +31,11 @@ class clientesController extends AppBaseController
      */
     public function index(Request $request){ 
         $clientes = DB::table('clientes as c')
-                      ->leftjoin('tbl_estados as e','e.id','=','c.estado')
-                      ->leftjoin('tbl_municipios as m','m.id','=','c.municipio')
+                      ->leftjoin('estados as e','e.id','=','c.estado')
+                      //->leftjoin('tbl_municipios as m','m.id','=','c.municipio')
                       ->leftjoin('proveedores as p','p.id','=','c.id_proveedor')
-                      ->selectraw("c.*,e.estado as nestado, if(c.pais=1,'México','') as npais, m.municipio as nmunicipio, p.nombre as nproveedor")
+                      ->leftjoin('paises as pa','pa.id','=','c.pais')
+                      ->selectraw("c.*,e.estado as nestado, pa.nombre as npais, c.municipio as nmunicipio, p.nombre as nproveedor")
                       ->get();
 
         return view('clientes.index')
@@ -47,15 +48,13 @@ class clientesController extends AppBaseController
      * @return Response
      */
     public function create(){
-        $estados = DB::table('tbl_estados')->orderby('estado')->get();
+        $estados = array('');
+        $paises = DB::table('paises')->orderby('nombre')->get();
         
         $logisticas = array();
-        //$data = (object)['logisticas'=>''];
-        $municipios = array();
-        //$data = (object)['municipios'=>''];
         $proveedores = DB::table('proveedores')->get();
 
-        return view('clientes.create',compact('estados','logisticas','municipios','proveedores'));
+        return view('clientes.create',compact('estados','logisticas','paises','proveedores'));
     }
 
     /**
@@ -106,7 +105,12 @@ class clientesController extends AppBaseController
     public function edit($id)
     {
         $clientes = $this->clientesRepository->find($id);
-        $id_estado = $clientes->estado;
+        $id_pais = $clientes->pais;
+        $estados = db::table('estados')
+                    ->where('id_pais',$id_pais)
+                    ->orderby('estado')
+                    ->get();
+        $paises = DB::table('paises')->orderby('nombre')->get();
         if (empty($clientes)) {
             Flash::error('Clientes not found');
 
@@ -114,7 +118,7 @@ class clientesController extends AppBaseController
         }
 
          $proveedores = DB::table('proveedores')->get();
-         $estados = DB::table('tbl_estados')->orderby('estado')->get();
+         
          $logisticas_fields = array('id'=>'',
                                     'nombre'=>'',
                                     'telefono'=>'',
@@ -131,20 +135,13 @@ class clientesController extends AppBaseController
          $logisticas_fields = (object)$logisticas_fields;
 
          $logisticas = DB::table('logisticas as a')
-                    ->leftjoin('tbl_estados as e','e.id','=','a.estado')
-                    ->leftjoin('tbl_municipios as m','m.id','=','a.municipio')
-                    ->selectraw("a.*, if(pais=1,'México','') as npais, e.estado as nestado, m.municipio as nmunicipio")
-                    ->where('id_producto',$id)
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
                     ->get();
         
 
-         $municipios = DB::table('tbl_estadosmun as em')
-                          ->join('tbl_municipios as m','em.municipios_id','=','m.id') 
-                          ->selectraw('m.*')
-                          ->where('em.estados_id',$id_estado)
-                          ->get(); 
-
-        return view('clientes.edit', compact('clientes','estados','logisticas','municipios','proveedores','logisticas_fields'));
+        return view('clientes.edit', compact('clientes','paises','estados','logisticas','proveedores','logisticas_fields'));
     }
 
     /**
@@ -202,9 +199,9 @@ class clientesController extends AppBaseController
                 ]);    
 
          $logisticas = DB::table('logisticas as a')
-                    ->leftjoin('tbl_estados as e','e.id','=','a.estado')
-                    ->leftjoin('tbl_municipios as m','m.id','=','a.municipio')
-                    ->selectraw("a.*, if(pais=1,'México','') as npais, e.estado as nestado, m.municipio as nmunicipio")
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
                     ->get();
 
          $options = view("logisticas.table",compact('logisticas'))->render();    

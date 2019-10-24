@@ -45,7 +45,7 @@ class cotizacionesController extends AppBaseController
                               'cliente'=>0,
                               'tiempo'=>0,
                               'income'=>0,
-                              'termino_pago'=>' ',
+                              'termino_pago'=>0,
                               'vendedor'=>auth()->id()]);       
             $request->session()->put('num_cot',$id);
             $num_cotizacion = $request->session()->get('num_cot');

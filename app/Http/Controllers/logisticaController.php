@@ -32,9 +32,9 @@ class logisticaController extends AppBaseController
     public function index(Request $request)
     {
         $logisticas = DB::table('logisticas as a')
-                    ->leftjoin('tbl_estados as e','e.id','=','a.estado')
-                    ->leftjoin('tbl_municipios as m','m.id','=','a.municipio')
-                    ->selectraw("a.*, if(pais=1,'México','') as npais, e.estado as nestado, m.municipio as nmunicipio")
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
                     ->get();
 
         return view('logisticas.index')
@@ -109,17 +109,14 @@ class logisticaController extends AppBaseController
                     ->get();
 
         $logisticas_fields = $logisticas[0];
-        $id_estado = $logisticas_fields->estado;
-        //$logisticas_fields = $logisticas;
+        $id_pais = $logisticas_fields->pais;
+        $estados = db::table('estados')
+                    ->where('id_pais',$id_pais)
+                    ->orderby('estado')
+                    ->get();
+        $paises = DB::table('paises')->orderby('nombre')->get();    
 
-        $estados = DB::table('tbl_estados')->orderby('estado')->get();
-        $municipios = DB::table('tbl_estadosmun as em')
-                          ->join('tbl_municipios as m','em.municipios_id','=','m.id') 
-                          ->selectraw('m.*')
-                          ->where('em.estados_id',$id_estado)
-                          ->get(); 
-
-        $options = view("logisticas.fields",compact('logisticas_fields','estados','municipios'))->render();    
+        $options = view("logisticas.fields",compact('logisticas_fields','estados','paises'))->render();    
         return json_encode($options);
 
     }
@@ -172,11 +169,10 @@ class logisticaController extends AppBaseController
         DB::table('logisticas')->where('id',$request->id_logistica)->delete();
 
         $logisticas = DB::table('logisticas as a')
-                    ->leftjoin('tbl_estados as e','e.id','=','a.estado')
-                    ->leftjoin('tbl_municipios as m','m.id','=','a.municipio')
-                    ->selectraw("a.*, if(pais=1,'México','') as npais, e.estado as nestado, m.municipio as nmunicipio")
-                    ->where('id_producto',$request->id_producto)
-                    ->get();                    
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
+                    ->get();                   
 
          $options = view("logisticas.table",compact('logisticas'))->render();    
          return json_encode($options);

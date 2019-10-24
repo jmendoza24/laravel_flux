@@ -31,9 +31,9 @@ class proveedoresController extends AppBaseController
     public function index(Request $request)
     {
         $proveedores = DB::table('proveedores as p')
-                      ->leftjoin('tbl_estados as e','e.id','=','p.estado')
-                      ->leftjoin('tbl_municipios as m','m.id','=','p.municipio')
-                      ->selectraw("p.*,e.estado as nestado, if(p.pais=1,'México','') as npais, m.municipio as nmunicipio")
+                      ->leftjoin('estados as e','e.id','=','p.estado')
+                      ->leftjoin('paises as pa','pa.id','=','p.pais')
+                      ->selectraw("p.*,e.estado as nestado, pa.nombre as npais, p.municipio as nmunicipio")
                       ->get();
 
         return view('proveedores.index')
@@ -46,10 +46,10 @@ class proveedoresController extends AppBaseController
      * @return Response
      */
     public function create(){
-        $estados = DB::table('tbl_estados')->orderby('estado')->get();
-        $municipios = array();
+        $paises = DB::table('paises')->orderby('nombre')->get();
+        $estados = array('');
 
-        return view('proveedores.create',compact('estados','municipios'));
+        return view('proveedores.create',compact('estados','paises'));
     }
 
     /**
@@ -99,21 +99,15 @@ class proveedoresController extends AppBaseController
      */
     public function edit($id){
         $proveedores = $this->proveedoresRepository->find($id);
-        $estados = DB::table('tbl_estados')->orderby('estado')->get();
-        $municipios = DB::table('tbl_estadosmun as em')
-                          ->join('tbl_municipios as m','em.municipios_id','=','m.id') 
-                          ->selectraw('m.*')
-                          ->where('em.estados_id',$proveedores->estado)
-                          ->get(); 
 
+        $id_pais = $proveedores->pais;
+        $paises = DB::table('paises')->orderby('nombre')->get();
+        $estados = db::table('estados')
+                    ->where('id_pais',$id_pais)
+                    ->orderby('estado')
+                    ->get();
 
-        if (empty($proveedores)) {
-            Flash::error('Proveedores not found');
-
-            return redirect(route('proveedores.index'));
-        }
-
-        return view('proveedores.edit',compact('proveedores','estados', 'municipios'));
+        return view('proveedores.edit',compact('proveedores','estados', 'paises'));
     }
 
     /**

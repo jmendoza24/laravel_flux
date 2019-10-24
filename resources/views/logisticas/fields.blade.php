@@ -4,6 +4,7 @@
   
     <input type="hidden" id="id_logistica" value="{{ $logisticas_fields->id}}">
     <input type="hidden" id="id_producto" value="{{ $logisticas_fields->id_producto}}">
+    <input type="hidden" name="nombre_log" id="nombre_log" class="form-control" value="0">
   <!-- <div class="row">
       <div class="col-md-12">
           <div class="form-group row">
@@ -51,7 +52,23 @@
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
-              <select class="form-control select2" style="width: 100%;" name="lestado" id="estado_log" onchange="get_municipios('estado_log','municipio_log')">
+          <select class="form-control" name="pais_log" style="width: 100%;" id="pais_log" onchange="get_estados('pais_log','estado_log')">
+            <option value="">Pais</option>
+            @foreach($paises as $pais)
+              <option value="{{ $pais->id}}" 
+                @if(!empty($logisticas_fields->pais))
+                  {{ ($logisticas_fields->pais == $pais->id) ? 'selected' : '' }}
+                @endif >
+                {{ $pais->nombre}}</option>
+              @endforeach
+          </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-12">
+              <select class="form-control" style="width: 100%;" name="estado_log" id="estado_log" >
                 <option value="">Estado</option>
                 @foreach($estados as $estado)
                 <option value="{{ $estado->id}}" 
@@ -67,33 +84,10 @@
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
-              <select class="form-control select2" style="width: 100%;"  name="lmunicipio" id="municipio_log">
-                <option value="">Municipio</option>
-                @foreach($municipios as $muni)
-                  <option value="{{ $muni->id}}" 
-                    @if(!empty($logisticas_fields->municipio))
-                        {{ ($logisticas_fields->municipio == $muni->id) ? 'selected' : '' }}
-                     @endif >
-                     {{ $muni->municipio}}
-                  </option>
-                 @endforeach
-              </select>
+              <input type="text"  class="form-control" placeholder="Municipio"  name="municipio_log" id="municipio_log" value="{{ $logisticas_fields->municipio}}">
           </div>
         </div>
-      </div>     
-    </div>
-    
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group row">
-          <div class="col-md-12">
-          <select class="form-control" name="pais_log" id="pais_log" >
-            <option value="">Pais</option>
-            <option value="1" >M&eacute;xico</option>
-          </select>
-          </div>
-        </div>
-      </div>
+      </div>           
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
@@ -120,3 +114,4 @@
   <button type="button" class="btn btn-outline-primary" onclick="actualiza_direccion()">Guardar</button>
 </div>
 @endif
+

@@ -16,15 +16,14 @@ class CreateLogisticasTable extends Migration
         Schema::create('logisticas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_producto');
-            $table->string('nombre');
-            $table->string('telefono')->nullable();
-            $table->string('correo')->nullable();
-            $table->integer('pais')->nullable();
-            $table->integer('estado')->nullable();
-            $table->integer('municipio')->nullable();
-            $table->string('calle')->nullable();
-            $table->integer('numero')->nullable();
-            $table->string('cp')->nullable();
+            $table->string('telefono_log')->nullable();
+            $table->string('correo_log')->nullable();
+            $table->integer('pais_log')->nullable();
+            $table->integer('estado_log')->nullable();
+            $table->string('municipio_log')->nullable();
+            $table->string('calle_log')->nullable();
+            $table->integer('numero_log')->nullable();
+            $table->string('cp_log')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

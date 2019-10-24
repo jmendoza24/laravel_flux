@@ -1,6 +1,3 @@
-@section('titulo')
-    Cotización FX-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}
-@endsection  
   <div class="row">
     <div class="col-md-12">
       <br/>
@@ -25,16 +22,13 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Notas : </label>
-        <textarea class="form-control" id="notas" name="notas" 
-                  onchange="guarda_informacion({{ $ordenesCompra->id }})"><?php 
-                           echo ($ordenesCompra->notas);
-                           ?></textarea>
+        <textarea class="form-control" id="notas" name="notas" readonly=""><?php  echo ($ordenesCompra->notas); ?></textarea>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Income terms : </label>
-        <select class="form-control custom-select required" style="width: 100%;"name="income" id="income" onchange="guarda_informacion({{ $ordenesCompra->id }})">
+        <select class="form-control custom-select required" style="width: 100%;"name="income" id="income" disabled="">
             <option value="">Seleccione una opcion</option>
             @foreach($income as $inco)
             <option value="{{ $inco->id}}" 

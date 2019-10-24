@@ -55,13 +55,28 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-         @if(!empty($clientes->estado))
-
-         @endif
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput2">País</label>
+          <div class="col-md-9">
+          <select class="form-control select2" name="pais" id="pais" required=""  onchange="get_estados('pais','estado')"> 
+            <option value="">Seleccione una opci&oacute;n</option>
+            @foreach($paises as $pais)
+              <option value="{{ $pais->id}}" 
+                @if(!empty($clientes->estado))
+                  {{ ($clientes->pais == $pais->id) ? 'selected' : '' }}
+                @endif >
+                {{ $pais->nombre}}</option>
+              @endforeach
+          </select>
+          <div class="invalid-feedback">Este campo es requerido.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Estado</label>
           <div class="col-md-9">
-            <select class="form-control select2" name="estado" id="estado" onchange="get_municipios('estado','municipio')" required="">
+            <select class="form-control select2" name="estado" id="estado" required="">
               <option value="">Seleccione una opcion</option>
               @foreach($estados as $estado)
               <option value="{{ $estado->id}}" 
@@ -79,35 +94,12 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Ciudad</label>
           <div class="col-md-9">
-          <select class="form-control select2" name="municipio" id="municipio" required="">
-              <option value="">Seleccione una opcion</option>
-              @foreach($municipios as $muni)
-              <option value="{{ $muni->id}}" 
-              @if(!empty($clientes->municipio))
-                  {{ ($clientes->municipio == $muni->id) ? 'selected' : '' }}
-               @endif >
-               {{ $muni->municipio}}
-             </option>
-               @endforeach
-            </select>
+            <input type="text" class="form-control" name="municipio" id="municipio" required="">
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
       </div>     
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">País</label>
-          <div class="col-md-9">
-          <select class="form-control" name="pais" id="pais" required=""> 
-            <option value="">Seleccione una opci&oacute;n</option>
-            <option value="1" selected="">M&eacute;xico</option>
-          </select>
-          <div class="invalid-feedback">Este campo es requerido.</div>
-          </div>
-        </div>
-      </div>
+      
       <div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Código postal</label>
@@ -287,12 +279,31 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput2">País</label>
+          <div class="col-md-9">
+            <select class="form-control select2" name="fac_pais" style="width: 100%;" id="fac_pais" onchange="get_estados('fac_pais','fac_estado')">
+            <option value="">Seleccione una opci&oacute;n</option>
+            @foreach($paises as $pais)
+              <option value="{{ $pais->id}}" 
+                @if(!empty($clientes->estado))
+                  {{ ($clientes->fac_pais == $pais->id) ? 'selected' : '' }}
+                @endif >
+                {{ $pais->nombre}}</option>
+              @endforeach
+          </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Estados</label>
           <div class="col-md-9">
-            <select class="form-control select2" style="width: 100%;" name="fac_estado" id="fac_estado" onchange="get_municipios('fac_estado','fac_municipio')">
+            <select class="form-control select2" style="width: 100%;" name="fac_estado" id="fac_estado" >
               <option value="">Seleccione una opcion</option>
               @foreach($estados as $estado)
-              <option value="{{ $estado->id}}">{{ $estado->estado}}</option>
+              <option value="{{ $estado->id}}"
+                 {{ ($clientes->fac_estado == $estado->id) ? 'selected' : '' }}
+                >{{ $estado->estado}}</option>
               @endforeach
             </select>
           </div>
@@ -302,26 +313,12 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Ciudad</label>
           <div class="col-md-9">
-            <select class="form-control select2" style="width: 100%;" name="fac_municipio" id="fac_municipio">
-              <option value="">Seleccione una opcion</option>
-            </select>
+            <input type="text" class="form-control" name="fac_municipio" id="fac_municipio">
           </div>
         </div>
       </div>
-    </div>
-    
-    <div class="row">
-       <div class="col-md-6">
-        <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput2">País</label>
-          <div class="col-md-9">
-            <select class="form-control" name="fac_pais" id="fac_pais">
-            <option value="">Seleccione una opci&oacute;n</option>
-            <option value="1" selected="">M&eacute;xico</option>
-          </select>
-          </div>
-        </div>
-      </div>
+   
+       
       <div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Código postal</label>

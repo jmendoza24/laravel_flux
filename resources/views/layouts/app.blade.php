@@ -7,6 +7,7 @@
   <meta name="description" content="Fluxmetal Fluxmetal">
   <meta name="keywords" content="Fluxmetal">
   <meta name="author" content="Fluxmetal">
+  <meta name="google-site-verification" content="SKuO2NOdADnxaV-X-53eTxgnXKRvIABkZB800jV9hWM" />
   <title>Fluxmetals</title> 
   <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ url('app-assets/images/ico/favicon.ico') }}">
@@ -43,6 +44,8 @@
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
   <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
+  <script src="{{ url('funciones/ordenes_compra.js') }}" type="text/javascript"></script>
+  @yield('script')
   <!-- END Custom CSS-->
 </head>
 

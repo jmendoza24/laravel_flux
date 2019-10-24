@@ -17,13 +17,15 @@ class logisticaRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'nombre',
-        'telefono',
-        'correo',
-        'pais',
-        'estado',
-        'municipio',
-        'calle'
+        'id_producto',
+        'telefono_log',
+        'correo_log',
+        'pais_log',
+        'estado_log',
+        'municipio_log',
+        'calle_log',
+        'cp_log',
+        'numero_log'
     ];
 
     /**

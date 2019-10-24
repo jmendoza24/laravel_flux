@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth']], function(){
 Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 
 	Route::get('get_municipios', 'CatalogosController@get_municipios');
+	Route::get('get_estados', 'CatalogosController@get_estados');
 	Route::get('save_address', 'clientesController@save_address');
 	Route::get('show_logistica', 'logisticaController@edit');
 	Route::get('update_address', 'logisticaController@update');
@@ -92,9 +93,14 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/guarda_informacion_cot', 'cotizacionesController@guarda_informacion_cot');
 	Route::get('/elimina_cotizacion', 'cotizacionesController@elimina_cotizacion');
 	Route::get('/convierteocc', 'ordenes_compraController@convierteocc');
+	Route::get('/validar_orden', 'ordenes_compraController@validar_orden');
+	Route::get('/agregar_productos', 'ordenes_compraController@agregar_productos');
+	Route::get('/actualiza_producto_occ', 'ordenes_compraController@actualiza_producto_occ');
+	Route::get('/borra_producto_occ', 'ordenes_compraController@borra_producto_occ');
+	Route::get('/actualiza_producto_occ2', 'ordenes_compraController@actualiza_producto_occ_det');
 	
-	
-	
+
+
 });
 
 
