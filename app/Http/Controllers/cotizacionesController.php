@@ -141,11 +141,11 @@ class cotizacionesController extends AppBaseController
         $cotizacion = DB::table('cotizaciones as c')
                         ->leftjoin('income_terms as ic','ic.id','c.income')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
-                        ->leftjoin('tbl_estados as e', 'e.id', 'cl.estado')
-                        ->leftjoin('tbl_municipios as m','m.id','cl.municipio')
+                        ->leftjoin('estados as e', 'e.id', 'cl.estado')
+                        //->leftjoin('tbl_municipios as m','m.id','cl.municipio')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', m.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
         $cotizacion = $cotizacion[0];
 
@@ -433,11 +433,11 @@ class cotizacionesController extends AppBaseController
         $cotizacion = DB::table('cotizaciones as c')
                         ->leftjoin('income_terms as ic','ic.id','c.income')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
-                        ->leftjoin('tbl_estados as e', 'e.id', 'cl.estado')
-                        ->leftjoin('tbl_municipios as m','m.id','cl.municipio')
+                        ->leftjoin('estados as e', 'e.id', 'cl.estado')
+                        //->leftjoin('tbl_municipios as m','m.id','cl.municipio')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', m.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
         $cotizacion = $cotizacion[0];
 
