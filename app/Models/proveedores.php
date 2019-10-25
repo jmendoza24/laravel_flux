@@ -56,7 +56,7 @@ class proveedores extends Model
         'direccion' => 'string',
         'pais' => 'integer',
         'estado' => 'integer',
-        'municipio' => 'integer',
+        'municipio' => 'string',
         'cp' => 'string',
         'rfc' => 'string',
         'credito' => 'string',

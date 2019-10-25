@@ -54,7 +54,7 @@ class logistica extends Model
         'correo' => 'string',
         'pais' => 'integer',
         'estado' => 'integer',
-        'municipio' => 'integer',
+        'municipio' => 'string',
         'calle' => 'string',
         'numero' => 'string',
         'cp' => 'string'

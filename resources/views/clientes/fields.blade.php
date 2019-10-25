@@ -62,7 +62,7 @@
             <option value="">Seleccione una opci&oacute;n</option>
             @foreach($paises as $pais)
               <option value="{{ $pais->id}}" 
-                @if(!empty($clientes->estado))
+                @if(!empty($clientes->pais))
                   {{ ($clientes->pais == $pais->id) ? 'selected' : '' }}
                 @endif >
                 {{ $pais->nombre}}</option>
@@ -78,13 +78,15 @@
           <div class="col-md-9">
             <select class="form-control select2" name="estado" id="estado" required="">
               <option value="">Seleccione una opcion</option>
+              @if(!empty($estados))
               @foreach($estados as $estado)
               <option value="{{ $estado->id}}" 
-                @if(!empty($clientes->estado))
+                
                   {{ ($clientes->estado == $estado->id) ? 'selected' : '' }}
-                @endif >
+                 >
                 {{ $estado->estado}}</option>
               @endforeach
+              @endif
             </select>
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
@@ -94,7 +96,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Ciudad</label>
           <div class="col-md-9">
-            <input type="text" class="form-control" name="municipio" id="municipio" required="">
+            {!! Form::text('municipio', null, ['class' => 'form-control']) !!}
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>

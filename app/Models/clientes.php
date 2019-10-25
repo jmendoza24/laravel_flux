@@ -97,7 +97,7 @@ class clientes extends Model
         'numero' => 'integer',
         'pais' => 'integer',
         'estado' => 'integer',
-        'municipio' => 'integer',
+        'municipio' => 'string',
         'cp' => 'string',
         'id_proveedor' => 'integer',
         'linea'=>'integer',

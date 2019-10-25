@@ -48,7 +48,7 @@ class clientesController extends AppBaseController
      * @return Response
      */
     public function create(){
-        $estados = array('');
+        $estados = array();
         $paises = DB::table('paises')->orderby('nombre')->get();
         
         $logisticas = array();
