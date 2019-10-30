@@ -97,7 +97,7 @@ class cotizacionesController extends AppBaseController
                         ->where('enviado','>',0)
                         ->get();
 
-        return view('cotizaciones.table',compact('cotizaciones'));
+        return view('cotizaciones.create',compact('cotizaciones'));
     }
 
     /**

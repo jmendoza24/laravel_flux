@@ -98,9 +98,8 @@ class ordenes_compraController extends AppBaseController
                                                     group by d.id_producto) a
                                             inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
                                 where c.id_orden = '.$id .'
-                                and incremento = 1');
+                                limit 1');
         $income = DB::table('income_terms')->get();
-
         return view('ordenes_compras.show',compact('ordenesCompra','detalle','income'));
     }
 
@@ -317,7 +316,7 @@ class ordenes_compraController extends AppBaseController
                                                     group by d.id_producto) a
                                             inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
                                 where c.id_orden = '.$id .'
-                                and incremento = 1');
+                                limit 1');
         $editar = 0;
         $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
 
@@ -399,5 +398,46 @@ class ordenes_compraController extends AppBaseController
         $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
         return json_encode($options);
 
+    }
+
+    function actualiza_info_occ(Request $request){
+        db::table('ordenes_compras')
+        ->where('id',$request->orden)
+        ->update(['orden_compra'=>$request->orden_compra,
+                  'notas'=>$request->notas,
+                  'income'=>$request->income]);
+
+        $editar = 0;    
+        $id = $request->orden;
+         $plantas = db::table('plantas')->get();
+        $ordenesCompra = DB::table('ordenes_compras as c')
+                        ->leftjoin('income_terms as ic','ic.id','c.income')
+                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
+                        ->where('c.id',$id)
+                        ->selectraw('c.*, nombre_corto,id_proveedor , correo_compra, compra_telefono, cl.linea')
+                        ->get();
+        $ordenesCompra = $ordenesCompra[0];
+
+        $detalle = db::select('select c.*, numero_parte, co.conteo, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from ordencompra_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join ordencompra_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_orden = '.$id.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                left join (select count(id) as conteo, producto
+                                           from  ordencompra_detalle 
+                                           WHERE id_orden = '.$id.'
+                                           group by producto ) as co on co.producto = c.producto
+                                where c.id_orden = '.$id );
+
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
+        return json_encode($options);
     }
 }

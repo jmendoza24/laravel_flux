@@ -17,12 +17,13 @@ class CreateOrdenesComprasTable extends Migration
             $table->increments('id');
             $table->integer('id_cotizacion');
             $table->integer('cliente');
-            $table->string('notas')->nullable();;
-            $table->integer('income')->nullable();;
-            $table->integer('termino_pago')->nullable();;
+            $table->string('notas')->nullable();
+            $table->integer('income')->nullable();
+            $table->integer('termino_pago')->nullable();
             $table->integer('vendedor');
             $table->date('fecha');
-            $table->integer('tipo')->nullable();;
+            $table->integer('tipo')->nullable();
+            $table->string('orden_compra')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

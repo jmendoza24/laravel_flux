@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/actualiza_producto_occ', 'ordenes_compraController@actualiza_producto_occ');
 	Route::get('/borra_producto_occ', 'ordenes_compraController@borra_producto_occ');
 	Route::get('/actualiza_producto_occ2', 'ordenes_compraController@actualiza_producto_occ_det');
-	
+	Route::get('/actualiza_info_occ', 'ordenes_compraController@actualiza_info_occ');
 
 
 });

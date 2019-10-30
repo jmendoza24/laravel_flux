@@ -111,3 +111,19 @@ function borra_producto_occ(producto, id_ot){
             }
         }); 
 }
+
+function actualiza_info_occ(orden){
+  var parametros = {"orden":orden,
+                    "orden_compra":$("#orden_compra").val(),
+                    "notas":$("#notas").val(),
+                    "income":$("#income").val()};
+  $.ajax({
+            data: parametros,
+            url: '/api/v1/actualiza_info_occ',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) {  
+              $("#detalle_cotiza").html(response);
+            }
+        });
+}

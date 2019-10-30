@@ -1,23 +1,4 @@
-  <div class="row">
-    <div class="col-md-12">
-      <br/>
-      <h5>Datos del cliente</h5>
-      <hr>
-    </div>
-    <div class="col-md-6">
-      <p><b>Nombre:</b> <label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label> </p>
-      <p><b>Número proveedor:</b> <label id="numproveedor">{{ $ordenesCompra->id_proveedor}}</label> </p>
-    </div>
-    <div class="col-md-6">
-      <p><b>Email de compra:</b> <label id="email">{{$ordenesCompra->correo_compra}}</label> </p>
-      <p><b>Teléfono de compra:</b> <label id="telefono">{{$ordenesCompra->compra_telefono}}</label> </p>
-    </div>
-  </div>
-  <hr>
-  <div class="row" style="margin-top: 5px; overflow: scroll;" id="detalle_cotiza">
-    @include('ordenes_compras.detalle')
-  </div>
-  
+@include('ordenes_compras.detalle')
   <div class="row ">
     <div class="col-md-6">
       <div class="form-group">

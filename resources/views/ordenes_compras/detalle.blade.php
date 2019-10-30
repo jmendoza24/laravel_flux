@@ -1,9 +1,51 @@
+ <div class="row">
+    <div class="col-md-12">
+      <h5>Datos del cliente</h5>
+      <hr>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-md-3 label-control" for="descripcion">Nombre:</label>
+        <div class="col-md-9">
+          <label id="numproveedor">{{ $ordenesCompra->id_proveedor}}</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 label-control" for="descripcion">Número proveedor:</label>
+        <div class="col-md-9">
+          <label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 label-control" for="descripcion">Orden compra cliente:</label>
+        <div class="col-md-9">
+          <input type="text" id="orden_compra" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control" {{ ($editar ==1)?'disabled':''}} />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-md-3 label-control" for="descripcion">Email de compra:</label>
+        <div class="col-md-9">
+          <label id="email">{{$ordenesCompra->correo_compra}}</label> 
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 label-control" for="descripcion">Teléfono de compra:</label>
+        <div class="col-md-9">
+          <label id="telefono">{{$ordenesCompra->compra_telefono}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row" style="margin-top: 5px; overflow: scroll;" id="">
 <table class="table table-bordered">
     <thead class="" style="background: #518a87; border: 1px solid #518a87; color: white;">
       <tr>
         <th>Número parte</th>
         @if($editar ==1)
-        <td>Incremento</td> 
+        <td>Item</td> 
         @endif
         <th>Descripción</th>
         <th>Familia</th>
@@ -28,7 +70,7 @@
       <tr>
         <td>{{ $det->numero_parte }}</td>
         @if($editar ==1)
-        <td><input type="text" name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})"></td>
+        <td><input type="text" style="width: 60px;" name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})"></td>
         @endif
         <td>{{ $det->descripcion}}</td>
         <td>{{ $det->nfamilia }}</td>
@@ -68,3 +110,4 @@
       @endforeach
     </tbody>
   </table>
+</div>
