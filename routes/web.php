@@ -48,6 +48,8 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::resource('listaMateriales', 'ListaMaterialesController');
 	Route::get('/historiaCotizacion', 'cotizacionesController@historia')->name('cotizaciones.historia');
 	Route::resource('ordenesCompras', 'ordenes_compraController');
+	Route::get('ordenesCompras/{id}/seguimiento', 'ordenes_compraController@seguimiento')->name('ordenesCompras.seguimiento');
+
 
 });
 
@@ -99,7 +101,9 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/borra_producto_occ', 'ordenes_compraController@borra_producto_occ');
 	Route::get('/actualiza_producto_occ2', 'ordenes_compraController@actualiza_producto_occ_det');
 	Route::get('/actualiza_info_occ', 'ordenes_compraController@actualiza_info_occ');
-
+	Route::get('/obtiene_seguimiento', 'ordenes_compraController@obtiene_seguimiento');
+	Route::post('/guarda_seguimiento', 'ordenes_compraController@guarda_seguimiento');
+	
 
 });
 

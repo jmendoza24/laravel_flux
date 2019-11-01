@@ -5,34 +5,34 @@
     </div>
     <div class="col-md-6">
       <div class="form-group row">
-        <label class="col-md-3 label-control" for="descripcion">Nombre:</label>
-        <div class="col-md-9">
+        <label class="col-md-5 label-control" for="descripcion">Nombre:</label>
+        <div class="col-md-7">
           <label id="numproveedor">{{ $ordenesCompra->id_proveedor}}</label>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 label-control" for="descripcion">Número proveedor:</label>
-        <div class="col-md-9">
+        <label class="col-md-5 label-control" for="descripcion">Número proveedor:</label>
+        <div class="col-md-7">
           <label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 label-control" for="descripcion">Orden compra cliente:</label>
-        <div class="col-md-9">
+        <label class="col-md-5 label-control" for="descripcion">Orden compra cliente:</label>
+        <div class="col-md-7">
           <input type="text" id="orden_compra" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control" {{ ($editar ==1)?'disabled':''}} />
         </div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group row">
-        <label class="col-md-3 label-control" for="descripcion">Email de compra:</label>
-        <div class="col-md-9">
+        <label class="col-md-5 label-control" for="descripcion">Email de compra:</label>
+        <div class="col-md-7">
           <label id="email">{{$ordenesCompra->correo_compra}}</label> 
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 label-control" for="descripcion">Teléfono de compra:</label>
-        <div class="col-md-9">
+        <label class="col-md-5 label-control" for="descripcion">Teléfono de compra:</label>
+        <div class="col-md-7">
           <label id="telefono">{{$ordenesCompra->compra_telefono}}</label>
         </div>
       </div>
@@ -76,7 +76,9 @@
         <td>{{ $det->nfamilia }}</td>
         <td>{{ $det->dibujo_nombre}}</td>
         @if($editar ==0)
-        <td><input type="number" style="text-align: right;" name="cantidad{{$det->id}}" id="cantidad{{$det->id}}" class="form-control" min="1" value="{{ $det->cantidad}}" onchange="actualiza_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"></td>
+        <td>
+          <input type="number" {{($ordenesCompra->tipo==2)?'readonly':''}} style="text-align: right;" name="cantidad{{$det->id}}" id="cantidad{{$det->id}}" class="form-control" min="1" value="{{ $det->cantidad}}" onchange="actualiza_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})">
+        </td>
         @endif
         <td style="text-align: center;">{{ $det->tiempo_entrega }}</td>
         @if($editar ==0)
@@ -98,10 +100,10 @@
         @endif
         <td>
           <div class="btn-group">
-            @if($editar ==1 && $det->incremento==1 and $det->cantidad > 1 and $det->conteo < $det->cantidad)
+            @if($editar ==1 && $det->cantidad > 1 and $det->conteo < $det->cantidad)
             <a class='btn btn-float btn-outline-info btn-round' onclick="agrega_subproducto({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-plus"></i></a>
             @endif
-            @if($det->incremento >1)
+            @if($det->incremento >1 and $editar ==1)
             <a class='btn btn-float btn-outline-danger btn-round' onclick="borra_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-trash"></i></a>
             @endif
           </div>

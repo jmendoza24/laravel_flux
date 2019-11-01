@@ -7,6 +7,7 @@ use App\Http\Requests\Updateordenes_compraRequest;
 use App\Repositories\ordenes_compraRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Flash;
 use Response;
 use DB;
@@ -98,6 +99,7 @@ class ordenes_compraController extends AppBaseController
                                                     group by d.id_producto) a
                                             inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
                                 where c.id_orden = '.$id .'
+                                order by c.id desc
                                 limit 1');
         $income = DB::table('income_terms')->get();
         return view('ordenes_compras.show',compact('ordenesCompra','detalle','income'));
@@ -240,7 +242,13 @@ class ordenes_compraController extends AppBaseController
         ->update(['tipo'=>2,
                   'notas'=>$request->notas,
                   'income'=>$request->income]);
+        db::update('delete from ordentrabajo_seguimiento where id_orden ='.$request->id_orden);
 
+        db::select('insert into ordentrabajo_seguimiento(id_orden,id_detalle,id_producto,id_proceso,id_subproceso)
+                    select o.id_orden,o.id,producto,p.id_proceso, p.id_subproceso
+                    from ordencompra_detalle o 
+                    inner join productos_subprocesos p on p.id_producto = o.producto 
+                    where id_orden ='.$request->id_orden);
         return 1;
     }
 
@@ -251,6 +259,13 @@ class ordenes_compraController extends AppBaseController
                     from ordencompra_detalle
                     where id_orden = ".$request->id_ot.'
                     group by id_orden,producto, dibujo,cantidad,costo');
+
+        db::select('insert into ordentrabajo_seguimiento(id_orden,id_detalle,id_producto,id_proceso,id_subproceso)
+                    select o.id_orden,o.id,producto,p.id_proceso, p.id_subproceso
+                    from ordencompra_detalle o 
+                    inner join productos_subprocesos p on p.id_producto = o.producto 
+                    where id_orden ='.$request->id_ot.'
+                    and o.id not in (select distinct id_detalle from ordentrabajo_seguimiento where id_orden = '.$request->id_ot.')');
 
         $id = $request->id_ot;
         $ordenesCompra = DB::table('ordenes_compras as c')
@@ -316,6 +331,7 @@ class ordenes_compraController extends AppBaseController
                                                     group by d.id_producto) a
                                             inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
                                 where c.id_orden = '.$id .'
+                                order by c.id desc
                                 limit 1');
         $editar = 0;
         $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
@@ -366,6 +382,13 @@ class ordenes_compraController extends AppBaseController
         db::table('ordencompra_detalle')
             ->where('id',$request->producto)
             ->delete();
+
+        db::table('ordentrabajo_seguimiento')
+            ->where('id_detalle',$request->producto)
+            ->delete();
+
+
+
         $editar = 1;    
         $id = $request->id_ot;
         $ordenesCompra = DB::table('ordenes_compras as c')
@@ -439,5 +462,68 @@ class ordenes_compraController extends AppBaseController
 
         $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
         return json_encode($options);
+    }
+
+    function seguimiento($id){
+        $ordenesCompra = DB::table('ordenes_compras as c')
+                        ->leftjoin('income_terms as ic','ic.id','c.income')
+                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
+                        ->where('c.id',$id)
+                        ->selectraw('c.*, nombre_corto,id_proveedor , correo_compra, compra_telefono, cl.linea')
+                        ->get();
+        $ordenesCompra = $ordenesCompra[0];
+
+        $productos = db::table('ordentrabajo_seguimiento as o')
+                        ->join('ordencompra_detalle as d','d.id','o.id_detalle')
+                        ->join('productos as pr','pr.id','d.producto')
+                        ->where('o.id_orden',$id)
+                        ->selectraw('distinct d.id, pr.numero_parte, d.incremento')
+                        ->get();
+        //dd($productos);
+        //$detalle = db::table('')
+        $procesos = array();
+        $subprocesos = array();
+        return view('ordenes_compras.seguimiento',compact('ordenesCompra','productos','procesos','subprocesos'));
+    }
+    function obtiene_seguimiento(Request $request){
+
+        $id_detalle = $request->id_detalle;
+        $procesos = db::table('ordentrabajo_seguimiento as o')
+                    ->join('procesos as pp','pp.id','o.id_proceso')
+                    ->selectraw('distinct pp.id, pp.procesos, pp.descripcion')
+                    ->where('o.id_detalle',$id_detalle)
+                    ->get();
+        $subprocesos = db::table('ordentrabajo_seguimiento as o')
+                        ->join('subprocesos as s','o.id_subproceso','s.id')
+                        ->where('o.id_detalle',$id_detalle)
+                        ->selectraw('distinct s.id, s.subproceso, o.id_proceso, o.fecha_inicio, o.foto, o.dias')
+                        ->get();
+
+
+
+     $options =  view('ordenes_compras.informe_seguimiento',compact('id_detalle','procesos','subprocesos'))->render();   
+     return json_encode($options);
+    }
+
+    function guarda_seguimiento(Request $request){
+
+        $id_seguimiento = $request->id_seguimiento;
+
+        $file_img = $request->image;
+        return $request->all();
+
+        if(!empty($file_img)){
+
+              
+            $img = Storage::url($file_img->store('image', 'images'));
+            
+            /**$imgp = strpos($img,'/storage/');
+            $img = substr($img, $imgp, strlen($img));
+            
+            DB::table('producto_dibujos')
+                ->where('id',$request->iddibujo)
+                ->update(['dibujo'=>$img]);*/
+        }
+        
     }
 }

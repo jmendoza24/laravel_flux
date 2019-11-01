@@ -19,8 +19,9 @@
             <td>{{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}</td>
             <td>
                 <div class='btn-group'>
-                    <a href="{!! route('ordenesCompras.show', [$ordenesCompra->id]) !!}" class='btn btn btn-float btn-outline-info btn-round'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('ordenesCompras.show', [$ordenesCompra->id]) !!}" class='btn btn btn-float btn-outline-info btn-round'><i class="fa fa-user"></i></a>
                     <a href="{!! route('ordenesCompras.edit', [$ordenesCompra->id]) !!}" class='btn btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></a>
+                    <a href="{!! route('ordenesCompras.seguimiento', [$ordenesCompra->id]) !!}" class='btn btn btn-float btn-outline-primary btn-round'><i class="fa fa-circle-o-notch" aria-hidden="true"></i></a>
                 </div>
             </td>
         </tr>

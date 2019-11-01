@@ -127,3 +127,41 @@ function actualiza_info_occ(orden){
             }
         });
 }
+
+function obtiene_seguimiento(id_detalle){
+  $.ajax({
+            data: {"id_detalle":id_detalle},
+            url: '/api/v1/obtiene_seguimiento',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) {  
+              $("#informe_seguimiento").html(response);
+            }
+        });
+}
+
+function guarda_seguimiento(id_seguimiento){
+  event.preventDefault();
+  alert(id_seguimiento);
+  var parametros = {"id_seguimiento":id_seguimiento,
+                    "_method": 'POST',
+                    "image": $('input[name=foto'+id_seguimiento+']').val(),
+                    "_token": $("meta[name='csrf-token']").attr("content")
+                  }
+  $.ajax
+        ({
+            url: '/api/v1/guarda_seguimiento',          
+            data: parametros,
+            dataType: "json",
+            method: "POST",                     
+            success: function(result){
+               console.log(result);
+            },
+            error(a,b,c){
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            }
+        });
+
+}

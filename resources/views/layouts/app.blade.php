@@ -11,6 +11,7 @@
   <title>Fluxmetals</title> 
   <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ url('app-assets/images/ico/favicon.ico') }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
   <!-- BEGIN VENDOR CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/vendors.css') }}">
@@ -191,6 +192,7 @@
   <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
 
   <script src="{{ url('app-assets/js/scripts/forms/wizard-steps.js')}}" type="text/javascript"></script>
+  <script type="text/javascript" src="{{ url('app-assets/js/scripts/ui/compact-menu.js')}}"></script>
   @yield('script')
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
