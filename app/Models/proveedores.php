@@ -42,7 +42,8 @@ class proveedores extends Model
         'credito',
         'telefono',
         'correo',
-        'puesto'
+        'puesto',
+        'nombre_contacto'
     ];
 
     /**
@@ -62,7 +63,8 @@ class proveedores extends Model
         'credito' => 'string',
         'telefono' => 'string',
         'correo' => 'string',
-        'puesto' => 'string'
+        'puesto' => 'string',
+        'nombre_contacto'=>'string'
     ];
 
     /**

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-    Orden de trabajo OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}
+    Crear orden de trabajo OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}
 @endsection  
 
 @section('content')
@@ -19,10 +19,10 @@
         <label for="lastName4">Notas : </label>
         <textarea class="form-control" id="notas" name="notas" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo ($ordenesCompra->notas);?></textarea>
       </div>
-    </div>
+    </div> 
     <div class="col-md-6">
       <div class="form-group">
-        <label for="lastName4">Income terms : </label>
+        <label for="lastName4">Inco term : </label>
         <select class="form-control custom-select required" style="width: 100%;"name="income" id="income" onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
             <option value="">Seleccione una opcion</option>
             @foreach($income as $inco)
@@ -36,6 +36,12 @@
           </select>
       </div>
     </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="lastName4">Lugar : </label>
+        <textarea class="form-control" id="lugar" name="lugar" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo ($ordenesCompra->lugar);?></textarea>
+      </div>
+    </div> 
     <br>
     
   </div>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Procesos;
 use App\Http\Requests\CreateProcesosRequest;
 use App\Http\Requests\UpdateProcesosRequest;
 use App\Repositories\ProcesosRepository;
@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Response;
 use DB;
+
 
 class ProcesosController extends AppBaseController
 {
@@ -30,7 +31,7 @@ class ProcesosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $procesos = DB::table('procesos')->get();
+        $procesos = Procesos::get();
 
         return view('procesos.index')
             ->with('procesos', $procesos);
@@ -92,7 +93,7 @@ class ProcesosController extends AppBaseController
      * @return Response
      */
     public function edit($id){
-        $procesos = DB::table('procesos')->where('id',$id)->get();
+        $procesos = Procesos::where('id',$id)->get();
         $procesos = $procesos[0];
         return view('procesos.edit')->with('procesos', $procesos);
     }
@@ -131,20 +132,12 @@ class ProcesosController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
-    {
-        $procesos = $this->procesosRepository->find($id);
-
-        if (empty($procesos)) {
-            Flash::error('Procesos not found');
-
-            return redirect(route('procesos.index'));
-        }
-
-        $this->procesosRepository->delete($id);
-
-        Flash::success('Procesos deleted successfully.');
-
+    public function destroy($id){
+        
+        db::table('procesos')
+        ->where('id',$id)
+        ->delete();
+        
         return redirect(route('procesos.index'));
     }
 }

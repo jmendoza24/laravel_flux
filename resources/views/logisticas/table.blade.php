@@ -5,7 +5,7 @@
             <th>Correo</th>-->
             <th>Pais</th>
             <th>Estado</th>
-            <th>Municipio</th>
+            <th>Ciudad</th>
             <th>Telefono</th>
             <th>Codigo postal</th>
             <th colspan=""></th>

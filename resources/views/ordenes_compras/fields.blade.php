@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <label for="lastName4">Income terms : </label>
+        <label for="lastName4">Inco term : </label>
         <select class="form-control custom-select required" style="width: 100%;"name="income" id="income" disabled="">
             <option value="">Seleccione una opcion</option>
             @foreach($income as $inco)
@@ -24,8 +24,13 @@
           </select>
       </div>
     </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="lastName4">Lugar : </label>
+        <textarea class="form-control" id="lugar" name="lugar" disabled=""><?php echo ($ordenesCompra->lugar);?></textarea>
+      </div>
+    </div>
     <br>
-    
   </div>
   <hr>
   <div class="form-group col-sm-12" style="text-align: right;">

@@ -22,6 +22,7 @@ class CreateCotizacionesTable extends Migration
             $table->integer('income');
             $table->string('termino_pago');
             $table->integer('vendedor');
+            $table->string('lugar');
             $table->timestamps();
             $table->softDeletes();
         });

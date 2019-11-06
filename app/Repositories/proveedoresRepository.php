@@ -26,7 +26,8 @@ class proveedoresRepository extends BaseRepository
         'credito',
         'telefono',
         'correo',
-        'puesto'
+        'puesto',
+        'nombre_contacto'
     ];
 
     /**

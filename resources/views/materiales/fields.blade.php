@@ -142,12 +142,12 @@
         {!! Form::text('molino', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('pais', 'País de procedendia:') !!}
+        {!! Form::label('pais', 'País de procedencia:') !!}
         {!! Form::text('pais', null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group col-sm-6">
-        {!! Form::label('colada_numero', 'Colada Numero:') !!}
+        {!! Form::label('colada_numero', 'Colada Número:') !!}
         {!! Form::number('colada_numero', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">

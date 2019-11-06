@@ -13,7 +13,7 @@
     <div class="form-group row">
       <label class="col-md-3 label-control" for="planta">Planta</label>
       <div class="col-md-9">
-          {!! Form::number('id_planta', null, ['class' => 'form-control']) !!}
+          {!! Form::text('id_planta', null, ['class' => 'form-control']) !!}
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@
 <div class="row">
     <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">Municipio</label>
+      <label class="col-md-3 label-control" for="userinput2">Ciudad</label>
       <div class="col-md-9">
         {!! Form::text('municipio', null, ['class' => 'form-control']) !!}
       </div>
@@ -66,7 +66,7 @@
   </div>
   <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput1">Codigo postal</label>
+      <label class="col-md-3 label-control" for="userinput1">Código postal</label>
       <div class="col-md-9">
         {!! Form::text('cp', null, ['class' => 'form-control']) !!}
       </div>

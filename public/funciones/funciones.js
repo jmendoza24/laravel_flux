@@ -59,9 +59,13 @@ function guarda_direccion(id_producto){
               $.alert('La direccion se agrego correctamente');
 
               $("#large").modal('hide');//ocultamos el modal
-              $('#form_logistica')[0].reset();
-              
-
+              $("#calle_log").val('');
+              $("#pais_log").val('');
+              $("#numero_log").val('');
+              $("#municipio_log").val('');
+              $("#estado_log").val('');
+              $("#cp_log").val('');
+              $("#telefono_log").val('');
             }
         }); 
 }
@@ -583,7 +587,7 @@ function dibujo_info(){
       }); 
   
 }
-
+/** 
 function guarda_informacion(){
   var parameters = { "income":$("#income").val()};
   $.ajax({
@@ -595,7 +599,7 @@ function guarda_informacion(){
             $("#tiempo").val(response);
           }
       }); 
-}
+}*/
 
 
 function obtiene_producto(){
@@ -865,7 +869,7 @@ function guarda_materialforma(id, campo){
 
 function guarda_informacion(cotizacion){
   $.ajax({
-          data: {"cotizacion":cotizacion, "notas":$("#notas").val(),"income":$("#income").val()},
+          data: {"cotizacion":cotizacion, "notas":$("#notas").val(),"income":$("#income").val(),"lugar":$("#lugar").val()},
           url: '/api/v1/guarda_informacion_cot',
           dataType: 'json',
           type:  'get',

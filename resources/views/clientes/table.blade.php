@@ -4,7 +4,7 @@
             <th>Nombre Corto</th>                
             <th>Pais</th>
             <th>Estado</th>
-            <th>Municipio</th>
+            <th>Ciudad</th>
             <th>Cp</th>
             <th>Proveedor</th>
             <th colspan=""></th>

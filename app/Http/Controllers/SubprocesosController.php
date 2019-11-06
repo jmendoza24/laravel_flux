@@ -145,7 +145,7 @@ class SubprocesosController extends AppBaseController
      */
     public function destroy($id)
     {
-        DB:table('subprocesos')->where('id',$id)->delete();
+        DB::table('subprocesos')->where('id',$id)->delete();
 
         return redirect(route('subprocesos.index'));
     }

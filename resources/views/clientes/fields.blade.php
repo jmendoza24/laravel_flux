@@ -3,11 +3,12 @@
     <a class="nav-link active" id="active-tab32" data-toggle="tab" href="#active32" aria-controls="active32"
     aria-expanded="true"><i class="ft-user"></i> Información General</a>
   </li>
+    @if($editar ==1)
   <li class="nav-item">
     <a class="nav-link" id="link-tab32" data-toggle="tab" href="#link32" aria-controls="link32"
     aria-expanded="false"><i class="ft-mail"></i> Contactos</a>
   </li>
-  @if($editar ==1)
+
   <li class="nav-item">
     <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt2" aria-controls="linkOpt2"><i class="fa fa-truck"></i> Logistica</a>
   </li>
@@ -46,7 +47,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Numero</label>
+          <label class="col-md-3 label-control" for="userinput1">Número</label>
           <div class="col-md-9">
             {!! Form::text('numero', null, ['class' => 'form-control']) !!}
           </div>
@@ -114,7 +115,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="empresa">Numero proveedor</label>
+          <label class="col-md-3 label-control" for="empresa">Número proveedor</label>
           <div class="col-md-9">
              {!! Form::text('id_proveedor', null, ['class' => 'form-control']) !!}
           </div>
@@ -129,17 +130,18 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <input type="hidden" name="linea" id="linea" value="0">
+    <!--<div class="row">
       <div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-3 label-control" for="empresa">Línea</label>
           <div class="col-md-9">
-            {!! Form::number('linea', null, ['class' => 'form-control','required']) !!}
+            
           </div>
           <div class="invalid-feedback">Este campo es requerido.</div>
         </div>
       </div>
-    </div>
+    </div>--->
     <h4 class="form-section"><i class="ft-mail"></i> Impuesto</h4>
     <div class="row">
       <div class="col-md-6">
@@ -154,7 +156,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">No. Certifcado </label>
           <div class="col-md-9">
-          {!! Form::number('imp_nocertificado', null, ['class' => 'form-control']) !!}
+          {!! Form::text('imp_nocertificado', null, ['class' => 'form-control']) !!}
           </div>
         </div>
       </div>
@@ -184,7 +186,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Instrucciones sobre embarques </label>
           <div class="col-md-9">
-          {!! Form::textarea('imp_nocertificado', null, ['class' => 'form-control']) !!}
+          {!! Form::textarea('nota_embarques', null, ['class' => 'form-control']) !!}
           </div>
         </div>
       </div>
@@ -287,7 +289,7 @@
             <option value="">Seleccione una opci&oacute;n</option>
             @foreach($paises as $pais)
               <option value="{{ $pais->id}}" 
-                @if(!empty($clientes->estado))
+                @if(!empty($clientes->fac_pais))
                   {{ ($clientes->fac_pais == $pais->id) ? 'selected' : '' }}
                 @endif >
                 {{ $pais->nombre}}</option>
@@ -315,7 +317,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Ciudad</label>
           <div class="col-md-9">
-            <input type="text" class="form-control" name="fac_municipio" id="fac_municipio">
+            {!! Form::text('fac_municipio', null, ['class' => 'form-control']) !!}
           </div>
         </div>
       </div>

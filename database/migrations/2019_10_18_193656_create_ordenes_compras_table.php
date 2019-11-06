@@ -24,6 +24,7 @@ class CreateOrdenesComprasTable extends Migration
             $table->date('fecha');
             $table->integer('tipo')->nullable();
             $table->string('orden_compra')->nullable();
+            $table->string('lugar')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

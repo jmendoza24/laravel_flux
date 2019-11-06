@@ -46,10 +46,10 @@ class plantaController extends AppBaseController
      * @return Response
      */
     public function create(){
-
+        $paises = db::table('paises')->get();
         $estados = DB::table('estados')->orderby('estado')->get();
         $municipios = array();
-        return view('plantas.create',compact('estados','municipios'));
+        return view('plantas.create',compact('estados','municipios','paises'));
     }
 
     /**

@@ -137,6 +137,7 @@ class clientesController extends AppBaseController
          $logisticas = DB::table('logisticas as a')
                     ->leftjoin('estados as e','e.id','=','a.estado')
                     ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where('a.id_producto',$id)
                     ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
                     ->get();
         
@@ -201,6 +202,7 @@ class clientesController extends AppBaseController
          $logisticas = DB::table('logisticas as a')
                     ->leftjoin('estados as e','e.id','=','a.estado')
                     ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where('a.id_producto',$request->id_producto)
                     ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
                     ->get();
 

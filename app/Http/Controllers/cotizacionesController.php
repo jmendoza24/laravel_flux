@@ -478,7 +478,8 @@ class cotizacionesController extends AppBaseController
         db::table('cotizaciones')
         ->where('id',$request->cotizacion)
         ->update(['id_notas'=>$request->notas,
-                  'income'=>$request->income]);
+                  'income'=>$request->income,
+                  'lugar'=>$request->lugar]);
     }
 
     function elimina_cotizacion(Request $request){

@@ -84,7 +84,7 @@
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
-              <input type="text"  class="form-control" placeholder="Municipio"  name="municipio_log" id="municipio_log" value="{{ $logisticas_fields->municipio}}">
+              <input type="text"  class="form-control" placeholder="Ciudad"  name="municipio_log" id="municipio_log" value="{{ $logisticas_fields->municipio}}">
           </div>
         </div>
       </div>           

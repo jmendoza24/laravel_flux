@@ -119,7 +119,7 @@ class clientes extends Model
         'log_nombre'=>'string',
         'log_correo'=>'string',
         'imp_factura' => 'integer',
-        'imp_porcentaje' => 'integer',
+        'imp_porcentaje' => 'string',
         'imp_nocertificado' => 'integer',
         'nota_marcado'=>'string',
         'nota_embarques'=>'string'

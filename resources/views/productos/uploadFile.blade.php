@@ -14,7 +14,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="empresa">Fecha de revisión:</label>
           <div class="col-md-9">
-            <input type="date" min="0" name="tiempoentrega" id="tiempoentrega" required=""  class="form-control" value="{{ $producto_dibujos->tiempo_entrega }}">
+            <input type="date" name="tiempoentrega"  id="tiempoentrega" required=""  class="form-control" value="{{ $producto_dibujos->tiempo_entrega }}">
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Número de revisión:</label>
           <div class="col-md-9">
-           	<input type="number" min="0" name="revision" id="revision" class="form-control" value="{{ $producto_dibujos->revision }}">
+           	<input type="text" min="0" name="revision" id="revision" class="form-control" value="{{ $producto_dibujos->revision }}">
            	<div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>

@@ -89,6 +89,12 @@
           </select>
       </div>
     </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="lastName4">Lugar : </label>
+        <textarea class="form-control" id="lugar" name="lugar" onchange="guarda_informacion({{ $num_cotizacion }})"><?php  echo $cotizacion->lugar; ?></textarea>
+      </div>
+    </div>
     <br>
     
   </div>

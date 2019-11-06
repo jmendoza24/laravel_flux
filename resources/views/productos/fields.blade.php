@@ -26,7 +26,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="descripcion">Número de parte:</label>
           <div class="col-md-9">
-            <input type="text" name="numero_parte" id="numero_parte" class="form-control" required="">     
+            {!! Form::text('numero_parte', null, ['required', 'class' => 'form-control']) !!}  
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
@@ -102,7 +102,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Tipo estructura:</label>
           <div class="col-md-9">
-            <select id="id_estructura" name="id_estructura" class="form-control">
+            <select id="id_estructura" name="id_estructura" class="form-control" required="">
                 <option value="">Selecione una opción</option>
                 @foreach($tipoestructura as $estructura)
                   <option value="{{ $estructura->id}}" 
@@ -112,6 +112,7 @@
                     {{ $estructura->estructura}}</option>
                   @endforeach
             </select>
+            <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
       </div>
@@ -147,7 +148,8 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Ancho:</label>
           <div class="col-md-9">
-            {{ Form::number('ancho', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','step'=>'any']) }}       
+            {{ Form::number('ancho', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','step'=>'any','required']) }}       
+            <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
       </div>

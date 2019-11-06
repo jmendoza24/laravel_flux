@@ -48,6 +48,11 @@
 			{{ $cotizacion->id_notas }}
 		</td>
 	</tr>
+	<tr>
+		<td colspan="3"><h6>Inco term:</h6>
+			{{ $cotizacion->id_notas }}
+		</td>
+	</tr>
 </table>
 @if($envio==0)
 <hr>

@@ -20,7 +20,7 @@ class Procesos extends Model
     public $table = 'procesos';
     
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at']; 
 
 
     public $fillable = [

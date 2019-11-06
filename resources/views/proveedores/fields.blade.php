@@ -100,6 +100,14 @@
 </div>
 <h4 class="form-section"><i class="ft-mail"></i> Contacto</h4>
 <div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput1">Nombre</label>
+      <div class="col-md-9">
+        {!! Form::text('nombre_contacto', null, ['class' => 'form-control']) !!}
+      </div>
+    </div>
+  </div>
     <div class="col-md-6">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput1">Teléfono</label>
@@ -116,8 +124,6 @@
       </div>
     </div>
   </div>
-</div>
-<div class="row">
  <div class="col-md-6">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput1">Puesto</label>

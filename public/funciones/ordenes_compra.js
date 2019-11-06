@@ -150,6 +150,7 @@ function guarda_seguimiento(id_seguimiento){
                   }
   $.ajax
         ({
+            async: true,
             url: '/api/v1/guarda_seguimiento',          
             data: parametros,
             dataType: "json",

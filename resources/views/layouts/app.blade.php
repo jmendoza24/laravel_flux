@@ -192,7 +192,7 @@
   <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
 
   <script src="{{ url('app-assets/js/scripts/forms/wizard-steps.js')}}" type="text/javascript"></script>
-  <script type="text/javascript" src="{{ url('app-assets/js/scripts/ui/compact-menu.js')}}"></script>
+  <!--<script type="text/javascript" src="{{ url('app-assets/js/scripts/ui/compact-menu.js')}}"></script>-->
   @yield('script')
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
