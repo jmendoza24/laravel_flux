@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">Nombre</label>
+      <label class="col-md-3 label-control" for="userinput2">Razón social</label>
       <div class="col-md-9">
       {!! Form::text('nombre', null, ['class' => 'form-control','required']) !!}
       <div class="invalid-feedback">Este campo es requerido.</div>
@@ -51,7 +51,7 @@
   </div> 
     <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">Municipio</label>
+      <label class="col-md-3 label-control" for="userinput2">Ciudad</label>
       <div class="col-md-9">
          {!! Form::text('municipio', null, ['class' => 'form-control']) !!}
           <div class="invalid-feedback">Este campo es requerido.</div>
@@ -137,7 +137,7 @@
 
 </div>
 <div class="form-actions right">
-  <a href="{{ route('plantas.index') }}">
+  <a href="{{ route('proveedores.index') }}">
 <button type="button" class="btn btn-warning mr-1">
   <i class="ft-x"></i> Cancel
 </button>

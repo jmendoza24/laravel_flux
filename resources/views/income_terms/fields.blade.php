@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-8">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput1">Income</label>
+      <label class="col-md-3 label-control" for="userinput1">Inco</label>
       <div class="col-md-9">
         {!! Form::text('income', null, ['class' => 'form-control','required']) !!}
         <div class="invalid-feedback">Este campo es requerido.</div>

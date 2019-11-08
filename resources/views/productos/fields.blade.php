@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <!--<div class="col-md-6">
+      <div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Tipo de acero</label>
           <div class="col-md-9">
@@ -95,7 +95,7 @@
             </select>
           </div>
         </div>
-      </div>--->
+      </div>
     <!--</div>
     <div class="row">-->
       <div class="col-md-6">
@@ -139,7 +139,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Peso (Lb):</label>
           <div class="col-md-9">
-            {{ Form::number('peso', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','required']) }}   
+            {{ Form::text('peso', null, ['placeholder'=>'', 'class' => 'form-control numeros','required']) }}   
             <div class="invalid-feedback">Este campo es requerido.</div>    
           </div>
         </div>
@@ -148,7 +148,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Ancho:</label>
           <div class="col-md-9">
-            {{ Form::number('ancho', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','step'=>'any','required']) }}       
+            {{ Form::number('ancho', null, ['placeholder'=>'', 'class' => 'form-control numeros','required']) }}       
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
@@ -157,7 +157,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Costo Unitario:</label>
           <div class="col-md-9">
-            {{ Form::number('costo_material', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','required']) }}       
+            {{ Form::text('costo_material', null, ['placeholder'=>'', 'class' => 'form-control currency','min'=>'0','required','step'=>'any']) }}       
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
@@ -175,7 +175,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Precio Unitario:</label>
           <div class="col-md-9">
-            {{ Form::number('costo_produccion', null, ['placeholder'=>'', 'class' => 'form-control','min'=>'0','step'=>'any']) }}       
+            {{ Form::text('costo_produccion', null, ['placeholder'=>'', 'class' => 'form-control currency','min'=>'0','step'=>'any']) }}       
           </div>
         </div>
       </div>
@@ -199,7 +199,9 @@
             @foreach($plantas as $planta)
             <tr>
               <td>{{ $planta->nombre}}</td>
-              <td><input type="number" name="plantacosto{{$planta->id}}" id="plantacosto{{$planta->id}}" min="0" step="any" class="form-control" onchange="guarda_horas({{$planta->id}},{{ $productos->id }})"></td>
+              <td>
+                <input type="number" name="plantacosto{{$planta->id}}" id="plantacosto{{$planta->id}}" min="0" value="{{ $planta->costo }}" 
+                step="any" class="form-control" onchange="guarda_horas({{$planta->id}},{{ $productos->id }})"></td>
             </tr>
             @endforeach
           </tbody>

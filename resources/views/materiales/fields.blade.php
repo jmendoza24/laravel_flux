@@ -1,3 +1,4 @@
+<input type="hidden" id="idmateriales" value="{{ $materiales->id}}">
 <div class="row">
     <div class="form-group col-sm-6">
         {!! Form::label('materiales', 'Material') !!}
@@ -18,7 +19,7 @@
         <div class="invalid-feedback">Este campo es requerido.</div>
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('forma', 'Forma:') !!}
+        <label>Forma:</label>
         <select class="form-control" id="forma" name="forma" required="" onchange="showcampos()">
             <option value="">Seleccione una opción</option>
             @foreach($formas as $forma)
@@ -69,41 +70,8 @@
     </div>
 </div>
 <h4 class="form-section" id="medida_div" style=""><i class="ft-mail"></i>Medidas</h4> <br/>
-<div class="row" style="" id="medidas">
-    
-    <div class="form-group col-sm-6" style="" id="cam1">
-        {!! Form::label('espesor', 'Espesor (Thickness):') !!}
-        {!! Form::number('espesor', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
-    </div>
-    <!-- Ancho Field -->
-    <div class="form-group col-sm-6" style="" id="cam2">
-        {!! Form::label('ancho', 'Ancho (Wide):') !!}
-        {!! Form::number('ancho', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
-    </div>
-     <div class="form-group col-sm-6" style="" id="cam3">
-        {!! Form::label('altura', 'Altura (Wide2):') !!}
-        {!! Form::number('altura', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
-    </div>
-    <div class="form-group col-sm-6" style="" id="cam4">
-        {!! Form::label('peso_distancia', 'Peso por Distancia:') !!}
-        {!! Form::number('peso_distancia', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
-    </div>
-     <div class="form-group col-sm-6" style="" id="cam5">
-        {!! Form::label('wide', 'Ancho (Wide):') !!}
-        {!! Form::number('wide', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
-    </div>
-    <div class="form-group col-sm-6" style="" id="cam6">
-        {!! Form::label('lenght', 'Largo (Length):') !!}
-        {!! Form::number('lenght', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
-    </div>
-    <div class="form-group col-sm-6" style="" id="cam7">
-        {!! Form::label('weight', 'Peso (Weight):') !!}
-        {!! Form::number('weight', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
-    </div>
-    <div class="form-group col-sm-6" style="" id="cam8">
-        {!! Form::label('precio', 'Precio:') !!}
-        {!! Form::number('precio', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
-    </div>
+<div class="row" style="" id="medidas_formas">
+    @include('materiales.medidas')
 </div>
 <h4 class="form-section"></h4>
 
@@ -118,7 +86,7 @@
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('fecha', 'Fecha de orden de compra:') !!}
-        {!! Form::date('fecha', null, ['class' => 'form-control']) !!}
+        {!! Form::date('fecha', null, ['class' => 'form-control pickadate-format']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('num_orden', 'No. orden de compra:') !!}
@@ -152,7 +120,7 @@
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('fecha_entrega', 'Fecha Entrega:') !!}
-        {!! Form::date('fecha_entrega', null, ['class' => 'form-control']) !!}
+        {!! Form::date('fecha_entrega', null, ['class' => 'form-control pickadate-format']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('num_embarque', 'No. Embarque:') !!}
@@ -184,10 +152,3 @@
     <a href="{!! route('materiales.index') !!}" class="btn btn-warning mr-1">Cancelar</a>
     
 </div>
-@section('script')
-<script type="text/javascript">
-    $(document).ready(function() {
-        showcampos();
-    });
-</script>
-@endsection

@@ -2,34 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Models\planta;
+use App\Models\catalogo_forma;
 use App\Repositories\BaseRepository;
 
 /**
- * Class plantaRepository
+ * Class catalogo_formaRepository
  * @package App\Repositories
- * @version August 23, 2019, 3:40 am UTC
+ * @version November 6, 2019, 6:27 pm UTC
 */
 
-class plantaRepository extends BaseRepository
+class catalogo_formaRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'nombre',
-        'id_planta',
-        'direccion',
-        'colonia',
-        'municipio',
-        'estado',
-        'pais',
-        'cp',
-        'rfc',
-        'telefono',
-        'correo',
-        'puesto',
-        'contacto_name'
+        'id_forma',
+        'columna',
+        'valor'
     ];
 
     /**
@@ -47,6 +37,6 @@ class plantaRepository extends BaseRepository
      **/
     public function model()
     {
-        return planta::class;
+        return catalogo_forma::class;
     }
 }

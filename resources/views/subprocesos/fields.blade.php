@@ -4,7 +4,7 @@
       <label class="col-md-3 label-control" for="userinput1">Proceso</label>
       <div class="col-md-9">
         <select class="form-control" name="idproceso" id="idproceso" required="">
-        	<option value="">Seleccione una opcion</option>
+        	<option value="">Seleccione una opción</option>
         	@foreach($procesos as $proc)
               <option value="{{ $proc->id}}" 
                 @if(!empty($subprocesos->idproceso))

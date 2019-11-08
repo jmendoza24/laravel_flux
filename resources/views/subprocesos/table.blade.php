@@ -3,7 +3,7 @@
         <tr>
             <th>Proceso</th>
             <th>Subproceso</th>
-            <th>Descripcion</th>
+            <th>Descripción</th>
             <th colspan=""></th>
         </tr>
     </thead>

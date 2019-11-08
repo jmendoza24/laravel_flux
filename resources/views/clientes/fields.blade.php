@@ -146,7 +146,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Porcentaje </label>
+          <label class="col-md-3 label-control" for="imp_porcentaje">Porcentaje </label>
           <div class="col-md-9">
             {!! Form::text('imp_porcentaje', null, ['class' => 'form-control percentage-inputmask']) !!}
           </div>
@@ -178,7 +178,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Instrucciones sobre marcaje </label>
           <div class="col-md-9">
-            {!! Form::textarea('imp_porcentaje', null, ['class' => 'form-control']) !!}
+            {!! Form::textarea('nota_marcado', null, ['class' => 'form-control']) !!}
           </div>
         </div>
       </div>

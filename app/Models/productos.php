@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 /**
  * Class productos
@@ -74,6 +75,15 @@ class productos extends Model
     public static $rules = [
         
     ];
+
+    function forma_identificador($identificador){
+
+        $consulta = db::table('catalogo_formas')
+                        ->where('columna',$identificador)
+                        ->get();
+
+        return $consulta ;
+    }
 
     
 }

@@ -32,10 +32,8 @@ class plantaController extends AppBaseController
         $plantas = DB::table('plantas as p')
                 ->leftjoin('estados as e', 'e.id','p.estado')
                 ->leftjoin('paises as pa', 'pa.id','p.municipio')
-                ->selectraw('p.*, p.municipio as nmunicipio, e.estado as nestado')
+                ->selectraw('p.*, e.estado as nestado')
                 ->get();
-
-
         return view('plantas.index')
             ->with('plantas', $plantas);
     }
@@ -100,7 +98,7 @@ class plantaController extends AppBaseController
     public function edit($id)
     {
         $planta = $this->plantaRepository->find($id);
-
+        
         if (empty($planta)) {
             Flash::error('Planta not found');
 
@@ -127,6 +125,7 @@ class plantaController extends AppBaseController
     public function update($id, UpdateplantaRequest $request)
     {
         $planta = $this->plantaRepository->find($id);
+
 
         if (empty($planta)) {
             Flash::error('Planta not found');

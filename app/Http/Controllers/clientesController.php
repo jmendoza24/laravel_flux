@@ -163,6 +163,7 @@ class clientesController extends AppBaseController
             return redirect(route('clientes.index'));
         }
 
+        #dd($request->all());
         $clientes = $this->clientesRepository->update($request->all(), $id);
 
         Flash::success('Clientes updated successfully.');

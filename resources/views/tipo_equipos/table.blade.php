@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Equipo</th>
-            <th>Descripcion</th>
+            <th>Descripción</th>
             <th colspan=""></th>
         </tr>
     </thead>

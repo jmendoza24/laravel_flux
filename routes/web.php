@@ -103,8 +103,10 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/actualiza_info_occ', 'ordenes_compraController@actualiza_info_occ');
 	Route::get('/obtiene_seguimiento', 'ordenes_compraController@obtiene_seguimiento');
 	Route::post('/guarda_seguimiento', 'ordenes_compraController@guarda_seguimiento');
+	Route::post('/guarda_catalogo', 'catalogo_formaController@store');
+	Route::get('/busca_forma', 'MaterialesController@busca_forma');
 	
-
+	
 });
 
 
@@ -113,3 +115,6 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 //Auth::routes();
 	
 
+
+
+Route::resource('catalogoFormas', 'catalogo_formaController');

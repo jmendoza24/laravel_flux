@@ -1,8 +1,8 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="incomeTerms-table">
     <thead>
         <tr>
-            <th>Income</th>
-            <th>Descripcion</th>
+            <th>Inco</th>
+            <th>Descripción</th>
             <th colspan=""></th>
         </tr>
     </thead>

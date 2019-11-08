@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="nombre">Nombre</label>
+      <label class="col-md-3 label-control" for="nombre">Razón social</label>
       <div class="col-md-9">
         {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
 
@@ -103,9 +103,17 @@
 </div>
 <h4 class="form-section"><i class="ft-mail"></i> Contacto</h4>
 <div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="userinput1">Nombre</label>
+      <div class="col-md-9">
+        {!! Form::text('contacto_name', null, ['class' => 'form-control']) !!}
+      </div>
+    </div>
+  </div>
     <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput1">Telefono</label>
+      <label class="col-md-3 label-control" for="userinput1">Teléfono</label>
       <div class="col-md-9">
         {!! Form::text('telefono', null, ['class' => 'form-control phone-inputmask']) !!}
       </div>
@@ -119,8 +127,7 @@
       </div>
     </div>
   </div>
-</div>
-<div class="row">
+
  <div class="col-md-6">
     <div class="form-group row">
       <label class="col-md-3 label-control" for="userinput1">Puesto</label>

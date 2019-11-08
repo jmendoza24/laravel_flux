@@ -142,7 +142,6 @@ function obtiene_seguimiento(id_detalle){
 
 function guarda_seguimiento(id_seguimiento){
   event.preventDefault();
-  alert(id_seguimiento);
   var parametros = {"id_seguimiento":id_seguimiento,
                     "_method": 'POST',
                     "image": $('input[name=foto'+id_seguimiento+']').val(),
@@ -150,7 +149,6 @@ function guarda_seguimiento(id_seguimiento){
                   }
   $.ajax
         ({
-            async: true,
             url: '/api/v1/guarda_seguimiento',          
             data: parametros,
             dataType: "json",

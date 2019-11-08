@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Puesto</th>
-            <th>Descripcion</th>
+            <th>Descripción</th>
             <th colspan=""></th>
         </tr>
     </thead>

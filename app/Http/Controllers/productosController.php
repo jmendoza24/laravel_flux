@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Productos;
 use App\Http\Requests\CreateproductosRequest;
 use App\Http\Requests\UpdateproductosRequest;
 use App\Repositories\productosRepository;
@@ -113,12 +114,15 @@ class productosController extends AppBaseController
      * @return Response
      */
     public function edit($id){
+
+         $info_formas = new productos();
+
          $subprocesos = array();
          $opcion = 'nada';
          $materialesformas = DB::table('producto_materialesforma as p')
                             ->join('formas as f','p.forma','f.id')
                             ->where('p.id_producto',$id)
-                            ->selectraw('p.*, f.forma as nforma')
+                            ->selectraw('p.*, f.forma as nforma, f.id as idforma')
                             ->get();
 
          $producto_dibujos = array('tiempo_entrega'=>'',
@@ -194,10 +198,23 @@ class productosController extends AppBaseController
             $info_mat .= '<span class="badge badge-pill badge-primary">'.$mate->material.'</span>&nbsp;';  
          }
 
-         $plantas = DB::table('plantas')->get();
+         $plantas = DB::table('plantas as p')
+                        ->leftjoin('planta_horas as h',function($join)use($id_producto){
+                            $join->on('p.id','h.id_planta')
+                            ->where('h.id_planta',$id_producto);})
+                        ->selectraw('p.nombre, p.id, h.costo')
+                        ->get();
+
          $formas = DB::table('formas')->get();
          $idproceso = '';
-        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas','materialesformas','idproceso'));
+
+         $espesor = $info_formas->forma_identificador(1);
+         $ancho = $info_formas->forma_identificador(2);
+         $altura = $info_formas->forma_identificador(3);
+         $peso = $info_formas->forma_identificador(4);      
+
+
+        return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas','materialesformas','idproceso','espesor','ancho','altura','peso'));
     }
 
     /**
@@ -208,19 +225,14 @@ class productosController extends AppBaseController
      *
      * @return Response 
      */
-    public function update($id, UpdateproductosRequest $request)
-    {
+    public function update($id, UpdateproductosRequest $request){
         $productos = $this->productosRepository->find($id);
 
-        if (empty($productos)) {
-            Flash::error('Productos not found');
-
-            return redirect(route('productos.index'));
-        }
-
-        $productos = $this->productosRepository->update($request->all(), $id);
-
-        Flash::success('Productos updated successfully.');
+        $producto = $request->all();
+        $producto['costo_material']   = str_replace(',', '', str_replace('$','',$producto['costo_material']));
+        $producto['costo_produccion'] = str_replace(',', '', str_replace('$','',$producto['costo_produccion']));
+        
+        $productos = $this->productosRepository->update($producto, $id);
 
         return redirect(route('productos.index'));
     }

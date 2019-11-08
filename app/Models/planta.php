@@ -45,7 +45,8 @@ class planta extends Model
         'rfc',
         'telefono',
         'correo',
-        'puesto'
+        'puesto',
+        'contacto_name'
     ];
 
     /**
@@ -56,17 +57,18 @@ class planta extends Model
     protected $casts = [
         'id' => 'integer',
         'nombre' => 'string',
-        'id_planta' => 'integer',
+        'id_planta' => 'string',
         'direccion' => 'string',
         'colonia' => 'string',
-        'municipio' => 'integer',
+        'municipio' => 'string',
         'estado' => 'integer',
         'pais' => 'integer',
         'cp' => 'string',
         'rfc' => 'string',
         'telefono' => 'string',
         'correo' => 'string',
-        'puesto' => 'string'
+        'puesto' => 'string',
+        'contacto_name'=>'string'
     ];
 
     /**

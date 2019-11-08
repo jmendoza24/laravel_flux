@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titulo')Materiales @endsection
+@section('titulo')Inventario de materiales @endsection
 @section('content')
 <div class="col-md-12">
     <h1 class="pull-right">

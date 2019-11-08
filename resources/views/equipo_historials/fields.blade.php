@@ -17,7 +17,7 @@
       <div class="form-group row">
         <div class="col-md-12">
             <label>Fecha:</label>
-        <input type="date" name="fecha" id="fecha" class="form-control" value="{{ $eqHistofields->fecha}}" >
+        <input type="text" name="fecha" id="fecha" class="form-control pickadate-format" value="{{ $eqHistofields->fecha}}" >
         </div>
       </div>
   </div>       
@@ -35,7 +35,7 @@
       <div class="form-group row">
         <div class="col-md-12">
             <label>Fecha vencimiento:</label>
-        <input type="date" name="vencimiento" id="vencimiento" class="form-control" value="{{ $eqHistofields->vencimiento}}">
+        <input type="text" name="vencimiento" id="vencimiento" class="form-control pickadate-format" value="{{ $eqHistofields->vencimiento}}">
         </div>
       </div>
   </div>

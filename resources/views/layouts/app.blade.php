@@ -30,23 +30,26 @@
   <!-- BEGIN STACK CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/app.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/selects/select2.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/ui/dragula.min.css') }}">
   
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/pickers/daterange/daterangepicker.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/pickers/datetime/bootstrap-datetimepicker.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/pickers/pickadate/pickadate.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/pickers/daterange/daterange.css')}}">
+
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/core/colors/palette-gradient.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/checkboxes-radios.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/extended/form-extended.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/switch.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/wizard.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/pickers/daterange/daterange.css')}}">
+  
 
+  
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
-  <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
-  <script src="{{ url('funciones/ordenes_compra.js') }}" type="text/javascript"></script>
-  @yield('script')
+
   <!-- END Custom CSS-->
 </head>
 
@@ -179,25 +182,41 @@
   <script src="{{ url('app-assets/vendors/js/forms/toggle/switchery.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/forms/switch.js') }}" type="text/javascript"></script> 
   
-  
+  <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
+
   <script src="{{ url('app-assets/vendors/js/extensions/jquery.steps.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/pickers/pickadate/picker.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/pickers/pickadate/picker.date.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/pickers/pickadate/picker.time.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/pickers/pickadate/legacy.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/pickers/dateTime/bootstrap-datetime.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}" type="text/javascript"></script> 
+
+
   <script src="{{ url('app-assets/vendors/js/forms/validation/jquery.validate.min.js') }}" type="text/javascript"></script>
+  
+  
+
+
 
   <script src="{{ url('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/core/app.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
 
   <script src="{{ url('app-assets/js/scripts/forms/wizard-steps.js')}}" type="text/javascript"></script>
-  <!--<script type="text/javascript" src="{{ url('app-assets/js/scripts/ui/compact-menu.js')}}"></script>-->
+  <script src="{{ url('app-assets/vendors/js/extensions/dragula.min.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/cards/draggable.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/tables/datatables/datatable-basic.js')}}" type="text/javascript"></script>
+  <script src="{{ url('funciones/jquery.SimpleMask.js') }}" type="text/javascript"></script>
+  <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
+  <script src="{{ url('funciones/ordenes_compra.js') }}" type="text/javascript"></script>  
+
   @yield('script')
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
-  
-  
+   
   <!-- END PAGE LEVEL JS-->
 </body>
 </html>

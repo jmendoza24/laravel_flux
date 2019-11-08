@@ -6,8 +6,8 @@
             <th>Pais</th>
             <th>Estado</th>
             <th>Ciudad</th>
-            <th>Telefono</th>
-            <th>Codigo postal</th>
+            <th>Teléfono</th>
+            <th>Código postal</th>
             <th colspan=""></th>
         </tr>
     </thead>

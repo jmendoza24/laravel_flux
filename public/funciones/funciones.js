@@ -18,6 +18,25 @@
 
 })();
 
+
+
+$( document ).ready(function() {
+  Inputmask.extendAliases({
+      numeros: {
+                groupSeparator: ".",
+                alias: "numeric",
+                placeholder: "0",
+                autoGroup: !0,
+                digits: 3,
+                digitsOptional: !1,
+                clearMaskOnLostFocus: !1
+            }
+    });
+
+    $(".currency").inputmask({ alias : "currency", prefix: '$ ' });
+    $(".numeros").inputmask({ alias : "numeros", prefix: '' });
+});
+
 function get_municipios(estado,municipio){
   var id_estado = $("#"+estado).val();
   var parameters = {"id_estado":id_estado}
@@ -147,10 +166,12 @@ function delete_logistica(id_logistica, id_producto){
 
 function agrega_historial(tipo){
   $("#historia_tipo").val(tipo);
+  $('.pickadate-format').pickadate();
 }
 
 
 function guarda_historial(tipo){
+
     var parameters = {"tipo":tipo,
                       "historia_tipo":$("#historia_tipo").val(),
                       "responsable":$("#responsable").val(),
@@ -177,9 +198,17 @@ function guarda_historial(tipo){
                 $("#equipoHistorials_corect-table").dataTable();
               }
 
-             // 
+             $("#historia_tipo").val('');
+              $("#responsable").val('');
+              $("#fecha").val('');
+              $("#descripcion").val('');
+              $("#vencimiento").val('');
+              $("#activo").val('');
             }
-        });                  
+        });     
+
+        
+
 }
 
 function show_historial(id_historia){
@@ -192,6 +221,7 @@ function show_historial(id_historia){
             type:  'get',
             success:  function (response) {     
               $("#campos_equipos").html(response); 
+              $('.pickadate-format').pickadate();
             }
         }); 
 
@@ -404,6 +434,7 @@ function nuevo_dibujo(id_producto){
         success:  function (response) {  
           $("#img_dibujo").html('');
           $("#img_dibujo").html(response);
+          $('.pickadate-format').pickadate();
         }
     }); 
 }
@@ -419,6 +450,12 @@ function edita_dibujo(id_dibujo,id_producto ){
         success:  function (response) {  
           $("#img_dibujo").html('');
           $("#img_dibujo").html(response);
+          $('.pickadate-format').pickadate({
+              format: 'mm/dd/yyyy',
+              formatSubmit: 'yyyy/mm/dd',
+              hiddenPrefix: 'prefix__',
+              hiddenSuffix: '__suffix'
+            });
         }
     }); 
 }
@@ -452,6 +489,19 @@ function elimina_dibujo(id_dibujo,id_producto){
 
 function showcampos(){
   var forma = $("#forma").val();
+  var materiales = $("#idmateriales").val();
+  $.ajax({
+      data: {"forma":forma,"idmateriales":materiales},
+      url: '/api/v1/busca_forma',
+      dataType: 'json',
+      type:  'get',
+      success:  function (response) {  
+        $("#medidas_formas").html(response);
+      }
+  });
+
+
+  
   var campos = [1,2,3,4,5,6,7,8];
     for (x=0;x<campos.length;x++){
       $("#cam"+campos[x]).hide();
@@ -509,6 +559,8 @@ function showcampos(){
       $("#cam"+campos[x]).show();
     }
   }
+
+
 
 }
 
@@ -765,6 +817,7 @@ function guarda_horas(id_planta, id_prod){
     }); 
 }
 
+/** 
 function showcampos(id_mat){
   var forma = $("#tipoforma").val();
   var campos = [1,2,3,4,5,6,7,8];
@@ -813,6 +866,8 @@ function showcampos(id_mat){
   }
 
 }
+
+*/
 
 function agrega_material_forma(id_producto){
   if($("#idforma").val() !=""){
@@ -922,3 +977,37 @@ function get_estados(pais,estado){
             }
         });
 }
+
+
+function guarda_catalogo(){
+  event.preventDefault();
+  var parametros = {"forma":$("#forma").val(),
+                    "identificador":$("#identificador").val(),
+                    "valor":$("#valor").val(),
+                    "_method": 'POST',
+                    "_token": $("meta[name='csrf-token']").attr("content")
+                  };
+  if($("#forma").val() != '' && $("#identificador").val() != '' && $("#valor").val() != ''){
+    $.ajax({
+            url: '/api/v1/guarda_catalogo',          
+            data: parametros,
+            dataType: "json",
+            method: "POST",                     
+            success: function(result){
+              $("#cat_formas").html(result);
+              $(".display").DataTable();
+              $.alert("Agregado correctamente");
+              $("#identificador").val('');
+              $("#valor").val('');
+              $("#forma").val('');
+              dragula([document.getElementById('card-drag-area')]);
+            }
+        });
+    }else{
+      $.alert("Seleccione los campos requeridos")
+    }
+
+}
+
+
+

@@ -13,7 +13,7 @@
         <tr>
             <td>{!! $equipoHistorial->responsable !!}</td>
             <td>{!! $equipoHistorial->descripcion !!}</td>
-            <td>{!! $equipoHistorial->vencimiento !!}</td>
+            <td>{{  $equipoHistorial->vencimiento}} </td>
             <td>{!! $equipoHistorial->activo !!}</td>
             <td>
                 <div class='btn-group'>

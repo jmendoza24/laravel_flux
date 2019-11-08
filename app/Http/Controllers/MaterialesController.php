@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\catalogo_forma;
+use App\Models\Materiales;
 
 use App\Http\Requests\CreateMaterialesRequest;
 use App\Http\Requests\UpdateMaterialesRequest;
@@ -102,6 +104,7 @@ class MaterialesController extends AppBaseController
      * @return Response
      */
     public function edit($id){
+        $forma = new catalogo_forma();
         #$materiales = $this->materialesRepository->find($id);
         $materiales = DB::table('materiales')->where('id',$id)->get();
         $materiales = $materiales[0];
@@ -110,7 +113,14 @@ class MaterialesController extends AppBaseController
         $grados = DB::table('grados')->orderby('grado')->get();
         $proveedores = DB::table('proveedores')->orderby('nombre')->get();
         $plantas = db::table('plantas')->get();
-        return view('materiales.edit',compact('materiales','aceros','formas','grados','proveedores','plantas'));
+
+        $espesor   = $forma->consulta_identificador(1);
+        $ancho     = $forma->consulta_identificador(2);
+        $altura    = $forma->consulta_identificador(3);
+        $peso      = $forma->consulta_identificador(4); 
+        $idforma   = $materiales->forma;
+
+        return view('materiales.edit',compact('materiales','aceros','formas','grados','proveedores','plantas','espesor','ancho','altura','peso','idforma'));
     }
 
     /**
@@ -163,5 +173,24 @@ class MaterialesController extends AppBaseController
         Flash::success('Materiales deleted successfully.');
 
         return redirect(route('materiales.index'));
+    }
+
+    function busca_forma(Request $request){
+        $forma = new catalogo_forma();
+        #$material = new materiales();
+
+        $materiales = Materiales::where('id',$request->idmateriales)->get();
+        $materiales = $materiales[0];
+        $idforma = $request->forma;
+
+        $espesor   = $forma->consulta_identificador(1);
+        $ancho     = $forma->consulta_identificador(2);
+        $altura    = $forma->consulta_identificador(3);
+        $peso      = $forma->consulta_identificador(4);   
+        
+        $options = view('materiales.medidas',compact('espesor','ancho','altura','peso','idforma','materiales'))->render();
+
+        return json_encode($options);
+        
     }
 }

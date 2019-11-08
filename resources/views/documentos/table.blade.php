@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>Documento</th>
-        <th>Descripcion</th>
+                <th>Descripcion</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>

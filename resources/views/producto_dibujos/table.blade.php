@@ -3,7 +3,7 @@
         <tr>
             <th>Id dibujo</th>
             <th>Fecha de revisión</th>
-            <th>Número de revision</th>
+            <th>Número de revisión</th>
             <!-- <th>Tiempo Entrega</th>-->
             <th colspan=""></th>
         </tr>
