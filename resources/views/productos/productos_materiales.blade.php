@@ -23,7 +23,7 @@
       @foreach($materialesformas  as $mat)
 
       <?php 
-         
+          
          if (in_array($mat->forma, $tipos12)){
           $display1 = "";           $display2 = "disabled";   $display3 = "disabled"; $display4 = "disabled";   $display8 = "";
          }else if(in_array($mat->forma, $tipo3414)){

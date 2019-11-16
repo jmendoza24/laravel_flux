@@ -8,7 +8,7 @@
     <td> @if($info_producto->dibujo_nombre != '')
           <span class="badge badge-default badge-primary">Ok</span>
           @else
-          <span class="badge badge-default badge-warning">No valido</span>
+          <span class="badge badge-default badge-warning">No válido</span>
           @endif
     </td>
   </tr>
@@ -19,7 +19,7 @@
       @if($info_producto->revision != '')
           <span class="badge badge-default badge-primary">Ok</span>
           @else
-          <span class="badge badge-default badge-warning">No valido</span>
+          <span class="badge badge-default badge-warning">No válido</span>
           @endif
     </td>
   </tr>
@@ -32,7 +32,7 @@
        @if(!empty($info_pro))
           <span class="badge badge-default badge-primary">Ok</span>
           @else
-          <span class="badge badge-default badge-warning">No valido</span>
+          <span class="badge badge-default badge-warning">No válido</span>
           @endif
     </td>
   </tr>
@@ -69,7 +69,7 @@
         @if(!empty($info_producto->sumahora))
           <span class="badge badge-default badge-primary">Ok</span>
           @else
-          <span class="badge badge-default badge-warning">No valido</span>
+          <span class="badge badge-default badge-warning">No válido</span>
           @endif
 
     </td>

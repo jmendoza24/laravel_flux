@@ -23,7 +23,7 @@
                 <li class="{{ Request::is('condiciones*') ? 'active' : '' }}"><a href="{!! route('condiciones.index') !!}"><span>Condiciones</span></a></li>
                 <li class="{{ Request::is('tipoaceros*') ? 'active' : '' }}"><a href="{!! route('tipoaceros.index') !!}"><span>Tipos de aceros</span></a></li>
                 <li class="{{ Request::is('tipoestructuras*') ? 'active' : '' }}"><a href="{!! route('tipoestructuras.index') !!}"><span>Tipos de estructuras</span></a></li>
-                <li class="{{ Request::is('catalogoFormas*') ? 'active' : '' }}"><a href="{!! route('catalogoFormas.index') !!}"><span>Catalogo Formas</span></a></li>
+                <li class="{{ Request::is('catalogoFormas*') ? 'active' : '' }}"><a href="{!! route('catalogoFormas.index') !!}"><span>Catálogo Formas</span></a></li>
             </ul>
         </li>
     </ul>

@@ -16,7 +16,7 @@
               <tr>
 
                 <td style="{{ ($proc->asignado==1)?'color:#518a87; font-weight: bold;':'' }}">
-                 <input type="checkbox" class="switch" id="switch5" data-group-cls="btn-group-sm" {{ ($proc->asignado ==1)? 'checked':'' }} 
+                 <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" {{ ($proc->asignado ==1)? 'checked':'' }} 
                     onchange="@if($proc->asignado==1)
                                 quitar_proceso({{$proc->id}},{{$id_producto}})
                               @else
@@ -54,7 +54,7 @@
             @foreach($subprocesos as $sub)
             <tr>
               <td>
-                <input type="checkbox" class="switch" id="switch5" data-group-cls="btn-group-sm" {{ ($sub->asignado ==1)? 'checked':'' }} 
+                <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" {{ ($sub->asignado ==1)? 'checked':'' }} 
                   onchange="@if($sub->asignado==1)
                             quitar_subproceso({{$sub->id}},{{$sub->idproceso}},{{$id_producto}})
                           @else

@@ -92,6 +92,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/elimina_producforma', 'productosController@elimina_producforma');
 	Route::get('/guarda_materialforma', 'productosController@guarda_materialforma');
 	Route::get('/enviar_cotizacion', 'cotizacionesController@enviar_cotizacion')->name('cotizacion.enviar');
+	Route::get('/guardar_cotizacion', 'cotizacionesController@guardar_cotizacion')->name('cotizacion.guardar');
 	Route::get('/guarda_informacion_cot', 'cotizacionesController@guarda_informacion_cot');
 	Route::get('/elimina_cotizacion', 'cotizacionesController@elimina_cotizacion');
 	Route::get('/convierteocc', 'ordenes_compraController@convierteocc');
@@ -105,6 +106,12 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::post('/guarda_seguimiento', 'ordenes_compraController@guarda_seguimiento');
 	Route::post('/guarda_catalogo', 'catalogo_formaController@store');
 	Route::get('/busca_forma', 'MaterialesController@busca_forma');
+	Route::get('/detalle_cotizacion', 'cotizacionesController@detalle_cotizacion');
+	Route::get('/revive_cotizacion', 'cotizacionesController@revive_cotizacion');
+
+	
+
+	
 	
 	
 });

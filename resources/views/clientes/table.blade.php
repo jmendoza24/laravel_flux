@@ -2,10 +2,10 @@
     <thead>
         <tr>
             <th>Nombre Corto</th>                
-            <th>Pais</th>
+            <th>País</th>
             <th>Estado</th>
             <th>Ciudad</th>
-            <th>Cp</th>
+            <th>C.P.</th>
             <th>Proveedor</th>
             <th colspan=""></th>
         </tr>

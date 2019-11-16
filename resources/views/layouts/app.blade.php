@@ -212,6 +212,7 @@
   <script src="{{ url('funciones/jquery.SimpleMask.js') }}" type="text/javascript"></script>
   <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
   <script src="{{ url('funciones/ordenes_compra.js') }}" type="text/javascript"></script>  
+  <script src="{{ url('app-assets/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
 
   @yield('script')
   <!-- END STACK JS-->
@@ -220,3 +221,20 @@
   <!-- END PAGE LEVEL JS-->
 </body>
 </html>
+<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary white">
+        <h4 class="modal-title" id="myModalLabel8">Fluxmetals</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="contenido">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

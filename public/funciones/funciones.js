@@ -165,8 +165,26 @@ function delete_logistica(id_logistica, id_producto){
 }
 
 function agrega_historial(tipo){
+  
+  $("#id_tipo").val('');
+  $("#historia_tipo").val('');
+  $("#responsable").val('');
+  $("#fecha").val('');
+  $("#descripcion").val('');
+  $("#vencimiento").val('');
+  $("#activo").val('');
+  
+  if(tipo==1){
+    $("#myModalLabel17").html('Calibración');
+  }else if (tipo ==2){
+    $("#myModalLabel17").html('Mtto. Preventivo');
+  }else if (tipo ==3){
+    $("#myModalLabel17").html('Mtto. Correctivo');
+  }
+
   $("#historia_tipo").val(tipo);
   $('.pickadate-format').pickadate();
+  
 }
 
 
@@ -204,6 +222,7 @@ function guarda_historial(tipo){
               $("#descripcion").val('');
               $("#vencimiento").val('');
               $("#activo").val('');
+              $("#equipo_historials").modal('toggle');
             }
         });     
 
@@ -256,6 +275,14 @@ function actualiza_historia(id_historia){
               }
 
              // 
+            $("#id_tipo").val('');
+            $("#historia_tipo").val('');
+            $("#responsable").val('');
+            $("#fecha").val('');
+            $("#descripcion").val('');
+            $("#vencimiento").val('');
+            $("#activo").val('');
+            $("#equipo_historials").modal('toggle');
             }
         });      
 }
@@ -301,27 +328,31 @@ function delete_historial(id_historia, tipo, historia_tipo){
 
 function agrega_proceso(id_proceso,id_producto){
   var horas = $("#horas"+id_proceso).val();
-  $.confirm({
+   $.ajax({
+        data: {"id_proceso":id_proceso,"id_producto":id_producto,"horas":horas},
+        url: '/api/v1/agrega_proceso',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          $("#listasubprocesos").html(response.options);
+          $("#costeos").html(response.costeo);
+          
+          $('.switch:checkbox').checkboxpicker();
+          ver_proceso(id_proceso,id_producto);
+        },error(a,b,c){
+          console.log(a);
+          console.log(b);
+          console.log(c);
+        }
+
+    }); 
+
+  /**$.confirm({
             title: 'Fluxmetals',
             content: 'Estas seguro que deseas agregar este proceso?',
             buttons: {
                 confirmar: function () {
-                  $.ajax({
-                          data: {"id_proceso":id_proceso,"id_producto":id_producto,"horas":horas},
-                          url: '/api/v1/agrega_proceso',
-                          dataType: 'json',
-                          type:  'get',
-                          success:  function (response) {  
-                            $("#listasubprocesos").html(response.options);
-                            $("#costeos").html(response.costeo);
-                            
-                            $('.switch:checkbox').checkboxpicker();
-                          },error(a,b,c){
-                            console.log(a);
-                            console.log(b);
-                            console.log(c);
-                          }
-                      }); 
+                 
 
                 },
                 cancelar: function () {
@@ -329,7 +360,7 @@ function agrega_proceso(id_proceso,id_producto){
 
                 }
               }
-          });
+          });*/
 }
 
 function ver_proceso(id_proceso,id_producto){
@@ -363,28 +394,29 @@ function quitar_proceso(id_proceso,id_producto){
 }
 
 function agrega_subproceso(id_subproceso,id_proceso,id_producto){
-  $.confirm({
+  $.ajax({
+          data: {"id_subproceso":id_subproceso,"id_producto":id_producto, "id_proceso":id_proceso},
+          url: '/api/v1/agrega_subproceso',
+          dataType: 'json',
+          type:  'get',
+           success:  function (response) {
+           console.log(response);  
+            if(response==1){
+              $.alert('El proceso debe se estar agregado poder agregar los subprocesos');
+            }else{
+              $("#listasubprocesos").html(response);
+              $('.switch:checkbox').checkboxpicker();  
+            }
+            
+           // $.alert('Subroceso agregado');
+          }
+      }); 
+  /** $.confirm({
             title: 'Fluxmetals',
             content: 'Estas seguro que deseas agregar este subproceso?',
             buttons: {
                 confirmar: function () {
-                  $.ajax({
-                          data: {"id_subproceso":id_subproceso,"id_producto":id_producto, "id_proceso":id_proceso},
-                          url: '/api/v1/agrega_subproceso',
-                          dataType: 'json',
-                          type:  'get',
-                           success:  function (response) {
-                           console.log(response);  
-                            if(response==1){
-                              $.alert('El proceso debe se estar agregado poder agregar los subprocesos');
-                            }else{
-                              $("#listasubprocesos").html(response);
-                              $('.switch:checkbox').checkboxpicker();  
-                            }
-                            
-                           // $.alert('Subroceso agregado');
-                          }
-                      }); 
+                  
 
                 },
                 cancelar: function () {
@@ -392,7 +424,7 @@ function agrega_subproceso(id_subproceso,id_proceso,id_producto){
 
                 }
               }
-          });
+          }); */
 }
 
 function quitar_subproceso(id_subproceso,id_proceso,id_producto){
@@ -796,6 +828,7 @@ function actualiza_proceso(proceso, producto){
           $("#listasubprocesos").html(response.options);
           $("#costeos").html(response.costeo);
           $('.switch:checkbox').checkboxpicker();
+          
         },error(a,b,c){
           console.log(a);
           console.log(b);
@@ -817,57 +850,59 @@ function guarda_horas(id_planta, id_prod){
     }); 
 }
 
-/** 
-function showcampos(id_mat){
-  var forma = $("#tipoforma").val();
-  var campos = [1,2,3,4,5,6,7,8];
+
+function filtra_forma(){
+  var forma = $("#forma").val();
+  //alert(forma);
+
+  var campos = [1,2,3,4];
     for (x=0;x<campos.length;x++){
-      $("#cam"+id_mat+campos[x]).hide();
+      $("#cam"+campos[x]).hide();
     }
 
   if(forma ==''){
     $.alert("Seleccione una forma")
   }else if(forma ==1 || forma ==2){
-    var campos = [1,5,6,7,8];
+    var campos = [1];
 
     for (x=0;x<campos.length;x++){
-      $("#cam"+id_mat+campos[x]).show();
+      $("#cam"+campos[x]).show();
     }
   }else if(forma ==3 || forma == 4 || forma == 14){
-    var campos = [1,2,6,7,8];
+    var campos = [1,2];
 
     for (x=0;x<campos.length;x++){
-      $("#cam"+id_mat+campos[x]).show();
+      $("#cam"+campos[x]).show();
     }
   }else if(forma ==5 || forma ==6){
-    var campos = [1,2,3,6,7,8];
+    var campos = [1,2,3];
 
     for (x=0;x<campos.length;x++){
-      $("#cam"+id_mat+campos[x]).show();
+      $("#cam"+campos[x]).show();
     }
   }else if(forma ==7 || forma ==8 || forma ==9 || forma ==10){
-    var campos = [3,4,6,7,8];
+    var campos = [3,4];
 
     for (x=0;x<campos.length;x++){
-      $("#cam"+id_mat+campos[x]).show();
+      $("#cam"+campos[x]).show();
     } 
   }else if(forma ==11 || forma ==12){
-    var campos = [2,6,7,8];
+    var campos = [2];
 
     for (x=0;x<campos.length;x++){
-      $("#cam"+id_mat+campos[x]).show();
+      $("#cam"+campos[x]).show();
     }
   }else if(forma ==13){
-    var campos = [1,4,5,6,7,8];
+    var campos = [1,4];
 
     for (x=0;x<campos.length;x++){
-      $("#cam"+id_mat+campos[x]).show();
+      $("#cam"+campos[x]).show();
     }
   }
 
 }
 
-*/
+
 
 function agrega_material_forma(id_producto){
   if($("#idforma").val() !=""){
@@ -1009,5 +1044,41 @@ function guarda_catalogo(){
 
 }
 
+function detalle_cotizacion(id_cotizacion){
+  $.ajax({
+            data: {"id_cotizacion":id_cotizacion},
+            url:   '/api/v1/detalle_cotizacion',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) { 
+              $("#contenido").html(response);      
+            }
+        });
+}
 
+function revive_cotizacion(id_cotizacion){
+  $.confirm({
+            title: 'Fluxmetals',
+            content: 'Estas seguro que deseas revivir esta cotizacion?',
+            buttons: {
+                confirmar: function () {
+                   $.ajax({
+                          data: {"id":id_cotizacion},
+                          url: '/api/v1/revive_cotizacion',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                            if(response==1){
+                              window.location.href = '/cotizaciones';    
+                            }else{
+                              $.alert('Error!');
+                            }
+                            
+                          }
+                      }); 
+                },
+                cancelar: function () {}
+              }
+          });
+}
 

@@ -1,7 +1,7 @@
 function convierte_occ(id_cotizacion){
 	 $.confirm({
             title: 'Fluxmetals',
-            content: 'Estas seguro que deseas convertir esta cotización a orden de trabajo?',
+            content: 'Estas seguro que deseas convertir esta cotizacion a orden de trabajo?',
             buttons: {
                 confirmar: function () {
                   $.ajax({

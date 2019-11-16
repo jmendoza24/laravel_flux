@@ -1,11 +1,11 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" id="plantas-table">
 <thead>
     <tr>
-        <th>Nombre</th>
+        <th>Razón social</th>
         <th>Planta</th>
         <th>Estado</th>
         <th>Ciudad</th>
-        <th>Codigo postal</th>
+        <th>C.P.</th>
         <th>Teléfono</th>
         <th colspan=""></th>
     </tr>

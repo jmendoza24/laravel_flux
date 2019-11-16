@@ -57,7 +57,7 @@
 @if($envio==0)
 <hr>
 <div class="form-group col-sm-12" style="text-align: right;">
-    <a href="{!! route('cotizaciones.historia') !!}" class="btn btn-warning mr-1">Cancelar</a>
-    <button class="btn btn-primary">Convertir a OCC</button>
+    <a href="{!! route('cotizaciones.historia') !!}" class="btn btn-warning mr-1">Regresar</a>
+    <!---<button class="btn btn-primary">Convertir a OCC</button>-->
 </div>
 @endif

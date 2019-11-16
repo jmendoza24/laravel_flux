@@ -14,7 +14,7 @@
     @foreach($ordenesCompras as $ordenesCompra)
         <tr>
             <th>OCFX-00{{ $ordenesCompra->id}}</th>
-            <td><a href="{!! route('cotizaciones.show', [$ordenesCompra->id_cotizacion]) !!}">FX-00{!! $ordenesCompra->id_cotizacion !!}</a></td>
+            <td><a style="color: #518a87;" data-toggle="modal" data-backdrop="false" data-target="#primary" onclick="detalle_cotizacion({!! $ordenesCompra->id_cotizacion !!})" >FX-00{!! $ordenesCompra->id_cotizacion !!}</a></td>
             <td>{!! $ordenesCompra->nombre_corto !!}</td>
             <td>{!! $ordenesCompra->name !!}</td>
             <td>{{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}</td>

@@ -101,5 +101,6 @@
   <hr>
   <div class="form-group col-sm-12" style="text-align: right;">
     <a href="" class="btn btn-warning mr-1">Cancelar</a>
-    <a href="{{ route('cotizacion.enviar') }}"  class="btn btn-primary">Enviar cotización</a>
+    <a href="{{ route('cotizacion.enviar') }}"  class="btn btn-primary">Guardar</a>
+    <a href="{{ route('cotizacion.enviar') }}"  class="btn btn-success">Asignar</a>
 </div>

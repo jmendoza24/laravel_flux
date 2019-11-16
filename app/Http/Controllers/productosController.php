@@ -66,6 +66,7 @@ class productosController extends AppBaseController
                                     );
        # $plantas  = DB::table('plantas')->get();
         $info_producto = array('');        
+        #dd($familias);
         return view('productos.create',compact('familias','clientes','tipoacero','tipoestructura','producto_dibujos','info_producto'));
     }
 
@@ -79,8 +80,13 @@ class productosController extends AppBaseController
     public function store(CreateproductosRequest $request)
     {
         $input = $request->all();
+        $producto = $request->all();
+        $producto['costo_material']   = str_replace(',', '', str_replace('$','',$producto['costo_material']));
+        $producto['costo_produccion'] = str_replace(',', '', str_replace('$','',$producto['costo_produccion']));
+        $producto['peso'] = str_replace(',','',$producto['peso']);
 
-        $productos = $this->productosRepository->create($input);
+#        $productos = $this->productosRepository->update($producto, $id);
+        $productos = $this->productosRepository->create($producto);
 
         Flash::success('Productos saved successfully.');
 
@@ -199,9 +205,9 @@ class productosController extends AppBaseController
          }
 
          $plantas = DB::table('plantas as p')
-                        ->leftjoin('planta_horas as h',function($join)use($id_producto){
+                        ->join('planta_horas as h',function($join)use($id_producto){
                             $join->on('p.id','h.id_planta')
-                            ->where('h.id_planta',$id_producto);})
+                            ->where('h.id_producto',$id_producto);})
                         ->selectraw('p.nombre, p.id, h.costo')
                         ->get();
 
@@ -213,6 +219,7 @@ class productosController extends AppBaseController
          $altura = $info_formas->forma_identificador(3);
          $peso = $info_formas->forma_identificador(4);      
 
+         #dd($espesor);
 
         return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas','materialesformas','idproceso','espesor','ancho','altura','peso'));
     }
@@ -231,6 +238,7 @@ class productosController extends AppBaseController
         $producto = $request->all();
         $producto['costo_material']   = str_replace(',', '', str_replace('$','',$producto['costo_material']));
         $producto['costo_produccion'] = str_replace(',', '', str_replace('$','',$producto['costo_produccion']));
+        $producto['peso'] = str_replace(',','',$producto['peso']);
         
         $productos = $this->productosRepository->update($producto, $id);
 
@@ -291,8 +299,8 @@ class productosController extends AppBaseController
                                 ->get();
 
             $id_producto = $request->id_producto;
-
-            $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
+            $idproceso  = $request->id_proceso;
+            $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos','idproceso'))->render();    
 
             $info_producto  = DB::select('SELECT p.tiempo_entrega, sumahora, p.peso, p.costo_material, p.costo_produccion, f.familia AS nfamilia,dibujo_nombre, revision
                                       FROM productos p
@@ -803,21 +811,24 @@ class productosController extends AppBaseController
         $existe = $existe[0];
 
         
-
+        $costo = str_replace(',', '', str_replace('$','',$request->costo));
         if($existe->existe>0){
             db::table('planta_horas')
             ->where([['id_producto',$request->id_producto],['id_planta',$request->id_planta]])
-            ->update(['costo'=>$request->costo]);
+            ->update(['costo'=>$costo]);
         }else{
             db::table('planta_horas')
             ->insert(['id_producto'=>$request->id_producto,
                       'id_planta'=>$request->id_planta,
-                      'costo'=>$request->costo]);
+                      'costo'=>$costo]);
         }
+        return $existe->existe;
 
     }
 
     function agrega_material_forma(Request $request){
+        $info_formas = new productos();
+
         DB::table('producto_materialesforma')
         ->insert(['id_producto'=>$request->id_producto,
                    'forma'=>$request->id_forma]);
@@ -825,16 +836,24 @@ class productosController extends AppBaseController
         $materialesformas = DB::table('producto_materialesforma as p')
                             ->join('formas as f','p.forma','f.id')
                             ->where('p.id_producto',$request->id_producto)
-                            ->selectraw('p.*, f.forma as nforma')
+                            ->selectraw('p.*, f.forma as nforma, f.id as idforma')
                             ->get();
 
-        $options = view('productos.productos_materiales',compact('materialesformas'))->render();    
+         $espesor = $info_formas->forma_identificador(1);
+         $ancho = $info_formas->forma_identificador(2);
+         $altura = $info_formas->forma_identificador(3);
+         $peso = $info_formas->forma_identificador(4); 
+
+
+        $options = view('productos.productos_materiales',compact('materialesformas','espesor','ancho','altura','peso'))->render();    
 
         return json_encode($options);
 
     }
 
     function elimina_producforma(Request $request){
+        $info_formas = new productos();
+
         DB::table('producto_materialesforma')
         ->where('id',$request->id_forma)
         ->delete();
@@ -842,10 +861,15 @@ class productosController extends AppBaseController
         $materialesformas = DB::table('producto_materialesforma as p')
                             ->join('formas as f','p.forma','f.id')
                             ->where('p.id_producto',$request->id_producto)
-                            ->selectraw('p.*, f.forma as nforma')
+                            ->selectraw('p.*, f.forma as nforma, f.id as idforma')
                             ->get();
 
-        $options = view('productos.productos_materiales',compact('materialesformas'))->render();    
+        $espesor = $info_formas->forma_identificador(1);
+        $ancho = $info_formas->forma_identificador(2);
+        $altura = $info_formas->forma_identificador(3);
+        $peso = $info_formas->forma_identificador(4); 
+
+        $options = view('productos.productos_materiales',compact('materialesformas','espesor','ancho','altura','peso'))->render();    
 
         return json_encode($options);
 

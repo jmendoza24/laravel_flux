@@ -6,7 +6,7 @@
         <div class="form-row">
             <div class="col-md-3">
               <label for="validationDefault01">Forma:</label>
-              <select class="form-control" id="forma" name="forma" required="">
+              <select class="form-control" id="forma" name="forma" required="" onchange="filtra_forma()">
                     <option value="">Seleccione una opción...</option>
                     @foreach($formas as $forma)
                     <option value="{{$forma->id}}">{{$forma->forma}}</option>
@@ -16,11 +16,11 @@
             <div class="col-md-3">
               <label for="validationDefault02">Identificador:</label>
               <select class="form-control" id="identificador" name="identificador" required="">
-                    <option value="">Seleccione una opción...</option>
-                    <option value="1">Espesor (Thickness)</option>
-                    <option value="2">Ancho (Wide)</option>
-                    <option value="3">Altura (Wide2)</option>
-                    <option value="4">Peso por Distancia</option>
+                    <option value=""  >Seleccione una opción...</option>
+                    <option value="1" id="cam1" >Espesor (Thickness)</option>
+                    <option value="2" id="cam2">Ancho (Wide)</option>
+                    <option value="3" id="cam3">Altura (Wide2)</option>
+                    <option value="4" id="cam4">Peso por Distancia</option>
                    <!-- <option value="5">(OM)Ancho (Wide)</option>
                     <option value="6">(OM)Largo (Length)</option>
                     <option value="7">(OM)Peso (Weight)</option>

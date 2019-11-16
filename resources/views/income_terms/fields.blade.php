@@ -23,6 +23,6 @@
 </div>
 <hr/>
 <div class="form-group col-sm-8" style="text-align: right;">
-    <a href="{!! route('familias.index') !!}" class="btn btn-warning mr-1">Cancelar</a>
+    <a href="{!! route('incomeTerms.index') !!}" class="btn btn-warning mr-1">Cancelar</a>
         {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
 </div>

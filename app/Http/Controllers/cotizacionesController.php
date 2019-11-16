@@ -470,6 +470,7 @@ class cotizacionesController extends AppBaseController
          $envio = 1;
          $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->setPaper('A4-L','landscape');
          $request->session()->forget('num_cot');
+
          $pdf->download('Cotizacion_'.$num_cotizacion.'.pdf');
          return redirect('/historiaCotizacion');
     }
@@ -498,4 +499,49 @@ class cotizacionesController extends AppBaseController
 
         return json_encode($options);
     }
+
+    function detalle_cotizacion(Request $request){
+        $num_cotizacion = $request->id_cotizacion;
+        $envio = 2;
+        $cotizacion = DB::table('cotizaciones as c')
+                        ->leftjoin('income_terms as ic','ic.id','c.income')
+                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
+                        ->leftjoin('estados as e', 'e.id', 'cl.estado')
+                        ->leftjoin('users as u','u.id','c.vendedor')
+                        ->where('c.id',$num_cotizacion)
+                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
+                        ->get();
+        $cotizacion = $cotizacion[0];
+
+
+        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                               from cotizacion_detalle as c
+                               left join productos as p on c.producto = p.id
+                               left join familias as f on f.id = p.familia 
+                               LEFT JOIN (
+                                            select p.id_producto, dibujo_nombre
+                                            from (
+                                                    SELECT MAX(d.id) as dibujo, id_producto
+                                                    from producto_dibujos  as d
+                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                    group by d.id_producto) a
+                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                where c.id_cotizacion = '.$num_cotizacion);
+
+        $options = View('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->render();
+
+        return json_encode($options);
+    }
+
+    function guardar_cotizacion(Request $request){
+         $request->session()->forget('num_cot');
+         return redirect('historiaCotizacion');
+    }
+
+    function revive_cotizacion(Request $request){
+        $request->session()->put('num_cot',$request->id);
+        return 1;
+    }
+
 }

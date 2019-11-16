@@ -99,11 +99,11 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" id="baseVerticalLeft2-tab2" data-toggle="tab" aria-controls="tabVerticalLeft22"
-          href="#tabVerticalLeft22" aria-expanded="false">M. Preventivo</a>
+          href="#tabVerticalLeft22" aria-expanded="false">Mtto. Preventivo</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="baseVerticalLeft2-tab3" data-toggle="tab" aria-controls="tabVerticalLeft23"
-          href="#tabVerticalLeft23" aria-expanded="false">M. Correctivo</a>
+          href="#tabVerticalLeft23" aria-expanded="false">Mtto. Correctivo</a>
         </li>
       </ul>
       <div class="tab-content px-1">
@@ -170,7 +170,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel17">+ Direcci&oacute;n de envío</h4>
+          <h4 class="modal-title" id="myModalLabel17"></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 
 class FamiliaController extends AppBaseController
 {
@@ -29,7 +30,7 @@ class FamiliaController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $familias = $this->familiaRepository->all();
+        $familias = db::table('familias')->get();
 
         return view('familias.index')
             ->with('familias', $familias);
@@ -139,18 +140,10 @@ class FamiliaController extends AppBaseController
      */
     public function destroy($id)
     {
-        $familia = $this->familiaRepository->find($id);
-
-        if (empty($familia)) {
-            Flash::error('Familia not found');
-
-            return redirect(route('familias.index'));
-        }
-
-        $this->familiaRepository->delete($id);
-
-        Flash::success('Familia deleted successfully.');
-
+       db::table('familias')
+       ->where('id',$id)
+       ->delete();
+       
         return redirect(route('familias.index'));
     }
 }
