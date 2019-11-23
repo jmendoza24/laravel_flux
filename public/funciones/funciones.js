@@ -845,7 +845,7 @@ function guarda_horas(id_planta, id_prod){
         type:  'get',
         success:  function (response) {  
            console.log(response);
-          //$("#listasubprocesos").html(response);
+          $("#listasubprocesos").html(response);
         }
     }); 
 }
