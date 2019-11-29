@@ -119,7 +119,7 @@ class productosController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id){
+    public function edit($id){ 
 
          $info_formas = new productos();
 
@@ -205,7 +205,7 @@ class productosController extends AppBaseController
          }
 
          $plantas = DB::table('plantas as p')
-                        ->join('planta_horas as h',function($join)use($id_producto){
+                        ->leftjoin('planta_horas as h',function($join)use($id_producto){
                             $join->on('p.id','h.id_planta')
                             ->where('h.id_producto',$id_producto);})
                         ->selectraw('p.nombre, p.id, h.costo')
@@ -518,20 +518,33 @@ class productosController extends AppBaseController
     
     
     function action(Request $request){
-
         $file_img = $request->file('select_file');
-        $img = Storage::url($file_img->store('dibujos', 'public'));
-        $imgp = strpos($img,'/storage/');
-        $img = substr($img, $imgp, strlen($img));
-        
         $fecha = date("Y-m-d");
-        DB::table('producto_dibujos')
+
+        if(!empty($file_img)){
+            $img = Storage::url($file_img->store('dibujos', 'public'));
+            $imgp = strpos($img,'/storage/');
+            $img = substr($img, $imgp, strlen($img));
+            
+            DB::table('producto_dibujos')
                 ->insert(['id_producto'=>$request->idproducto,
                           'dibujo'=>$img,
                           'fecha'=>$fecha,
                           'revision'=>$request->revision,
                           'tiempo_entrega'=>$request->tiempoentrega,
                           'dibujo_nombre'=>$request->dibujo_nombre ]);
+
+        }else{
+            DB::table('producto_dibujos')
+                ->insert(['id_producto'=>$request->idproducto,
+                          'fecha'=>$fecha,
+                          'revision'=>$request->revision,
+                          'tiempo_entrega'=>$request->tiempoentrega,
+                          'dibujo_nombre'=>$request->dibujo_nombre ]);
+        }
+        
+        
+        
 
         return redirect('productos/'.$request->idproducto.'/edit');
     }
@@ -879,7 +892,11 @@ class productosController extends AppBaseController
         db::table('producto_materialesforma')
         ->where('id',$request->id)
         ->update([$request->columna=>$request->campo]);
+/**
+        $var = db::table('producto_materialesforma')
+                ->where('id',$request->id)->get();
 
+        return $var;*/
     }
 
 

@@ -1,21 +1,21 @@
-function convierte_occ(id_cotizacion){
-	 $.confirm({
+function convierte_occ(id_cotizacion, tipo){
+   $.confirm({
             title: 'Fluxmetals',
-            content: 'Estas seguro que deseas convertir esta cotizacion a orden de trabajo?',
+            content: 'Deseas convertir esta cotización en orden de trabajo?',
             buttons: {
                 confirmar: function () {
                   $.ajax({
-                          data: {"id_cotizacion":id_cotizacion},
+                          data: {"id_cotizacion":id_cotizacion,"tipo":tipo},
                           url: '/api/v1/convierteocc',
                           dataType: 'json',
                           type:  'get',
                           success:  function (response) {  
-                          	console.log(response);
-                          	$.alert('La cotizacion ahora es una orden de trabajo')
-                            //window.location.href = 'ordenesCompras';
+                            console.log(response);
+                            console.log("ordenesCompras/"+response);
+                            $.alert('La cotizacion ahora es una orden de trabajo')                            
                             setTimeout(function() {
-                  								  window.location.href = "ordenesCompras";
-                  								}, 2000);
+                                    window.location.href = "ordenesCompras/"+response;
+                                  }, 2000);
                           }
                       }); 
 
@@ -31,7 +31,7 @@ function validar_orden(id_orden){
                     "id_orden":id_orden};
    $.confirm({
             title: 'Fluxmetals',
-            content: 'Estas seguro esta orden de trabajo es valido?',
+            content: 'Validar esta orden de trabajo?',
             buttons: {
                 confirmar: function () {
                   $.ajax({

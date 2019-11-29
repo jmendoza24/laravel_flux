@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('titulo')
-    Asignación de orden de trabajo OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}
+    Asignación OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}
 @endsection  
 @section('content')
 @php($editar = 1)

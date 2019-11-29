@@ -136,3 +136,28 @@ textarea{height: 65px;
 .bg-primary{
 background: #518a87 !important;	
 }
+
+.btn-outline-info:hover{
+	background: #518a87 !important;	
+	border-color: #518a87;
+
+}
+
+.btn-outline-info {
+    border-color: #518a87;
+    background-color: transparent;
+    color: #518a87;
+}
+.btn-outline-success:hover{
+	background: #518a87 !important;	
+	border-color: #518a87;
+}
+
+.btn-outline-danger:hover{
+	background: #6d6d6d !important;	
+	border-color: #6d6d6d;
+}
+.btn-outline-danger{
+	border-color: #6d6d6d;
+	color: #6d6d6d;
+}

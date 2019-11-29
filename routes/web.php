@@ -108,12 +108,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/busca_forma', 'MaterialesController@busca_forma');
 	Route::get('/detalle_cotizacion', 'cotizacionesController@detalle_cotizacion');
 	Route::get('/revive_cotizacion', 'cotizacionesController@revive_cotizacion');
+	Route::get('/get_costo_plaza', 'cotizacionesController@get_costo_plaza');
 
-	
-
-	
-	
-	
 });
 
 

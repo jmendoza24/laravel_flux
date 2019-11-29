@@ -49,12 +49,13 @@
       <hr>
     </div>
     <div class="col-md-6">
-      <p><b>Nombre:</b> <label id="clientenombre">{{ $cotizacion->nombre_corto}}</label> </p>
-      <p><b>Número proveedor:</b> <label id="numproveedor">{{ $cotizacion->id_proveedor}}</label> </p>
+      <p><b>Cliente:</b> <label id="clientenombre">{{ $cotizacion->nombre_corto}}</label> </p>
+      <!--<p><b>Nombre contacto:</b> <label id="numproveedor">{{ $cotizacion->id_proveedor}}</label> </p>-->
     </div>
     <div class="col-md-6">
-      <p><b>Email de compra:</b> <label id="email">{{$cotizacion->correo_compra}}</label> </p>
-      <p><b>Teléfono de compra:</b> <label id="telefono">{{$cotizacion->compra_telefono}}</label> </p>
+      <p><b>Nombre contacto:</b> <label id="telefono">{{$cotizacion->compra_nombre}}</label> </p>
+      <p><b>Email contacto:</b> <label id="email">{{$cotizacion->correo_compra}}</label> </p>
+      
     </div>
   </div>
   <hr>
@@ -65,17 +66,7 @@
   <div class="row ">
     <div class="col-md-6">
       <div class="form-group">
-        <label for="lastName4">Notas : </label>
-        <textarea class="form-control" id="notas" name="notas" onchange="guarda_informacion({{ $num_cotizacion }})"><?php  if($cotizacion->id_notas==''){
-                                                                  echo ($condiciones[0]->condicion);
-                                                                }else{
-                                                                   echo ($cotizacion->id_notas);
-                                                                 } ?></textarea>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="lastName4">Income terms : </label>
+        <label for="lastName4">Inco terms : </label>
         <select class="form-control custom-select required" style="width: 100%;"name="income" id="income" onchange="guarda_informacion({{ $num_cotizacion }})">
             <option value="">Seleccione una opcion</option>
             @foreach($income as $inco)
@@ -92,7 +83,17 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Lugar : </label>
-        <textarea class="form-control" id="lugar" name="lugar" onchange="guarda_informacion({{ $num_cotizacion }})"><?php  echo $cotizacion->lugar; ?></textarea>
+        <input type="text" class="form-control" id="lugar" name="lugar" onchange="guarda_informacion({{ $num_cotizacion }})" value="<?php  echo $cotizacion->lugar; ?>">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="lastName4">Notas : </label>
+        <textarea class="form-control" id="notas" style="height: 200px;" name="notas" onchange="guarda_informacion({{ $num_cotizacion }})"><?php  if($cotizacion->id_notas==''){
+                                                                  echo ($condiciones[0]->condicion);
+                                                                }else{
+                                                                   echo ($cotizacion->id_notas);
+                                                                 } ?></textarea>
       </div>
     </div>
     <br>
@@ -100,7 +101,17 @@
   </div>
   <hr>
   <div class="form-group col-sm-12" style="text-align: right;">
-    <a href="" class="btn btn-warning mr-1">Cancelar</a>
-    <a href="{{ route('cotizacion.enviar') }}"  class="btn btn-primary">Guardar</a>
-    <a href="{{ route('cotizacion.enviar') }}"  class="btn btn-success">Asignar</a>
+    <div class="btn-group mr-1 mb-1">
+        <button type="button" class="btn btn-primary btn-min-width dropdown-toggle" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">Seleccione una acción</button>
+        <div class="dropdown-menu">
+          <a href="{{ route('cotizacion.guardar') }}"  class="dropdown-item">Guardar</a>
+          <a href="{{ route('cotizacion.enviar') }}"  class="dropdown-item">Enviar</a>
+          <a class="dropdown-item" onclick="convierte_occ({{$cotizacion->id}},2)">Crear OT</a>
+          <div class="dropdown-divider"></div>
+          <a href="/historiaCotizacion" class="dropdown-item">Regresar</a>
+        </div>
+      </div>
+    
+    
 </div>

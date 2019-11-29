@@ -10,7 +10,7 @@
 			<h6>Created by: {{$cotizacion->name}} </h6></td>
 	</tr>
 	<tr>
-		<td>Client:{{ $cotizacion->nombre_corto }} <br/>
+		<td>Client: {{ $cotizacion->nombre_corto }} <br/>
 					{{ $cotizacion->direccion }}</td>
 		<td>Freight terms: </td>
 		<td>Payment Terms:</td>
@@ -23,7 +23,7 @@
 			        <th>Item</th>
 			        <th>Part Description</th>
 			        <th>Drawing No</th>
-			        <th>Lead time:</th> 
+			        <th>Lead time</th> 
 			        <th>Quantity</th>
 			        <th>Unit Price</th>
 			      </tr>
@@ -44,13 +44,20 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="3"><h6>Special Note:</h6>
-			{{ $cotizacion->id_notas }}
-		</td>
-	</tr>
-	<tr>
-		<td colspan="3"><h6>Inco term:</h6>
-			{{ $cotizacion->id_notas }}
+		<td colspan="3">
+			<table style="width: 100%;" >
+				<tr>
+					<td style="width: 49%;">
+						<h6>Special Note:</h6>
+						<?php echo nl2br($cotizacion->id_notas) ?>
+					</td>
+					<td>
+						<h6>Inco term:</h6>
+						{{ $cotizacion->descripcionic }} - {{ $cotizacion->lugar}}
+					</td>
+				</tr>
+			</table>
+			
 		</td>
 	</tr>
 </table>

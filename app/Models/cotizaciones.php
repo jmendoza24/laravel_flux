@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 /**
  * Class cotizaciones
@@ -72,5 +73,12 @@ class cotizaciones extends Model
         'cliente' => 'required'
     ];
 
-    
+    function informacion_plaza($filtro){
+        return db::table('planta_horas as h')
+                ->join('plantas as p','h.id_planta','p.id')
+                ->join('productos as pro', 'pro.id','h.id_producto')
+                ->where('id_producto',$filtro->id_producto)
+                ->selectraw('h.costo, p.nombre, pro.numero_parte')
+                ->get();
+    }
 }

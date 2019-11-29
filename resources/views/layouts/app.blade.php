@@ -213,16 +213,18 @@
   <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
   <script src="{{ url('funciones/ordenes_compra.js') }}" type="text/javascript"></script>  
   <script src="{{ url('app-assets/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
   @yield('script')
+
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
    
   <!-- END PAGE LEVEL JS-->
 </body>
 </html>
-<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+<div class="modal fade" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document" id="modal_primary">
     <div class="modal-content">
       <div class="modal-header bg-primary white">
         <h4 class="modal-title" id="myModalLabel8">Fluxmetals</h4>
@@ -232,7 +234,7 @@
       </div>
       <div class="modal-body" id="contenido">
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" id="footer_primary">
         <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
