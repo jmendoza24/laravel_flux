@@ -5,15 +5,9 @@
     </div>
     <div class="col-md-6">
       <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Nombre:</label>
+        <label class="col-md-5 label-control" for="descripcion">Ciente:</label>
         <div class="col-md-7">
-          <label id="numproveedor">{{ $ordenesCompra->id_proveedor}}</label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Número proveedor:</label>
-        <div class="col-md-7">
-          <label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label>
+          <label id="numproveedor">{{ $ordenesCompra->nombre_corto}}</label>
         </div>
       </div>
       <div class="form-group row">
@@ -25,15 +19,15 @@
     </div>
     <div class="col-md-6">
       <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Email de compra:</label>
+        <label class="col-md-5 label-control" for="descripcion">Contacto compra:</label>
         <div class="col-md-7">
-          <label id="email">{{$ordenesCompra->correo_compra}}</label> 
+          <label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Teléfono de compra:</label>
+        <label class="col-md-5 label-control" for="descripcion">Email  compra:</label>
         <div class="col-md-7">
-          <label id="telefono">{{$ordenesCompra->compra_telefono}}</label>
+          <label id="email">{{$ordenesCompra->correo_compra}}</label> 
         </div>
       </div>
     </div>
@@ -62,7 +56,7 @@
         <th>Planta</th>
         <th>Fecha entrega</th>
         @endif
-        <th></th>
+       <!-- <th></th>-->
       </tr>
     </thead>
     <tbody>
@@ -98,7 +92,7 @@
           <input type="date" id="fecha_entrega{{$det->id}}" class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
         </td>
         @endif
-        <td>
+       <!-- <td>
           <div class="btn-group">
             @if($editar ==1 && $det->cantidad > 1 and $det->conteo < $det->cantidad)
             <a class='btn btn-float btn-outline-info btn-round' onclick="agrega_subproducto({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-plus"></i></a>
@@ -107,7 +101,7 @@
             <a class='btn btn-float btn-outline-danger btn-round' onclick="borra_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-trash"></i></a>
             @endif
           </div>
-        </td>
+        </td>-->
       </tr>
       @endforeach
     </tbody>

@@ -157,7 +157,7 @@
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Costo Unitario:</label>
           <div class="col-md-9">
-            {{ Form::text('costo_material', null, ['placeholder'=>'', 'class' => 'form-control currency','min'=>'0','required','step'=>'any']) }}       
+            {{ Form::text('costo_material', null, ['placeholder'=>'', 'id'=>'costo_material', 'class' => 'form-control currency','min'=>'0','required','step'=>'any']) }}       
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
@@ -201,7 +201,7 @@
               <td>{{ $planta->nombre}}</td>
               <td>
                 <input type="text" name="plantacosto{{$planta->id}}" id="plantacosto{{$planta->id}}" min="0" value="{{ $planta->costo }}" 
-                step="any" class="form-control currency" onchange="guarda_horas({{$planta->id}},{{ $productos->id }})"></td>
+                step="any" class="form-control currency"  onchange="guarda_horas({{$planta->id}},{{ $productos->id }})"></td>
             </tr>
             @endforeach
           </tbody>

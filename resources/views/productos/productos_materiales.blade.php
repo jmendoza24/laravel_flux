@@ -4,7 +4,7 @@
         <th>Forma</th>
         <th>Espesor (Thickness)</th>
         <th>Ancho (Wide)</th>
-        <th>Altura (Wide2)</th>
+        <th>Altura (Height)</th>
         <th>Peso por Distancia</th>
         <th>Precio</th>
         <th></th>
@@ -47,7 +47,7 @@
         ?>
       <tr>
         <td>
-            <label>{{ $mat->nforma }} {{ $mat->forma}}</label>
+            <label>{{ $mat->nforma }}</label>
             <input type="hidden" id="wide{{ $mat->id}}" value="0">
             <input type="hidden" id="lenght{{ $mat->id}}" value="0">
             <input type="hidden" id="weight{{ $mat->id}}" value="0">
@@ -67,7 +67,7 @@
             <option value="">Seleccione</option>
             @foreach($ancho as $anc)
               @if($anc->id_forma == $mat->idforma)
-              <option value="{{$anc->id}}" {{($mat->espesor ==$anc->id)? 'selected':''}}>{{$anc->valor}}</option>
+              <option value="{{$anc->id}}" {{($mat->ancho ==$anc->id)? 'selected':''}}>{{$anc->valor}}</option>
               @endif
             @endforeach
           </select>
@@ -76,7 +76,7 @@
             <option value="">Seleccione</option>
             @foreach($altura as $alt)
               @if($alt->id_forma == $mat->idforma)
-              <option value="{{$alt->id}}" {{($mat->espesor ==$alt->id)? 'selected':''}}>{{$alt->valor}}</option>
+              <option value="{{$alt->id}}" {{($mat->altura ==$alt->id)? 'selected':''}}>{{$alt->valor}}</option>
               @endif
             @endforeach
           </select>
@@ -85,7 +85,7 @@
             <option value="">Seleccione</option>
             @foreach($peso as $pes)
               @if($pes->id_forma == $mat->idforma)
-              <option value="{{$pes->id}}" {{($mat->espesor ==$pes->id)? 'selected':''}}>{{$pes->valor}}</option>
+              <option value="{{$pes->id}}" {{($mat->peso_distancia ==$pes->id)? 'selected':''}}>{{$pes->valor}}</option>
               @endif
             @endforeach
           </select>

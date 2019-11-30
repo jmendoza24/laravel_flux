@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\cotizaciones;
 use App\Http\Requests\CreatecotizacionesRequest;
 use App\Http\Requests\UpdatecotizacionesRequest;
 use App\Repositories\cotizacionesRepository;
@@ -56,17 +57,17 @@ class cotizacionesController extends AppBaseController
         $tipo = 1;
         $cotizacion = DB::table('cotizaciones as c')
                         ->leftjoin('income_terms as ic','ic.id','c.income')
-                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
+                        ->leftjoin('clientes as cl', 'cl.id','c.cliente') 
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw('c.*, nombre_corto,id_proveedor , correo_compra, compra_telefono')
+                        ->selectraw('c.*, nombre_corto,id_proveedor , correo_compra, compra_nombre,compra_telefono')
                         ->get();
 
-        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre, d.dibujo
                                from cotizacion_detalle as c
                                left join productos as p on c.producto = p.id
                                left join familias as f on f.id = p.familia 
                                LEFT JOIN (
-                                            select p.id_producto, dibujo_nombre
+                                            select p.id_producto, dibujo_nombre, p.dibujo
                                             from (
                                                     SELECT MAX(d.id) as dibujo, id_producto
                                                     from producto_dibujos  as d
@@ -75,7 +76,7 @@ class cotizacionesController extends AppBaseController
                                                     group by d.id_producto) a
                                             inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
                                 where c.id_cotizacion = '.$num_cotizacion);
-      #dd($num_cotizacion);
+     # dd($cotizacion);
         $cotizacion = $cotizacion[0];
 
         $clientes = db::table('clientes')->get();
@@ -93,7 +94,8 @@ class cotizacionesController extends AppBaseController
         $cotizaciones = db::table('cotizaciones as c')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
-                        ->selectraw('c.*, name, cl.nombre_corto')
+                        ->leftjoin('ordenes_compras as o','o.id_cotizacion','c.id')
+                        ->selectraw('c.*, ifnull(o.id,0) as idot, name, cl.nombre_corto, cl.compra_nombre, cl.correo_compra')
                         ->where('enviado','>',0)
                         ->get();
 
@@ -145,7 +147,7 @@ class cotizacionesController extends AppBaseController
                         //->leftjoin('tbl_municipios as m','m.id','cl.municipio')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra,compra_nombre, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
         $cotizacion = $cotizacion[0];
 
@@ -437,7 +439,7 @@ class cotizacionesController extends AppBaseController
                         //->leftjoin('tbl_municipios as m','m.id','cl.municipio')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*, ic.income as descripcionic, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
         $cotizacion = $cotizacion[0];
 
@@ -464,8 +466,8 @@ class cotizacionesController extends AppBaseController
         
 
          //  return view('cotizaciones.cotizacion_envio',compact('cotizacion','detalle'));
-         $request->session()->forget('num_cot');
-         return redirect('historiaCotizacion');
+         //$request->session()->forget('num_cot');
+        // return redirect('historiaCotizacion');
 
          $envio = 1;
          $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->setPaper('A4-L','landscape');
@@ -488,10 +490,15 @@ class cotizacionesController extends AppBaseController
         ->where('id',$request->id)
         ->delete();
 
+        db::table('cotizacion_detalle')
+        ->where('id_cotizacion',$request->id)
+        ->delete();
+
         $cotizaciones = db::table('cotizaciones as c')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
-                        ->selectraw('c.*, name, cl.nombre_corto')
+                        ->leftjoin('ordenes_compras as o','o.id_cotizacion','c.id')
+                        ->selectraw('c.*, ifnull(o.id,0) as idot, name, cl.nombre_corto, cl.compra_nombre, cl.correo_compra')
                         ->where('enviado','>',0)
                         ->get();
 
@@ -509,7 +516,7 @@ class cotizacionesController extends AppBaseController
                         ->leftjoin('estados as e', 'e.id', 'cl.estado')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*, ic.income as descripcionic ,u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
         $cotizacion = $cotizacion[0];
 
@@ -542,6 +549,15 @@ class cotizacionesController extends AppBaseController
     function revive_cotizacion(Request $request){
         $request->session()->put('num_cot',$request->id);
         return 1;
+    }
+
+    function get_costo_plaza(Request $request){
+        $cotizacion = new cotizaciones;
+        $cotizacion->id_producto = $request->id_producto;
+        $plantascosto = $cotizacion->informacion_plaza($cotizacion);
+        
+        $vista = View('cotizaciones.costo_plantas',compact('plantascosto'))->render();
+        return json_encode($vista);
     }
 
 }
