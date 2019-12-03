@@ -198,10 +198,6 @@
 
   <script src="{{ url('app-assets/vendors/js/forms/validation/jquery.validate.min.js') }}" type="text/javascript"></script>
   
-  
-
-
-
   <script src="{{ url('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/core/app.js') }}" type="text/javascript"></script>
 

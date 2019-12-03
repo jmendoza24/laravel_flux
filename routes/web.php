@@ -113,11 +113,9 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 });
 
 
-
-
 //Auth::routes();
 	
 
 
-
+Route::get('mail/send', 'cotizacionesController@envio_mail');
 Route::resource('catalogoFormas', 'catalogo_formaController');
