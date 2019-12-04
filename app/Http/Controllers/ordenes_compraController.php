@@ -68,7 +68,7 @@ class ordenes_compraController extends AppBaseController
         $insertado = db::table('ordenes_compras')
                         ->insertGetId(['id_cotizacion'=>$cotizacion->id,
                                       'cliente'=>$cotizacion->cliente,
-                                      'notas'=>$cotizacion->id_notas,
+                                      'notas'=>'',
                                       'income'=>$cotizacion->income,
                                       'termino_pago'=>$cotizacion->termino_pago,
                                       'vendedor'=>$cotizacion->vendedor,

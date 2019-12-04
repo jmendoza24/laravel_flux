@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\cotizaciones;
+
+use App\Mail\EnvioFlux;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CreatecotizacionesRequest;
 use App\Http\Requests\UpdatecotizacionesRequest;
 use App\Repositories\cotizacionesRepository;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -439,7 +443,7 @@ class cotizacionesController extends AppBaseController
                         //->leftjoin('tbl_municipios as m','m.id','cl.municipio')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, ic.income as descripcionic, u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*, ic.descripcion as descinco, ic.income as descripcionic, u.name, cl.nombre as nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
         $cotizacion = $cotizacion[0];
 
@@ -461,20 +465,34 @@ class cotizacionesController extends AppBaseController
          db::table('cotizaciones')
                 ->where('id',$num_cotizacion)
                 ->update(['enviado'=>1]);
-        
-        // $request->session()->forget('num_cot');
-        
-
-         //  return view('cotizaciones.cotizacion_envio',compact('cotizacion','detalle'));
-         //$request->session()->forget('num_cot');
-        // return redirect('historiaCotizacion');
 
          $envio = 1;
          $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->setPaper('A4-L','landscape');
-         $request->session()->forget('num_cot');
+         Storage::put('Cotizacion_'.$num_cotizacion.'.pdf', $pdf->output());
+        
+        $content = "Hola esto es una prueba";
 
-         $pdf->download('Cotizacion_'.$num_cotizacion.'.pdf');
-         return redirect('/historiaCotizacion');
+        $subjects = "Ventas Fluxmetals";
+        $to = "jacob.mendozaha@gmail.com";
+
+        #$to = $cotizacion->correo_compra;
+        $copia = 'salvador@altermedia.mx';
+        // here we add attachment, attachment must be an array
+        $attachment = [ 
+         Storage::url('Cotizacion_'.$num_cotizacion.'.pdf'),
+         ];
+
+
+        Mail::to($to)->cc($copia)->send(new EnvioFlux($subjects, $content,$attachment));
+        Storage::delete('Cotizacion_'.$num_cotizacion.'.pdf');
+        $request->session()->forget('num_cot');
+
+        return redirect('/historiaCotizacion');
+         
+        # $pdf->save('Cotizacion_'.$num_cotizacion.'.pdf');
+                 
+       //$request->session()->forget('num_cot');
+
     }
 
     function guarda_informacion_cot(Request $request){
@@ -516,7 +534,7 @@ class cotizacionesController extends AppBaseController
                         ->leftjoin('estados as e', 'e.id', 'cl.estado')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, ic.income as descripcionic ,u.name, nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*, ic.descripcion as descinco, ic.income as descripcionic ,u.name, cl.nombre as nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
         $cotizacion = $cotizacion[0];
 
@@ -537,7 +555,6 @@ class cotizacionesController extends AppBaseController
                                 where c.id_cotizacion = '.$num_cotizacion);
 
         $options = View('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->render();
-
         return json_encode($options);
     }
 
@@ -558,6 +575,38 @@ class cotizacionesController extends AppBaseController
         
         $vista = View('cotizaciones.costo_plantas',compact('plantascosto'))->render();
         return json_encode($vista);
+    }
+
+    function envio_mail(){
+        $content = "Hola esto es una prueba";
+
+        $subjects = "Ventas Fluxmetals";
+        $to = "jacob.mendozaha@gmail.com";
+        $copia = '';
+        // here we add attachment, attachment must be an array
+        $attachment = [ 
+         public_path("Cotizacion_72.pdf"),
+        //  public_path("dibujos/dOHLxUKLd7TCLMyUCvLSRHbLwEIdRy357Bttl4RO.png"),
+         ];
+
+
+        
+        Mail::to($to)->cc($copia)->send(new EnvioFlux($subjects, $content,$attachment));
+        /* try {
+
+            return response()->json("Email Sent!");
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }*/
+/**
+        $objDemo = new \stdClass();
+        $objDemo->demo_one = 'Demo One Value';
+        $objDemo->demo_two = 'Demo Two Value';
+        $objDemo->sender = 'SenderUserName';
+        $objDemo->receiver = 'ReceiverUserName';
+        $objDemo->attachment = 'storage/app/public/1JuFx4gwoxn3VeHhQ0nZgoCfnYhTuSoJcZw6VXBO.pdf';
+ 
+        Mail::to("jacob.mendozaha@gmail.com")->send(new EnvioFlux($objDemo));*/
     }
 
 }

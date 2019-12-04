@@ -76,7 +76,7 @@ class ordenes_compra extends Model
                         ->leftjoin('income_terms as ic','ic.id','c.income')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
                         ->where('c.id',$id_orden)
-                        ->selectraw('c.*, nombre_corto,id_proveedor , correo_compra, compra_telefono, cl.linea')
+                        ->selectraw('c.*, ic.descripcion as desc_inco, nombre_corto,id_proveedor , correo_compra, compra_telefono, cl.linea')
                         ->get();
         return $consulta[0];
     }

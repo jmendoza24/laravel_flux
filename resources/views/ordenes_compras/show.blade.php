@@ -36,12 +36,18 @@
         <input type="text"  class="form-control" id="lugar" name="lugar" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="<?php echo ($ordenesCompra->lugar);?>">
       </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="lastName4">Términos : </label>
+        <textarea class="form-control" style="height: 200px;"  onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo nl2br($ordenesCompra->desc_inco)?></textarea>
+      </div>
+    </div> 
+    <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Notas : </label>
         <textarea class="form-control" id="notas" style="height: 200px;" name="notas" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo ($ordenesCompra->notas);?></textarea>
       </div>
-    </div>  
+    </div> 
     <br>
     
   </div>

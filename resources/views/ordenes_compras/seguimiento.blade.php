@@ -43,6 +43,7 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
       <div class="nav-vertical col-md-12">
           <div class="col-md-3">
             <ul class="nav nav-tabs nav-left nav-border-left">
+              <br><br>
               @foreach($productos as $prod)
               <li class="nav-item">
                 <a class="nav-link" onclick="obtiene_seguimiento({{ $prod->id}})" style="width: 100%;" id="baseVerticalLeft2-tab1" data-toggle="tab" aria-controls="tabVerticalLeft{{ $prod->id}}" aria-expanded="true">
@@ -53,7 +54,7 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
             </ul>
           </div>
         <div class="col-md-9" id="informe_seguimiento" style="border: 0px solid red; float: right;">
-              @include('ordenes_compras.informe_seguimiento')
+              {{-- @include('ordenes_compras.informe_seguimiento') --}}
         </div>
       </div>
   
