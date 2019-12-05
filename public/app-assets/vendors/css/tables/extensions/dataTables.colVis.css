@@ -97,6 +97,7 @@ ul.ColVis_collection {
 	background-color: rgba( 255, 255, 255, 0.3 );
 	overflow: hidden;
 	z-index: 2002;
+	max-height: 250px;
 
 	-webkit-border-radius: 5px;
 	   -moz-border-radius: 5px;

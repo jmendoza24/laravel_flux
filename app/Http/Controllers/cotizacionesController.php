@@ -28,7 +28,7 @@ class cotizacionesController extends AppBaseController
     {
         $this->cotizacionesRepository = $cotizacionesRepo;
     }
-
+ 
     /**
      * Display a listing of the cotizaciones.
      *

@@ -57,9 +57,9 @@ $('.dataex-colvis-mouseover').DataTable( {
 
 $('.dataex-colvis-restore').DataTable( {
     dom: 'C<"clear">lfrtip',
-    columnDefs: [
+    /* columnDefs: [
         { visible: false, targets: 2 }
-    ],
+    ],*/
     scrollY: true,
     colVis: {
         restore: "Restore",

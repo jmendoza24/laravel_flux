@@ -37,371 +37,141 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
                         </tr>
                       </thead>
                       <tbody>
+                        @foreach($productos as $producto)
                         <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
+                          <td><label  style="width: 90px;">SG-00{{ $producto->id }}</label></td>
+                          <td>{{ $producto->descripcion }}</td>
+                          <td> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm"><i class="fa fa-info"></i></span></label></td>
+                          <td>{{ $producto->fecha_entrega }}</td>
+                          <td>
+                            <select class="form-control" style="width: 150px;">
+                              <option value="">Seleccione</option>
+                              @foreach($plantas as $planta)
+                                <option value="{{ $planta->id }}">{{ $planta->nombre }}</option>
+                              @endforeach
+                            </select>
+                          </td>
+                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
+                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
+                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
+                          <td style="text-align: center;"><button type="button" class="btn btn-icon btn-info btn-sm"><i class="ft-bar-chart-2"></i></button></td>
+                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
+                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
+                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="btn-group mx-2" role="group">
+                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
+                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                            </div>
+                          </td>
                         </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
-                        <tr>
-                          <th>IDN</th>
-                          <th>Nombre corto</th>
-                          <th>#Parte</th>
-                          <th>Fecha entrega</th>
-                          <th>Planta</th>
-                          <th>Lanzamiento</th>
-                          <th>Info</th>
-                          <th>Preguntas</th>
-                          <th>Asig. Mat</th>
-                          <th>Pintura</th>
-                          <th>Prog. Corte</th>
-                          <th>TACM</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                          <th>Corte</th>
-                          <th>Forma</th>
-                          <th>Soldado</th>
-                          <th>TT</th>
-                          <th>Pruebas</th>
-                          <th>Pintado</th>
-                          <th>Embarque</th>
-                        </tr>
+                        @endforeach
                       </tfoot>
                     </table>
      

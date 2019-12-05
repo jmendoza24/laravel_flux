@@ -241,18 +241,18 @@ class ordenes_compraController extends AppBaseController
         $orden = new ordenes_compra;
         $ordenesCompra = $orden->header_orden($id);
 
-        $productos = db::table('ordentrabajo_seguimiento as o')
-                        ->join('ordencompra_detalle as d','d.id','o.id_detalle')
-                        ->join('productos as pr','pr.id','o.id_producto')
-                        ->where('o.id_orden',$id)
-                        ->selectraw('distinct d.id, pr.numero_parte, d.incremento')
+        $productos = db::table('ordencompra_detalle as d')
+                        ->join('productos as pr','pr.id','d.producto')
+                        ->where('d.id_orden',$id)
+                        ->selectraw('pr.*, pr.numero_parte, d.incremento, d.fecha_entrega')
                         ->orderby('d.id','asc')
                         ->get();
-       # dd($productos);
+       
 
-        $procesos = array();
-        $subprocesos = array();
-        return view('ordenes_compras.seguimiento',compact('ordenesCompra','productos','procesos','subprocesos'));
+         $plantas = DB::table('plantas')->get();
+
+
+        return view('ordenes_compras.seguimiento',compact('ordenesCompra','productos','plantas'));
     }
     function obtiene_seguimiento(Request $request){
 
