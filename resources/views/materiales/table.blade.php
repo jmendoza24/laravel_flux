@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered datacol-basic-initialisation" id="materiales-table">
+<table class="table display nowrap table-striped table-bordered scroll-horizontal" id="materiales-table">
     <thead>
         <tr>
             <th>Material</th>

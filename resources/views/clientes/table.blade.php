@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered datacol-basic-initialisation" id="clientes-table">
+<table class="table display nowrap table-striped table-bordered scroll-horizontal" id="clientes-table">
     <thead>
         <tr>
             <th>Nombre Corto</th>                

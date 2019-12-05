@@ -49,7 +49,7 @@ $('.dataex-colvis-mouseover').DataTable( {
     colVis: {
         activate: "mouseover"
     }
-} );
+} ); 
 
 /********************************************
 *       Mouseover Restore / show all        *
@@ -60,6 +60,7 @@ $('.dataex-colvis-restore').DataTable( {
     columnDefs: [
         { visible: false, targets: 2 }
     ],
+    scrollY: true,
     colVis: {
         restore: "Restore",
         showAll: "Show all",

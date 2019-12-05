@@ -6,7 +6,8 @@
        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('cotizaciones.index') !!}">+ Cotización</a>
     </h1>
 </div>
-<div class="col-md-12" id="table_cotizacion" style="overflow: scroll;">
+<br><br><br>
+<div class="col-md-12" id="table_cotizacion">
    @include('cotizaciones.table')
 </div>
 @endsection

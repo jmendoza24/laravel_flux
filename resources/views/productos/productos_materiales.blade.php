@@ -1,4 +1,4 @@
-  <table class="table table-striped table-bordered">  
+  <table class="table display nowrap table-striped table-bordered scroll-horizontal">  
     <thead>
       <tr>
         <th>Forma</th>

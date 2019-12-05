@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered datacol-basic-initialisation" id="ordenesCompras-table">
+<table class="table display nowrap table-striped table-bordered scroll-horizontal" id="ordenesCompras-table">
     <thead>
         <tr>
             <th>OT</th>

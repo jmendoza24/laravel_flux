@@ -6,7 +6,7 @@
            <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('condiciones.create') !!}">+ Condición</a>
     </h1>
 </div>
-<div style="overflow-x: scroll;" class="col-md-12">
+<div class="col-md-12">
     @include('condiciones.table')
 </div>
 
