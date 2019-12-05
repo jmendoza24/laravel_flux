@@ -109,6 +109,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/detalle_cotizacion', 'cotizacionesController@detalle_cotizacion');
 	Route::get('/revive_cotizacion', 'cotizacionesController@revive_cotizacion');
 	Route::get('/get_costo_plaza', 'cotizacionesController@get_costo_plaza');
+	Route::get('/agrega_comentarios', 'ordenes_compraController@agrega_comentarios');
+	Route::get('/seguimiento_subproceso', 'ordenes_compraController@seguimiento_subproceso');
 
 });
 

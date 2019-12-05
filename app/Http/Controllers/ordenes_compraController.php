@@ -243,16 +243,20 @@ class ordenes_compraController extends AppBaseController
 
         $productos = db::table('ordencompra_detalle as d')
                         ->join('productos as pr','pr.id','d.producto')
+                        ->join('clientes as c','id_empresa','c.id')
                         ->where('d.id_orden',$id)
-                        ->selectraw('pr.*, pr.numero_parte, d.incremento, d.fecha_entrega')
+                        ->selectraw('pr.*,nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
                         ->orderby('d.id','asc')
                         ->get();
        
 
-         $plantas = DB::table('plantas')->get();
+         $plantas = DB::table('plantas')->get();       
 
-
-        return view('ordenes_compras.seguimiento',compact('ordenesCompra','productos','plantas'));
+         $procesos = $orden->get_procesos_ordenes($id);
+         $sub_procesos = $orden->get_sub_procesos_ordenes($id);
+        # dd($sub_procesos);
+    
+        return view('ordenes_compras.seguimiento',compact('ordenesCompra','productos','plantas','procesos','sub_procesos'));
     }
     function obtiene_seguimiento(Request $request){
 
@@ -294,5 +298,18 @@ class ordenes_compraController extends AppBaseController
                 ->update(['dibujo'=>$img]);*/
         }
         
+    }
+
+    function agrega_comentarios(Request $request){
+
+        $options = view('ordenes_compras.seguimiento_comentarios')->render();
+        return json_encode($options);
+    }
+
+    function seguimiento_subproceso(Request $request){
+
+        $options = view('ordenes_compras.info_subprocesos')->render();
+        return json_encode($options);
+
     }
 }

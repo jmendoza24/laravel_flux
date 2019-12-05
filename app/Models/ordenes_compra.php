@@ -140,13 +140,29 @@ class ordenes_compra extends Model
             }
         }
 
-        db::select('insert into ordentrabajo_seguimiento(id_orden,id_detalle,id_producto,id_proceso,id_subproceso)
+  /**      db::select('insert into ordentrabajo_seguimiento(id_orden,id_detalle,id_producto,id_proceso,id_subproceso)
                         select o.id_orden,o.id,producto,p.id_proceso, p.id_subproceso
                         from ordencompra_detalle o 
                         inner join productos_subprocesos p on p.id_producto = o.producto 
                         where o.id_orden ='.$filto->id_orden.'
                         and o.id not in (select distinct id_detalle from ordentrabajo_seguimiento where id_orden = '.$filto->id_orden.')');
+*/
+    }
 
+    function get_procesos_ordenes($id_orden){
+        return DB::table('ordencompra_detalle as o')
+                ->join('productos_procesos as pp','pp.id_producto','o.producto')
+                ->where('id_orden',$id_orden)
+                ->selectraw('o.id, pp.id_proceso, o.producto')
+                ->get();
+    }
+
+     function get_sub_procesos_ordenes($id_orden){
+        return DB::table('ordencompra_detalle as o')
+                ->join('productos_subprocesos as pp','pp.id_producto','o.producto')
+                ->where('id_orden',$id_orden)
+                ->selectraw('o.id as id_detalle, pp.id_subproceso,o.producto, pp.id_proceso')
+                ->get();
     }
 
     

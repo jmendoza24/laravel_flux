@@ -39,10 +39,10 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
                       <tbody>
                         @foreach($productos as $producto)
                         <tr>
-                          <td><label  style="width: 90px;">SG-00{{ $producto->id }}</label></td>
-                          <td>{{ $producto->descripcion }}</td>
-                          <td> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm"><i class="fa fa-info"></i></span></label></td>
-                          <td>{{ $producto->fecha_entrega }}</td>
+                          <td> <label  style="width: 90px;">SG-00{{ $producto->id_detalle }}</label></td>
+                          <td>{{ $producto->nombre_corto }}</td>
+                          <td> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm" data-toggle="modal" data-backdrop="false" data-target="#primary" ><i class="fa fa-info"></i></span></label></td>
+                          <td> {{  date("m-d-Y", strtotime($producto->fecha_entrega)) }}</td>
                           <td>
                             <select class="form-control" style="width: 150px;">
                               <option value="">Seleccione</option>
@@ -51,35 +51,70 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
                               @endforeach
                             </select>
                           </td>
-                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
-                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
-                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-icon btn-info btn-sm"><i class="ft-bar-chart-2"></i></button></td>
-                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
-                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
-                          <td style="text-align: center;"><input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked=""></td>
+                          <td style="text-align: center;">
+                            <div class="btn-group mx-2" role="group">
+                              <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked="">
+                              &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="agrega_comentarios()" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                            </div>
+                          </td>
+                          <td style="text-align: center;">
+                            <div class="btn-group mx-2" role="group">
+                              <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked="">
+                              &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="agrega_comentarios()" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                          </div>
+                          </td>
+                          <td style="text-align: center;">
+                            <div class="btn-group mx-2" role="group">
+                              <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked="">
+                              &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="agrega_comentarios()" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                          </div>
+                          </td>
+                          <td style="text-align: center;">
+                            <button class="btn btn-outline-info"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                          </td>
+                          <td style="text-align: center;">
+                            <div class="btn-group mx-2" role="group">
+                              <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked="">
+                              &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="agrega_comentarios()" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                          </div>
+                          </td>
+                          <td style="text-align: center;">
+                            <div class="btn-group mx-2" role="group">
+                              <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked="">
+                              &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="agrega_comentarios()" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                          </div>
+                          </td>
+                          <td style="text-align: center;">
+                            <div class="btn-group mx-2" role="group">
+                              <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" checked="">
+                              &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="agrega_comentarios()" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                          </div>
+                          </td>
                           <td>
                             <div class="btn-group mx-2" role="group">
-                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                              @foreach($sub_procesos as $suproceso)
+                               @if($producto->id_detalle == $suproceso->id_detalle and $suproceso->id_proceso==1 and $producto->id== $suproceso->producto)
+                                  <button type="button" onclick="seguimiento_subproceso()" data-toggle="modal" data-backdrop="false" data-target="#primary"  class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
+                                @endif
+                              @endforeach
                             </div>
                           </td>
                           <td>
                             <div class="btn-group mx-2" role="group">
-                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                              @foreach($sub_procesos as $suproceso)
+                               @if($producto->id_detalle == $suproceso->id_detalle and $suproceso->id_proceso==2 and $producto->id== $suproceso->producto)
+                                  <button type="button" onclick="seguimiento_subproceso()" data-toggle="modal" data-backdrop="false" data-target="#primary"  class="btn btn-icon btn-outline-success"><i class="fa fa-gavel"></i></button>
+                                @endif
+                              @endforeach
                             </div>
                           </td>
                           <td>
                             <div class="btn-group mx-2" role="group">
-                              <button type="button" class="btn btn-icon btn-outline-success"><i class="fa fa-thermometer"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-warning"><i class="fa fa-gavel"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-info"><i class="fa fa-tint"></i></button>
-                              <button type="button" class="btn btn-icon btn-outline-primary"><i class="fa fa-cog"></i></button>
+                              @foreach($sub_procesos as $suproceso)
+                               @if($producto->id_detalle == $suproceso->id_detalle and $suproceso->id_proceso==4 and $producto->id== $suproceso->producto)
+                                  <button type="button" data-toggle="modal" data-backdrop="false" data-target="#primary"  class="btn btn-icon btn-outline-success"><i class="fa fa-tint"></i></button>
+                                @endif
+                              @endforeach
                             </div>
                           </td>
                           <td>

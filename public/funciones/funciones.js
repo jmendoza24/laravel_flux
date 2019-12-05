@@ -838,16 +838,25 @@ function actualiza_proceso(proceso, producto){
 }
 
 function guarda_horas(id_planta, id_prod){
-  $.ajax({
+  var costo_unitario =  parseInt($("#costo_material").val().replace('$','').replace(',',''));
+  var costo = parseInt($("#plantacosto"+id_planta).val().replace('$','').replace(',',''));
+
+  if(costo < costo_unitario){
+    $.alert("El costo por planta no puede ser menor al costo unitario" );  
+  }else{
+    $.ajax({
         data: {"id_producto":id_prod,"id_planta":id_planta,"costo":$("#plantacosto"+id_planta).val()},
         url: '/api/v1/actualiza_costoplanta',
         dataType: 'json',
         type:  'get',
         success:  function (response) {  
            console.log(response);
-          $("#listasubprocesos").html(response);
+          //$("#listasubprocesos").html(response);
         }
     }); 
+  }
+  
+  
 }
 
 
@@ -1082,3 +1091,46 @@ function revive_cotizacion(id_cotizacion){
           });
 }
 
+
+function show_costo_planta(id_producto){
+      $.ajax({
+            data: {"id_producto":id_producto},
+            url:   '/api/v1/get_costo_plaza',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) { 
+              $("#contenido").html(response);
+              $(".display").DataTable({"lengthChange": false,"searching": false,"paging": false, "info": false});
+              $("#modal_primary").removeClass("modal-xl");
+              $("#footer_primary").hide();
+
+              if (!($('.modal.in').length)) {
+                  $('.modal-dialog').css({
+                    top: 0,
+                    left: 0
+                  });
+                }
+
+                $('#primary').modal({
+                  backdrop: false,
+                  show: true
+                });
+
+                $('.modal-dialog').draggable({
+                  handle: ".modal-header"
+                });      
+            }
+        });
+}
+
+function show_dibujo_producto(dibujo, num_parte){
+
+  var text = '<h4>Costo por planta: <span><b>'+ num_parte +'</b></span></h4> <hr/>'+
+             '<div style="text-align:center;"><img src="'+dibujo+'"/></div>';
+  $("#contenido").html(text);
+  $("#modal_primary").removeClass("modal-xl");
+  $("#modal_primary").addClass("modal-lg");
+  $('.modal-dialog').draggable({handle: ".modal-header"});
+ $("#footer_primary").hide();
+
+}
