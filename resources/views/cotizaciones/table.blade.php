@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered datacol-basic-initialisation" id="cotizaciones-table">
+<table class="table display nowrap table-striped table-bordered scroll-horizontal" id="cotizaciones-table">
     <thead>
         <tr>
             <th>Cotización</th>

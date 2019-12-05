@@ -223,7 +223,7 @@
            <a class="btn btn-primary pull-right" onclick="nuevo_dibujo({{ $productos->id }})" data-toggle="modal" data-target="#large" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Dibujo</a>
         </h1>
       </div>
-      <div class="col-md-12" id="dibujos_table" style="overflow-x: scroll;">
+      <div class="col-md-12" id="dibujos_table" >
           @include('producto_dibujos.table')
       </div>
     </div>
@@ -254,7 +254,7 @@
       </tr>
     </table>
     </div>
-    <div id="listamateriales" style="overflow: scroll; max-height: 600px;">
+    <div id="listamateriales" style=" max-height: 600px;">
       @include('productos.productos_materiales')
     </div>
   </div>

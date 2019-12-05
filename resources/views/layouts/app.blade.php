@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/vendors.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/responsive.dataTables.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/fixedColumns.dataTables.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/datatable/select.dataTables.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/buttons.dataTables.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/colReorder.dataTables.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/tables/extensions/dataTables.colVis.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/icheck/icheck.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/icheck/custom.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/fonts/simple-line-icons/style.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/pages/chat-application.css')}}">
+  
    
   <!-- END VENDOR CSS-->
   <!-- BEGIN STACK CSS-->
@@ -75,10 +76,7 @@
                           <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                           <div class="heading-elements">
                             <ul class="list-inline mb-0">
-                              <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                              <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                               <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                              <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                           </div>
                         </div>
@@ -151,11 +149,8 @@
  <script src="{{ url('app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
   <!-- BEGIN VENDOR JS-->
   <!-- BEGIN PAGE VENDOR JS-->
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/datatables.min.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.fixedColumns.min.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-  
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js') }}" type="text/javascript"></script>
+
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/datatables.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/tables/buttons.colVis.min.js') }}" type="text/javascript"></script>
   <!-- END PAGE VENDOR JS-->
@@ -166,7 +161,6 @@
   <script src="{{ url('app-assets/vendors/js/forms/extended/inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/extended/maxlength/bootstrap-maxlength.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/js/scripts/tables/datatables-extensions/datatables-colreorder.js') }}" type="text/javascript"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
@@ -200,11 +194,17 @@
   
   <script src="{{ url('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/core/app.js') }}" type="text/javascript"></script>
-
+  
   <script src="{{ url('app-assets/js/scripts/forms/wizard-steps.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/extensions/dragula.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/cards/draggable.js') }}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/tables/datatables/datatable-basic.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.colVis.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/tables/datatables-extensions/datatable-colvis.js')}}" type="text/javascript"></script>
+
+  
   <script src="{{ url('funciones/jquery.SimpleMask.js') }}" type="text/javascript"></script>
   <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
   <script src="{{ url('funciones/ordenes_compra.js') }}" type="text/javascript"></script>  

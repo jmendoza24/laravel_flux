@@ -1,5 +1,4 @@
-<div class="table-responsive">
-    <table class="table table-striped table-bordered datacol-basic-initialisation table-condense" style="" id="proveedores-table">
+    <table class="table display nowrap table-striped table-bordered scroll-horizontal" style="" id="proveedores-table">
         <thead>
             <tr>
                 <th>Razón social</th>
@@ -43,4 +42,3 @@
         @endforeach
         </tbody>
     </table>
-</div>

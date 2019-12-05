@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="productos-table">
+<table class="table display nowrap table-striped table-bordered scroll-horizontal" style="" id="productos-table">
         <thead>
             <tr>
                 <th>Nombre</th>

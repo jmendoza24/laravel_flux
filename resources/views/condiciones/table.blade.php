@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered datacol-basic-initialisation" id="condiciones-table">
+<table class="table display nowrap table-striped table-bordered scroll-horizontal" id="condiciones-table">
     <thead>
         <tr>
             <th>Tipo</th>

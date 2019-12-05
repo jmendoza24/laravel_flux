@@ -8,7 +8,8 @@
        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('proveedores.create') !!}">+ Proveedor</a>
     </h1>
 </div>
-<div style="overflow-x: scroll;" class="col-md-12">
+<br><br><br>
+<div class="col-md-12">
   @include('proveedores.table')
 </div>
 @endsection

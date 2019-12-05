@@ -4,44 +4,409 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
 @endsection
 @php($id_detalle = '')
 @section('content')
- <div class="row">
-    <div class="col-md-12">
-      <h5>Datos del cliente</h5>
-      <hr>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Ciente:</label>
-        <div class="col-md-7">
-          <label id="numproveedor">{{ $ordenesCompra->nombre_corto}}</label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Orden compra cliente:</label>
-        <div class="col-md-7">
-          <input type="text" id="orden_compra" value="{{$ordenesCompra->orden_compra}}" class="form-control" readonly="" />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Contacto compra:</label>
-        <div class="col-md-7">
-          <label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Email  compra:</label>
-        <div class="col-md-7">
-          <label id="email">{{$ordenesCompra->correo_compra}}</label> 
-        </div>
-      </div>
-    </div>
-  </div>
-  <hr/>
     <div class="row">
-      <div class="nav-vertical col-md-12">
-          <div class="col-md-3">
+                    <table class="table table-striped table-bordered  dataex-colvis-restore">
+                      <thead>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                        <tr>
+                          <th>IDN</th>
+                          <th>Nombre corto</th>
+                          <th>#Parte</th>
+                          <th>Fecha entrega</th>
+                          <th>Planta</th>
+                          <th>Lanzamiento</th>
+                          <th>Info</th>
+                          <th>Preguntas</th>
+                          <th>Asig. Mat</th>
+                          <th>Pintura</th>
+                          <th>Prog. Corte</th>
+                          <th>TACM</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                          <th>Corte</th>
+                          <th>Forma</th>
+                          <th>Soldado</th>
+                          <th>TT</th>
+                          <th>Pruebas</th>
+                          <th>Pintado</th>
+                          <th>Embarque</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+     
+        
+          <!--<div class="col-md-3">
             <ul class="nav nav-tabs nav-left nav-border-left">
               <br><br>
               @foreach($productos as $prod)
@@ -54,8 +419,7 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
             </ul>
           </div>
         <div class="col-md-9" id="informe_seguimiento" style="border: 0px solid red; float: right;">
-              {{-- @include('ordenes_compras.informe_seguimiento') --}}
-        </div>
+        </div>-->
       </div>
   
   </div>
