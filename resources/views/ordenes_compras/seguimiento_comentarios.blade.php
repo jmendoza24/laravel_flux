@@ -1,13 +1,4 @@
-<table class="table table-striped table-bordered">
-	<tr>
-		<td>Seguimiento:</td>
-		<td>abc -123</td>
-	</tr>
-	<tr>
-		<td>Titulo:</td>
-		<td>Subtitulo</td>
-	</tr>
-</table>
+<h3 id="titulo_tabla">Titulo</h3> <br>
 <div class="col-md-12">
 	<label>Comentarios:</label>
 	<textarea class="form-control"></textarea>

@@ -25,7 +25,9 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/icheck/custom.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/fonts/simple-line-icons/style.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/pages/chat-application.css')}}">
-  
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/js/gallery/photo-swipe/photoswipe.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/js/gallery/photo-swipe/default-skin/default-skin.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/pages/gallery.css')}}">
    
   <!-- END VENDOR CSS-->
   <!-- BEGIN STACK CSS-->
@@ -211,6 +213,10 @@
   <script src="{{ url('app-assets/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+  <script src="{{ url('app-assets/vendors/js/gallery/masonry/masonry.pkgd.min.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js')}}" type="text/javascript"></script>
+  <script src="{{ url('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}" type="text/javascript"></script>
   @yield('script')
 
   <!-- END STACK JS-->

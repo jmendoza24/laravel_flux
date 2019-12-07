@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/get_costo_plaza', 'cotizacionesController@get_costo_plaza');
 	Route::get('/agrega_comentarios', 'ordenes_compraController@agrega_comentarios');
 	Route::get('/seguimiento_subproceso', 'ordenes_compraController@seguimiento_subproceso');
+	Route::get('/informacion_producto', 'ordenes_compraController@informacion_producto');
 
 });
 

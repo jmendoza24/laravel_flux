@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ordenes_compra;
+#use App\Models\productos;
 use App\Http\Requests\Createordenes_compraRequest;
 use App\Http\Requests\Updateordenes_compraRequest;
 use App\Repositories\ordenes_compraRepository;
@@ -311,5 +312,17 @@ class ordenes_compraController extends AppBaseController
         $options = view('ordenes_compras.info_subprocesos')->render();
         return json_encode($options);
 
+    }
+
+    function informacion_producto(Request $request){
+
+        $filtro = new ordenes_compra;
+        $filtro->id_producto = $request->id_producto;
+
+        $producto = $filtro->informacion_producto($filtro);
+        $producto = $producto[0];
+
+        $options = view('ordenes_compras.producto_info',compact('producto'))->render();
+        return json_encode($options);
     }
 }

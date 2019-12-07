@@ -165,5 +165,17 @@ class ordenes_compra extends Model
                 ->get();
     }
 
+    function informacion_producto($filtro){
+        return db::select('select p.*,dibujo, dibujo_nombre,revision
+                           from productos p 
+                           inner join(
+                                       select id_producto, dibujo, dibujo_nombre,revision
+                                       from  producto_dibujos 
+                                        where id_producto = '.$filtro->id_producto.'
+                                        order by id desc 
+                                        limit 1 ) d on d.id_producto = p.id
+                            where id  = '.$filtro->id_producto);
+    }
+
     
 }
