@@ -1,156 +1,137 @@
-<ul class="nav nav-tabs nav-underline no-hover-bg">
-    <li class="nav-item">
-      <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31"
-      href="#tab31" aria-expanded="true">Materiales</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="base-tab32" data-toggle="tab" aria-controls="tab32" href="#tab32"
-      aria-expanded="false">Avance</a>
-    </li>
-</ul>
-<div class="tab-content px-1 pt-1">
-	<div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true" aria-labelledby="base-tab31">
-	  
-	</div>
-	<div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
-		<div class="card collapse-icon accordion-icon-rotate left">
-			<div class="bs-callout-primary callout-border-right callout-bordered callout-transparent p-1">
-				<div class="row">
-	          		<div class="col-md-6">
-	              		<div class="form-group row">
-					      <label class="col-md-4 label-control" for="userinput1">Fecha compromiso:</label>
-					      <div class="col-md-8">
-					        <input type="text" class="form-control pickadate-format" name="">
-					        <div class="invalid-feedback">Este campo es requerido.</div>
-					      </div>
-					    </div>
-				    </div>
-				    <div class="col-md-6">
-	              		<div class="form-group row">
-					      <label class="col-md-3 label-control" for="userinput1">Dias:</label>
-					      <div class="col-md-9">
-					        <input type="text" class="form-control" name="">
-					        <div class="invalid-feedback">Este campo es requerido.</div>
-					      </div>
-					    </div>
-				    </div>
-				    <div class="col-md-6">
-					    <div class="form-group row">
-					      <label class="col-md-4 label-control" for="userinput1">Fecha Entrega:</label>
-					      <div class="col-md-8">
-					        <input type="text" class="form-control pickadate-format" name="">
-					        <div class="invalid-feedback">Este campo es requerido.</div>
-					      </div>
-					    </div>
-					</div>
-					<div class="col-md-6">
-	              		<div class="form-group row">
-					      <label class="col-md-3 label-control" for="userinput1">Avance:</label>
-					      <div class="col-md-6">
-					        <input type="text" class="form-control" name="">
-					        <div class="invalid-feedback">Este campo es requerido.</div>
-					      </div>
-					      <div class="col-md-3">
-					      	<button class="btn btn-float btn-outline-success" title="Dibujo"><i class="ft-image"></i></button>
-					      </div>
-					    </div>
-				    </div>
-	          	</div>
+<table class="table table-bordered">
+	<tr>
+		<td>
+			Comentarios:
+		</td>
+		<td colspan="2">
+			<textarea class="form-control"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">Fotos</td>
+	</tr>
+	<tr>
+		<td>
+			<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+              	<div class="row">
+					<figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+	                  <a href="{{ asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
+	                    <img class="img-thumbnail img-fluid" src="{{ asset('app-assets/images/gallery/1.jpg')}}"  
+	                    itemprop="thumbnail" alt="Example" style="width: 100px" />
+	                  </a>
+	                </figure>
+            	</div>
+        	</div>
+        </td>
+        <td>
+        	<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+              	<div class="row">
+					<figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+	                  <a href="{{ asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
+	                    <img class="img-thumbnail img-fluid" src="{{ asset('app-assets/images/gallery/1.jpg')}}"  
+	                    itemprop="thumbnail" alt="Example" style="width: 100px"/>
+	                  </a>
+	                </figure>
+            	</div>
+        	</div>
+        </td>
+        <td>
+        	<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+              	<div class="row">
+					<figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+	                  <a href="{{ asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
+	                    <img class="img-thumbnail img-fluid" src="{{ asset('app-assets/images/gallery/1.jpg')}}"  
+	                    itemprop="thumbnail" alt="Example" style="width: 100px"/>
+	                  </a>
+	                </figure>
+            	</div>
+        	</div>
+		</td>
+	</tr>
+</table>
+<table class="table table-bordered compact" id="tbl_listado_doc">
+	<thead>	
+	<tr>
+		<th>Documento</th>
+		<th>Fecha</th>
+		<th>PDF</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>Documento</td>
+		<td>Fecha</td>
+		<td>PDF</td>
+	</tr>
+	<tr>
+		<td>Documento</td>
+		<td>Fecha</td>
+		<td>PDF</td>
+	</tr>
+	<tr>
+		<td>Documento</td>
+		<td>Fecha</td>
+		<td>PDF</td>
+	</tr>
+	<tr>
+		<td>Documento</td>
+		<td>Fecha</td>
+		<td>PDF</td>
+	</tr>
+	</tbody>
+</table>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+ It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg"></div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+    PhotoSwipe keeps only 3 of them in the DOM to save memory.
+    Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter"></div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--share" title="Share"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader-active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut"></div>
             </div>
-			@php($i = 1)
-			@foreach($procesos as $proc)
-			<div id="headingCollapse{{ $proc->id}}" class="card-header">
-              <a data-toggle="collapse" href="#collapse{{ $proc->id}}" aria-expanded="false" aria-controls="collapse{{ $proc->id}}" 
-              class="card-title lead">{{ $proc->procesos}}</a>
-            </div>
-				<div id="collapse{{ $proc->id}}" role="tabpanel" aria-labelledby="headingCollapse{{ $proc->id}}" class="collapse">
-	              <div class="card-content">
-	              	<div class="bs-callout-primary callout-border-right callout-bordered callout-transparent p-1">
-				<div class="row">
-	          		<div class="col-md-6">
-	              		<div class="form-group row">
-					      <label class="col-md-4 label-control" for="userinput1">Horas:</label>
-					      <div class="col-md-8">
-					        <input type="text" class="form-control" name="">
-					        <div class="invalid-feedback">Este campo es requerido.</div>
-					      </div>
-					    </div>
-				    </div>
-				    <div class="col-md-6">
-	              		<div class="form-group row">
-					      <label class="col-md-3 label-control" for="userinput1">Fecha inicio:</label>
-					      <div class="col-md-9">
-					        <input type="date" class="form-control" name="">
-					        <div class="invalid-feedback">Este campo es requerido.</div>
-					      </div>
-					    </div>
-				    </div>
-				    <div class="col-md-6">
-					    <div class="form-group row">
-					      <label class="col-md-4 label-control" for="userinput1">Horas reales</label>
-					      <div class="col-md-8">
-					        <input type="text" class="form-control"name="">
-					        <div class="invalid-feedback">Este campo es requerido.</div>
-					      </div>
-					    </div>
-					</div>
-	          	</div>
-            </div>
-	              	@foreach($subprocesos as $sub)
-						@if($sub->id_proceso == $proc->id)
-						<div class="bs-callout-warning callout-square callout-bordered mt-1">
-	                      <div class="media align-items-stretch">
-	                        <div class="d-flex align-items-center bg-warning p-2">
-	                          <i class="fa fa-database white font-medium-5"></i>
-	                        </div>
-	                        <div class="media-body p-1">
-	                        	<div class="row">
-	                        		<div class="col-md-6"><strong>{{ $sub->subproceso}}</strong></div>
-	                        		<div class="col-md-6" style="text-align: right;">
-	                        			<button class="btn btn-float btn-outline-info btn-sm" title="Dibujo"><i class="ft-image"></i></button>
-	                        			<input type="submit" class="btn btn-promary" value="Guardar" name="">
-
-	                        		</div>	                          
-	                      		</div>
-	                      		<hr>
-	                          	<div class="row">
-					          		<div class="col-md-6">
-					              		<div class="form-group row">
-									      <label class="col-md-4 label-control" for="userinput1">Fotos:</label>
-									      <div class="col-md-8">
-									        <input type="file" class="form-control" name="">
-									      </div>
-									    </div>
-								    </div>
-								    <div class="col-md-6">
-					              		<div class="form-group row">
-									      <label class="col-md-4 label-control" for="userinput1">Comentarios:</label>
-									      <div class="col-md-8">
-									        <textarea class="form-control"></textarea>
-									      </div>
-									    </div>
-								    </div>
-								</div>
-	                        </div>
-	                      </div>
-	                    </div>
-	                	@endif
-					@endforeach
-	              </div>
-	            </div>
-				
-			 @php($i = $i +1)
-			@endforeach
-
           </div>
-	</div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip"></div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 @section('script')
 <script type="text/javascript">
-	$(document).ready(function(){
-    $('.pickadate-format').pickadate();
-});
+	$("#tbl_listado_doc").DatTable({
+		"scrollY":        "200px",
+        "scrollCollapse": true,
+	})
 </script>
 @endsection
-

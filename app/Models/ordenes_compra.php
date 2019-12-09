@@ -177,5 +177,15 @@ class ordenes_compra extends Model
                             where id  = '.$filtro->id_producto);
     }
 
+    function informacion_subprocesos($filtro){
+
+        return db::table('productos_subprocesos as ps')
+                        ->leftjoin('subprocesos as s', 's.id','ps.id_subproceso')
+                        ->where([['ps.id_producto',$filtro->id_producto],['ps.id_proceso',$filtro->id_proceso]])
+                        ->orderby('subproceso')
+                        ->get();
+       
+        #dd($var);
+    }
     
 }

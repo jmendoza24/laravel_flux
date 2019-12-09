@@ -1131,6 +1131,6 @@ function show_dibujo_producto(dibujo, num_parte){
   $("#modal_primary").removeClass("modal-xl");
   $("#modal_primary").addClass("modal-lg");
   $('.modal-dialog').draggable({handle: ".modal-header"});
- $("#footer_primary").hide();
+  $("#footer_primary").hide();
 
 }

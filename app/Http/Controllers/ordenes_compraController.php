@@ -308,8 +308,14 @@ class ordenes_compraController extends AppBaseController
     }
 
     function seguimiento_subproceso(Request $request){
+        $filtro = new ordenes_compra;
+        $filtro->id_producto = $request->id_producto;
+        $filtro->id_proceso = $request->id_proceso;
+        $filtro->id_detalle = $request->id_detalle;
 
-        $options = view('ordenes_compras.info_subprocesos')->render();
+        $subprocesos = $filtro->informacion_subprocesos($filtro);
+
+        $options = view('ordenes_compras.info_subprocesos',compact('subprocesos'))->render();
         return json_encode($options);
 
     }
@@ -323,6 +329,11 @@ class ordenes_compraController extends AppBaseController
         $producto = $producto[0];
 
         $options = view('ordenes_compras.producto_info',compact('producto'))->render();
+        return json_encode($options);
+    }
+
+    function seguimiento_calidad(Request $request){
+        $options = view('ordenes_compras.informe_seguimiento')->render();
         return json_encode($options);
     }
 }
