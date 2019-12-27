@@ -1,3 +1,4 @@
+@if(count($subprocesos)>0)
 <table class="table table-bordered">
 		<tr>
 			<td>Proceso</td>
@@ -32,3 +33,6 @@
 		@endforeach
 	</tbody>
 </table>
+@else
+<h5>Agregue al menos un subproceso para la captura de horas</h5>
+@endif

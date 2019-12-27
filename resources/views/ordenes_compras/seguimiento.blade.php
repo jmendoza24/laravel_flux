@@ -145,19 +145,19 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
                 <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
-                &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="seguimiento_subproceso(1,{{$producto->id}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(1,{{$producto->id}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
                 <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
-                &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="seguimiento_subproceso(2,{{$producto->id}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(2,{{$producto->id}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
                 <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
-                &nbsp;<span class="btn btn-outline-primary btn-sm" onclick="seguimiento_subproceso(4,{{$producto->id}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(4,{{$producto->id}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
