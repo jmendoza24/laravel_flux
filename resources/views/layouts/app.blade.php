@@ -46,7 +46,6 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/extended/form-extended.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/switch.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/plugins/forms/wizard.css') }}">
-  
 
   
   <!-- END Page Level CSS-->
@@ -219,6 +218,7 @@
   <script src="{{ url('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}" type="text/javascript"></script>
   @yield('script')
 
+  
   <!-- END STACK JS-->
   <!-- BEGIN PAGE LEVEL JS-->
    

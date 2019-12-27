@@ -49,16 +49,26 @@ class MaterialesController extends AppBaseController
      * @return Response
      */
     public function create(){
+        $forma = new catalogo_forma();
+        $materiales = new Materiales();
         $aceros = DB::table('tipoaceros')->orderby('acero')->get();
         $formas = DB::table('formas')->orderby('forma')->get();
         $grados = DB::table('grados')->orderby('grado')->get();
         $proveedores = DB::table('proveedores')->orderby('nombre')->get();
         $plantas = db::table('plantas')->get();
+        $materiales->id = 0;
+        $materiales->espesor = '';
+        $idforma   = 0;
+        $espesor   = $forma->consulta_identificador(1);
+        $ancho     = $forma->consulta_identificador(2);
+        $altura    = $forma->consulta_identificador(3);
+        $peso      = $forma->consulta_identificador(4);
+    
 
-        return view('materiales.create',compact('aceros','formas','grados','proveedores','plantas'));
+        return view('materiales.create',compact('aceros','formas','grados','proveedores','plantas','materiales','espesor','ancho','altura','peso','idforma'));
     }
 
-    /**
+    /** 
      * Store a newly created Materiales in storage.
      *
      * @param CreateMaterialesRequest $request
@@ -177,10 +187,20 @@ class MaterialesController extends AppBaseController
 
     function busca_forma(Request $request){
         $forma = new catalogo_forma();
-        #$material = new materiales();
+        $material = new materiales();
 
         $materiales = Materiales::where('id',$request->idmateriales)->get();
-        $materiales = $materiales[0];
+        if(sizeof($materiales)>0){
+            $materiales = $materiales[0];    
+        }else{
+            $materiales->id = 0;
+            $materiales->espesor = 0;
+            $materiales->ancho = 0;
+            $materiales->altura = 0;
+            
+        }
+        
+        
         $idforma = $request->forma;
 
         $espesor   = $forma->consulta_identificador(1);

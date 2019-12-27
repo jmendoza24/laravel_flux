@@ -168,7 +168,7 @@ class ordenes_compra extends Model
     function informacion_producto($filtro){
         return db::select('select p.*,dibujo, dibujo_nombre,revision
                            from productos p 
-                           inner join(
+                           left join(
                                        select id_producto, dibujo, dibujo_nombre,revision
                                        from  producto_dibujos 
                                         where id_producto = '.$filtro->id_producto.'
@@ -187,5 +187,107 @@ class ordenes_compra extends Model
        
         #dd($var);
     }
+
+    function get_comentario($filtro){
+        
+        if($filtro->columna==2){
+            $col = 'lanzamiento';
+        }else if($filtro->columna==3){
+            $col = 'informacion';
+        }else if($filtro->columna==4){
+            $col = 'pregunta';
+        }else if($filtro->columna==5){
+            $col = 'pintura';
+        }else if($filtro->columna==6){
+            $col = 'prog_corte';
+        }else if($filtro->columna==7){
+            $col = 'tacm';
+        }
+
+        return db::table('seguimiento_planeacion')
+                    ->where([['id_orden',$filtro->id_orden],['id_detalle',$filtro->id_detalle]])
+                    ->get();
+    }
+
+    function guardar_seguimiento($filtro){
+        #dd($filtro);
+        if($filtro->columna==1){
+            $col = 'id_planta';
+        }else if($filtro->columna==2){
+            $col = 'lanzamiento';
+        }else if($filtro->columna==3){
+            $col = 'informacion';
+        }else if($filtro->columna==4){
+            $col = 'pregunta';
+        }else if($filtro->columna==5){
+            $col = 'pintura';
+        }else if($filtro->columna==6){
+            $col = 'prog_corte';
+        }else if($filtro->columna==7){
+            $col = 'tacm';
+        }else if($filtro->columna==8){
+            $col = 'fecha_estimado_termino';
+        }else if($filtro->columna=='id_planta' or $filtro->columna=='st_lanzamiento' or $filtro->columna=='st_informacion' or $filtro->columna=='st_pregunta'
+                or $filtro->columna=='st_pintura' or $filtro->columna=='st_prog_corte' or $filtro->columna=='st_tacm' or $filtro->columna=='fecha_estimado_termino'){
+            $col = $filtro->columna;
+        }
+
+
+        $existe = db::table('seguimiento_planeacion')
+                    ->where([['id_orden',$filtro->id_orden],['id_detalle',$filtro->id_detalle]])
+                    ->count();
+        if($existe >0){
+
+            db::table('seguimiento_planeacion')
+                ->where([['id_orden',$filtro->id_orden],['id_detalle',$filtro->id_detalle]])
+                ->update([$col=>$filtro->valor]);
+                
+        }else{
+            db::table('seguimiento_planeacion')
+                ->insert(['id_orden'=>$filtro->id_orden,
+                          'id_detalle'=>$filtro->id_detalle,
+                          $col=>$filtro->valor
+                         ]);
+        }
+         
+
+        $var =  db::table('seguimiento_planeacion')
+                ->where([['id_orden',$filtro->id_orden],['id_detalle',$filtro->id_detalle]])->get();
+       
+
+    }
     
+
+    function get_materiales($filtro){
+        $prod = db::table('producto_materialesforma')->where([['forma',1],['id_producto',7]])->get();
+       # dd($prod);
+        $materiales = db::select('select m.forma as idforma, f.forma as nforma, m.id as idmaterial, d.id as id_detalle, d.producto, m.espesor, m.ancho, m.altura, m.peso_distancia, 
+                                 p.espesor as pespesor, p.ancho as pancho, p.altura as paltura, p.peso_distancia as pdisct, c.valor as nespesor, c2.valor as nancho, c3.valor as naltura, c4.valor as npeso_distancia
+                                 from ordencompra_detalle as d
+                                 inner join producto_materialesforma p on d.producto = p.id_producto
+                                 left join materiales m on m.forma = p.forma and p.espesor = m.espesor and p.ancho = m.ancho and p.altura = m.altura and ifnull(p.peso_distancia,0) = ifnull(m.peso_distancia,0)
+                                 left join catalogo_formas c on p.espesor = c.id
+                                 left join catalogo_formas c2 on p.ancho = c2.id
+                                 left join catalogo_formas c3 on p.altura = c3.id
+                                 left join catalogo_formas c4 on p.peso_distancia = c4.id
+                                 left join formas as f on f.id = p.forma
+                                 where d.id = ' .$filtro->id_detalle);
+      #  dd($materiales);    #and p.ancho = m.ancho and p.altura = m.altura and p.peso_distancia = m.peso_distancia 
+
+        $mat_formas =  db::table('ordencompra_detalle as d')
+                        ->join('producto_materialesforma as p','d.producto','p.id_producto')
+                        ->join('formas as f','f.id','p.forma')
+                        ->leftjoin('catalogo_formas as c','p.espesor','c.id')
+                        ->leftjoin('catalogo_formas as c2','p.ancho','c2.id')
+                        ->leftjoin('catalogo_formas as c3','p.altura','c3.id')
+                        ->leftjoin('catalogo_formas as c4','p.peso_distancia','c4.id')
+                        ->where('d.id',$filtro->id_detalle)
+                        ->selectraw('p.id, p.forma as idforma, f.forma, c.valor as espesor, c2.valor as ancho, c3.valor as altura, c4.valor as peso_distancia')
+                        ->get();
+        
+        $result = array('materiales'=>$materiales,
+                        'mat_formas'=>$mat_formas);
+#        dd($mat_formas);
+        return $result;
+    }
 }

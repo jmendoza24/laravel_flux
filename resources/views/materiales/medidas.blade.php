@@ -12,7 +12,7 @@
 <!-- Ancho Field -->
 <div class="form-group col-sm-6" style="" id="cam2">
     {!! Form::label('ancho', 'Ancho (Wide):') !!}
-    <select class="form-control" id="ancho">
+    <select class="form-control" id="ancho" name="ancho">
         <option value="">Seleccione</option>
         @foreach($ancho as $anc)
           @if($anc->id_forma == $idforma)
@@ -23,7 +23,7 @@
 </div>
  <div class="form-group col-sm-6" style="" id="cam3">
     {!! Form::label('altura', 'Altura (Wide2):') !!}
-    <select class="form-control" id="altura">
+    <select class="form-control" id="altura" name="altura">
         <option value="">Seleccione</option>
         @foreach($altura as $alt)
           @if($alt->id_forma == $idforma)
@@ -34,7 +34,7 @@
 </div>
 <div class="form-group col-sm-6" style="" id="cam4">
     {!! Form::label('peso_distancia', 'Peso por Distancia:') !!}
-    <select class="form-control" id="peso_distancia">
+    <select class="form-control" id="peso_distancia" name="peso_distancia">
         <option value="">Seleccione</option>
         @foreach($peso as $pes)
           @if($pes->id_forma == $idforma)

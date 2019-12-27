@@ -103,7 +103,6 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/actualiza_producto_occ2', 'ordenes_compraController@actualiza_producto_occ_det');
 	Route::get('/actualiza_info_occ', 'ordenes_compraController@actualiza_info_occ');
 	Route::get('/obtiene_seguimiento', 'ordenes_compraController@obtiene_seguimiento');
-	Route::post('/guarda_seguimiento', 'ordenes_compraController@guarda_seguimiento');
 	Route::post('/guarda_catalogo', 'catalogo_formaController@store');
 	Route::get('/busca_forma', 'MaterialesController@busca_forma');
 	Route::get('/detalle_cotizacion', 'cotizacionesController@detalle_cotizacion');
@@ -113,8 +112,10 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/seguimiento_subproceso', 'ordenes_compraController@seguimiento_subproceso');
 	Route::get('/informacion_producto', 'ordenes_compraController@informacion_producto');
 	Route::get('/seguimiento_calidad', 'ordenes_compraController@seguimiento_calidad');
+	Route::get('/guarda_detalles_pro', 'ordenes_compraController@guarda_detalles_pro');
+	Route::get('/guarda_seguimiento', 'ordenes_compraController@guarda_seguimiento');
+	Route::get('/configura_metariales', 'ordenes_compraController@configura_metariales');
 	
-
 });
 
 

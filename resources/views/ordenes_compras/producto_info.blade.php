@@ -21,6 +21,7 @@
 			<td>Num. Dibujo:</td>
 			<td>{{ $producto->revision}}</td>
 		</tr>
+    @if($producto->dibujo != '')
 		<tr>
 			<td colspan="2">
 				<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
@@ -35,6 +36,7 @@
         	</div>
 			</td>
 		</tr>
+    @endif
 	</tbody>
 </table>
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">

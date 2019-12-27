@@ -140,6 +140,7 @@ function obtiene_seguimiento(id_detalle){
         });
 }
 
+/**
 function guarda_seguimiento(id_seguimiento){
   event.preventDefault();
   var parametros = {"id_seguimiento":id_seguimiento,
@@ -157,9 +158,11 @@ function guarda_seguimiento(id_seguimiento){
             }
         });
 }
-
-function agrega_comentarios(titulo){
-  var parametros = {"id":1};
+*/
+function agrega_comentarios(columna,detalle,orden){
+  var parametros = {"columna":columna,
+                    "id_detalle":detalle,
+                    "id_orden":orden};
 
  $.ajax({
             url: '/api/v1/agrega_comentarios',          
@@ -169,7 +172,7 @@ function agrega_comentarios(titulo){
             success: function(result){
                $("#contenido").html(result);
                $("#modal_primary").removeClass("modal-xl");
-               $("#titulo_tabla").html(titulo);
+               //$("#titulo_tabla").html(titulo);
                $('.modal-dialog').draggable({handle: ".modal-header"});
                $("#footer_primary").hide();
             }
@@ -227,24 +230,36 @@ function informacion_producto(id_producto){
 function muestra_bloque(){
   var bloque_muesta = $("#bloque_muesta").val();
   var table = $('#seguimiento_subproceso').DataTable();
-  if(bloque_muesta=='planeacion'){
-    // 0,1,2,3,4 default
-    table.columns([6,7,8,9,10,11,12]).visible(true);
+  //alert(bloque_muesta);
+  // 0,1,2,3,4,5 default
+  if(bloque_muesta=="show_estatus"){
+    table.columns([6,7,8,9,10]).visible(true);
+   
+    $(".oct-estatus").show();
+    $(".mostr-estatus").hide();
+  }
+  else if(bloque_muesta=="hide_estatus"){
+    table.columns([6,7,8,9,10]).visible(false);
+    
+    $(".oct-estatus").hide();
+    $(".mostr-estatus").show();
+  }
+  else if(bloque_muesta=='planeacion'){
+    table.columns([11,12,13,14,15,16,17]).visible(true);
   }else if(bloque_muesta == 'produccion'){
-    table.columns([13,14,15,16,17,18,19,20]).visible(true);
+    table.columns([18,19,20,21,22,23,24,25]).visible(true);
   }else if(bloque_muesta == 'calidad'){
-    table.columns([21,22,23,24,25,26,27]).visible(true);
+    table.columns([26,27,28,29,30,31,32]).visible(true);
   }else if(bloque_muesta == 'trafico'){
-    table.columns([28]).visible(true);
+    table.columns([33]).visible(true);
   }else if(bloque_muesta == 'factura'){
-    table.columns([29]).visible(true);
+    table.columns([34]).visible(true);
   }else if(bloque_muesta=='all'){
-    table.columns([6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29]).visible(false);
+    table.columns([6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]).visible(false);
   }else if(bloque_muesta=='shohwall'){
-    table.columns([6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29]).visible(true);
+    table.columns([6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]).visible(true);
   }
 
-  
   //
  // jQuery('#Tabla_Mostrar'+id).toggle();
   //$.alert(bloque_muesta);
@@ -276,4 +291,25 @@ function seguimiento_calidad(id_producto,id_proceso,id_detalle){
                initPhotoSwipeFromDOM('.my-gallery');
             }
         });
+}
+
+
+function guarda_planeacion(id_columna, id_detalle, id_orden){
+  var parametros  = {'id_columna':id_columna,
+                     'id_detalle':id_detalle,
+                     'id_orden':id_orden,
+                     'comentario':$("#comentario_seg").val()
+                    };
+      console.log(parametros);
+
+    $.ajax({
+            url: '/api/v1/guarda_seguimiento',          
+            data: parametros,
+            dataType: "json",
+            method: "get",                     
+            success: function(result){
+               console.log(result);
+            }
+        });
+
 }

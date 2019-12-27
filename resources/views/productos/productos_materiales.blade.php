@@ -1,4 +1,4 @@
-  <table class="table display nowrap table-striped table-bordered scroll-horizontal">  
+  <table class="table display nowrap table-striped table-bordered scroll-horizontal" id="prod_materiales">  
     <thead>
       <tr>
         <th>Forma</th>

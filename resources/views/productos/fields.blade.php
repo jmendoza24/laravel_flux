@@ -254,7 +254,7 @@
       </tr>
     </table>
     </div>
-    <div id="listamateriales" style=" max-height: 600px;">
+    <div id="listamateriales" style="max-height: 600px;" class="col-md-12">
       @include('productos.productos_materiales')
     </div>
   </div>

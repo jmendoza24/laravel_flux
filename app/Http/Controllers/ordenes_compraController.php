@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Flash;
 use Response;
-use DB;
+use DB; 
 use View;
 
 class ordenes_compraController extends AppBaseController
@@ -107,51 +107,11 @@ class ordenes_compraController extends AppBaseController
         ->update(['tipo'=>2,
                   'notas'=>$request->notas,
                   'income'=>$request->income]);
-
-
-        /**
-        db::table('ordenes_compras') 
-        ->where('id',$request->id_orden)
-        ->update(['tipo'=>2,
-                  'notas'=>$request->notas,
-                  'income'=>$request->income]);
-        */
     
         $orden->id_orden = $request->id_orden;
         $orden->agrega_cantidades($orden);
         return 1;
     }
-/**
-    function agregar_productos(Request $request){
-        $orden = new ordenes_compra;
-
-        $editar = 1;
-
-        db::select("insert into ordencompra_detalle(id_orden,incremento, producto, dibujo,cantidad,costo,hijo)
-                    select id_orden,max(incremento) + 1, producto, dibujo,cantidad,costo,1
-                    from ordencompra_detalle
-                    where id = ".$request->id_detalle.'
-                    group by id_orden,producto, dibujo,cantidad,costo');
-
-        db::select('insert into ordentrabajo_seguimiento(id_orden,id_detalle,id_producto,id_proceso,id_subproceso)
-                    select o.id_orden,o.id,producto,p.id_proceso, p.id_subproceso
-                    from ordencompra_detalle o 
-                    inner join productos_subprocesos p on p.id_producto = o.producto 
-                    where o.id ='.$request->id_detalle.'
-                    and o.id not in (select distinct id_detalle from ordentrabajo_seguimiento where id_orden = '.$request->id_ot.')');
-
-        $id = $request->id_ot;
-        
-        $ordenesCompra = $orden->header_orden($id);
-        $plantas = db::table('plantas')->get();
-        $detalle = $orden->detalle_orden($id,1);
-
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
-        return json_encode($options);
-
-    }
-
-    */
 
     function actualiza_producto_occ(Request $request){
         $orden = new ordenes_compra;
@@ -245,8 +205,9 @@ class ordenes_compraController extends AppBaseController
         $productos = db::table('ordencompra_detalle as d')
                         ->join('productos as pr','pr.id','d.producto')
                         ->join('clientes as c','id_empresa','c.id')
+                        ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
                         ->where('d.id_orden',$id)
-                        ->selectraw('pr.*,nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
+                        ->selectraw('pr.*, pr.id as idproducto, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
                         ->orderby('d.id','asc')
                         ->get();
        
@@ -259,6 +220,7 @@ class ordenes_compraController extends AppBaseController
     
         return view('ordenes_compras.seguimiento',compact('ordenesCompra','productos','plantas','procesos','sub_procesos'));
     }
+
     function obtiene_seguimiento(Request $request){
 
         $id_detalle = $request->id_detalle;
@@ -279,33 +241,6 @@ class ordenes_compraController extends AppBaseController
      return json_encode($options);
     }
 
-    function guarda_seguimiento(Request $request){
-
-        $id_seguimiento = $request->id_seguimiento;
-
-        $file_img = $request->image;
-        return $request->all();
-
-        if(!empty($file_img)){
-
-              
-            $img = Storage::url($file_img->store('image', 'images'));
-            
-            /**$imgp = strpos($img,'/storage/');
-            $img = substr($img, $imgp, strlen($img));
-            
-            DB::table('producto_dibujos')
-                ->where('id',$request->iddibujo)
-                ->update(['dibujo'=>$img]);*/
-        }
-        
-    }
-
-    function agrega_comentarios(Request $request){
-
-        $options = view('ordenes_compras.seguimiento_comentarios')->render();
-        return json_encode($options);
-    }
 
     function seguimiento_subproceso(Request $request){
         $filtro = new ordenes_compra;
@@ -326,6 +261,7 @@ class ordenes_compraController extends AppBaseController
         $filtro->id_producto = $request->id_producto;
 
         $producto = $filtro->informacion_producto($filtro);
+        #dd($producto);
         $producto = $producto[0];
 
         $options = view('ordenes_compras.producto_info',compact('producto'))->render();
@@ -336,4 +272,103 @@ class ordenes_compraController extends AppBaseController
         $options = view('ordenes_compras.informe_seguimiento')->render();
         return json_encode($options);
     }
+
+     function agrega_comentarios(Request $request){
+        $filtro = new ordenes_compra;
+        $filtro->id_detalle = $request->id_detalle;
+        $filtro->id_orden   = $request->id_orden;
+        $filtro->columna    = $request->id_columna;
+
+        $data = $filtro->get_comentario($filtro);
+        
+        if(sizeof($data) >0){
+            $data = $data[0];
+
+            if($request->columna==2){
+                $col = $data->lanzamiento;
+                $nom_col = "Lanzamiento";
+            }else if($request->columna==3){
+                $col = $data->informacion;
+                $nom_col = "Información";
+            }else if($request->columna==4){
+                $col = $data->pregunta;
+                $nom_col = "Pregunta";
+            }else if($request->columna==5){
+                $col = $data->pintura;
+                $nom_col = "Pintura";
+            }else if($request->columna==6){
+                $col = $data->prog_corte;
+                $nom_col = "Prog. Corte";
+            }else if($request->columna==7){
+                $col = $data->tacm;
+                $nom_col = "TACM";
+            }
+        }else{
+            $col = '';
+            if($request->columna==2){
+                $nom_col = "Lanzamiento";
+            }else if($request->columna==3){
+                $nom_col = "Información";
+            }else if($request->columna==4){
+                $nom_col = "Pregunta";
+            }else if($request->columna==5){
+                $nom_col = "Pintura";
+            }else if($request->columna==6){
+                $nom_col = "Prog. Corte";
+            }else if($request->columna==7){
+                $nom_col = "TACM";
+            }
+        }
+
+
+
+        $data = array('id_orden'=>$request->id_orden,
+                      'id_detalle'=>$request->id_detalle,
+                      'valor'=>$col,
+                      'columna'=>$request->columna,
+                      'nom_col'=>$nom_col);
+
+        #dd($data);
+        $options = view('ordenes_compras.seguimiento_comentarios',compact('data'))->render();
+        return json_encode($options);
+    }
+
+    function guarda_seguimiento(Request $request){
+
+        $filtro = new ordenes_compra;
+        $filtro->id_detalle = $request->id_detalle;
+        $filtro->id_orden   = $request->id_orden;
+        $filtro->columna    = $request->id_columna;
+        $filtro->valor      = $request->comentario;
+
+        $informacion = $filtro->guardar_seguimiento($filtro);
+        
+    }
+
+    function guarda_detalles_pro(Request $request){
+        $filtro = new ordenes_compra;
+        $filtro->id_detalle = $request->id_detalle;
+        $filtro->id_orden   = $request->id_orden;
+        $filtro->columna    = $request->columna;
+        $filtro->valor      = $request->valor;
+
+        $informacion = $filtro->guardar_seguimiento($filtro);
+
+    }
+
+    function configura_metariales(Request $request){
+        $filtro = new ordenes_compra;
+        $filtro->id_detalle = $request->id_detalle;
+
+        $materiales = $filtro->get_materiales($filtro);
+
+        $material = $materiales['materiales'];
+        $mat_forma = $materiales['mat_formas'];
+
+      #  dd($material);
+        $options = view('ordenes_compras.seguimiento_materiales',compact('material','mat_forma'))->render();
+        return json_encode($options);
+
+    }
+
 }
