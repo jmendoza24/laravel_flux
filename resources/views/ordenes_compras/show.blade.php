@@ -54,7 +54,7 @@
   <hr>
   <div class="form-group col-sm-12" style="text-align: right;">
     <a href="{{ route('ordenesCompras.index')}}" class="btn btn-warning mr-1">Regresar</a>
-    @if($ordenesCompra->tipo==2)
+    @if($ordenesCompra->tipo==1)
     <a style="color: white;" onclick="validar_orden({{ $ordenesCompra->id }})" class="btn btn-primary">Validar</a>
     @endif
 </div>

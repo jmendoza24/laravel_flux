@@ -1,3 +1,4 @@
+<div style="overflow-y: auto; max-height: 500px;">
 <table class="table table-compact table-striped table-bordered">
 	<thead>
 		<tr>
@@ -26,12 +27,20 @@
 			<td colspan="2">
 				<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
               	<div class="row">
-					<figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-	                  <a href="{{ asset($producto->dibujo)}}" itemprop="contentUrl" data-size="480x360">
-	                    <img class="img-thumbnail img-fluid" src="{{ asset($producto->dibujo)}}"  
-	                    itemprop="thumbnail" alt="{{ $producto->dibujo_nombre}}" />
-	                  </a>
+                  @php( $tipo = explode('.',$producto->dibujo) )
+                  @if($tipo[1] !='pdf')
+        					<figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+  	                  <a href="{{ asset($producto->dibujo)}}" itemprop="contentUrl" data-size="480x360">
+  	                    <img class="img-thumbnail img-fluid" src="{{ asset($producto->dibujo)}}"  
+  	                    itemprop="thumbnail" alt="{{ $producto->dibujo_nombre}}" />
+                      </a>
 	                </figure>
+                  @else 
+                  <div class="embed-responsive embed-responsive-item embed-responsive-16by9">
+                    <iframe class="img-thumbnail" src="{{$producto->dibujo}}"
+                    width="640" height="360"></iframe>
+                  </div>
+                  @endif
             	</div>
         	</div>
 			</td>
@@ -39,6 +48,7 @@
     @endif
 	</tbody>
 </table>
+</div>
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
   <!-- Background of PhotoSwipe. 
  It's a separate element as animating opacity is faster than rgba(). -->

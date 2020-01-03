@@ -1059,7 +1059,7 @@ function detalle_cotizacion(id_cotizacion){
             url:   '/api/v1/detalle_cotizacion',
             dataType: 'json',
             type:  'get',
-            success:  function (response) { 
+            success:  function (response) {  
               $("#contenido").html(response);      
             }
         });

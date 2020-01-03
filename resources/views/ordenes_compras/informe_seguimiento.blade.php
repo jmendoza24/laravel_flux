@@ -11,41 +11,35 @@
 		<td colspan="3">Fotos</td>
 	</tr>
 	<tr>
-		<td>
+		<td colspan="3">
 			<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-              	<div class="row">
-					<figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-	                  <a href="{{ asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
-	                    <img class="img-thumbnail img-fluid" src="{{ asset('app-assets/images/gallery/1.jpg')}}"  
-	                    itemprop="thumbnail" alt="Example" style="width: 100px" />
-	                  </a>
-	                </figure>
-            	</div>
-        	</div>
-        </td>
-        <td>
-        	<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-              	<div class="row">
-					<figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-	                  <a href="{{ asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
-	                    <img class="img-thumbnail img-fluid" src="{{ asset('app-assets/images/gallery/1.jpg')}}"  
-	                    itemprop="thumbnail" alt="Example" style="width: 100px"/>
-	                  </a>
-	                </figure>
-            	</div>
-        	</div>
-        </td>
-        <td>
-        	<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-              	<div class="row">
-					<figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-	                  <a href="{{ asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
-	                    <img class="img-thumbnail img-fluid" src="{{ asset('app-assets/images/gallery/1.jpg')}}"  
-	                    itemprop="thumbnail" alt="Example" style="width: 100px"/>
-	                  </a>
-	                </figure>
-            	</div>
-        	</div>
+              <div class="row">
+                <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                  <a href="{{ url('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
+                    <img class="img-thumbnail img-fluid" src="{{ url('app-assets/images/gallery/1.jpg')}}"
+                    itemprop="thumbnail" alt="Image description" />
+                  </a>
+                </figure>
+                <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                  <a href="{{ url('app-assets/images/gallery/2.jpg')}}" itemprop="contentUrl" data-size="480x360">
+                    <img class="img-thumbnail img-fluid" src="{{ url('app-assets/images/gallery/2.jpg')}}"
+                    itemprop="thumbnail" alt="Image description" />
+                  </a>
+                </figure>
+                <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                  <a href="{{ url('app-assets/images/gallery/3.jpg')}}" itemprop="contentUrl" data-size="480x360">
+                    <img class="img-thumbnail img-fluid" src="{{ url('app-assets/images/gallery/3.jpg')}}"
+                    itemprop="thumbnail" alt="Image description" />
+                  </a>
+                </figure>
+                <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                  <a href="{{ url('app-assets/images/gallery/4.jpg')}}" itemprop="contentUrl" data-size="480x360">
+                    <img class="img-thumbnail img-fluid" src="{{ url('app-assets/images/gallery/4.jpg')}}"
+                    itemprop="thumbnail" alt="Image description" />
+                  </a>
+                </figure>
+              </div>
+            </div>
 		</td>
 	</tr>
 </table>

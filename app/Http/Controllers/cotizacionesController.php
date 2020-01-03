@@ -534,8 +534,9 @@ class cotizacionesController extends AppBaseController
                         ->leftjoin('estados as e', 'e.id', 'cl.estado')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, ic.descripcion as descinco, ic.income as descripcionic ,u.name, cl.nombre as nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*,cl.correo_compra, cl.compra_nombre, ic.descripcion as descinco, ic.income as descripcionic ,u.name, cl.nombre as nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
+        #dd($cotizacion);
         $cotizacion = $cotizacion[0];
 
 

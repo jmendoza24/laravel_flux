@@ -38,6 +38,7 @@
         <!-- Define header and footer blocks before your content -->
         <header>
         	@endif
+        	
             <table class="table table-bordered">
 				<tr>
 					<td style="border-right: 1px solid white; "><img src="{{ asset('app-assets/images/logo/flux.png') }}" style="width: 100px;"/></td>
@@ -49,8 +50,8 @@
 				<tr>
 					<td>Client: {{ $cotizacion->nombre_corto }} <br/>
 								{{ $cotizacion->direccion }}</td>
-					<td>Freight terms: </td>
-					<td>Payment Terms:</td>
+					<td>Comprador: {{ $cotizacion->compra_nombre}} <br> {{ $cotizacion->correo_compra}} </td>
+					<td>{{ $cotizacion->descripcionic }} - {{ $cotizacion->lugar}}</td>
 				</tr>
 			</table>
 			@if($envio==1)
@@ -63,10 +64,6 @@
 						<h6>Terms:</h6>
 						<?php echo nl2br($cotizacion->descinco) ?>
 					</td>
-					<td valign="top">
-						<h6>Inco term:</h6>
-						{{ $cotizacion->descripcionic }} - {{ $cotizacion->lugar}}
-					</td>
 				</tr>
 			</table>
         </footer>
@@ -74,6 +71,7 @@
         <!-- Wrap the content of your PDF inside a main tag -->
         <main>
             	@endif
+            	<div style="overflow-y: auto; max-height: 350px;">
                <table class="table table-bordered">
 					<tr>
 						<td colspan="3">
@@ -104,6 +102,7 @@
 						</td>
 					</tr>
 				</table>
+			</div>
 				@if($envio==1)
         </main>
     </body>
