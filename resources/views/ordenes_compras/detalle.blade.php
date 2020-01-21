@@ -3,11 +3,19 @@
       <h5>Datos del cliente</h5>
       <hr>
     </div>
+
     <div class="col-md-6">
       <div class="form-group row">
         <label class="col-md-5 label-control" for="descripcion">Ciente:</label>
         <div class="col-md-7">
+          @if($nuevo ==0)
           <label id="numproveedor">{{ $ordenesCompra->nombre_corto}}</label>
+           @else
+           <select class="form-control" id="cliente">
+             <option value="">--Seleccione</option>
+           </select>
+  
+        @endif
         </div>
       </div>
       <div class="form-group row">
@@ -31,9 +39,27 @@
         </div>
       </div>
     </div>
+
+
+
   </div>
+  
   <hr/>
-  <div class="row" style="margin-top: 5px; overflow: scroll;" id="">
+@if($nuevo==1)
+<div class="row">
+  <div class="form-group form-inline">
+    <label>Producto&nbsp;</label>
+    <select class="form-control select2" id="producto_ot">
+        <option value="0">---Seleccione</option>
+        @foreach($productos as $producto)
+        <option value="{{ $producto->id}}">{{ $producto->numero_parte}}</option>
+        @endforeach
+    </select>&nbsp;&nbsp;
+    <button class="btn btn-primary" onclick="agrega_producto_ot({{ $ordenesCompra->id }})">Agregar</button>
+  </div>
+</div>
+@endif
+<div class="row" style="margin-top: 5px; overflow: scroll;" id="">
 <table class="table table-bordered">
     <thead class="" style="background: #518a87; border: 1px solid #518a87; color: white;">
       <tr>
@@ -55,6 +81,9 @@
         @if($editar ==1)
         <th>Planta</th>
         <th>Fecha entrega</th>
+        @endif
+        @if($nuevo==1)
+        <th>Notas</th>
         @endif
        <!-- <th></th>-->
       </tr>
@@ -92,6 +121,12 @@
           <input type="date" id="fecha_entrega{{$det->id}}" class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
         </td>
         @endif
+        @if($nuevo==1)
+        <td>
+          <input type="text" name="">
+        </td>
+        @endif
+
        <!-- <td>
           <div class="btn-group">
             @if($editar ==1 && $det->cantidad > 1 and $det->conteo < $det->cantidad)

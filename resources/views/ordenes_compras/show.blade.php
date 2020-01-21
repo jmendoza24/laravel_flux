@@ -6,6 +6,7 @@
 
 @section('content')
 @php($editar = 0)
+@php($nuevo = 0)
 
 <div class="col-md-12">
   <div id="detalle_cotiza">

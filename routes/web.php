@@ -115,6 +115,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/guarda_detalles_pro', 'ordenes_compraController@guarda_detalles_pro');
 	Route::get('/guarda_seguimiento', 'ordenes_compraController@guarda_seguimiento');
 	Route::get('/configura_metariales', 'ordenes_compraController@configura_metariales');
+	Route::get('/agrega_producto_ot', 'ordenes_compraController@agrega_producto_ot');
+	
 	
 });
 

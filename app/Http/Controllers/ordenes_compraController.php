@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ordenes_compra;
-#use App\Models\productos;
+use App\Models\productos;
+use App\Models\ordencompra_detalle;
 use App\Http\Requests\Createordenes_compraRequest;
 use App\Http\Requests\Updateordenes_compraRequest;
 use App\Repositories\ordenes_compraRepository;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Flash;
 use Response;
+use Sesion;
 use DB; 
 use View;
 
@@ -30,6 +32,40 @@ class ordenes_compraController extends AppBaseController
 
         return view('ordenes_compras.index',compact('ordenesCompras'));
     
+    }
+
+    function create(Request $request){
+        if ($request->session()->has('num_orden')) {
+             
+         $num_orden = $request->session()->get('num_orden');
+
+         }else{
+            $fecha = date('Y-m-d');
+
+            $id = DB::table('ordenes_compras')
+                    ->insertGetId(['id_cotizacion'=>0,
+                                   'cliente'=>0,
+                                   'notas'=>'',
+                                   'income'=>0,     
+                                   'termino_pago'=>0,
+                                   'vendedor'=>auth()->id(),
+                                   'fecha' => $fecha,
+                                   'orden_compra'=>'',
+                                   'lugar'=>'']);       
+            $request->session()->put('num_orden',$id);
+            $num_orden = $request->session()->get('num_orden');
+
+         }
+
+        $productos = productos::get();
+        $orden = new ordenes_compra;
+
+        $ordenesCompra = $orden->header_orden($num_orden);
+        $detalle = $orden->detalle_orden($num_orden,0);
+        $income = DB::table('income_terms')->get();
+
+        return view('ordenes_compras.create',compact('ordenesCompra','detalle','income','productos'));
+
     }
 
     
@@ -369,6 +405,17 @@ class ordenes_compraController extends AppBaseController
         $options = view('ordenes_compras.seguimiento_materiales',compact('material','mat_forma'))->render();
         return json_encode($options);
 
+    }
+    function agrega_producto_ot(Request $request){
+        db::table('ordencompra_detalle')->insert(['id_orden'=>$request->id_orden,
+                                     'incremento'=>0,
+                                     'producto'=>$request->producto_ot,
+                                     'dibujo'=>0,
+                                     'cantidad'=>1,
+                                     'fecha_entrega'=>date('Y-m-d'),
+                                     'costo'=>'0.0',
+                                     'hijo'=>0
+                                 ]);
     }
 
 }
