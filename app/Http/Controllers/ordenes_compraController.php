@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ordenes_compra;
 use App\Models\productos;
-use App\Models\ordencompra_detalle;
+#use App\Models\ordencompra_detalle;
+use App\Models\clientes;
 use App\Http\Requests\Createordenes_compraRequest;
 use App\Http\Requests\Updateordenes_compraRequest;
 use App\Repositories\ordenes_compraRepository;
@@ -51,20 +52,21 @@ class ordenes_compraController extends AppBaseController
                                    'vendedor'=>auth()->id(),
                                    'fecha' => $fecha,
                                    'orden_compra'=>'',
-                                   'lugar'=>'']);       
+                                   'lugar'=>'',
+                                   'tipo'=>1]);       
             $request->session()->put('num_orden',$id);
             $num_orden = $request->session()->get('num_orden');
 
          }
-
-        $productos = productos::get();
         $orden = new ordenes_compra;
 
         $ordenesCompra = $orden->header_orden($num_orden);
         $detalle = $orden->detalle_orden($num_orden,0);
         $income = DB::table('income_terms')->get();
+        $clientes = clientes::get();
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
 
-        return view('ordenes_compras.create',compact('ordenesCompra','detalle','income','productos'));
+        return view('ordenes_compras.create',compact('ordenesCompra','detalle','income','clientes','productos'));
 
     }
 
@@ -164,7 +166,10 @@ class ordenes_compraController extends AppBaseController
         $detalle = $orden->detalle_orden($id,1);
 
         $editar = 0;
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
+        $nuevo = 1;
+        $clientes = clientes::get();
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos'))->render();
 
         return json_encode($options);
     }
@@ -184,8 +189,11 @@ class ordenes_compraController extends AppBaseController
 
         $detalle = $orden->detalle_orden($id,1);
 
-        $editar = 1;
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
+        $editar = 0;
+        $nuevo = 1;
+        $clientes = clientes::get();
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos'))->render();
 
         return json_encode($options);
     }
@@ -202,15 +210,19 @@ class ordenes_compraController extends AppBaseController
             ->where('id_detalle',$request->producto)
             ->delete();
 
+        
 
-
-        $editar = 1;    
         $id = $request->id_ot;
         $ordenesCompra = $orden->header_orden($id);
 
         $detalle = $orden->detalle_orden($id,1);
 
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
+        $editar = 0;
+        $nuevo = 1;
+        $clientes = clientes::get();
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos'))->render();
+
         return json_encode($options);
 
     }
@@ -221,7 +233,8 @@ class ordenes_compraController extends AppBaseController
         ->where('id',$request->orden)
         ->update(['orden_compra'=>$request->orden_compra,
                   'notas'=>$request->notas,
-                  'income'=>$request->income]);
+                  'income'=>$request->income,
+                  'lugar'=>$request->lugar]);
 
         $editar = 0;    
         $id = $request->orden;
@@ -229,8 +242,10 @@ class ordenes_compraController extends AppBaseController
         $ordenesCompra = $orden->header_orden($id);
 
         $detalle = $orden->detalle_orden($id,1);
-
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas'))->render();
+        $nuevo = 1;
+        $clientes = clientes::get();
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos'))->render();
         return json_encode($options);
     }
 
@@ -407,15 +422,64 @@ class ordenes_compraController extends AppBaseController
 
     }
     function agrega_producto_ot(Request $request){
-        db::table('ordencompra_detalle')->insert(['id_orden'=>$request->id_orden,
-                                     'incremento'=>0,
-                                     'producto'=>$request->producto_ot,
-                                     'dibujo'=>0,
-                                     'cantidad'=>1,
-                                     'fecha_entrega'=>date('Y-m-d'),
-                                     'costo'=>'0.0',
-                                     'hijo'=>0
-                                 ]);
+        
+        $orden = new ordenes_compra;
+        
+        $existe = db::table('ordencompra_detalle')->where([['id_orden',$request->id_orden],['producto',$request->producto_ot]])->count();
+        if($existe > 0){    
+            return  json_encode(1);
+        }else{
+            $info_producto  = DB::select('SELECT p.descripcion, p.tiempo_entrega,p.id_empresa, p.peso, ifnull(p.costo_material,0) as costo_material, ifnull(p.costo_produccion,0) as costo_produccion, p.costo_material,dibujo_nombre, revision,ifnull(d.id,0) as id
+                                      FROM productos p
+                                      LEFT JOIN (
+                                             SELECT dibujo_nombre, revision, id_producto,id
+                                             FROM producto_dibujos
+                                             WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = '.$request->producto_ot.')) d ON d.id_producto = p.id
+                                      where p.id ='. $request->producto_ot);
+            $info_producto = $info_producto[0];
+
+            db::table('ordencompra_detalle')->insert(['id_orden'=>$request->id_orden,
+                                         'incremento'=>0,
+                                         'producto'=>$request->producto_ot,
+                                         'dibujo'=>$info_producto->id,
+                                         'cantidad'=>1,
+                                         'fecha_entrega'=>date('Y-m-d'),
+                                         'costo'=>$info_producto->costo_produccion,
+                                         'hijo'=>0
+                                     ]); 
+            ordenes_compra::where('id',$request->id_orden)->update(['cliente'=>$info_producto->id_empresa]);
+            $ordenesCompra = $orden->header_orden($request->id_orden);
+            $detalle = $orden->detalle_orden($request->id_orden,1);
+            $editar = 0;
+            $nuevo = 1;
+            $plantas = db::table('plantas')->get();
+            $clientes = clientes::get();
+            $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+            $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','clientes','nuevo','productos'))->render();
+            return json_encode($options);
+
+        }
+        
+    }
+
+    function obtiene_producto_ot(Request $request){
+        $cliente = ordenes_compra::where('id',$request->id_orden)
+                    ->get();          
+
+        if($cliente[0]->cliente != $request->cliente){
+            db::table('ordencompra_detalle')
+            ->where('id_orden',$request->id_orden)
+            ->delete();
+        }
+        
+        $productos = productos::where('id_empresa',$request->cliente)->get();
+
+        $prod = '<option value="">Seleccione una opcion</option>';
+        foreach ($productos as $p) {
+            $prod .= '<option value="'.$p->id.'">'.$p->numero_parte.'</option>';
+        }
+
+        return json_encode($prod);
     }
 
 }

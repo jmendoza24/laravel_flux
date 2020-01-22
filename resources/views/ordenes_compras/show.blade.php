@@ -17,7 +17,7 @@
   <div class="row ">
     <div class="col-md-6">
       <div class="form-group">
-        <label for="lastName4">Inco term : </label>
+        <label for="lastName4">Incoterms : </label>
         <select class="form-control custom-select required" style="width: 100%;"name="income" id="income" onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
             <option value="">Seleccione una opcion</option>
             @foreach($income as $inco)

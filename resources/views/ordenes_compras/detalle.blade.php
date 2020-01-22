@@ -11,10 +11,17 @@
           @if($nuevo ==0)
           <label id="numproveedor">{{ $ordenesCompra->nombre_corto}}</label>
            @else
-           <select class="form-control" id="cliente">
-             <option value="">--Seleccione</option>
-           </select>
-  
+           <select class="form-control" style="width: 100%;" name="cliente" id="cliente" onchange="obtiene_producto_ot({{ $ordenesCompra->id }})">
+                  <option value="">Seleccione una opcion</option>
+                  @foreach($clientes as $cliente)
+                  <option value="{{ $cliente->id}}" 
+                    @if(!empty($ordenesCompra->cliente))
+                      {{ ($ordenesCompra->cliente == $cliente->id) ? 'selected' : '' }}
+                    @endif >
+                    {{ $cliente->nombre_corto}}
+                  </option>
+                @endforeach
+            </select>
         @endif
         </div>
       </div>
@@ -49,12 +56,17 @@
 <div class="row">
   <div class="form-group form-inline">
     <label>Producto&nbsp;</label>
-    <select class="form-control select2" id="producto_ot">
-        <option value="0">---Seleccione</option>
-        @foreach($productos as $producto)
-        <option value="{{ $producto->id}}">{{ $producto->numero_parte}}</option>
-        @endforeach
-    </select>&nbsp;&nbsp;
+        <select class="form-control" name="producto" id="producto">
+          <option value="">Seleccione una opcion</option>
+          @foreach($productos as $prod)
+          <option value="{{ $prod->id}}" 
+            @if(!empty($ordenesCompra->producto))
+              {{ ($cotizacion->producto == $prod->id) ? 'selected' : '' }}
+            @endif >
+            {{ $prod->numero_parte}}
+          </option>
+          @endforeach
+        </select>&nbsp;
     <button class="btn btn-primary" onclick="agrega_producto_ot({{ $ordenesCompra->id }})">Agregar</button>
   </div>
 </div>
@@ -63,10 +75,8 @@
 <table class="table table-bordered">
     <thead class="" style="background: #518a87; border: 1px solid #518a87; color: white;">
       <tr>
-        <th>Número parte</th>
-        @if($editar ==1)
         <td>Item</td> 
-        @endif
+        <th>Número parte</th>
         <th>Descripción</th>
         <th>Familia</th>
         <th>Id Dibujo</th>
@@ -80,21 +90,25 @@
         @endif
         @if($editar ==1)
         <th>Planta</th>
-        <th>Fecha entrega</th>
         @endif
         @if($nuevo==1)
+        <th>Fecha entrega</th>
         <th>Notas</th>
-        @endif
-       <!-- <th></th>-->
+        <th></th>
+       @endif
       </tr>
     </thead>
     <tbody>
       @foreach($detalle as $det)
       <tr>
+          <td>
+          @if($editar ==0)
+            <input type="text" style="width: 60px;" name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+          @else
+          <label>{{ $det->incremento }}</label>
+          @endif
+        </td>
         <td>{{ $det->numero_parte }}</td>
-        @if($editar ==1)
-        <td><input type="text" style="width: 60px;" name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})"></td>
-        @endif
         <td>{{ $det->descripcion}}</td>
         <td>{{ $det->nfamilia }}</td>
         <td>{{ $det->dibujo_nombre}}</td>
@@ -117,13 +131,16 @@
             @endforeach
           </select>
         </td>
-        <td>
-          <input type="date" id="fecha_entrega{{$det->id}}" class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
-        </td>
         @endif
         @if($nuevo==1)
         <td>
-          <input type="text" name="">
+          <input type="date" id="fecha_entrega{{$det->id}}" class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+        </td>
+        <td>
+          <textarea class="form-control" style="width: 200px;"></textarea>
+        </td>
+        <td>
+          <a class='btn btn-float btn-outline-danger btn-round' onclick="borra_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-trash"></i></a>
         </td>
         @endif
 
@@ -133,7 +150,7 @@
             <a class='btn btn-float btn-outline-info btn-round' onclick="agrega_subproducto({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-plus"></i></a>
             @endif
             @if($det->incremento >1 and $editar ==1)
-            <a class='btn btn-float btn-outline-danger btn-round' onclick="borra_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-trash"></i></a>
+            
             @endif
           </div>
         </td>-->
