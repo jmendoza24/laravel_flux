@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use DB;
 /**
  * Class logistica
  * @package App\Models
@@ -68,6 +68,19 @@ class logistica extends Model
     public static $rules = [
        
     ];
+
+    function cliente_logisticas($filtros){
+        $logisticas = DB::table('logisticas as a')
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where('a.id_producto',$filtros->id_cliente)
+                    ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
+                    ->get();
+
+        return $logisticas;
+    }
+
+
 
     
 }

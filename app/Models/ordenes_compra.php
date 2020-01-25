@@ -108,7 +108,7 @@ class ordenes_compra extends Model
                                            group by producto ) as co on co.producto = c.producto
                                 where c.id_orden = '.$id_orden .'
                                 and hijo  '.$query.'
-                                order by c.id desc');
+                                order by c.id asc');
     }
 
     function agrega_cantidades($filto){

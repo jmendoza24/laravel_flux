@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\logistica;
 use App\Http\Requests\CreateclientesRequest;
 use App\Http\Requests\UpdateclientesRequest;
 use App\Repositories\clientesRepository;
@@ -123,7 +124,7 @@ class clientesController extends AppBaseController
                                     'nombre'=>'',
                                     'telefono'=>'',
                                     'correo'=>'',
-                                    'calle'=>'',
+                                    'calle'=>'', 
                                     'cp'=>'',
                                     'numero'=>'',
                                     'estado'=>'',
@@ -187,6 +188,9 @@ class clientesController extends AppBaseController
     }
     
     function save_address(Request $request){
+        $filtro = new logistica;
+        $filtro->id_cliente = $request->id_producto;
+
         DB::table('logisticas')
          ->insert(['id_producto' => $request->id_producto, 
                    'nombre'      => $request->nombre_log, 
@@ -200,15 +204,10 @@ class clientesController extends AppBaseController
                    'cp'          => $request->cp_log
                 ]);    
 
-         $logisticas = DB::table('logisticas as a')
-                    ->leftjoin('estados as e','e.id','=','a.estado')
-                    ->leftjoin('paises as p','p.id','=','a.pais')
-                    ->where('a.id_producto',$request->id_producto)
-                    ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
-                    ->get();
+        $logisticas = $filtro->cliente_logisticas($filtro);
 
-         $options = view("logisticas.table",compact('logisticas'))->render();    
-         return json_encode($options);
+        $options = view("logisticas.table",compact('logisticas'))->render();    
+        return json_encode($options);
     }
 
 }

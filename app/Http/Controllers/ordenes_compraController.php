@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ordenes_compra;
 use App\Models\productos;
-#use App\Models\ordencompra_detalle;
+use App\Models\logistica;
 use App\Models\clientes;
 use App\Http\Requests\Createordenes_compraRequest;
 use App\Http\Requests\Updateordenes_compraRequest;
@@ -36,6 +36,9 @@ class ordenes_compraController extends AppBaseController
     }
 
     function create(Request $request){
+        $logistica = new logistica;
+        $orden = new ordenes_compra;
+
         if ($request->session()->has('num_orden')) {
              
          $num_orden = $request->session()->get('num_orden');
@@ -58,38 +61,46 @@ class ordenes_compraController extends AppBaseController
             $num_orden = $request->session()->get('num_orden');
 
          }
-        $orden = new ordenes_compra;
+        
 
         $ordenesCompra = $orden->header_orden($num_orden);
         $detalle = $orden->detalle_orden($num_orden,0);
         $income = DB::table('income_terms')->get();
         $clientes = clientes::get();
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $logistica->id_cliente = $ordenesCompra->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
 
-        return view('ordenes_compras.create',compact('ordenesCompra','detalle','income','clientes','productos'));
+        return view('ordenes_compras.create',compact('ordenesCompra','detalle','income','clientes','productos','logisticas'));
 
     }
 
     
     public function show($id){
         $orden = new ordenes_compra;
+        $logistica = new logistica;
 
         $ordenesCompra = $orden->header_orden($id);
         $detalle = $orden->detalle_orden($id,0);
         $income = DB::table('income_terms')->get();
+        $logistica->id_cliente = $ordenesCompra->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
 
-        return view('ordenes_compras.show',compact('ordenesCompra','detalle','income'));
+        return view('ordenes_compras.show',compact('ordenesCompra','detalle','income','logisticas'));
     }
 
     public function edit($id){
         $orden = new ordenes_compra;
+        $logistica = new logistica;
 
         $ordenesCompra = $orden->header_orden($id);
         $detalle = $orden->detalle_orden($id,1);
         $plantas = db::table('plantas')->get();
         $income = DB::table('income_terms')->get();
+        $logistica->id_cliente = $ordenesCompra->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
 
-        return view('ordenes_compras.edit',compact('detalle','ordenesCompra','income','plantas'));
+        return view('ordenes_compras.edit',compact('detalle','ordenesCompra','income','plantas','logisticas'));
     }
 
     
@@ -148,11 +159,13 @@ class ordenes_compraController extends AppBaseController
     
         $orden->id_orden = $request->id_orden;
         $orden->agrega_cantidades($orden);
+        $request->session()->forget('num_orden');
         return 1;
     }
 
     function actualiza_producto_occ(Request $request){
         $orden = new ordenes_compra;
+        $logistica = new logistica;
 
         db::table('ordencompra_detalle')
         ->where('id',$request->producto)
@@ -169,19 +182,24 @@ class ordenes_compraController extends AppBaseController
         $nuevo = 1;
         $clientes = clientes::get();
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos'))->render();
+        $logistica->id_cliente = $ordenesCompra->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
+
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas'))->render();
 
         return json_encode($options);
     }
 
     function actualiza_producto_occ_det(Request $request){
         $orden = new ordenes_compra;
+        $logistica = new logistica;
 
         db::table('ordencompra_detalle')
         ->where('id',$request->producto)
         ->update(['incremento'=>$request->incremento,
                   'fecha_entrega'=>$request->fecha_entrega,
-                  'planta'=>$request->planta]);
+                  'planta'=>$request->planta,
+                  'nota_det'=>$request->notas_det]);
         $plantas = db::table('plantas')->get();
 
         $id = $request->id_ot;
@@ -193,13 +211,16 @@ class ordenes_compraController extends AppBaseController
         $nuevo = 1;
         $clientes = clientes::get();
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos'))->render();
+        $logistica->id_cliente = $ordenesCompra->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas'))->render();
 
         return json_encode($options);
     }
 
     function borra_producto_occ(Request $request){
         $orden = new ordenes_compra;
+        $logistica = new logistica;
         $plantas = db::table('plantas')->get();
 
         db::table('ordencompra_detalle')
@@ -221,7 +242,9 @@ class ordenes_compraController extends AppBaseController
         $nuevo = 1;
         $clientes = clientes::get();
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos'))->render();
+        $logistica->id_cliente = $ordenesCompra->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas'))->render();
 
         return json_encode($options);
 
@@ -229,6 +252,7 @@ class ordenes_compraController extends AppBaseController
 
     function actualiza_info_occ(Request $request){
         $orden = new ordenes_compra;
+        $logistica = new logistica;
         db::table('ordenes_compras')
         ->where('id',$request->orden)
         ->update(['orden_compra'=>$request->orden_compra,
@@ -245,7 +269,9 @@ class ordenes_compraController extends AppBaseController
         $nuevo = 1;
         $clientes = clientes::get();
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos'))->render();
+        $logistica->id_cliente = $ordenesCompra->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas'))->render();
         return json_encode($options);
     }
 
@@ -480,6 +506,13 @@ class ordenes_compraController extends AppBaseController
         }
 
         return json_encode($prod);
+    }
+
+    function orden_factura(Request $request){
+        $orden = new ordenes_compra;
+        $detalle = $orden->detalle_orden(37,1);
+
+        return view('ordenes_compras.plantilla_factura',compact('detalle'));
     }
 
 }

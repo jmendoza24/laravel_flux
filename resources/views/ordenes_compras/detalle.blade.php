@@ -3,52 +3,53 @@
       <h5>Datos del cliente</h5>
       <hr>
     </div>
-
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Ciente:</label>
-        <div class="col-md-7">
-          @if($nuevo ==0)
-          <label id="numproveedor">{{ $ordenesCompra->nombre_corto}}</label>
-           @else
-           <select class="form-control" style="width: 100%;" name="cliente" id="cliente" onchange="obtiene_producto_ot({{ $ordenesCompra->id }})">
-                  <option value="">Seleccione una opcion</option>
-                  @foreach($clientes as $cliente)
-                  <option value="{{ $cliente->id}}" 
-                    @if(!empty($ordenesCompra->cliente))
-                      {{ ($ordenesCompra->cliente == $cliente->id) ? 'selected' : '' }}
-                    @endif >
-                    {{ $cliente->nombre_corto}}
-                  </option>
+    <table style="width: 100%;" border="0">
+      <tr>
+        <td><label class="label-control" for="descripcion">Ciente:</label></td>
+        <td>
+              @if($nuevo ==0)
+              <label id="numproveedor">{{ $ordenesCompra->nombre_corto}}</label>
+               @else
+               <select class="form-control" style="width: 100%;" name="cliente" id="cliente" onchange="obtiene_producto_ot({{ $ordenesCompra->id }})">
+                      <option value="">Seleccione una opcion</option>
+                      @foreach($clientes as $cliente)
+                      <option value="{{ $cliente->id}}" 
+                        @if(!empty($ordenesCompra->cliente))
+                          {{ ($ordenesCompra->cliente == $cliente->id) ? 'selected' : '' }}
+                        @endif >
+                        {{ $cliente->nombre_corto}}
+                      </option>
+                    @endforeach
+                </select>
+            @endif
+        </td>
+        <td><label class="label-control" for="descripcion">Contacto compra:</label></td>
+        <td><label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label></td>
+      </tr>
+      <tr>
+        <td><label class="label-control" for="descripcion">Orden compra cliente:</label></td>
+        <td>
+              <input type="text" id="orden_compra" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control" {{ ($editar ==1)?'disabled':''}} />
+        </td>
+        <td><label class="label-control" for="descripcion">Email  compra:</label></td>
+        <td>
+              <label id="email">{{$ordenesCompra->correo_compra}}</label> 
+        </td>
+      </tr>
+      <tr>
+        <td><label class="label-control" for="descripcion" >Shipping to:</label></td>
+        <td colspan="3">
+              <select class="form-control" id="shipping_id" {{($editar ==1)?'disabled':''}}>
+                <option value="">Seleecione...</option>
+                @foreach($logisticas as $logistica)
+                <option value="{{$logistica->id}}">
+                  {{$logistica->calle . ', ' .$logistica->municipio .', '. $logistica->nestado .', '. $logistica->npais}}
+                </option>
                 @endforeach
-            </select>
-        @endif
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Orden compra cliente:</label>
-        <div class="col-md-7">
-          <input type="text" id="orden_compra" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control" {{ ($editar ==1)?'disabled':''}} />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Contacto compra:</label>
-        <div class="col-md-7">
-          <label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-5 label-control" for="descripcion">Email  compra:</label>
-        <div class="col-md-7">
-          <label id="email">{{$ordenesCompra->correo_compra}}</label> 
-        </div>
-      </div>
-    </div>
-
-
-
+              </select>
+        </td>
+      </tr>
+    </table>
   </div>
   
   <hr/>
@@ -119,8 +120,8 @@
         @endif
         <td style="text-align: center;">{{ $det->tiempo_entrega }}</td>
         @if($editar ==0)
-        <td style="text-align: right;">${{ number_format($det->costo_produccion,2)}}</td>
         <td style="text-align: right;">${{ number_format($det->costo_material,2)}}</td>
+        <td style="text-align: right;">${{ number_format($det->costo_produccion,2)}}</td>
         @endif
         @if($editar ==1)
         <td>
@@ -137,7 +138,7 @@
           <input type="date" id="fecha_entrega{{$det->id}}" class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
         </td>
         <td>
-          <textarea class="form-control" style="width: 200px;"></textarea>
+          <textarea class="form-control" style="width: 200px;" id="notas_det" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">{{$det->nota_det}}</textarea>
         </td>
         <td>
           <a class='btn btn-float btn-outline-danger btn-round' onclick="borra_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-trash"></i></a>
