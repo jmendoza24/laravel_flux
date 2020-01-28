@@ -290,4 +290,27 @@ class ordenes_compra extends Model
 #        dd($mat_formas);
         return $result;
     }
+
+    function obtiene_plantas(){
+        return db::table('ordenes_compras as o')
+               ->join('ordencompra_detalle as d','d.id_orden','o.id')
+               ->join('plantas as p','p.id','d.planta')
+               ->where([['o.tipo',2],['d.planta','>',0]])
+               ->whereNull('enviado_planta')
+               ->groupBy('d.planta')
+               ->selectraw('d.planta, count(*) conteo, p.nombre')
+               ->get();
+               
+    }
+
+    function obtiene_info_plantas($filtros){
+        return db::table('ordenes_compras as o')
+               ->join('ordencompra_detalle as d','d.id_orden','o.id')
+               ->leftjoin('productos as p','p.id','d.producto')
+               ->leftjoin('plantas as pl','pl.id','d.planta')
+               ->where([['o.tipo',2],['d.planta',$filtros->id_planta]])
+               ->whereNull('enviado_planta')
+               ->selectraw('d.*, pl.nombre,p.descripcion,p.costo_produccion')
+               ->get();
+    }
 }

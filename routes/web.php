@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/historiaCotizacion', 'cotizacionesController@historia')->name('cotizaciones.historia');
 	Route::resource('ordenesCompras', 'ordenes_compraController');
 	Route::get('ordenesCompras/{id}/seguimiento', 'ordenes_compraController@seguimiento')->name('ordenesCompras.seguimiento');
+	Route::get('/ordenesporenviar', 'ordenes_compraController@ordenesporenviar')->name('enviados.index');
 
 
 });
@@ -118,6 +119,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/agrega_producto_ot', 'ordenes_compraController@agrega_producto_ot');
 	Route::get('/obtiene_producto_ot', 'ordenes_compraController@obtiene_producto_ot');
 	Route::get('/orden_factura', 'ordenes_compraController@orden_factura')->name('factura.plantilla');
+	Route::get('/obtiene_info_plantas', 'ordenes_compraController@obtiene_info_plantas');
+	Route::get('/envia_info_planta', 'ordenes_compraController@envia_info_planta')->name('envia_plantas');
 	
 });
 

@@ -8,7 +8,7 @@
 @php($nuevo = 0)
 {!! Form::model($ordenesCompra, ['route' => ['ordenesCompras.update', $ordenesCompra->id], 'method' => 'patch','class'=>'needs-validation','novalidate']) !!}
     <div class="col-md-12">
-    @include('ordenes_compras.fields')
+   @include('ordenes_compras.detalle')
     </div>
 {!! Form::close() !!}
 @endsection

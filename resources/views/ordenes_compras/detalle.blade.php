@@ -39,10 +39,10 @@
       <tr>
         <td><label class="label-control" for="descripcion" >Shipping to:</label></td>
         <td colspan="3">
-              <select class="form-control" id="shipping_id" {{($editar ==1)?'disabled':''}}>
+              <select class="form-control" id="shipping_id" {{($editar ==1)?'disabled':''}} onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
                 <option value="">Seleecione...</option>
                 @foreach($logisticas as $logistica)
-                <option value="{{$logistica->id}}">
+                <option value="{{$logistica->id}}" {{($ordenesCompra->shipping==$logistica->id)?'selected':'' }}>
                   {{$logistica->calle . ', ' .$logistica->municipio .', '. $logistica->nestado .', '. $logistica->npais}}
                 </option>
                 @endforeach
@@ -160,3 +160,41 @@
     </tbody>
   </table>
 </div>
+ <div class="row ">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="lastName4">Incoterms : </label>
+        <select class="form-control custom-select required" {{($editar ==1)?'disabled':''}} style="width: 100%;"name="income" id="income" onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
+            <option value="">Seleccione una opcion</option>
+            @foreach($income as $inco)
+            <option value="{{ $inco->id}}" 
+              @if(!empty($ordenesCompra->income))
+                {{ ($ordenesCompra->income == $inco->id) ? 'selected' : '' }}
+              @endif >
+              {{ $inco->income}}
+            </option>
+            @endforeach
+          </select>
+      </div>
+    </div> 
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="lastName4">Lugar : </label>
+        <input type="text" {{($editar ==1)?'disabled':''}} class="form-control" id="lugar" name="lugar" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="<?php echo ($ordenesCompra->lugar);?>">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="lastName4">Términos : </label>
+        <textarea class="form-control" {{($editar ==1)?'disabled':''}} style="height: 200px;"  onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo nl2br($ordenesCompra->desc_inco)?></textarea>
+      </div>
+    </div> 
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="lastName4">Notas : </label>
+        <textarea class="form-control" id="notas" {{($editar ==1)?'disabled':''}} style="height: 200px;" name="notas" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo ($ordenesCompra->notas);?></textarea>
+      </div>
+    </div> 
+    <br>
+    
+  </div>

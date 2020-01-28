@@ -6,6 +6,7 @@ use App\Models\ordenes_compra;
 use App\Models\productos;
 use App\Models\logistica;
 use App\Models\clientes;
+use App\Models\plantas;
 use App\Http\Requests\Createordenes_compraRequest;
 use App\Http\Requests\Updateordenes_compraRequest;
 use App\Repositories\ordenes_compraRepository;
@@ -17,6 +18,7 @@ use Response;
 use Sesion;
 use DB; 
 use View;
+use PDF;
 
 class ordenes_compraController extends AppBaseController
 {
@@ -184,8 +186,8 @@ class ordenes_compraController extends AppBaseController
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
-
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas'))->render();
+        $income = DB::table('income_terms')->get();
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
 
         return json_encode($options);
     }
@@ -213,7 +215,8 @@ class ordenes_compraController extends AppBaseController
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas'))->render();
+        $income = DB::table('income_terms')->get();
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
 
         return json_encode($options);
     }
@@ -244,7 +247,8 @@ class ordenes_compraController extends AppBaseController
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas'))->render();
+        $income = DB::table('income_terms')->get();
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
 
         return json_encode($options);
 
@@ -258,7 +262,8 @@ class ordenes_compraController extends AppBaseController
         ->update(['orden_compra'=>$request->orden_compra,
                   'notas'=>$request->notas,
                   'income'=>$request->income,
-                  'lugar'=>$request->lugar]);
+                  'lugar'=>$request->lugar,
+                  'shipping'=>$request->logistica]);
 
         $editar = 0;    
         $id = $request->orden;
@@ -271,7 +276,9 @@ class ordenes_compraController extends AppBaseController
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas'))->render();
+        $income = DB::table('income_terms')->get();
+
+        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
         return json_encode($options);
     }
 
@@ -450,6 +457,8 @@ class ordenes_compraController extends AppBaseController
     function agrega_producto_ot(Request $request){
         
         $orden = new ordenes_compra;
+        $logistica  = new logistica;
+
         
         $existe = db::table('ordencompra_detalle')->where([['id_orden',$request->id_orden],['producto',$request->producto_ot]])->count();
         if($existe > 0){    
@@ -481,7 +490,10 @@ class ordenes_compraController extends AppBaseController
             $plantas = db::table('plantas')->get();
             $clientes = clientes::get();
             $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
-            $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','clientes','nuevo','productos'))->render();
+            $logistica->id_cliente = $ordenesCompra->cliente;
+            $logisticas = $logistica->cliente_logisticas($logistica);   
+            $income = DB::table('income_terms')->get();
+            $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','clientes','nuevo','productos','logisticas','income'))->render();
             return json_encode($options);
 
         }
@@ -515,4 +527,30 @@ class ordenes_compraController extends AppBaseController
         return view('ordenes_compras.plantilla_factura',compact('detalle'));
     }
 
+    function ordenesporenviar(Request $request){
+        $orden = new ordenes_compra;
+        $plantas = $orden->obtiene_plantas();
+        $detalle = array();
+
+        return view('ordenes_compras.ordnesporenviar',compact('plantas','detalle'));
+    }
+
+    function obtiene_info_plantas(Request $request){
+        $orden = new ordenes_compra;
+        $orden->id_planta = $request->id_planta;
+        $detalle = $orden->obtiene_info_plantas($orden);
+
+        $option =  view('ordenes_compras.tabla_plantas',compact('detalle'))->render();
+        return json_encode($option);
+    }
+
+    function envia_info_planta(Request $request){
+        $orden = new ordenes_compra;
+        $orden->id_planta = $request->id_planta;
+        $detalle = $orden->obtiene_info_plantas($orden);
+
+        $pdf = \PDF::loadView('ordenes_compras.plantilla_factura',compact('detalle'))->setPaper('A4-L','landscape');
+        return $pdf->download('OrdenTrabajoPlanta_'.$request->id_planta.'.pdf');
+
+    }
 }
