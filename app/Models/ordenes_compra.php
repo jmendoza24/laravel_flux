@@ -64,11 +64,25 @@ class ordenes_compra extends Model
     ];
 
     function ordenesCompra(){
-        return  db::table('ordenes_compras as c')
-                        ->leftjoin('users as u','u.id','c.vendedor')
-                        ->leftjoin('clientes as cl', 'cl.id','c.cliente')
-                        ->selectraw("c.*, name, cl.nombre_corto , case c.tipo when 1 then 'Pendiente'  when 2 then 'Validada' when 3 then 'Asignada' when 4 then 'Seguimiento' when 5 then 'Trafico' when 6 then 'Cerrada' else 'Otro' end as estatus ")
-                        ->get();
+     $var = db::select('select c.*, cl.nombre_corto , count(d.producto) as cantidad, sum(d.cantidad * costo_produccion) as total
+                        from ordenes_compras as c 
+                        inner join ordencompra_detalle d on d.id_orden = c.id
+                        left join productos as p on d.producto = p.id
+                        inner join clientes as cl on cl.id = c.cliente
+                        where d.hijo = 0
+                        group by c.id');
+
+     $productos = db::table('ordenes_compras as c')
+                     ->join('ordencompra_detalle as d','d.id_orden','c.id')
+                     ->join('productos as p','d.producto','p.id')
+                     ->where('d.hijo',0)
+                     ->selectraw('c.id, p.numero_parte')
+                     ->get();
+
+      $arr = array('var'=>$var,
+                   'productos'=>$productos);
+
+      return $arr;
     }
 
     function header_orden($id_orden){
@@ -149,10 +163,11 @@ class ordenes_compra extends Model
 */
     }
 
-    function get_procesos_ordenes($id_orden){
+    function get_procesos_ordenes(){
         return DB::table('ordencompra_detalle as o')
+                ->join('ordenes_compras as d','d.id','o.id_orden')
                 ->join('productos_procesos as pp','pp.id_producto','o.producto')
-                ->where('id_orden',$id_orden)
+                ->where('d.tipo',2)
                 ->selectraw('o.id, pp.id_proceso, o.producto')
                 ->get();
     }

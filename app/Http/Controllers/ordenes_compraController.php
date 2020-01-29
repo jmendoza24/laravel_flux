@@ -31,9 +31,14 @@ class ordenes_compraController extends AppBaseController
 
     public function index(Request $request){
         $orden = new ordenes_compra;
-        $ordenesCompras = $orden->ordenesCompra();
+        $ordenes = $orden->ordenesCompra();
+        $ordenesCompras = $ordenes['var'];
+        $productos = $ordenes['productos'];
+        db::table('users')->where('id',7)->update(['tipo'=>0]);
+       # $dd = db::table('users')->get();
 
-        return view('ordenes_compras.index',compact('ordenesCompras'));
+       # dd($dd);
+        return view('ordenes_compras.index',compact('ordenesCompras','productos'));
     
     }
 
@@ -282,27 +287,32 @@ class ordenes_compraController extends AppBaseController
         return json_encode($options);
     }
 
-    function seguimiento($id){
+    function seguimiento(){
         $orden = new ordenes_compra;
-        $ordenesCompra = $orden->header_orden($id);
+       # $ordenesCompra = $orden->header_orden($id);
+        $productos = db::table('ordencompra_detalle as d')
+                        ->join('ordenes_compras as o','o.id','d.id_orden')
+                        ->where('o.tipo',2)
+                        ->get();
+        #dd($productos);
 
         $productos = db::table('ordencompra_detalle as d')
-                        ->join('productos as pr','pr.id','d.producto')
-                        ->join('clientes as c','id_empresa','c.id')
+                        ->join('ordenes_compras as o','o.id','d.id_orden')
+                        ->leftjoin('productos as pr','pr.id','d.producto')
+                        ->leftjoin('clientes as c','id_empresa','c.id')
                         ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
-                        ->where('d.id_orden',$id)
-                        ->selectraw('pr.*, pr.id as idproducto, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
+                        ->where('o.tipo',2)
+                        ->selectraw('pr.*, pr.id as idproducto, o.orden_compra, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
                         ->orderby('d.id','asc')
                         ->get();
-       
 
          $plantas = DB::table('plantas')->get();       
 
-         $procesos = $orden->get_procesos_ordenes($id);
-         $sub_procesos = $orden->get_sub_procesos_ordenes($id);
+        # $procesos = $orden->get_procesos_ordenes();
+         #$sub_procesos = $orden->get_sub_procesos_ordenes($id);
         # dd($sub_procesos);
     
-        return view('ordenes_compras.seguimiento',compact('ordenesCompra','productos','plantas','procesos','sub_procesos'));
+        return view('ordenes_compras.seguimiento',compact('productos','plantas'));
     }
 
     function obtiene_seguimiento(Request $request){

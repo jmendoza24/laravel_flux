@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('titulo')
-Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}
+Seguimiento ordenes de trabajo
 @endsection
 @php($id_detalle = '')
 @section('content')
@@ -8,10 +8,10 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
       <label class="col-md-9"></label>
         <select class="form-control col-md-3" id="bloque_muesta" onchange="muestra_bloque()">
             <option>Seleccione...</option>
-            <option value="all">Ocultar todos</option>
+            <option value="show_estatus"  class="mostr-estatus">Estatus</option>
+            <!--<option value="all">Ocultar todos</option>
             <option value="hide_estatus" class="oct-estatus">Ocultar estatus</option>
-            <option value="show_estatus" style="display: none; " class="mostr-estatus">Mostrar estatus</option>
-            <option value="shohwall">Mostrar todos</option>
+            <option value="shohwall">Mostrar todos</option>--->
             <option value="planeacion">Planeación</option>
             <option value="produccion">Producción</option>
             <option value="calidad">Calidad</option>
@@ -80,11 +80,12 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
           @foreach($productos as $producto)
           <tr>
             <td style="z-index: 1000;">
-             <label  style="width: 90px;">SG-00{{ $producto->id_detalle }}</label></td>
+             <label  style="width: 90px;">SG-00{{ $producto->id_detalle }}</label>
+            </td>
             <td style="z-index: 1000;"> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm" data-toggle="modal" data-backdrop="false" data-target="#primary" onclick="informacion_producto({{$producto->idproducto}})" ><i class="fa fa-info"></i></span></label></td>
             <td style="z-index: 1000;"> {{  date("m-d-Y", strtotime($producto->fecha_entrega)) }}</td>
             <td>{{ $producto->nombre_corto }}</td>
-            <td>OT</td>
+            <td>{{ $producto->orden_compra}}</td>
             <td>
               <select class="form-control" style="width: 150px;" id="id_planta{{ $producto->id_detalle}}" disabled="">
                 <option value="">Seleccione</option>
@@ -101,19 +102,22 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
             {{-- FIn estatus --}}
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group" style="">
-                <input type="checkbox" class="switch" {{ ($producto->st_lanzamiento==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_lanzamiento{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(2,{{ $producto->id_detalle }},'st_lanzamiento',{{$producto->id_orden}})" >
+                <span class="badge badge-{{ ($producto->st_lanzamiento==1)?'success':'warning' }} badge-outlined">{{ ($producto->st_lanzamiento==1)?'SI':'NO' }}</span>
+                <!--<input type="checkbox" class="switch" {{ ($producto->st_lanzamiento==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_lanzamiento{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(2,{{ $producto->id_detalle }},'st_lanzamiento',{{$producto->id_orden}})" >-->
                 &nbsp;<span id="span{{$producto->id_detalle}}_2" class=""   onclick="agrega_comentarios(2,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" {{ ($producto->st_informacion==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_informacion{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(3,{{ $producto->id_detalle }},'st_informacion',{{$producto->id_orden}})" >
+                <span class="badge badge-{{ ($producto->st_informacion==1)?'success':'warning' }} badge-outlined">{{ ($producto->st_informacion==1)?'SI':'NO' }}</span>
+                <!--<input type="checkbox" class="switch" {{ ($producto->st_informacion==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_informacion{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(3,{{ $producto->id_detalle }},'st_informacion',{{$producto->id_orden}})" >--->
                 &nbsp;<span id="span{{$producto->id_detalle}}_3" class=""  onclick="agrega_comentarios(3,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" {{ ($producto->st_pregunta==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_pregunta{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(4,{{ $producto->id_detalle }},'st_pregunta',{{$producto->id_orden}})" >
+                <span class="badge badge-{{ ($producto->st_pregunta==1)?'success':'warning' }} badge-outlined">{{ ($producto->st_pregunta==1)?'SI':'NO' }}</span>
+                <!--<input type="checkbox" class="switch" {{ ($producto->st_pregunta==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_pregunta{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(4,{{ $producto->id_detalle }},'st_pregunta',{{$producto->id_orden}})" >--->
                 &nbsp;<span id="span{{$producto->id_detalle}}_4" class="" onclick="agrega_comentarios(4,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
             </div>
             </td>
@@ -122,20 +126,23 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
             </td>
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" {{ ($producto->st_pintura==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_pintura{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(5,{{ $producto->id_detalle }},'st_pintura',{{$producto->id_orden}})" >
+                <span class="badge badge-{{ ($producto->st_pintura==1)?'success':'warning' }} badge-outlined">{{ ($producto->st_pintura==1)?'SI':'NO' }}</span>
+                <!--<input type="checkbox" class="switch" {{ ($producto->st_pintura==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_pintura{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(5,{{ $producto->id_detalle }},'st_pintura',{{$producto->id_orden}})" >--->
                 &nbsp;<span id="span{{$producto->id_detalle}}_5" class=""  onclick="agrega_comentarios(5,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
             </div>
             </td>
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" {{ ($producto->st_prog_corte==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_prog_corte{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(6,{{ $producto->id_detalle }},'st_prog_corte',{{$producto->id_orden}})" >
+                <span class="badge badge-{{ ($producto->st_prog_corte==1)?'success':'warning' }} badge-outlined">{{ ($producto->st_prog_corte==1)?'SI':'NO' }}</span>
+                <!--<input type="checkbox" class="switch" {{ ($producto->st_prog_corte==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_prog_corte{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(6,{{ $producto->id_detalle }},'st_prog_corte',{{$producto->id_orden}})" >--->
                 &nbsp;<span id="span{{$producto->id_detalle}}_6" class=""   onclick="agrega_comentarios(6,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
 
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" {{ ($producto->st_tacm==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_tacm{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(7,{{ $producto->id_detalle }},'st_tacm',{{$producto->id_orden}})" >
+                <span class="badge badge-{{ ($producto->st_tacm==1)?'success':'warning' }} badge-outlined">{{ ($producto->st_tacm==1)?'SI':'NO' }}</span>
+                <!--<input type="checkbox" class="switch" {{ ($producto->st_tacm==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_tacm{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(7,{{ $producto->id_detalle }},'st_tacm',{{$producto->id_orden}})" >--->
                 &nbsp;<span id="span{{$producto->id_detalle}}_7" class=""  onclick="agrega_comentarios(7,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
             </div>
             </td>
@@ -245,7 +252,8 @@ Seguimiento OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", st
       "scrollX": true,
       "fixedColumns":   {
             leftColumns:3
-      }
+      },
+      "paging": false
     });
 
     table.columns([11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]).visible(false);

@@ -186,7 +186,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Términos : </label>
-        <textarea class="form-control" {{($editar ==1)?'disabled':''}} style="height: 200px;"  onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo nl2br($ordenesCompra->desc_inco)?></textarea>
+        <textarea class="form-control" {{($editar ==1)?'disabled':''}} {{($nuevo ==1)?'disabled':''}} style="height: 200px;"  onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo nl2br($ordenesCompra->desc_inco)?></textarea>
       </div>
     </div> 
     <div class="col-md-6">

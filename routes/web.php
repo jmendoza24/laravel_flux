@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::resource('listaMateriales', 'ListaMaterialesController');
 	Route::get('/historiaCotizacion', 'cotizacionesController@historia')->name('cotizaciones.historia');
 	Route::resource('ordenesCompras', 'ordenes_compraController');
-	Route::get('ordenesCompras/{id}/seguimiento', 'ordenes_compraController@seguimiento')->name('ordenesCompras.seguimiento');
+	Route::get('ordenestrabajo/seguimiento', 'ordenes_compraController@seguimiento')->name('ordenesCompras.seguimiento');
 	Route::get('/ordenesporenviar', 'ordenes_compraController@ordenesporenviar')->name('enviados.index');
 
 

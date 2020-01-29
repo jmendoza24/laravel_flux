@@ -13,7 +13,7 @@
     @include('ordenes_compras.detalle')
   </div>
   
-  
+  <!--
   <div class="row ">
     <div class="col-md-6">
       <div class="form-group">
@@ -51,7 +51,7 @@
     </div> 
     <br>
     
-  </div>
+  </div>--->
   <hr>
   <div class="form-group col-sm-12" style="text-align: right;">
     <a href="{{ route('ordenesCompras.index')}}" class="btn btn-warning mr-1">Regresar</a>

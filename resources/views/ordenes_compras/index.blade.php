@@ -3,8 +3,10 @@
 @section('content')
 <div class="col-md-12">
     <h1 class="pull-right">
-       <a class="btn btn-success" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('enviados.index')}}">OT por enviar</a>
-       <a class="btn btn-primary" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('ordenesCompras.create') !!}">+ Nueva OT</a>
+       <a class="btn btn-success" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('enviados.index')}}" title="Envios a plantas"><i  class="fa fa-map-marker" aria-hidden="true" ></i></a>
+       <a class="btn btn-primary" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('ordenesCompras.create') !!}" title="Nueva OT"><i  class="fa fa-plus-circle" aria-hidden="true" ></i></a>
+       <a class="btn btn-primary" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('ordenesCompras.seguimiento') !!}" class='btn  btn-float btn-outline-info btn-round' title="Seguimiento"><i  class="fa fa-list-ul" aria-hidden="true"></i></a>                    
+
     </h1>
 </div>
 <br><br><br>
