@@ -14,4 +14,15 @@
      @include('ordenes_compras.table')
 </div>
 @endsection
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#ordenesCompras-table').DataTable( {
+        "paging":   false,
+        "ordering": true,
+        "info":     true
+    } );
+} );
 
+</script>
+@endsection

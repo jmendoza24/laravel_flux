@@ -34,10 +34,10 @@ class ordenes_compraController extends AppBaseController
         $ordenes = $orden->ordenesCompra();
         $ordenesCompras = $ordenes['var'];
         $productos = $ordenes['productos'];
-        db::table('users')->where('id',7)->update(['tipo'=>0]);
-       # $dd = db::table('users')->get();
+        db::table('users')->where('id',1)->update(['tipo'=>0]);
+        $dd = db::table('users')->get();
 
-       # dd($dd);
+      #  dd($dd);
         return view('ordenes_compras.index',compact('ordenesCompras','productos'));
     
     }
