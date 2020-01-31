@@ -18,7 +18,6 @@ class SeguimientoMateriales extends Migration
             $table->integer('id_orden');
             $table->integer('id_detalle');
             $table->integer('id_materia');
-            $table->integer('id_forma');
             $table->timestamps();
             $table->softDeletes();
         });

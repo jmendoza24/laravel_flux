@@ -121,6 +121,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/orden_factura', 'ordenes_compraController@orden_factura')->name('factura.plantilla');
 	Route::get('/obtiene_info_plantas', 'ordenes_compraController@obtiene_info_plantas');
 	Route::get('/envia_info_planta', 'ordenes_compraController@envia_info_planta')->name('envia_plantas');
+	Route::get('/guarda_seguimiento_materiales', 'ordenes_compraController@guarda_seguimiento_materiales');
+	
 	
 });
 

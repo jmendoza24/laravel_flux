@@ -5,17 +5,19 @@
 <table class="table display nowrap table-striped table-bordered zero-configuration small">
 	<thead>
 		<tr style="background: #518a87; color: white;">
-			<td>PLANTA</td>
-			<td>UNIDADES / QUANTITY</td>
-			<td>U. MEDIDA / UOM</td>
-			<td>LIBRAS / LBS</td>
-			<td>DESCRIPCION / FULL DESCRIPTION</td>
-			<td>PRECIO UNIDAD  / UNIT PRICE	</td>
-			<td>TOTAL DLLS / TOTAL DOLLAR VALUE</td>
+			<td>IDN</td>
+			<td>Planta</td>
+			<td>Unidades</td>
+			<td>U. Medida</td>
+			<td>Libras</td>
+			<td>Descripción</td>
+			<td>Precio unidad</td>
+			<td>Total dls</td>
 		</tr>
 	</thead>
 	@foreach($detalle as $det)
 	<tr>
+		<td>{{ str_pad($det->id,8,'0',STR_PAD_LEFT) }}</td>
 		<td>{{ $det->nombre}}</td>
 		<td></td>
 		<td></td>

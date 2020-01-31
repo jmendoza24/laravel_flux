@@ -268,26 +268,32 @@ class ordenes_compra extends Model
 
         $var =  db::table('seguimiento_planeacion')
                 ->where([['id_orden',$filtro->id_orden],['id_detalle',$filtro->id_detalle]])->get();
-       
 
     }
     
 
     function get_materiales($filtro){
-        $prod = db::table('producto_materialesforma')->where([['forma',1],['id_producto',7]])->get();
-       # dd($prod);
-        $materiales = db::select('select m.forma as idforma, f.forma as nforma, m.id as idmaterial, d.id as id_detalle, d.producto, m.espesor, m.ancho, m.altura, m.peso_distancia, 
-                                 p.espesor as pespesor, p.ancho as pancho, p.altura as paltura, p.peso_distancia as pdisct, c.valor as nespesor, c2.valor as nancho, c3.valor as naltura, c4.valor as npeso_distancia
+        $prod = db::table('seguimiento_materiales as d')
+                #->join('producto_materialesforma as p','p.id_producto','d.producto')
+                ->where('id_orden',14)
+                #->selectraw('d.*')
+                ->get();
+
+          #dd($prod);
+        $materiales = db::select('select s.id_materia, p.id as idmaterial, d.id_orden, d.id, m.forma as idforma, f.forma as nforma, m.id as idmaterial, d.id as id_detalle, d.producto, m.espesor, p.espesor as pespesor, m.ancho, p.ancho as pancho, m.altura, p.altura as paltura, m.peso_distancia, p.peso_distancia as ppeso_distancia,
+                                 p.espesor as pespesor, p.ancho as pancho, p.altura as paltura, p.peso_distancia as pdisct, c.valor as nespesor, c2.valor as nancho, c3.valor as naltura, c4.valor as npeso_distancia, colada_numero
                                  from ordencompra_detalle as d
                                  inner join producto_materialesforma p on d.producto = p.id_producto
-                                 left join materiales m on m.forma = p.forma and p.espesor = m.espesor and p.ancho = m.ancho and p.altura = m.altura and ifnull(p.peso_distancia,0) = ifnull(m.peso_distancia,0)
+                                 inner join materiales m on m.forma = p.forma and ifnull(p.espesor,0) = ifnull(m.espesor,0) and ifnull(p.ancho,0) = ifnull(m.ancho,0) and ifnull(p.altura,0) = ifnull(m.altura,0) and ifnull(p.peso_distancia,0) = ifnull(m.peso_distancia,0) and m.planta = d.planta
                                  left join catalogo_formas c on p.espesor = c.id
                                  left join catalogo_formas c2 on p.ancho = c2.id
                                  left join catalogo_formas c3 on p.altura = c3.id
                                  left join catalogo_formas c4 on p.peso_distancia = c4.id
                                  left join formas as f on f.id = p.forma
+                                 left join seguimiento_materiales as s on s.id_materia = m.id
                                  where d.id = ' .$filtro->id_detalle);
-      #  dd($materiales);    #and p.ancho = m.ancho and p.altura = m.altura and p.peso_distancia = m.peso_distancia 
+        #dd($materiales);    #and p.ancho = m.ancho and p.altura = m.altura and p.peso_distancia = m.peso_distancia 
+         #  and p.espesor = m.espesor and p.ancho = m.ancho and p.altura = m.altura and ifnull(p.peso_distancia,0) = ifnull(m.peso_distancia,0)
 
         $mat_formas =  db::table('ordencompra_detalle as d')
                         ->join('producto_materialesforma as p','d.producto','p.id_producto')
@@ -297,8 +303,9 @@ class ordenes_compra extends Model
                         ->leftjoin('catalogo_formas as c3','p.altura','c3.id')
                         ->leftjoin('catalogo_formas as c4','p.peso_distancia','c4.id')
                         ->where('d.id',$filtro->id_detalle)
-                        ->selectraw('p.id, p.forma as idforma, f.forma, c.valor as espesor, c2.valor as ancho, c3.valor as altura, c4.valor as peso_distancia')
+                        ->selectraw('p.id, p.forma as idforma, p.espesor as pespesor, p.ancho as pancho, p.altura as paltura, p.peso_distancia as ppeso_distancia, f.forma, c.valor as espesor, c2.valor as ancho, c3.valor as altura, c4.valor as peso_distancia')
                         ->get();
+         #dd($mat_formas);
         
         $result = array('materiales'=>$materiales,
                         'mat_formas'=>$mat_formas);
@@ -316,7 +323,7 @@ class ordenes_compra extends Model
                ->selectraw('d.planta, count(*) conteo, p.nombre')
                ->get();
                
-    }
+    } 
 
     function obtiene_info_plantas($filtros){
         return db::table('ordenes_compras as o')

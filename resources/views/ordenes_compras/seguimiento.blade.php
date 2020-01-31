@@ -57,7 +57,7 @@ Seguimiento ordenes de trabajo
             <th class="produccion">Corte</th>
             <th class="produccion">Forma</th>
             <th class="produccion">Soldado</th>
-            <th class="produccion">TT</th>
+            <th class="produccion">TT</th> 
             <th class="produccion">Pruebas NDE</th>
             <th class="produccion">Pintado</th>
             <th class="produccion">Empaque</th>
@@ -147,48 +147,48 @@ Seguimiento ordenes de trabajo
             </div>
             </td>
             <td class="produccion">
-              <input type="date" name="" class="form-control">
+              <input type="date" id="fecha_termino_seg" value="{{ $producto->fecha_estimado_termino}}" class="form-control" onchange="guarda_planeacion(8,{{ $producto->id_detalle}},{{$producto->id_orden}});"> 
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
+                <span class="badge badge-success badge-outlined">SI</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(1,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
+                <span class="badge badge-success badge-outlined">SI</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(2,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
+                <span class="badge badge-success badge-outlined">SI</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(4,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
+                <span class="badge badge-success badge-outlined">SI</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(4,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
+                <span class="badge badge-success badge-outlined">SI</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(5,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
+                <span class="badge badge-success badge-outlined">SI</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(6,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
 
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
-                <input type="checkbox" class="switch" data-on-label="&nbsp;Si&nbsp;" id="switch5" data-group-cls="btn-group-sm" >
+                <span class="badge badge-success badge-outlined">SI</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(7,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>

@@ -7,6 +7,7 @@ use App\Models\productos;
 use App\Models\logistica;
 use App\Models\clientes;
 use App\Models\plantas;
+use App\Models\Seguimiento_materiales;
 use App\Http\Requests\Createordenes_compraRequest;
 use App\Http\Requests\Updateordenes_compraRequest;
 use App\Repositories\ordenes_compraRepository;
@@ -302,7 +303,7 @@ class ordenes_compraController extends AppBaseController
                         ->leftjoin('clientes as c','id_empresa','c.id')
                         ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
                         ->where('o.tipo',2)
-                        ->selectraw('pr.*, pr.id as idproducto, o.orden_compra, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
+                        ->selectraw('pr.*, sp.fecha_estimado_termino, pr.id as idproducto, o.orden_compra, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
                         ->orderby('d.id','asc')
                         ->get();
 
@@ -459,7 +460,7 @@ class ordenes_compraController extends AppBaseController
         $material = $materiales['materiales'];
         $mat_forma = $materiales['mat_formas'];
 
-      #  dd($material);
+        #dd($material);
         $options = view('ordenes_compras.seguimiento_materiales',compact('material','mat_forma'))->render();
         return json_encode($options);
 
@@ -511,6 +512,8 @@ class ordenes_compraController extends AppBaseController
     }
 
     function obtiene_producto_ot(Request $request){
+        $logistica  = new logistica;
+
         $cliente = ordenes_compra::where('id',$request->id_orden)
                     ->get();          
 
@@ -520,14 +523,28 @@ class ordenes_compraController extends AppBaseController
             ->delete();
         }
         
+        ordenes_compra::where('id',$request->id_orden)->update(['cliente'=>$request->cliente]);
+        /**
         $productos = productos::where('id_empresa',$request->cliente)->get();
+        $logistica->id_cliente = $request->cliente;
+        $logistica = $logistica->cliente_logisticas($logistica);
+
+        $logisticas = '<option value="">Seleccione una opcion</option>';
+        foreach ($logistica as $log) {
+            $logisticas .= '<option value="'.$log->id.'">'.$log->calle . ', ' .$log->municipio .', '. $log->nestado .', '. $log->npais.'</option>';
+        }
+
 
         $prod = '<option value="">Seleccione una opcion</option>';
         foreach ($productos as $p) {
             $prod .= '<option value="'.$p->id.'">'.$p->numero_parte.'</option>';
         }
 
-        return json_encode($prod);
+        $arr = array('logisticas'=>$logisticas,
+                     'prod'=>$prod);
+
+        return json_encode($arr);
+        */
     }
 
     function orden_factura(Request $request){
@@ -562,5 +579,15 @@ class ordenes_compraController extends AppBaseController
         $pdf = \PDF::loadView('ordenes_compras.plantilla_factura',compact('detalle'))->setPaper('A4-L','landscape');
         return $pdf->download('OrdenTrabajoPlanta_'.$request->id_planta.'.pdf');
 
+    }
+
+    function guarda_seguimiento_materiales(Request $request){
+        if($request->valor==1){
+            seguimiento_materiales::insert(['id_orden'=>$request->id_orden,
+                                            'id_detalle'=>$request->id_detalle,
+                                            'id_materia'=>$request->id_material]);    
+        }else{
+            seguimiento_materiales::where([['id_orden',$request->id_orden],['id_detalle',$request->id_detalle],['id_materia',$request->id_material]])->delete();
+        }        
     }
 }
