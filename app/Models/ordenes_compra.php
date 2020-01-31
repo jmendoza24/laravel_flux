@@ -193,14 +193,26 @@ class ordenes_compra extends Model
     }
 
     function informacion_subprocesos($filtro){
+        $id_detalle = $filtro->id_detalle;
+        $id_orden = $filtro->id_orden;
 
-        return db::table('productos_subprocesos as ps')
-                        ->leftjoin('subprocesos as s', 's.id','ps.id_subproceso')
-                        ->where([['ps.id_producto',$filtro->id_producto],['ps.id_proceso',$filtro->id_proceso]])
-                        ->orderby('subproceso')
-                        ->get();
-       
-        #dd($var);
+        
+
+        return  db::table('productos_subprocesos as ps')
+                    ->leftjoin('productos_procesos as pp', function ($join) {
+                        $join->on('pp.id_producto','ps.id_producto');
+                        $join->on('pp.id_proceso','ps.id_proceso');
+                    })
+                    ->leftjoin('seguimiento_produccion as seg',function($join)use($id_detalle){
+                            $join->on('ps.id_subproceso','seg.id_subproceso')
+                                 ->where('seg.id_detalle',$id_detalle);
+                    })
+                    ->leftjoin('subprocesos as s', 's.id','ps.id_subproceso')
+                    ->leftjoin('procesos as pc','pc.id','ps.id_proceso')
+                    ->where([['ps.id_producto',$filtro->id_producto],['ps.id_proceso',$filtro->id_proceso]])
+                    ->orderby('subproceso')
+                    ->selectraw('seg.*, ps.id_subproceso as idsub, pp.horas ,subproceso, procesos')
+                    ->get();
     }
 
     function get_comentario($filtro){
@@ -280,7 +292,7 @@ class ordenes_compra extends Model
                 ->get();
 
           #dd($prod);
-        $materiales = db::select('select s.id_materia, p.id as idmaterial, d.id_orden, d.id, m.forma as idforma, f.forma as nforma, m.id as idmaterial, d.id as id_detalle, d.producto, m.espesor, p.espesor as pespesor, m.ancho, p.ancho as pancho, m.altura, p.altura as paltura, m.peso_distancia, p.peso_distancia as ppeso_distancia,
+        $materiales = db::select('select s.id_materia, d.asigan_meterial, p.id as idmaterial, d.id_orden, d.id, m.forma as idforma, f.forma as nforma, m.id as idmaterial, d.id as id_detalle, d.producto, m.espesor, p.espesor as pespesor, m.ancho, p.ancho as pancho, m.altura, p.altura as paltura, m.peso_distancia, p.peso_distancia as ppeso_distancia,
                                  p.espesor as pespesor, p.ancho as pancho, p.altura as paltura, p.peso_distancia as pdisct, c.valor as nespesor, c2.valor as nancho, c3.valor as naltura, c4.valor as npeso_distancia, colada_numero
                                  from ordencompra_detalle as d
                                  inner join producto_materialesforma p on d.producto = p.id_producto
@@ -334,5 +346,29 @@ class ordenes_compra extends Model
                ->whereNull('enviado_planta')
                ->selectraw('d.*, pl.nombre,p.descripcion,p.costo_produccion')
                ->get();
+    }
+
+    function guarda_seguimiento_subprocesos($filtros){
+        $existe = db::table('seguimiento_produccion')
+                    ->where([['id_orden',$filtros->id_orden],['id_detalle',$filtros->id_detalle],['id_subproceso',$filtros->id_sub]])
+                    ->count();
+        
+        if($existe >0){
+
+            db::table('seguimiento_produccion')
+                ->where([['id_orden',$filtros->id_orden],['id_detalle',$filtros->id_detalle],['id_subproceso',$filtros->id_sub]])
+                ->update([$filtros->campo=>$filtros->valor]);
+                
+        }else{
+            db::table('seguimiento_produccion')
+                ->insert(['id_orden'=>$filtros->id_orden,
+                          'id_detalle'=>$filtros->id_detalle,
+                          'id_subproceso'=>$filtros->id_sub,
+                          'id_proceso'=>$filtros->id_proceso,
+                          $filtros->campo=>$filtros->valor
+                         ]);
+        }
+      #  $var = db::table('seguimiento_produccion')->get();
+        #dd($var);
     }
 }

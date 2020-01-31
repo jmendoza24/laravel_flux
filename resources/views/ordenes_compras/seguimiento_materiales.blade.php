@@ -5,6 +5,13 @@ $altura = array(5,6,7,8,9,10);
 $peso = array(7,8,9,10,13);
 
  ?>
+ @if($material[0]->asigan_meterial != 1)
+ <button class="btn btn-primary pull-right" onclick="finaliza_material_asigna({{ $material[0]->id_orden}},{{ $material[0]->id}},1)">Finaliza asignación</button>
+ <br><br>
+ @elseif($material[0]->asigan_meterial==1 && Auth::user()->tipo==1)
+ <button class="btn btn-primary pull-right" onclick="finaliza_material_asigna({{ $material[0]->id_orden}},{{ $material[0]->id}},0)">Modificar asignación</button>
+ <br><br>
+ @endif
 <table class="table table-bordered table-striped" id="tbl_materiales">
 	<thead>
 		<tr>
@@ -36,7 +43,7 @@ $peso = array(7,8,9,10,13);
 					@foreach($material as $mat)
 						@if($mat_for->idforma == $mat->idforma)
 						 <div class="d-inline-block custom-control custom-checkbox mr-1">
-	                      <input type="checkbox" {{ $mat->id_materia >0?'checked':'' }} class="custom-control-input" name="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial}}" id="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial}}" onchange="seguimiento_materiales({{ $mat->id_orden}},{{ $mat->id}},{{$mat->idmaterial}})" >
+	                      <input type="checkbox" {{ $mat->id_materia >0?'checked':'' }} {{ ($mat->asigan_meterial==1)?'disabled':''}} class="custom-control-input" name="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial}}" id="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial}}" onchange="seguimiento_materiales({{ $mat->id_orden}},{{ $mat->id}},{{$mat->idmaterial}})" >
 	                      <label class="custom-control-label" for="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial}}">
 	                      	<!--{{ $mat->nforma}} <br>-->
 					      	@if(in_array($mat_for->idforma,$espesor))

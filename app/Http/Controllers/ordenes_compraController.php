@@ -36,9 +36,9 @@ class ordenes_compraController extends AppBaseController
         $ordenesCompras = $ordenes['var'];
         $productos = $ordenes['productos'];
 #        db::table('users')->where('id',1)->update(['tipo'=>0]);
- #       $dd = db::table('users')->get();
-
-      #  dd($dd);
+      #$dd = db::table('seguimiento_produccion')->get();
+       
+       # dd($dd);
         return view('ordenes_compras.index',compact('ordenesCompras','productos'));
     
     }
@@ -338,14 +338,16 @@ class ordenes_compraController extends AppBaseController
 
 
     function seguimiento_subproceso(Request $request){
+        $id_detalle = $request->id_detalle;
         $filtro = new ordenes_compra;
+        $orden = db::table('ordencompra_detalle')->where('id',$request->id_detalle)->get();
         $filtro->id_producto = $request->id_producto;
         $filtro->id_proceso = $request->id_proceso;
         $filtro->id_detalle = $request->id_detalle;
+        $filtro->id_orden = $orden[0]->id_orden;
 
         $subprocesos = $filtro->informacion_subprocesos($filtro);
-
-        $options = view('ordenes_compras.info_subprocesos',compact('subprocesos'))->render();
+        $options = view('ordenes_compras.info_subprocesos',compact('subprocesos','id_detalle'))->render();
         return json_encode($options);
 
     }
@@ -437,6 +439,7 @@ class ordenes_compraController extends AppBaseController
         $filtro->valor      = $request->comentario;
 
         $informacion = $filtro->guardar_seguimiento($filtro);
+        return 1;
         
     }
 
@@ -525,27 +528,7 @@ class ordenes_compraController extends AppBaseController
         
         ordenes_compra::where('id',$request->id_orden)->update(['cliente'=>$request->cliente]);
         return 1;
-        /**
-        $productos = productos::where('id_empresa',$request->cliente)->get();
-        $logistica->id_cliente = $request->cliente;
-        $logistica = $logistica->cliente_logisticas($logistica);
-
-        $logisticas = '<option value="">Seleccione una opcion</option>';
-        foreach ($logistica as $log) {
-            $logisticas .= '<option value="'.$log->id.'">'.$log->calle . ', ' .$log->municipio .', '. $log->nestado .', '. $log->npais.'</option>';
-        }
-
-
-        $prod = '<option value="">Seleccione una opcion</option>';
-        foreach ($productos as $p) {
-            $prod .= '<option value="'.$p->id.'">'.$p->numero_parte.'</option>';
-        }
-
-        $arr = array('logisticas'=>$logisticas,
-                     'prod'=>$prod);
-
-        return json_encode($arr);
-        */
+        
     }
 
     function orden_factura(Request $request){
@@ -601,5 +584,33 @@ class ordenes_compraController extends AppBaseController
     function finalizar_asignacion(Request $request){
         ordenes_compra::where('id',$request->id_orden)->update(['tipo'=>3]);
         return 1;
+    }
+
+    function finaliza_material_asigna(Request $request){
+        db::table('ordencompra_detalle')->where('id',$request->id_detalle)->update(['asigan_meterial'=>$request->tipo]);
+        return 1;
+    }
+
+    function guarda_seg_produccion(Request $request){
+        $filtro = new ordenes_compra;
+        #db::table('seguimiento_produccion')->truncate();
+        $order = db::table('ordencompra_detalle')->where('id',$request->id_detalle)->get();
+        $proceso = db::table('subprocesos')->where('id',$request->id_sub)->get();
+        
+        $request->id_orden  = $order[0]->id_orden;
+        $request->id_proceso  = $proceso[0]->idproceso;
+        $filtro->guarda_seguimiento_subprocesos($request);
+        
+        $filtro->id_proceso = $proceso[0]->idproceso;
+        $filtro->id_producto = $order[0]->producto;
+        $filtro->id_detalle =$order[0]->id;
+        $filtro->id_orden =$order[0]->id_orden;
+       
+
+        $subprocesos = $filtro->informacion_subprocesos($filtro);
+
+        $id_detalle = $request->id_detalle;
+        $options = view('ordenes_compras.seguimiento_produccion',compact('subprocesos','id_detalle'))->render();
+        return json_encode($options);
     }
 }
