@@ -35,8 +35,8 @@ class ordenes_compraController extends AppBaseController
         $ordenes = $orden->ordenesCompra();
         $ordenesCompras = $ordenes['var'];
         $productos = $ordenes['productos'];
-        db::table('users')->where('id',1)->update(['tipo'=>0]);
-        $dd = db::table('users')->get();
+#        db::table('users')->where('id',1)->update(['tipo'=>0]);
+ #       $dd = db::table('users')->get();
 
       #  dd($dd);
         return view('ordenes_compras.index',compact('ordenesCompras','productos'));
@@ -524,6 +524,7 @@ class ordenes_compraController extends AppBaseController
         }
         
         ordenes_compra::where('id',$request->id_orden)->update(['cliente'=>$request->cliente]);
+        return 1;
         /**
         $productos = productos::where('id_empresa',$request->cliente)->get();
         $logistica->id_cliente = $request->cliente;
@@ -576,8 +577,14 @@ class ordenes_compraController extends AppBaseController
         $orden->id_planta = $request->id_planta;
         $detalle = $orden->obtiene_info_plantas($orden);
 
-        $pdf = \PDF::loadView('ordenes_compras.plantilla_factura',compact('detalle'))->setPaper('A4-L','landscape');
-        return $pdf->download('OrdenTrabajoPlanta_'.$request->id_planta.'.pdf');
+        db::update('update ordenes_compras  o
+                   inner join ordencompra_detalle  d on d.id_orden= o.id
+                   set enviado_planta = 1
+                   where o.tipo = 3 and d.planta = '.$request->id_planta.' and o.tipo != 4');
+
+        return redirect('/ordenesporenviar');
+        #$pdf = \PDF::loadView('ordenes_compras.plantilla_factura',compact('detalle'))->setPaper('A4-L','landscape');
+        #return $pdf->download('OrdenTrabajoPlanta_'.$request->id_planta.'.pdf');
 
     }
 
@@ -589,5 +596,10 @@ class ordenes_compraController extends AppBaseController
         }else{
             seguimiento_materiales::where([['id_orden',$request->id_orden],['id_detalle',$request->id_detalle],['id_materia',$request->id_material]])->delete();
         }        
+    }
+
+    function finalizar_asignacion(Request $request){
+        ordenes_compra::where('id',$request->id_orden)->update(['tipo'=>3]);
+        return 1;
     }
 }

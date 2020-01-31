@@ -10,7 +10,7 @@
               @if($nuevo ==0)
               <label id="numproveedor">{{ $ordenesCompra->nombre_corto}}</label>
                @else
-               <select class="form-control" style="width: 100%;" name="cliente" id="cliente" onchange="obtiene_producto_ot({{ $ordenesCompra->id }})">
+               <select class="form-control" style="width: 100%;" name="cliente"  id="cliente" onchange="obtiene_producto_ot({{ $ordenesCompra->id }})">
                       <option value="">Seleccione una opcion</option>
                       @foreach($clientes as $cliente)
                       <option value="{{ $cliente->id}}" 
@@ -29,7 +29,7 @@
       <tr>
         <td><label class="label-control" for="descripcion">Orden compra cliente:</label></td>
         <td>
-              <input type="text" id="orden_compra" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control" {{ ($editar ==1)?'disabled':''}} />
+              <input type="text" id="orden_compra" {{ $ordenesCompra->tipo==3?'disabled':'' }} onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control" {{ ($editar ==1)?'disabled':''}} />
         </td>
         <td><label class="label-control" for="descripcion">Email  compra:</label></td>
         <td>
@@ -39,7 +39,7 @@
       <tr>
         <td><label class="label-control" for="descripcion" >Shipping to:</label></td>
         <td colspan="3">
-              <select class="form-control" id="shipping_id" {{($editar ==1)?'disabled':''}} onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
+              <select class="form-control" id="shipping_id" {{($editar ==1)?'disabled':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
                 <option value="">Seleecione...</option>
                 @foreach($logisticas as $logistica)
                 <option value="{{$logistica->id}}" {{($ordenesCompra->shipping==$logistica->id)?'selected':'' }}>
@@ -104,7 +104,7 @@
       <tr>
           <td>
           @if($editar ==0)
-            <input type="text" style="width: 60px;" name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+            <input type="text" style="width: 60px;" {{ $ordenesCompra->tipo==3?'disabled':'' }} name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
           @else
           <label>{{ $det->incremento }}</label>
           @endif
@@ -115,7 +115,7 @@
         <td>{{ $det->dibujo_nombre}}</td>
         @if($editar ==0)
         <td>
-          <input type="number" {{($ordenesCompra->tipo==2)?'readonly':''}} style="text-align: right;" name="cantidad{{$det->id}}" id="cantidad{{$det->id}}" class="form-control" min="1" value="{{ $det->cantidad}}" onchange="actualiza_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})">
+          <input type="number" {{($ordenesCompra->tipo==2)?'readonly':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} style="text-align: right;" name="cantidad{{$det->id}}" id="cantidad{{$det->id}}" class="form-control" min="1" value="{{ $det->cantidad}}" onchange="actualiza_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})">
         </td>
         @endif
         <td style="text-align: center;">{{ $det->tiempo_entrega }}</td>
@@ -164,7 +164,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Incoterms : </label>
-        <select class="form-control custom-select required" {{($editar ==1)?'disabled':''}} style="width: 100%;"name="income" id="income" onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
+        <select class="form-control custom-select required" {{ $ordenesCompra->tipo==3?'disabled':'' }} {{($editar ==1)?'disabled':''}} style="width: 100%;"name="income" id="income" onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
             <option value="">Seleccione una opcion</option>
             @foreach($income as $inco)
             <option value="{{ $inco->id}}" 
@@ -180,19 +180,19 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Lugar : </label>
-        <input type="text" {{($editar ==1)?'disabled':''}} class="form-control" id="lugar" name="lugar" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="<?php echo ($ordenesCompra->lugar);?>">
+        <input type="text" {{($editar ==1)?'disabled':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} class="form-control" id="lugar" name="lugar" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="<?php echo ($ordenesCompra->lugar);?>">
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Términos : </label>
-        <textarea class="form-control" {{($editar ==1)?'disabled':''}} {{($nuevo ==1)?'disabled':''}} style="height: 200px;"  onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo nl2br($ordenesCompra->desc_inco)?></textarea>
+        <textarea class="form-control" {{($editar ==1)?'disabled':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} {{($nuevo ==1)?'disabled':''}} style="height: 200px;"  onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo nl2br($ordenesCompra->desc_inco)?></textarea>
       </div>
     </div> 
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4">Notas : </label>
-        <textarea class="form-control" id="notas" {{($editar ==1)?'disabled':''}} style="height: 200px;" name="notas" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo ($ordenesCompra->notas);?></textarea>
+        <textarea class="form-control" id="notas" {{($editar ==1)?'disabled':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} style="height: 200px;" name="notas" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" ><?php echo ($ordenesCompra->notas);?></textarea>
       </div>
     </div> 
     <br>

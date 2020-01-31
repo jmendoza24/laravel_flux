@@ -1,7 +1,10 @@
 @extends('layouts.app')
 @section('titulo')
     Asignación OT-000{{ $ordenesCompra->id }} | <b>Fecha :</b> {{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}
-    <a href="{{route('factura.plantilla')}}">Fact</a>
+    @if($ordenesCompra->tipo !=3)
+    <br>
+    <button class="btn btn-primary pull-right" onclick="finalizar_asignacion({{ $ordenesCompra->id }})">Finalizar asignación</button>
+    @endif
 @endsection  
 @section('content')
 @php($editar = 1)

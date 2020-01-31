@@ -317,7 +317,7 @@ class ordenes_compra extends Model
         return db::table('ordenes_compras as o')
                ->join('ordencompra_detalle as d','d.id_orden','o.id')
                ->join('plantas as p','p.id','d.planta')
-               ->where([['o.tipo',2],['d.planta','>',0]])
+               ->where([['o.tipo',3],['d.planta','>',0],['o.tipo','!=',4]])
                ->whereNull('enviado_planta')
                ->groupBy('d.planta')
                ->selectraw('d.planta, count(*) conteo, p.nombre')
@@ -330,7 +330,7 @@ class ordenes_compra extends Model
                ->join('ordencompra_detalle as d','d.id_orden','o.id')
                ->leftjoin('productos as p','p.id','d.producto')
                ->leftjoin('plantas as pl','pl.id','d.planta')
-               ->where([['o.tipo',2],['d.planta',$filtros->id_planta]])
+               ->where([['o.tipo',3],['d.planta',$filtros->id_planta],['o.tipo','!=',4]])
                ->whereNull('enviado_planta')
                ->selectraw('d.*, pl.nombre,p.descripcion,p.costo_produccion')
                ->get();

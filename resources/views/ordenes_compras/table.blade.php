@@ -1,7 +1,7 @@
+{{ sizeof($ordenesCompras)}} {{ Auth::user()->tipo}}
 <table class="table display nowrap table-striped table-bordered" id="ordenesCompras-table">
     <thead>
         <tr>
-    
             <th>OCC</th>
             <th>Cliente</th>
             <th>Fecha OCC</th>            
@@ -37,7 +37,7 @@
                 </div>
             </td>
         </tr>
-        @elseif($ordenesCompra->tipo==1 && Auth::user()->tipo==1 )
+        @elseif(Auth::user()->tipo==1)
         <tr>
             <th>{{ $ordenesCompra->orden_compra}}</th>
             <td>{!! $ordenesCompra->nombre_corto !!}</td>
@@ -56,12 +56,12 @@
             <td style="text-align: right;">${{ number_format($ordenesCompra->total,2)}}</td>
             <td>
                 <div class='btn-group'>
-                    <a href="{!! route('ordenesCompras.show', [$ordenesCompra->id]) !!}" class='btn  btn-float btn-outline-info btn-round' title="Administrador" style="{{($ordenesCompra->tipo==2)?'background: #6d6d6d; color:white;':''}}" ><i class="fa fa-check"></i></a>
+                    <a href="{!! route('ordenesCompras.edit', [$ordenesCompra->id]) !!}" class='btn  btn-float btn-outline-info btn-round' title="Asignacion"><i  class="fa fa-share-alt"></i></a>
+                    <a href="{!! route('ordenesCompras.show', [$ordenesCompra->id]) !!}" class='btn  btn-float btn-outline-info btn-round' title="Administrador" style="{{($ordenesCompra->tipo==3)?'background: #6d6d6d; color:white;':''}}" ><i class="fa fa-check"></i></a>
                     <!--<a href="{!! route('ordenesCompras.seguimiento', [$ordenesCompra->id]) !!}" class='btn  btn-float btn-outline-info btn-round' title="Seguimiento"><i  class="fa fa-list-ul" aria-hidden="true"></i></a>                    --->
                 </div>
             </td>
         </tr>
-
         @endif
     @endforeach
     </tbody>
