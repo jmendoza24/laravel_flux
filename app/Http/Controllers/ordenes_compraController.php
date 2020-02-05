@@ -613,4 +613,9 @@ class ordenes_compraController extends AppBaseController
         $options = view('ordenes_compras.seguimiento_produccion',compact('subprocesos','id_detalle'))->render();
         return json_encode($options);
     }
+
+    function carga_files_produccion(Request $request){
+        $arreglo = $request->all();
+        dd($arreglo);
+    }
 }

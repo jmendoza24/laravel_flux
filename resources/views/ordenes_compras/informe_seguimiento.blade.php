@@ -8,7 +8,13 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="3">Fotos</td>
+		<td colspan="3"> Cargar Fotos<br>
+      <form method="post" enctype="multipart/form-data" class="form-inline" id="formUpload">
+              {!! csrf_field() !!}
+        <input type="file" name="fotos_im" class="form-control"> &nbsp;&nbsp;
+        <span class="btn btn-primary" onclick="carga_documentos(1)">Cargar</span>
+      </form>
+    </td>
 	</tr>
 	<tr>
 		<td colspan="3">
