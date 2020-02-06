@@ -322,7 +322,7 @@ class ordenes_compraController extends AppBaseController
 
          $plantas = DB::table('plantas')->get();  
          $calida_seg = db::table('seguimiento_calidad')
-                      ->selectraw("if(estatus='',0,estatus) as estatus, id_detalle, id_orden, id_proceso")
+                      ->selectraw("ifnull(estatus,0) as estatus, id_detalle, id_orden, id_proceso")
                       ->get();
 
         # $procesos = $orden->get_procesos_ordenes();
