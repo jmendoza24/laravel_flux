@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
-    <div class="row" style="overflow-y: scroll; max-height: 400px;">
+    <div class="row" style="overflow-y: scroll; max-height: 400px;" id="seguimiento_calidad">
     @include('ordenes_compras.informe_seguimiento')
     </div>
   </div>

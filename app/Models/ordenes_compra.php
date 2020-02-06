@@ -196,8 +196,6 @@ class ordenes_compra extends Model
         $id_detalle = $filtro->id_detalle;
         $id_orden = $filtro->id_orden;
 
-        
-
         return  db::table('productos_subprocesos as ps')
                     ->leftjoin('productos_procesos as pp', function ($join) {
                         $join->on('pp.id_producto','ps.id_producto');

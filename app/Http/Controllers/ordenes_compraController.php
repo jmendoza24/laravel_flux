@@ -20,6 +20,7 @@ use Sesion;
 use DB; 
 use View;
 use PDF;
+use Auth;
 
 class ordenes_compraController extends AppBaseController
 {
@@ -35,10 +36,22 @@ class ordenes_compraController extends AppBaseController
         $ordenes = $orden->ordenesCompra();
         $ordenesCompras = $ordenes['var'];
         $productos = $ordenes['productos'];
-#        db::table('users')->where('id',1)->update(['tipo'=>0]);
-      #$dd = db::table('seguimiento_produccion')->get();
+      #  db::select('drop table seguimiento_produccion_files');
+       /**  db::select('CREATE TABLE seguimiento_calidad (
+ id int(10) unsigned NOT NULL AUTO_INCREMENT,
+ id_orden int(11) NOT NULL,
+ id_detalle int(11) NOT NULL,
+ id_proceso int(11) DEFAULT NULL,
+ comentario varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+ estatus varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+ created_at timestamp NULL DEFAULT NULL,
+ updated_at timestamp NULL DEFAULT NULL,
+ deleted_at timestamp NULL DEFAULT NULL,
+ PRIMARY KEY (id)
+) ');
+      $dd = db::table('seguimiento_calidad')->get();
        
-       # dd($dd);
+        dd($dd);*/
         return view('ordenes_compras.index',compact('ordenesCompras','productos'));
     
     }
@@ -307,13 +320,16 @@ class ordenes_compraController extends AppBaseController
                         ->orderby('d.id','asc')
                         ->get();
 
-         $plantas = DB::table('plantas')->get();       
+         $plantas = DB::table('plantas')->get();  
+         $calida_seg = db::table('seguimiento_calidad')
+                      ->selectraw("if(estatus='',0,estatus) as estatus, id_detalle, id_orden, id_proceso")
+                      ->get();
 
         # $procesos = $orden->get_procesos_ordenes();
          #$sub_procesos = $orden->get_sub_procesos_ordenes($id);
         # dd($sub_procesos);
     
-        return view('ordenes_compras.seguimiento',compact('productos','plantas'));
+        return view('ordenes_compras.seguimiento',compact('productos','plantas','calida_seg'));
     }
 
     function obtiene_seguimiento(Request $request){
@@ -347,7 +363,27 @@ class ordenes_compraController extends AppBaseController
         $filtro->id_orden = $orden[0]->id_orden;
 
         $subprocesos = $filtro->informacion_subprocesos($filtro);
-        $options = view('ordenes_compras.info_subprocesos',compact('subprocesos','id_detalle'))->render();
+        $images_produccion = db::table('seguimiento_produccion_files')
+                            ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso],['tipo',1]])
+                            ->get();
+        $files_produccion = db::table('seguimiento_produccion_files as f')
+                            ->join('users as u', 'u.id','f.id_usuario')
+                            ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso],['f.tipo',2]])
+                            ->selectraw('f.*, u.name as user_name')
+                            ->get();
+        $seguimiento_calidad = db::table('seguimiento_calidad')
+                              ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso]])
+                              ->get();
+        if(sizeof($seguimiento_calidad)>0){
+            $seguimiento_calidad = $seguimiento_calidad[0];    
+        }else{
+            $seguimiento_calidad = array('comentario'=>'',
+                                         'estatus'=>'');
+            $seguimiento_calidad = (object)$seguimiento_calidad;
+        }
+        
+
+        $options = view('ordenes_compras.info_subprocesos',compact('seguimiento_calidad','subprocesos','id_detalle','filtro','files_produccion','images_produccion'))->render();
         return json_encode($options);
 
     }
@@ -615,7 +651,70 @@ class ordenes_compraController extends AppBaseController
     }
 
     function carga_files_produccion(Request $request){
+        $filtro = new ordenes_compra;
+
         $arreglo = $request->all();
-        dd($arreglo);
+        if(!empty($arreglo)){
+            $file_img = $request->file('fotos_im');
+            $img = Storage::url($file_img->store('seguimiento', 'public'));
+            $imgp = strpos($img,'/storage/');
+            $img = substr($img, $imgp, strlen($img));
+            $user = Auth::user()->id;
+
+            DB::table('seguimiento_produccion_files')
+                ->insert(['id_orden'=>$request->id_orden,
+                          'id_detalle'=>$request->id_detalle,
+                          'id_proceso'=>$request->id_proceso,
+                          'tipo'=>$request->tipo,
+                          'nombre'=>$request->nombre,
+                          'archivo'=>$img,
+                          'fecha'=>date('Y-m-d'),
+                          'id_usuario'=>$user]);
+        }
+
+        
+        $filtro->id_producto = $request->id_producto;
+        $filtro->id_proceso  = $request->id_proceso;
+        $filtro->id_detalle  = $request->id_detalle;
+        $filtro->id_orden    = $request->id_orden;
+
+        $images_produccion = db::table('seguimiento_produccion_files')
+                            ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso],['tipo',1],['id_orden',$request->id_orden]])
+                            ->get();
+        $files_produccion = db::table('seguimiento_produccion_files as f')
+                            ->join('users as u', 'u.id','f.id_usuario')
+                            ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso],['f.tipo',2],['id_orden',$request->id_orden]])
+                            ->selectraw('f.*, u.name as user_name')
+                            ->get();
+        $seguimiento_calidad = db::table('seguimiento_calidad')
+                              ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso],['id_orden',$request->id_orden]])
+                              ->get();
+        $seguimiento_calidad = $seguimiento_calidad[0];
+        $options = view('ordenes_compras.informe_seguimiento',compact('seguimiento_calidad', 'filtro','files_produccion','images_produccion'))->render();
+        
+        return $options;
+
+    }
+
+    function seguimiento_calidad_proceso(Request $request){
+        $existe = db::table('seguimiento_calidad')
+                    ->where([['id_orden',$request->id_orden],['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso]])
+                    ->count();
+        
+        if($existe >0){
+
+            db::table('seguimiento_calidad')
+                ->where([['id_orden',$request->id_orden],['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso]])
+                ->update([$request->campo=>$request->valor]);
+                
+        }else{
+            db::table('seguimiento_calidad')
+                ->insert(['id_orden'=>$request->id_orden,
+                          'id_detalle'=>$request->id_detalle,
+                          'id_proceso'=>$request->id_proceso,
+                          $request->campo=>$request->valor
+                         ]);
+        }
+        return 1;
     }
 }

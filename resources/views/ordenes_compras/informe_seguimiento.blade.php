@@ -1,51 +1,67 @@
-<table class="table table-bordered">
+@if($seguimiento_calidad->estatus==2)
+<div class="row" style="height: 200px;">
+<h4 class="col-md-12">Proceso finalizado, Si necesitas modifcar, solicitar desbloqueo al administrador </h4>
+
+<label class="col-md-2">Ingresa tu correo</label>
+<div class="col-md-3">
+<input type="email" name="" class="form-control">
+</div>
+<div class="col-md-2">
+  <span class="btn btn-primary">Enviar solicitud</span>
+</div>
+
+</div>
+@else
+<table class="table">
 	<tr>
-		<td>
-			Comentarios:
-		</td>
-		<td colspan="2">
-			<textarea class="form-control"></textarea>
-		</td>
+		<td>Comentarios:</td>
+		<td><textarea class="form-control" id="comentario" onchange="seguimiento_calidad_proceso({{ $filtro->id_proceso}},{{ $filtro->id_detalle }},{{ $filtro->id_orden}},'comentario')">{{ $seguimiento_calidad->comentario }}</textarea></td>
+    <td>
+      Estatus:
+    </td>
+    <td>
+      <select class="form-control" id="estatus" onchange="seguimiento_calidad_proceso({{ $filtro->id_proceso}},{{ $filtro->id_detalle }},{{ $filtro->id_orden}},'estatus')">
+        <option value="0" {{ ($seguimiento_calidad->estatus==0)?'selected':''}}>Pendiente</option>
+        <option value="1" {{ ($seguimiento_calidad->estatus==1)?'selected':''}}>Rechazado</option>
+        <option value="2" {{ ($seguimiento_calidad->estatus==2)?'selected':''}}>Aceptado</option>
+      </select>
+    </td>
 	</tr>
 	<tr>
-		<td colspan="3"> Cargar Fotos<br>
+		<td colspan="4"> Cargar Archivos y Fotos<br> 
       <form method="post" enctype="multipart/form-data" class="form-inline" id="formUpload">
               {!! csrf_field() !!}
+        <input type="hidden" name="id_orden" value="{{ $filtro->id_orden}}">
+        <input type="hidden" name="id_detalle" value="{{ $filtro->id_detalle }}">
+        <input type="hidden" name="id_proceso" value="{{ $filtro->id_proceso}}">
         <input type="file" name="fotos_im" class="form-control"> &nbsp;&nbsp;
+        <select class="form-control" name="tipo" required="">
+          <option value="2">Archivos</option>
+          <option value="1">Fotos</option>
+        </select>&nbsp;&nbsp;
+        <input type="text" name="nombre" class="form-control">&nbsp;&nbsp;
         <span class="btn btn-primary" onclick="carga_documentos(1)">Cargar</span>
       </form>
     </td>
 	</tr>
 	<tr>
-		<td colspan="3">
+		<td colspan="4">
 			<div class="card-body  my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-              <div class="row">
-                <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                  <a href="{{ url('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                    <img class="img-thumbnail img-fluid" src="{{ url('app-assets/images/gallery/1.jpg')}}"
-                    itemprop="thumbnail" alt="Image description" />
-                  </a>
-                </figure>
-                <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                  <a href="{{ url('app-assets/images/gallery/2.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                    <img class="img-thumbnail img-fluid" src="{{ url('app-assets/images/gallery/2.jpg')}}"
-                    itemprop="thumbnail" alt="Image description" />
-                  </a>
-                </figure>
-                <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                  <a href="{{ url('app-assets/images/gallery/3.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                    <img class="img-thumbnail img-fluid" src="{{ url('app-assets/images/gallery/3.jpg')}}"
-                    itemprop="thumbnail" alt="Image description" />
-                  </a>
-                </figure>
-                <figure class="col-lg-3 col-md-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                  <a href="{{ url('app-assets/images/gallery/4.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                    <img class="img-thumbnail img-fluid" src="{{ url('app-assets/images/gallery/4.jpg')}}"
-                    itemprop="thumbnail" alt="Image description" />
-                  </a>
-                </figure>
-              </div>
-            </div>
+        <div class="row">
+          @foreach($images_produccion as $images)
+          <div class="col-md-3">
+           <center> <span class="btn btn-danger" style="margin-bottom: 5px;"><i class="fa fa-trash"></i></span></center>
+          <figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+            <a href="{{ url($images->archivo)}}" itemprop="contentUrl" data-size="480x360">
+              <img class="img-thumbnail img-fluid" src="{{ url($images->archivo)}}"
+              itemprop="thumbnail" alt="Image description" />
+            </a>
+            <label>{{ $images->nombre }}</label>
+          </figure>
+          </div>
+          @endforeach
+        </div>
+      </div>
 		</td>
 	</tr>
 </table>
@@ -54,30 +70,17 @@
 	<tr>
 		<th>Documento</th>
 		<th>Fecha</th>
-		<th>PDF</th>
+		<th>Usuario</th>
 	</tr>
 	</thead>
 	<tbody>
+  @foreach($files_produccion as $files)
 	<tr>
-		<td>Documento</td>
-		<td>Fecha</td>
-		<td>PDF</td>
+		<td><a href="{{ $files->archivo}}" target="_blank">{{ $files->nombre}}</td>
+		<td>{{ substr($files->fecha, 0,10) }}</td>
+		<td>{{ $files->user_name}}</td>
 	</tr>
-	<tr>
-		<td>Documento</td>
-		<td>Fecha</td>
-		<td>PDF</td>
-	</tr>
-	<tr>
-		<td>Documento</td>
-		<td>Fecha</td>
-		<td>PDF</td>
-	</tr>
-	<tr>
-		<td>Documento</td>
-		<td>Fecha</td>
-		<td>PDF</td>
-	</tr>
+  @endforeach
 	</tbody>
 </table>
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -135,3 +138,4 @@
 	})
 </script>
 @endsection
+@endif
