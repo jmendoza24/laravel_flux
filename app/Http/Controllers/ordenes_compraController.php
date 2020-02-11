@@ -308,28 +308,37 @@ class ordenes_compraController extends AppBaseController
                         ->join('ordenes_compras as o','o.id','d.id_orden')
                         ->where('o.tipo',2)
                         ->get();
-        #dd($productos);
-
+        #dd($productos); 
+        #51
         $productos = db::table('ordencompra_detalle as d')
                         ->join('ordenes_compras as o','o.id','d.id_orden')
                         ->leftjoin('productos as pr','pr.id','d.producto')
                         ->leftjoin('clientes as c','id_empresa','c.id')
                         ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
                         ->where('o.tipo',2)
-                        ->selectraw('pr.*, sp.fecha_estimado_termino, pr.id as idproducto, o.orden_compra, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
+                        ->selectraw('pr.*, pr.id as idproducto, o.orden_compra, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
                         ->orderby('d.id','asc')
                         ->get();
-
+        
          $plantas = DB::table('plantas')->get();  
          $calida_seg = db::table('seguimiento_calidad')
                       ->selectraw("ifnull(estatus,0) as estatus, id_detalle, id_orden, id_proceso")
                       ->get();
+         #db::table('seguimiento_produccion')->truncate();
+
+         $seg_produccion = db::select('select distinct p.id_detalle, p.id_proceso, ifnull(conteo,0) as conteo
+                                       from seguimiento_produccion p
+                                       left join ( 
+                                                   select id_detalle, count(*) as conteo, id_proceso
+                                                   from seguimiento_produccion
+                                                   where fecha_fin is null
+                                                   group by id_detalle, id_proceso) p2 on p2.id_detalle = p.id_detalle and p.id_proceso = p2.id_proceso');
 
         # $procesos = $orden->get_procesos_ordenes();
          #$sub_procesos = $orden->get_sub_procesos_ordenes($id);
         # dd($sub_procesos);
     
-        return view('ordenes_compras.seguimiento',compact('productos','plantas','calida_seg'));
+        return view('ordenes_compras.seguimiento',compact('productos','plantas','calida_seg','seg_produccion'));
     }
 
     function obtiene_seguimiento(Request $request){

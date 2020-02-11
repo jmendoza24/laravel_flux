@@ -11,6 +11,7 @@ Seguimiento ordenes de trabajo
 @php($color5 = 'secondary')
 @php($color6 = 'secondary')
 @php($color7 = 'secondary')
+@php($color_p = 'secondary')
     <div class="row">
       <label class="col-md-9"></label>
         <select class="form-control col-md-3" id="bloque_muesta" onchange="muestra_bloque()">
@@ -21,7 +22,6 @@ Seguimiento ordenes de trabajo
             <option value="shohwall">Mostrar todos</option>--->
             <option value="planeacion">Planeación</option>
             <option value="produccion">Producción</option>
-            <option value="calidad">Calidad</option>
             <option value="trafico">Tráfico</option>
             <option value="factura">Facturación</option>
         </select>
@@ -158,8 +158,14 @@ Seguimiento ordenes de trabajo
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-success badge-outlined">P</span>&nbsp;
-                
+                @foreach($seg_produccion as $s_prod)
+                @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 1 && $s_prod->conteo==0)
+                  @php($color_p = 'primary')
+                @elseif($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 1 && $s_prod->conteo > 0)
+                @php($color_p = 'secondary')
+                @endif
+                @endforeach
+                <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 @foreach($calida_seg as $calidad)
                   @if($calidad->id_detalle==$producto->id_detalle && $calidad->id_proceso ==1 && $calidad->estatus==0)
                   @php($color = 'secondary')
@@ -185,7 +191,14 @@ Seguimiento ordenes de trabajo
                 @endforeach
 
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-success badge-outlined">P</span>&nbsp;
+                @foreach($seg_produccion as $s_prod)
+                @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 2 && $s_prod->conteo==0)
+                  @php($color_p = 'primary')
+                @elseif($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 2 && $s_prod->conteo > 0)
+                @php($color_p = 'secondary')
+                @endif
+                @endforeach
+                <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color2}} badge-outlined">C</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(2,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
@@ -201,9 +214,16 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-success badge-outlined">P</span>&nbsp;
+                @foreach($seg_produccion as $s_prod)
+                @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 3 && $s_prod->conteo==0)
+                  @php($color_p = 'primary')
+                @elseif($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 3 && $s_prod->conteo > 0)
+                @php($color_p = 'secondary')
+                @endif
+                @endforeach
+                <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color3}} badge-outlined">C</span>
-                &nbsp;<span  onclick="seguimiento_subproceso(4,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(3,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
@@ -217,7 +237,14 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-success badge-outlined">P</span>&nbsp;
+                @foreach($seg_produccion as $s_prod)
+                @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 4 && $s_prod->conteo==0)
+                  @php($color_p = 'primary')
+                @elseif($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 4 && $s_prod->conteo > 0)
+                @php($color_p = 'secondary')
+                @endif
+                @endforeach
+                <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color4}} badge-outlined">C</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(4,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
@@ -233,7 +260,14 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-success badge-outlined">P</span>&nbsp;
+                @foreach($seg_produccion as $s_prod)
+                @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 5 && $s_prod->conteo==0)
+                  @php($color_p = 'primary')
+                @elseif($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 5 && $s_prod->conteo > 0)
+                @php($color_p = 'secondary')
+                @endif
+                @endforeach
+                <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color5}} badge-outlined">C</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(5,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
@@ -250,7 +284,14 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-success badge-outlined">P</span>&nbsp;
+                @foreach($seg_produccion as $s_prod)
+                @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 6 && $s_prod->conteo==0)
+                  @php($color_p = 'primary')
+                @elseif($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 6 && $s_prod->conteo > 0)
+                @php($color_p = 'secondary')
+                @endif
+                @endforeach
+                <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color6}} badge-outlined">C</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(6,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
@@ -267,7 +308,14 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-success badge-outlined">P</span>&nbsp;
+                @foreach($seg_produccion as $s_prod)
+                @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 7 && $s_prod->conteo==0)
+                  @php($color_p = 'primary')
+                @elseif($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 7 && $s_prod->conteo > 0)
+                @php($color_p = 'secondary')
+                @endif
+                @endforeach
+                <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color7}} badge-outlined">C</span>
                 &nbsp;<span  onclick="seguimiento_subproceso(7,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>

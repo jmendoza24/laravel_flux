@@ -47,3 +47,11 @@
         <span class="menu-title" data-i18n="">Ordenes de trabajo</span>
     </a>
 </li>
+
+<li class=" nav-item {{ Request::is('traficos*') ? 'active' : '' }}">
+    <a href="{!! route('traficos.index') !!}">
+        <i class="ft-sliders"></i>
+        <span class="menu-title" data-i18n="">Trafico</span>
+    </a>
+</li>
+

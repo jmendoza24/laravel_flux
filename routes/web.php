@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::resource('ordenesCompras', 'ordenes_compraController');
 	Route::get('ordenestrabajo/seguimiento', 'ordenes_compraController@seguimiento')->name('ordenesCompras.seguimiento');
 	Route::get('/ordenesporenviar', 'ordenes_compraController@ordenesporenviar')->name('enviados.index');
-
+	Route::resource('traficos', 'traficoController');
 
 });
 
@@ -127,6 +127,9 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/guarda_seg_produccion', 'ordenes_compraController@guarda_seg_produccion');
 	Route::post('/carga_files_produccion', 'ordenes_compraController@carga_files_produccion');
 	Route::get('/seguimiento_calidad_proceso', 'ordenes_compraController@seguimiento_calidad_proceso');
+	Route::get('/agrega_trafico', 'traficoController@agrega_trafico');
+
+	
 	
 });
 
@@ -135,5 +138,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	
 
 
+//Route::get('mail/send', 'cotizacionesController@envio_mail')->name('trafico.index');
 Route::get('mail/send', 'cotizacionesController@envio_mail');
 Route::resource('catalogoFormas', 'catalogo_formaController');
+
