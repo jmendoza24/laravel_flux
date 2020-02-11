@@ -41,23 +41,24 @@ class trafico extends Model
         
     ];
 
-    function get_trafico($filtros){
+    function get_trafico(){
 
-        $trafico =   db::table('ordencompra_detalle as d')
-                        ->join('traficos_detalle as t','t.id_detalle','d.id')
-                        ->join('ordenes_compras as o','o.id','d.id_orden')
-                        ->leftjoin('productos as pr','pr.id','d.producto')
-                        ->leftjoin('clientes as c','id_empresa','c.id')
-                        ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
-                        ->leftjoin('logisticas as l','l.id','o.shipping')
-                        ->leftjoin('plantas as a','a.id','d.planta')
-                        ->leftjoin('estados as e','e.id','=','l.estado')
-                        ->leftjoin('paises as p','p.id','=','l.pais')
-                        ->where('t.id_trafico',$filtros->id_trafico)
-                        ->selectraw('t.id as ide, pr.*, o.shipping, c.nombre_corto, sp.fecha_estimado_termino, a.nombre as planta_name, l.calle,   p.nombre as npais, e.estado as nestado, l.municipio as nmunicipio, pr.id as idproducto, o.orden_compra, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
-                        ->orderby('d.id','asc')
-                        ->get();
+        $trafico = db::select('select dt.shipping,t.id as ide, c.nombre_corto, l.calle,   p.nombre as npais, e.estado as nestado, l.municipio as nmunicipio
+                               from traficos as t 
+                               inner join(
+                                          select distinct td.id_trafico, cliente, o.shipping
+                                          from traficos_detalle td
+                                          inner join ordencompra_detalle od on od.id = td.id_detalle
+                                          inner join ordenes_compras o on o.id = od.id_orden
+                                        ) as dt on dt.id_trafico = t.id
+                                inner join clientes as c on c.id = dt.cliente
+                                left join logisticas as l on l.id = dt.shipping
+                                left join estados as e on e.id = l.estado
+                                left join paises as p on p.id = l.pais
+                                order by t.id ');
+
         return $trafico;
+
     }
 
     

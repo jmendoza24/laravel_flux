@@ -10,7 +10,7 @@
             <th>Fecha entrega producción</th>
             <th>Planta</th>
             <th>Estatus</th>
-            <th>IDE</th>
+            <!--<th>IDE</th>-->
         </tr>
     </thead> 
     <tbody>
@@ -30,7 +30,7 @@
             <td>{{ $trafico->fecha_estimado_termino}}</td> 
             <td>{{ $trafico->planta_name}}</td> 
             <td></td>
-            <td></td>
+            <!--<td><a data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#primary" onclick="seguimiento_trafico({{$trafico->id}})">{{ $trafico->id}}</a></td>--->
         </tr>
         @endforeach
     </tbody>

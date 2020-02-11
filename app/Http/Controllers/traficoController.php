@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\trafico;
+use App\Models\clientes;
 use App\Http\Requests\CreatetraficoRequest;
 use App\Http\Requests\UpdatetraficoRequest;
 use App\Repositories\traficoRepository;
@@ -32,18 +33,14 @@ class traficoController extends AppBaseController
      * @return Response
      */
     public function index(Request $request){
-        
-        if ($request->session()->has('no_track')) {
-         $trafico_numero = $request->session()->get('no_track');
+        $trafic = new trafico;       
+        $traficos = $trafic->get_trafico();
+        /**
+        $trafico = db::table('traficos as t')
+                   ->join('traficos_detalle as d','d.id_trafico','t.id')
+                   ->selectraw('distinct t.*')
+                   ->get();
 
-         }else{
-            $fecha = date('Y-m-d');
-            $id = trafico::insertGetId(['id_usuario'=>auth()->id(),
-                                        'estatus'=>0]);
-            $request->session()->put('no_track',$id);
-            $trafico_numero = $request->session()->get('no_track');
-
-         }
       
         $traficos = db::table('ordencompra_detalle as d')
                         ->join('ordenes_compras as o','o.id','d.id_orden')
@@ -59,9 +56,9 @@ class traficoController extends AppBaseController
                         ->orderby('d.id','asc')
                         ->get();
 
-        $var = db::table('ordenes_compras')->get();
+        $var = db::table('ordenes_compras')->get();*/
         #dd($traficos);
-        return view('traficos.index',compact('traficos','trafico_numero'));
+        return view('traficos.index',compact('traficos'));
     }
 
     function agrega_trafico(Request $request){
@@ -95,14 +92,55 @@ class traficoController extends AppBaseController
      */
     public function create(Request $request){
         $trafic = new trafico;
-        $trafico_numero = $request->session()->get('no_track');
-        $trafic->id_trafico = $trafico_numero;
-        $trafico_detalle = $trafic->get_trafico($trafic);
-        $trafico = trafico::get();
 
-        return view('traficos.create',compact('trafico_detalle','trafico','trafico_numero'));
+        if($request->session()->has('no_track')) {
+            $trafico_numero = $request->session()->get('no_track');
+
+         }else{
+            $fecha = date('Y-m-d');
+            $id = trafico::insertGetId(['id_usuario'=>auth()->id(),
+                                        'estatus'=>0]);
+            $request->session()->put('no_track',$id);
+            $trafico_numero = $request->session()->get('no_track');
+         }
+
+          $traficos = db::table('ordencompra_detalle as d')
+                        ->join('ordenes_compras as o','o.id','d.id_orden')
+                        ->leftjoin('productos as pr','pr.id','d.producto')
+                        #->leftjoin('clientes as c','id_empresa','c.id')
+                        ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
+                        ->leftjoin('logisticas as l','l.id','o.shipping')
+                        ->leftjoin('plantas as a','a.id','d.planta')
+                        ->leftjoin('estados as e','e.id','=','l.estado')
+                        ->leftjoin('paises as p','p.id','=','l.pais')
+                        ->where('o.tipo',2)
+                        ->selectraw('pr.*, o.shipping, sp.fecha_estimado_termino, a.nombre as planta_name, l.calle,   p.nombre as npais, e.estado as nestado, l.municipio as nmunicipio, pr.id as idproducto, o.orden_compra, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
+                        ->orderby('d.id','asc')
+                        ->get();
+        
+        $cliente = clientes::get();
+        return view('traficos.create',compact('traficos','trafico_numero','cliente'));
     }
 
+    function muestra_trafico(Request $request){
+        $trafico_numero = $request->session()->get('no_track');
+
+        #$detalle = 
+
+        $trafic = new trafico;
+        $trafic->id_trafico = $request->id_trafico;
+        $trafico_detalle = $trafic->get_trafico($trafic);
+
+        $options = view('traficos.fields',compact('trafico_detalle','trafico_numero'))->render();
+        return json_encode($options);
+
+    }
+
+    function seguimiento_trafico(Request $request){
+        $trafico = 1;
+        $options = view('traficos.show_fields',compact('trafico'))->render();
+        return json_encode($options);
+    }
     /**
      * Store a newly created trafico in storage.
      *

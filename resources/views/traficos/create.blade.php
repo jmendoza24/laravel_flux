@@ -3,21 +3,22 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-2" style="border:2px solid #F4F2F1; ">
-            <h4>Traficos</h4>
-            <ul>
-                <li style="font-weight: bold;color: blue;" >T-{{$trafico_numero}}</li>
-            </ul>
-            <ul style="overflow-y: scroll; height: 300px;">
-                
-                @foreach($trafico as $trafic)
-                <li>T-{{$trafic->id}}</li>
+        <div class="col-md-9 form-inline">
+            <label>Cliente:</label>&nbsp;&nbsp;
+            <select class="form-control" id="cliente" onchange="muestra_trafico()">
+                <option value="0">Seleccione..</option>
+                @foreach($cliente as $cli)
+                <option value="{{ $cli->id}}">{{ $cli->nombre_corto}}</option>
                 @endforeach
-            </ul>
+            </select>
+        </div> 
+        <div class="col-md-3 form-group">
+            <button class="btn btn-warning  pull-right">Finalizar</button>
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="traficos_sin">
+            @include('traficos.table')
         </div>
-        <div class="col-md-10" style="overflow-x: scroll;">
-            @include('traficos.fields')    
-        </div>
-        
     </div>
 @endsection

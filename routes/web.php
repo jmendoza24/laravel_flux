@@ -128,6 +128,9 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::post('/carga_files_produccion', 'ordenes_compraController@carga_files_produccion');
 	Route::get('/seguimiento_calidad_proceso', 'ordenes_compraController@seguimiento_calidad_proceso');
 	Route::get('/agrega_trafico', 'traficoController@agrega_trafico');
+	Route::get('/muestra_trafico', 'traficoController@muestra_trafico');
+	Route::get('/seguimiento_trafico', 'traficoController@seguimiento_trafico');
+	
 
 	
 	
