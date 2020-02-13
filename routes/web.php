@@ -130,9 +130,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/agrega_trafico', 'traficoController@agrega_trafico');
 	Route::get('/muestra_trafico', 'traficoController@muestra_trafico');
 	Route::get('/seguimiento_trafico', 'traficoController@seguimiento_trafico');
-	
-
-	
+	Route::get('/finaliza_trafico', 'traficoController@finaliza_trafico');
 	
 });
 

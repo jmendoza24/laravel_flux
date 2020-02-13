@@ -144,6 +144,13 @@ class traficoController extends AppBaseController
         $options = view('traficos.show_fields',compact('trafico'))->render();
         return json_encode($options);
     }
+
+    function finaliza_trafico(Request $request){
+        //$trafico_numero = $request->session()->get('no_track');
+        $request->session()->forget('no_track');
+        return 1;
+
+    }
     /**
      * Store a newly created trafico in storage.
      *
