@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>IDN</th>
+            <th>Cliente</th>
             <th>Linea</th>
             <th>Producto</th>
             <th>OCC</th>
@@ -18,10 +19,11 @@
             @foreach($traficos as $trafico)
             <td>
                 <div class="d-inline-block custom-control custom-checkbox mr-1">
-                    <input type="checkbox" onchange="agrega_trafico({{$trafico->id_detalle}})"  class="custom-control-input" name="trafic_{{$trafico->id_detalle}}" id="trafic_{{$trafico->id_detalle}}" >
+                    <input type="checkbox" {{($trafico->existe ==1)?'checked':''}} onchange="agrega_trafico({{$trafico->id_detalle}},{{ $trafico->idcliente}})"  class="custom-control-input" name="trafic_{{$trafico->id_detalle}}" id="trafic_{{$trafico->id_detalle}}" >
                     <label class="custom-control-label" for="trafic_{{$trafico->id_detalle}}">TR00{{$trafico->id_detalle}}</label>
                 </div>
             </td>
+            <td>{{ $trafico->nombre_corto}}</td>
             <td>{{ $trafico->incremento}}</td>
             <td>{{ $trafico->numero_parte}}</td>
             <td>{{ $trafico->orden_compra}}</td>

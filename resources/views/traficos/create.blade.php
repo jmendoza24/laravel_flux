@@ -3,12 +3,14 @@
 
 @section('content')
     <div class="row">
+        <input type="hidden" id="id_cliente" value="{{$cliente_actual->cliente}}">
+        <input type="hidden" id="nom_cliente" value="{{$cliente_actual->nombre_corto}}">
         <div class="col-md-9 form-inline">
             <label>Cliente:</label>&nbsp;&nbsp;
             <select class="form-control" id="cliente" onchange="muestra_trafico()">
                 <option value="0">Seleccione..</option>
                 @foreach($cliente as $cli)
-                <option value="{{ $cli->id}}">{{ $cli->nombre_corto}}</option>
+                <option value="{{ $cli->id}}" {{($cli->id==$cliente_actual->cliente)?'selected':''}}>{{ $cli->nombre_corto}}</option>
                 @endforeach
             </select>
         </div> 
@@ -22,3 +24,4 @@
         </div>
     </div>
 @endsection
+

@@ -217,12 +217,6 @@
   <script src="{{ url('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}" type="text/javascript"></script>
   @yield('script')
-
-  
-  <!-- END STACK JS-->
-  <!-- BEGIN PAGE LEVEL JS-->
-   
-  <!-- END PAGE LEVEL JS-->
 </body>
 </html>
 <div class="modal fade" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">

@@ -35,41 +35,29 @@ class traficoController extends AppBaseController
     public function index(Request $request){
         $trafic = new trafico;       
         $traficos = $trafic->get_trafico();
-        /**
-        $trafico = db::table('traficos as t')
-                   ->join('traficos_detalle as d','d.id_trafico','t.id')
-                   ->selectraw('distinct t.*')
-                   ->get();
 
-      
-        $traficos = db::table('ordencompra_detalle as d')
-                        ->join('ordenes_compras as o','o.id','d.id_orden')
-                        ->leftjoin('productos as pr','pr.id','d.producto')
-                        #->leftjoin('clientes as c','id_empresa','c.id')
-                        ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
-                        ->leftjoin('logisticas as l','l.id','o.shipping')
-                        ->leftjoin('plantas as a','a.id','d.planta')
-                        ->leftjoin('estados as e','e.id','=','l.estado')
-                        ->leftjoin('paises as p','p.id','=','l.pais')
-                        ->where('o.tipo',2)
-                        ->selectraw('pr.*, o.shipping, sp.fecha_estimado_termino, a.nombre as planta_name, l.calle,   p.nombre as npais, e.estado as nestado, l.municipio as nmunicipio, pr.id as idproducto, o.orden_compra, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
-                        ->orderby('d.id','asc')
-                        ->get();
-
-        $var = db::table('ordenes_compras')->get();*/
-        #dd($traficos);
         return view('traficos.index',compact('traficos'));
     }
 
     function agrega_trafico(Request $request){
         $trafic = new trafico;
-
         $trafico_numero = $request->session()->get('no_track');
-        $trafic->id_trafico = $trafico_numero;
+        $cliente_actual  = $trafic->cliente_actual($trafico_numero); 
+        if(sizeof($cliente_actual)>0){
+            $cliente_actual = $cliente_actual[0];    
+        }else{
+            $cliente_actual = array('cliente'=>$request->id_cliente,
+                                    'nombre_corto'=>'');
+            $cliente_actual = (object)$cliente_actual;
+        }
+
+        if($cliente_actual->cliente != $request->id_cliente){
+            db::table('traficos_detalle')->where('id_trafico',$trafico_numero)->delete();
+        }
 
         $existe = db::table('traficos_detalle')
-                    ->where([['id_trafico',$trafico_numero],['id_detalle',$request->id_detalle]])
-                    ->count();
+                ->where([['id_trafico',$trafico_numero],['id_detalle',$request->id_detalle]])
+                ->count();
 
         if($existe > 0 and $request->valor==0){
             db::table('traficos_detalle')
@@ -80,10 +68,24 @@ class traficoController extends AppBaseController
              ->insert(['id_trafico'=>$trafico_numero,
                        'id_detalle'=>$request->id_detalle]);
         }
-        $var = db::table('traficos_detalle')->get();
         
-        $trafico = $trafic->get_trafico($trafic);
-        return 1;
+        $var = db::table('traficos_detalle')->where('id_trafico',$trafico_numero)->get();
+        $cliente_actual  = $trafic->cliente_actual($trafico_numero); 
+        #dd($var);
+        if(sizeof($cliente_actual)>0){
+            $cliente_actual = $cliente_actual[0];    
+        }else{
+            $cliente_actual = array('cliente'=>0,
+                                    'nombre_corto'=>'');
+            $cliente_actual = (object)$cliente_actual;
+        }
+        $traficos = $trafic->filtro_trafico($request->id_cliente,$trafico_numero);
+        $options = view('traficos.table',compact('traficos'))->render();
+
+        $arr  = array('cliente_actual'=>$cliente_actual,
+                      'options'=>$options);
+
+        return json_encode($arr);
     }
     /**
      * Show the form for creating a new trafico.
@@ -104,34 +106,35 @@ class traficoController extends AppBaseController
             $trafico_numero = $request->session()->get('no_track');
          }
 
-          $traficos = db::table('ordencompra_detalle as d')
-                        ->join('ordenes_compras as o','o.id','d.id_orden')
-                        ->leftjoin('productos as pr','pr.id','d.producto')
-                        #->leftjoin('clientes as c','id_empresa','c.id')
-                        ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
-                        ->leftjoin('logisticas as l','l.id','o.shipping')
-                        ->leftjoin('plantas as a','a.id','d.planta')
-                        ->leftjoin('estados as e','e.id','=','l.estado')
-                        ->leftjoin('paises as p','p.id','=','l.pais')
-                        ->where('o.tipo',2)
-                        ->selectraw('pr.*, o.shipping, sp.fecha_estimado_termino, a.nombre as planta_name, l.calle,   p.nombre as npais, e.estado as nestado, l.municipio as nmunicipio, pr.id as idproducto, o.orden_compra, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
-                        ->orderby('d.id','asc')
-                        ->get();
+        $traficos = $trafic->filtro_trafico(0,$trafico_numero);
+        $cliente_actual  = $trafic->cliente_actual($trafico_numero); 
+        if(sizeof($cliente_actual)>0){
+            $cliente_actual = $cliente_actual[0];    
+        }else{
+            $cliente_actual = array('cliente'=>0,
+                                    'nombre_corto'=>'');
+            $cliente_actual = (object)$cliente_actual;
+        }
+        
         
         $cliente = clientes::get();
-        return view('traficos.create',compact('traficos','trafico_numero','cliente'));
+        #db::table('traficos_detalle')->where('id_trafico',$trafico_numero)->delete();
+        return view('traficos.create',compact('traficos','trafico_numero','cliente','cliente_actual'));
     }
 
     function muestra_trafico(Request $request){
+        $trafic = new trafico;
         $trafico_numero = $request->session()->get('no_track');
 
-        #$detalle = 
+        $traficos = $trafic->filtro_trafico($request->id_cliente,$trafico_numero);
 
-        $trafic = new trafico;
-        $trafic->id_trafico = $request->id_trafico;
-        $trafico_detalle = $trafic->get_trafico($trafic);
-
-        $options = view('traficos.fields',compact('trafico_detalle','trafico_numero'))->render();
+        #dd($traficos);
+        if(sizeof($traficos)>0){
+            $options = view('traficos.table',compact('traficos'))->render();
+            
+        }else{
+            $options = '<br/><br/><h4>No existen idns para este cliente</h4>';
+        }
         return json_encode($options);
 
     }
