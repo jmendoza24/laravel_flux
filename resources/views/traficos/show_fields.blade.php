@@ -1,70 +1,138 @@
-<div style="width: 100%; overflow-y: scroll; height: 500px; ">
+<div class="col-md-12" style="border: 10x solid red; max-height: 800px; overflow-y: scroll;">
+	<br>
 	<div class="row">
-		<div class="col-md-9">
-			<h5>Tarima</h5>
-			<hr>
-			<table class="table table-bordered table-striped small">
-				<tr>
-					<td>Peso Kg.</td>
-					<td>Altura</td>
-					<td>Ancho</td>
-					<td>Largo</td>
-					<td>Peso tarima</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><input type="text" name="peso_kg" id="peso_kg" class="form-control"></td>
-					<td><input type="text" name="altura" id="altura" class="form-control"></td>
-					<td><input type="text" name="ancho" id="ancho" class="form-control"></td>
-					<td><input type="text" name="largo" id="largo" class="form-control"></td>
-					<td><input type="text" name="peso_tarima" id="peso_tarima" class="form-control"></td>
-					<td>
-						<button class="btn btn-primary"><i class="fa fa-save"></i></button>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="col-md-3">
-			<form class="form-group">
-			<h5>Carga de documentos</h5>
-			<hr>
-			
-				<div class="form-group">
-				    {!! Form::label('peso_tarima', 'Documento') !!}
-				    <select class="form-control">
-						<option value="">Selecciona...</option>
-						<option value="1">TR Confirmation</option>
-						<option value="2">Pickup Delivery Note</option>
-						<option value="3">Validacion de Fracciones Mexico</option>
-						<option value="4">Factura PDF (Planta México a FLUX USA)</option>
-						<option value="5">Factura XML</option>
-						<option value="6">Cotizacion de Ag. Aduanal MX</option>
-						<option value="7">Comprobante de Pago Ag. Aduanal</option>
-						<option value="8">Pedimento Aduana MX</option>
-						<option value="9">DODA</option>
-						<option value="10">POD Firmado</option>
-						<option value="11">Verificacion Fracciones USA</option>
-						<option value="12">Pre File (Shipment Advice)</option>
-						<option value="13">Carta de Aduana</option>
-						<option value="14">Bill of Lading USA</option>
-						<option value="15">Documento de Entrega (firmado)</option>
-						<option value="16">Nota Credito</option>
-						<option value="17">NCR</option>
-					</select>
-				</div>
-				<div class="form-group">
-				    <input type="file" name="" class="form-control">
-				</div>
-				<div class="form-group">
-				    <input type="button" name="" value="Cargar" class="btn btn-primary pull-right">
-				</div>
-			</form>
-		</div>
+		<div class="col-md-12">
+	      <div class="card">
+	        <div class="card-header">
+	          <h5 class="card-title">Carga de documentos</h5>
+	        </div>
+	        <div class="card-content collpase show">
+	          <div class="card-body">
+	            <div class="card-text">
+	              <form class="form-group card-body">
+						<div class="form-group">
+						    {!! Form::label('peso_tarima', 'Documento') !!}
+						    <select class="form-control">
+								<option value="">Selecciona...</option>
+								<option value="1">TR Confirmation</option>
+								<option value="2">Pickup Delivery Note</option>
+								<option value="3">Validacion de Fracciones Mexico</option>
+								<option value="4">Factura PDF (Planta México a FLUX USA)</option>
+								<option value="5">Factura XML</option>
+								<option value="6">Cotizacion de Ag. Aduanal MX</option>
+								<option value="7">Comprobante de Pago Ag. Aduanal</option>
+								<option value="8">Pedimento Aduana MX</option>
+								<option value="9">DODA</option>
+								<option value="10">POD Firmado</option>
+								<option value="11">Verificacion Fracciones USA</option>
+								<option value="12">Pre File (Shipment Advice)</option>
+								<option value="13">Carta de Aduana</option>
+								<option value="14">Bill of Lading USA</option>
+								<option value="15">Documento de Entrega (firmado)</option>
+								<option value="16">Nota Credito</option>
+								<option value="17">NCR</option>
+							</select>
+						</div>
+						<div class="form-group">
+						    <input type="file" name="" class="form-control">
+						</div>
+						<div class="form-group">
+						    <input type="button" name="" value="Cargar" class="btn btn-primary pull-right">
+						</div>
+					</form>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-md-12">
+	      <div class="card">
+	        <div class="card-header">
+	          <h4 class="card-title">Tarimas</h4>
+	        </div>
+	        <div class="card-content collpase show">
+	          <div class="card-body">
+	            <div class="card-text">
+	              	<table class="table table-bordered table-striped small">
+						<tr>
+							<td>Peso Kg.</td>
+							<td>Altura</td>
+							<td>Ancho</td>
+							<td>Largo</td>
+							<td>Peso tarima</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><input type="text" name="peso_kg" id="peso_kg" class="form-control"></td>
+							<td><input type="text" name="altura" id="altura" class="form-control"></td>
+							<td><input type="text" name="ancho" id="ancho" class="form-control"></td>
+							<td><input type="text" name="largo" id="largo" class="form-control"></td>
+							<td><input type="text" name="peso_tarima" id="peso_tarima" class="form-control"></td>
+							<td>
+								<button class="btn btn-primary"><i class="fa fa-save"></i></button>
+							</td>
+						</tr>
+					</table>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-md-12">
+	      <div class="card">
+	        <div class="card-header">
+	          <h4 class="card-title">Preparación</h4>
+	        </div>
+	        <div class="card-content collpase show">
+	          <div class="card-body">
+	            <div class="card-text">
+	            	<button class="btn btn-float btn-outline-primary col-md-3"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>POD</button>
+					<button class="btn btn-float btn-outline-primary col-md-3"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Packing List</button>
+					<button class="btn btn-float btn-outline-primary col-md-3"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Invoice</button>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-md-12">
+	      <div class="card">
+	        <div class="card-header">
+	          <h4 class="card-title">Embarque</h4>
+	        </div>
+	        <div class="card-content collpase show">
+	          <div class="card-body">
+	            <div class="card-text">
+	            	<button class="btn btn-float btn-outline-primary col-md-4"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>TR Confirmation</button>
+					<button class="btn btn-float btn-outline-primary col-md-4"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Pickup Delivery Note</button>		
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-md-12">
+	      <div class="card">
+	        <div class="card-header">
+	          <h4 class="card-title">Embarque</h4>
+	        </div>
+	        <div class="card-content collpase show">
+	          <div class="card-body">
+	            <div class="card-text">
+	            	
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+
 	</div>
+</div>
+
+	
+<!--
 
 	<div class="row">
 		<div class="col-md-6">
-			<h5>Monitore</h5><hr>
+			<h5>Preparación</h5><hr>
 			<button class="btn btn-float btn-outline-primary"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>POD</button>
 			<button class="btn btn-float btn-outline-primary"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Packing List</button>
 			<button class="btn btn-float btn-outline-primary"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Invoice</button>
@@ -196,4 +264,4 @@
 		</div>
 		<button class="btn btn-float btn-outline-primary col-md-3" style="margin-bottom: 3px;"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Acción Correctiva MEMO</button>
 	</div>
-</div>
+--->
