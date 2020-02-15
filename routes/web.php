@@ -131,6 +131,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/muestra_trafico', 'traficoController@muestra_trafico');
 	Route::get('/seguimiento_trafico', 'traficoController@seguimiento_trafico');
 	Route::get('/finaliza_trafico', 'traficoController@finaliza_trafico');
+	Route::post('/carga_files_trafico', 'traficoController@carga_files_trafico');
+		
 	
 });
 

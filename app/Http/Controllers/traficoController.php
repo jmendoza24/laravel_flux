@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\trafico;
 use App\Models\clientes;
+use App\Models\Trafico_documentos;
 use App\Http\Requests\CreatetraficoRequest;
 use App\Http\Requests\UpdatetraficoRequest;
 use App\Repositories\traficoRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Flash;
 use Response;
 use DB;
@@ -33,9 +35,11 @@ class traficoController extends AppBaseController
      * @return Response
      */
     public function index(Request $request){
+        #$files = db::table('traficos_documentos')->where('id_trafico',83)->get();
+       # dd($files);
         $trafic = new trafico;       
         $traficos = $trafic->get_trafico();
-
+       
         return view('traficos.index',compact('traficos'));
     }
 
@@ -140,8 +144,9 @@ class traficoController extends AppBaseController
     }
 
     function seguimiento_trafico(Request $request){
-        $trafico = 1;
-        $options = view('traficos.show_fields',compact('trafico'))->render();
+        $trafico = $request->ide;
+        $files = db::table('traficos_documentos')->where('id_trafico',$request->ide)->get();
+        $options = view('traficos.show_fields',compact('trafico','files'))->render();
         return json_encode($options);
     }
 
@@ -151,112 +156,24 @@ class traficoController extends AppBaseController
         return 1;
 
     }
-    /**
-     * Store a newly created trafico in storage.
-     *
-     * @param CreatetraficoRequest $request
-     *
-     * @return Response
-     */
-    public function store(CreatetraficoRequest $request)
-    {
-        $input = $request->all();
-
-        $trafico = $this->traficoRepository->create($input);
-
-        Flash::success('Trafico saved successfully.');
-
-        return redirect(route('traficos.index'));
-    }
-
-    /**
-     * Display the specified trafico.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $trafico = $this->traficoRepository->find($id);
-
-        if (empty($trafico)) {
-            Flash::error('Trafico not found');
-
-            return redirect(route('traficos.index'));
+    function carga_files_trafico(Request $request){
+        #Trafico_documentos::truncate();
+        $path =  Storage::putFileAs('trafico', $request->file('documento_carga'), $request->file('documento_carga')->getClientOriginalName());
+        $existe = Trafico_documentos::where([['id_trafico',$request->id_trafico],['documento',$request->tipo_documento]])->count();
+        if($existe > 0){
+            Trafico_documentos::where([['id_trafico',$request->id_trafico],['documento',$request->tipo_documento]])
+                                ->update(['file'=>$path]);    
+        }else{
+            Trafico_documentos::insert(['id_trafico'=>$request->id_trafico,
+                                        'documento'=>$request->tipo_documento,
+                                        'file'=>'storage/'.$path]);    
         }
+        
+        $files = db::table('traficos_documentos')->where('id_trafico',$request->id_trafico)->get();
+        $trafico = $request->id_trafico;
 
-        return view('traficos.show')->with('trafico', $trafico);
+        $options = view('traficos.show_fields',compact('trafico','files'))->render();
+        return $options;
     }
-
-    /**
-     * Show the form for editing the specified trafico.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $trafico = $this->traficoRepository->find($id);
-
-        if (empty($trafico)) {
-            Flash::error('Trafico not found');
-
-            return redirect(route('traficos.index'));
-        }
-
-        return view('traficos.edit')->with('trafico', $trafico);
-    }
-
-    /**
-     * Update the specified trafico in storage.
-     *
-     * @param int $id
-     * @param UpdatetraficoRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, UpdatetraficoRequest $request)
-    {
-        $trafico = $this->traficoRepository->find($id);
-
-        if (empty($trafico)) {
-            Flash::error('Trafico not found');
-
-            return redirect(route('traficos.index'));
-        }
-
-        $trafico = $this->traficoRepository->update($request->all(), $id);
-
-        Flash::success('Trafico updated successfully.');
-
-        return redirect(route('traficos.index'));
-    }
-
-    /**
-     * Remove the specified trafico from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $trafico = $this->traficoRepository->find($id);
-
-        if (empty($trafico)) {
-            Flash::error('Trafico not found');
-
-            return redirect(route('traficos.index'));
-        }
-
-        $this->traficoRepository->delete($id);
-
-        Flash::success('Trafico deleted successfully.');
-
-        return redirect(route('traficos.index'));
-    }
+    
 }
