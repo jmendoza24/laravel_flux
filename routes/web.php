@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('ordenestrabajo/seguimiento', 'ordenes_compraController@seguimiento')->name('ordenesCompras.seguimiento');
 	Route::get('/ordenesporenviar', 'ordenes_compraController@ordenesporenviar')->name('enviados.index');
 	Route::resource('traficos', 'traficoController');
+	Route::get('/factura', 'FacturacionController@index')->name('factura.index');
 
 });
 

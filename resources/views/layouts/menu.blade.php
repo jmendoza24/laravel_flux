@@ -54,4 +54,11 @@
         <span class="menu-title" data-i18n="">Trafico</span>
     </a>
 </li>
+<li class=" nav-item {{ Request::is('factura*') ? 'active' : '' }}">
+    <a href="{!! route('factura.index') !!}">
+        <i class="ft-smartphone"></i>
+        <span class="menu-title" data-i18n="">Factura</span>
+    </a>
+</li>
+
 
