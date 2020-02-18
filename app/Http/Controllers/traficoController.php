@@ -283,10 +283,18 @@ class traficoController extends AppBaseController
             $trafico->save();
    
         }
+    }
 
-        
-        $var = Trafico_flete::get();
-        dd($var);
+    function informacion_trafico(Request $request){
+        $trafico = new trafico;
+        $trafico->id_trafico = $request->id_trafico;
+
+        $trafi = $trafico->trafico_info($trafico);
+        $traficos = $trafi['trafico'];
+        $status_prod = $trafi['status_prod'];
+
+        $options = view('traficos.trafico_informacion',compact('traficos','status_prod'))->render();
+        return json_encode($options);
     }
     
 }

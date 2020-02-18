@@ -95,5 +95,31 @@ class trafico extends Model
                                 where id_trafico = '.$trafico_numero.'');
     }
 
+    function trafico_info($filtro){
+      $trafico = db::table('traficos_detalle as td')
+                ->join('ordencompra_detalle as od', 'od.id' , 'td.id_detalle')
+                ->join('productos as p','p.id','od.producto')
+                ->where('id_trafico',$filtro->id_trafico)
+                ->selectraw('td.id_detalle,p.numero_parte, od.fecha_entrega')
+                ->get();
+
+      $status_prod = db::select('select td.id_detalle, ifnull(conteo,0) as conteo
+                                from  traficos_detalle td 
+                                left join (
+                                            select sp.id_detalle, count(*) as conteo, id_trafico
+                                            from seguimiento_produccion sp
+                                            inner join traficos_detalle td on td.id_detalle = sp.id_detalle
+                                            where fecha_fin is null
+                                            and id_trafico = '.$filtro->id_trafico.'
+                                            group by id_detalle, id_trafico) as a on a.id_detalle = td.id_detalle
+                                where td.id_trafico = '.$filtro->id_trafico.'
+                                order by td.id_detalle desc');
+
+      $arr = array('trafico'=>$trafico,
+                   'status_prod'=>$status_prod);
+
+      return $arr;
+    }
+
     
 }

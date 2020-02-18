@@ -136,9 +136,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/actualiza_tarimas', 'traficoController@actualiza_tarimas');
 	Route::get('/elimina_tarifa', 'traficoController@elimina_tarifa');
 	Route::post('/guarda_flete', 'traficoController@guarda_flete');
-	
-
-	
+	Route::get('/informacion_trafico', 'traficoController@informacion_trafico');
 	
 });
 

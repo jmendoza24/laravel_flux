@@ -50,7 +50,7 @@
 		<div class="col-md-12" style="" >
 	      <div class="card" style=" border:2px solid #518a87 !important;">
 	        <div class="card-header" style="background: #F5F7FA;">
-	          <h6 class="card-title">Carga de documentos <span class="pull-right" style="cursor: pointer;"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></span></h6>
+	          <h6 class="card-title">Carga de documentos <span class="pull-right" style="cursor: pointer;" data-toggle="modal" data-target="#default" onclick="informacion_trafico({{ $trafico}})"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></span></h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
