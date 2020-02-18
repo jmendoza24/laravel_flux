@@ -169,12 +169,12 @@
 	        </div>
 	      </div>
 	    </div>
-	    <div class="col-md-12">
 	    <form id="informacion_flete" enctype="multipart/form-data">
+	    <div class="col-md-12">
             {{ csrf_field() }}
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Información del flete <span class="btn btn-primary pull-right" onclick="guarda_flete()"><i class="fa fa-save fa-2x"></i>Guardar</span></h6>
+	          <h6 class="card-title">Información del flete <span class="btn btn-primary pull-right" onclick="guarda_flete()"><i class="fa fa-save"></i> Guardar</span></h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -183,59 +183,59 @@
 	            	<div class="row">
 						<div class="form-group col-md-3">
 						    {!! Form::label('aduanal_mx', 'Agrencia aduanal mx') !!}
-						    <input type="text" name="aduanal_mx" id="aduanal_mx" class="form-control">
+						    <input type="text" name="aduanal_mx" id="aduanal_mx" class="form-control" value="{{ $fletes->agencia_mx}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('no_plataforma', 'Plataforma #') !!}
-						    <input type="text" name="no_plataforma" id="no_plataforma" class="form-control">
+						    <input type="text" name="no_plataforma" id="no_plataforma" class="form-control" value="{{ $fletes->no_plataforma}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('placas', 'Placas') !!}
-						    <input type="text" name="placas" id="placas" class="form-control">
+						    <input type="text" name="placas" id="placas" class="form-control" value="{{ $fletes->placas}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('pais_or', 'Pais de Origen') !!}
-						    <input type="text" name="pais_or" id="pais_or" class="form-control">
+						    <input type="text" name="pais_or" id="pais_or" class="form-control" value="{{ $fletes->pais_orige}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('amb_largo', 'Largo') !!}
-						    <input type="text" name="amb_largo" id="amb_largo" class="form-control">
+						    <input type="text" name="amb_largo" id="amb_largo" class="form-control" value="{{ $fletes->largo}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('scac', 'SCAC') !!}
-						    <input type="text" name="scac" id="scac" class="form-control">
+						    <input type="text" name="scac" id="scac" class="form-control" value="{{ $fletes->scac}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('caat', 'CAAT') !!}
-						    <input type="text" name="caat" id="caat" class="form-control">
+						    <input type="text" name="caat" id="caat" class="form-control" value="{{ $fletes->caat}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('num_referencia', 'Número de Referencia Expeditors') !!}
-						    <input type="text" name="num_referencia" id="num_referencia" class="form-control">
+						    <input type="text" name="num_referencia" id="num_referencia" class="form-control" value="{{ $fletes->no_referencia}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('entrada_camion', 'Hora de entrada Camión') !!}
-						    <input type="text" name="entrada_camion" id="entrada_camion" class="form-control">
+						    <input type="text" name="entrada_camion" id="entrada_camion" class="form-control" value="{{ $fletes->entrada_camion}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('salida_camion', 'Hora de salida Camión') !!}
-						    <input type="text" name="salida_camion" id="salida_camion" class="form-control">
+						    <input type="text" name="salida_camion" id="salida_camion" class="form-control" value="{{ $fletes->salida_camion}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('fraccion_arra', 'Fracciones Arancelarias USA') !!}
-						    <input type="text" name="fraccion_arra" id="fraccion_arra" class="form-control">
+						    <input type="text" name="fraccion_arra" id="fraccion_arra" class="form-control" value="{{ $fletes->arancelaria_usa}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('fecha_entrega', 'Fecha entrega') !!}
-						    <input type="text" name="fecha_entrega" id="fecha_entrega" class="form-control">
+						    <input type="text" name="fecha_entrega" id="fecha_entrega" class="form-control" value="{{ $fletes->fecha_entrega}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('tipo_cambio', 'Tipo cambio') !!}
-						    <input type="text" name="tipo_cambio" id="tipo_cambio" class="form-control">
+						    <input type="text" name="tipo_cambio" id="tipo_cambio" class="form-control" value="{{ $fletes->tipo_cambio}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('fraccion_arra_mx', 'Fraccion Arancelaria MX') !!}
-						    <input type="text" name="fraccion_arra_mx" id="fraccion_arra_mx" class="form-control">
+						    <input type="text" name="fraccion_arra_mx" id="fraccion_arra_mx" class="form-control" value="{{ $fletes->arancelaria_mx}}">
 						</div>
 						<div class="form-group col-md-3">
 							<a href="{{ ($doc_3 !='')? url($doc_3):'#'}}" {{ ($doc_3 !='')?'target="_blank"':''}}>
@@ -249,7 +249,6 @@
 	          </div>
 	        </div>
 	      </div>
-	      </form>
 	    </div>
 	    <div class="col-md-12">
 	      <div class="card">
@@ -370,11 +369,11 @@
 	            <div class="row">
 	            	<div class="form-group col-md-3">
 					    {!! Form::label('fecha_aduana_mx', 'Fecha liberación Aduana MX') !!}
-					    <input type="date" name="fecha_aduana_mx" id="fecha_aduana_mx" class="form-control">
+					    <input type="date" name="fecha_aduana_mx" id="fecha_aduana_mx" class="form-control" value="{{ $fletes->liberacion_ad_mx}}">
 					</div>
 					<div class="form-group col-md-3">
 					    {!! Form::label('fecha_aduana_us', 'Fecha liberación Aduana US') !!}
-					    <input type="date" name="fecha_aduana_us" id="fecha_aduana_us" class="form-control">
+					    <input type="date" name="fecha_aduana_us" id="fecha_aduana_us" class="form-control" value="{{ $fletes->liberacion_ad_usa}}">
 					</div>
 	            </div>
 	          </div>
@@ -391,7 +390,7 @@
 	            <div class="row">
 	            	<div class="form-group col-md-3">
 					    {!! Form::label('fecha_bodega', 'Fecha de entrega en Bodega') !!}
-					    <input type="date" name="fecha_bodega" id="fecha_bodega" class="form-control">
+					    <input type="date" name="fecha_bodega" id="fecha_bodega" class="form-control" value="{{ $fletes->entrega_bodega}}">
 					</div>
 					<a href="{{ ($doc_15 !='')? url($doc_15):'#'}}" {{ ($doc_15 !='')?'target="_blank"':''}} class="col-md-3">
 	            		<button class="btn btn-float btn-{{ ($doc_15 !='')?'primary':'secondary'}} " {{ ($doc_15 !='')?'':'disabled'}} style="margin-bottom: 3px;">
@@ -403,5 +402,6 @@
 	        </div>
 	      </div>
 	    </div>
+	    </form>
 	</div>
 </div>

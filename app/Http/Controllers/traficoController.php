@@ -151,7 +151,32 @@ class traficoController extends AppBaseController
         $trafico = $request->ide;
         $files = db::table('traficos_documentos')->where('id_trafico',$request->ide)->get();
         $tarimas = Trafico_tarimas::where('id_trafico',$trafico)->get();
-        $options = view('traficos.show_fields',compact('trafico','files','tarimas'))->render();
+        $fletes = Trafico_flete::where('id_trafico',$trafico)->get();
+        if(sizeof($fletes)>0){
+            $fletes = $fletes[0];
+        }else{
+            $fletes = array('id_trafico'        => '',
+                            'agencia_mx'        => '',
+                            'no_plataforma'     => '',
+                            'placas'            => '',
+                            'pais_orige'        => '',
+                            'largo'             => '',
+                            'scac'              => '',
+                            'caat'              => '',
+                            'no_referencia'     => '',
+                            'entrada_camion'    => '',
+                            'salida_camion'     => '',
+                            'arancelaria_usa'   => '',
+                            'fecha_entrega'     => '',
+                            'tipo_cambio'       => '',
+                            'arancelaria_mx'    => '',
+                            'liberacion_ad_mx'  =>'',
+                            'liberacion_ad_usa' =>'',
+                            'entrega_bodega'    =>'');
+            $fletes = (object)$fletes;
+        }
+        
+        $options = view('traficos.show_fields',compact('trafico','files','tarimas','fletes'))->render();
 
         return json_encode($options);
     }
@@ -213,34 +238,54 @@ class traficoController extends AppBaseController
     }
 
     function guarda_flete(Request $request){
-    #    Trafico_flete::truncate();
 
         $trafico = new Trafico_flete;
-
         $existe = Trafico_flete::where('id_trafico',$request->id_trafico)->count();
 
-        if($existe> 0){
-            $trafico::find($request->id_trafico);
+        if($existe > 0 ){
+            Trafico_flete::where('id_trafico',$request->id_trafico)
+            ->update([  'agencia_mx'        => $request->aduanal_mx,
+                        'no_plataforma'     => $request->no_plataforma,
+                        'placas'            => $request->placas,
+                        'pais_orige'        => $request->pais_or,
+                        'largo'             => $request->amb_largo,
+                        'scac'              => $request->scac,
+                        'caat'              => $request->caat,
+                        'no_referencia'     => $request->num_referencia,
+                        'entrada_camion'    => $request->entrada_camion,
+                        'salida_camion'     => $request->salida_camion,
+                        'arancelaria_usa'   => $request->fraccion_arra,
+                        'fecha_entrega'     => $request->fecha_entrega,
+                        'tipo_cambio'       => $request->tipo_cambio,
+                        'arancelaria_mx'    => $request->fraccion_arra_mx,
+                        'liberacion_ad_mx'  => $request->fecha_aduana_mx,
+                        'liberacion_ad_usa' => $request->fecha_aduana_us,
+                        'entrega_bodega'    => $request->fecha_bodega]);
+        }else{
+            $trafico->id_trafico        = $request->id_trafico;
+            $trafico->agencia_mx        = $request->aduanal_mx;
+            $trafico->no_plataforma     = $request->no_plataforma;
+            $trafico->placas            = $request->placas;
+            $trafico->pais_orige        = $request->pais_or;
+            $trafico->largo             = $request->amb_largo;
+            $trafico->scac              = $request->scac;
+            $trafico->caat              = $request->caat;
+            $trafico->no_referencia     = $request->num_referencia;
+            $trafico->entrada_camion    = $request->entrada_camion;
+            $trafico->salida_camion     = $request->salida_camion;
+            $trafico->arancelaria_usa   = $request->fraccion_arra;
+            $trafico->fecha_entrega     = $request->fecha_entrega;
+            $trafico->tipo_cambio       = $request->tipo_cambio;
+            $trafico->arancelaria_mx    = $request->fraccion_arra_mx;
+            $trafico->liberacion_ad_mx  = $request->fecha_aduana_mx;
+            $trafico->liberacion_ad_usa = $request->fecha_aduana_us;
+            $trafico->entrega_bodega    = $request->fecha_bodega;
+            $trafico->save();
+   
         }
-        $trafico->id_trafico        = $request->id_trafico;
-        $trafico->agencia_mx        = $request->aduanal_mx;
-        $trafico->no_plataforma     = $request->no_plataforma;
-        $trafico->placas            = $request->placas;
-        $trafico->pais_orige        = $request->pais_or;
-        $trafico->largo             = $request->amb_largo;
-        $trafico->scac              = $request->scac;
-        $trafico->caat              = $request->caat;
-        $trafico->no_referencia     = $request->num_referencia;
-        $trafico->entrada_camion    = $request->entrada_camion;
-        $trafico->salida_camion     = $request->salida_camion;
-        $trafico->arancelaria_usa   = $request->fraccion_arra;
-        $trafico->fecha_entrega     = $request->fecha_entrega;
-        $trafico->tipo_cambio       = $request->tipo_cambio;
-        $trafico->arancelaria_mx    = $request->fraccion_arra_mx;
-        
-        $trafico->save();
 
-        $var = Trafico_flete::count();
+        
+        $var = Trafico_flete::get();
         dd($var);
     }
     
