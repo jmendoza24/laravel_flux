@@ -55,7 +55,7 @@
 	        <div class="card-content collpase show">
 	          <div class="card-body">
 	            <div class="card-text">
-	              <form class="form-group card-body" id="documentos_seguimiento"enctype="multipart/form-data">
+	              <form class="form-group card-body" id="documentos_seguimiento" enctype="multipart/form-data">
 	              	{{ csrf_field() }}
 	              	<input type="hidden" name="id_trafico" value="{{ $trafico}}">
 	              	<div class="row">
@@ -102,26 +102,25 @@
 	        <div class="card-content collpase show">
 	          <div class="card-body">
 	            <div class="card-text">
-	              	<table class="table table-bordered table-striped small">
-						<tr>
-							<td>Peso Kg.</td>
-							<td>Altura</td>
-							<td>Ancho</td>
-							<td>Largo</td>
-							<td>Peso tarima</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td><input type="text" name="peso_kg" id="peso_kg" class="form-control"></td>
-							<td><input type="text" name="altura" id="altura" class="form-control"></td>
-							<td><input type="text" name="ancho" id="ancho" class="form-control"></td>
-							<td><input type="text" name="largo" id="largo" class="form-control"></td>
-							<td><input type="text" name="peso_tarima" id="peso_tarima" class="form-control"></td>
-							<td>
-								<button class="btn btn-primary"><i class="fa fa-save"></i></button>
-							</td>
-						</tr>
-					</table>
+	            	<form id="nueva_tarima" enctype="multipart/form-data">
+		            	<table class="table">	
+		            			{{ csrf_field() }}
+		            			<input type="hidden" name="id_trafico" value="{{ $trafico}}">
+							<tr>
+								<td><input type="number" min="0" step="any" name="peso" id="peso" class="form-control" placeholder="Peso Kg"></td>
+								<td><input type="number" min="0" step="any" name="altura" id="altura" class="form-control" placeholder="Altura"></td>
+								<td><input type="number" min="0" step="any" name="ancho" id="ancho" class="form-control" placeholder="Ancho"></td>
+								<td><input type="number" min="0" step="any" name="largo" id="largo" class="form-control" placeholder="Largo"></td>
+								<td><input type="number" min="0" step="any" name="pero_tarima" id="pero_tarima" class="form-control" placeholder="Peso tarima"></td>
+								<td>
+									<span class="btn btn-primary" onclick="guarda_tarima()"><i class="fa fa-plus"></i> Tarimas</span>
+								</td>
+							</tr>
+	            		</table>
+	            	</form>
+	            	<div id="listado_tarimas">
+	              		@include('traficos.tarimas')
+					</div>
 	            </div>
 	          </div>
 	        </div>
@@ -171,13 +170,16 @@
 	      </div>
 	    </div>
 	    <div class="col-md-12">
+	    <form id="informacion_flete" enctype="multipart/form-data">
+            {{ csrf_field() }}
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Información del flete</h6>
+	          <h6 class="card-title">Información del flete <span class="btn btn-primary pull-right" onclick="guarda_flete()"><i class="fa fa-save fa-2x"></i>Guardar</span></h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
 	            <div class="row">
+            		<input type="hidden" name="id_trafico" value="{{ $trafico}}">
 	            	<div class="row">
 						<div class="form-group col-md-3">
 						    {!! Form::label('aduanal_mx', 'Agrencia aduanal mx') !!}
@@ -243,11 +245,11 @@
 			            	</a>
 						</div>
 					</div>
-	            	
 	            </div>
 	          </div>
 	        </div>
 	      </div>
+	      </form>
 	    </div>
 	    <div class="col-md-12">
 	      <div class="card">
@@ -257,51 +259,56 @@
 	        <div class="card-content collpase show">
 	          <div class="card-body">
 	            <div class="row">
-	            	<a href="{{ ($doc_3 !='')? url($doc_3):'#'}}" {{ ($doc_3 !='')?'target="_blank"':''}} class="col-md-3">
-	            		<button class="btn btn-float btn-{{ ($doc_3 !='')?'primary':'secondary'}}" {{ ($doc_3 !='')?'':'disabled'}} style="margin-bottom: 3px;">
-	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Validacion de Fracciones Mexico
+	            	<a href="{{ ($doc_3 !='')? url($doc_3):'#'}}" {{ ($doc_3 !='')?'target="_blank"':''}} class="col-md-3" >
+	            		<button class="btn btn-float btn-{{ ($doc_3 !='')?'primary':'secondary'}}" {{ ($doc_3 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
+	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Validacion de Fracciones MX
 	            		</button>
 	            	</a>
 	            </div>
 	            <br>
 	            <div class="row">
-	            	<button class="btn btn-float btn-outline-primary col-md-3" style="margin-bottom: 3px;"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Complemento de Comercio Exterior</button>
+	            	<a href="#" class="col-md-3">
+	            		<button class="btn btn-float btn-secondary" style="margin-bottom: 3px; width: 100%">
+	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Comp. Comercio Exterior
+	            		</button>
+	            	</a>
+	            	<!--<button class="btn btn-float btn-outline-primary col-md-3" style="margin-bottom: 3px;"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></button>-->
 	            </div>
 	            <br>
 	            <div class="row">
-	            	<a href="{{ ($doc_5 !='')? url($doc_5):'#'}}" {{ ($doc_5 !='')?'target="_blank"':''}} class="col-md-2">
-	            		<button class="btn btn-float btn-{{ ($doc_5 !='')?'primary':'secondary'}}" {{ ($doc_5 !='')?'':'disabled'}} style="margin-bottom: 3px;">
-	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Factura XML
+	            	<a href="{{ ($doc_5 !='')? url($doc_5):'#'}}" {{ ($doc_5 !='')?'target="_blank"':''}} class="col-md-3">
+	            		<button class="btn btn-float btn-{{ ($doc_5 !='')?'primary':'secondary'}}" {{ ($doc_5 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%">
+	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Fact FLUX MX-US (XML)
 	            		</button>
 	            	</a>
-	            	<a href="{{ ($doc_4 !='')? url($doc_4):'#'}}" {{ ($doc_4 !='')?'target="_blank"':''}} class="col-md-4">
-						<button class="btn btn-float btn-{{ ($doc_4 !='')?'primary':'secondary'}} " {{ ($doc_4 !='')?'':'disabled'}} style="margin-bottom: 3px;">
-							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Factura PDF (Planta México a FLUX USA)
+	            	<a href="{{ ($doc_4 !='')? url($doc_4):'#'}}" {{ ($doc_4 !='')?'target="_blank"':''}} class="col-md-3">
+						<button class="btn btn-float btn-{{ ($doc_4 !='')?'primary':'secondary'}}" {{ ($doc_4 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%">
+							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Fact FLUX MX-US (PDF)
 						</button>
 					</a>
 	            </div>
 	            <br>
 	            <div class="row">
 	            	<a href="{{ ($doc_6 !='')? url($doc_6):'#'}}" {{ ($doc_6 !='')?'target="_blank"':''}} class="col-md-3">
-	            		<button class="btn btn-float btn-{{ ($doc_6 !='')?'primary':'secondary'}} " {{ ($doc_6 !='')?'':'disabled'}} style="margin-bottom: 3px;">
-	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Cotizacion de Ag. Aduanal MX
+	            		<button class="btn btn-float btn-{{ ($doc_6 !='')?'primary':'secondary'}} " {{ ($doc_6 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
+	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Cot. Ag. Ad. MX
 	            		</button>
 	            	</a>
 	            	<a href="{{ ($doc_7 !='')? url($doc_7):'#'}}" {{ ($doc_7 !='')?'target="_blank"':''}} class="col-md-3">
-	            		<button class="btn btn-float btn-{{ ($doc_7 !='')?'primary':'secondary'}}" {{ ($doc_7 !='')?'':'disabled'}} style="margin-bottom: 3px;">
-						<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Comprobante de Pago Ag. Aduanal
+	            		<button class="btn btn-float btn-{{ ($doc_7 !='')?'primary':'secondary'}}" {{ ($doc_7 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
+						<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Pago Ag. Ad. MX
 					</button>
 					</a>
 	            </div>
 	            <br>
 	            <div class="row">
 					<a href="{{ ($doc_8 !='')? url($doc_8):'#'}}" {{ ($doc_8 !='')?'target="_blank"':''}} class="col-md-3">
-	            		<button class="btn btn-float btn-{{ ($doc_8 !='')?'primary':'secondary'}}" {{ ($doc_8 !='')?'':'disabled'}} style="margin-bottom: 3px;">
+	            		<button class="btn btn-float btn-{{ ($doc_8 !='')?'primary':'secondary'}}" {{ ($doc_8 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
 							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Pedimento Aduana MX
 						</button>
 					</a>
-					<a href="{{ ($doc_9 !='')? url($doc_9):'#'}}" {{ ($doc_9 !='')?'target="_blank"':''}} class="col-md-2">
-	            		<button class="btn btn-float btn-{{ ($doc_9 !='')?'primary':'secondary'}} " {{ ($doc_9 !='')?'':'disabled'}} style="margin-bottom: 3px;">
+					<a href="{{ ($doc_9 !='')? url($doc_9):'#'}}" {{ ($doc_9 !='')?'target="_blank"':''}} class="col-md-3">
+	            		<button class="btn btn-float btn-{{ ($doc_9 !='')?'primary':'secondary'}} " {{ ($doc_9 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
 						<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>DODA
 					</button>
 					</a>
@@ -310,8 +317,8 @@
 	            <h6 class="card-title">POD</h6>
 	            <hr>
 	            <div class="row">
-	            	<a href="{{ ($doc_10 !='')? url($doc_10):'#'}}" {{ ($doc_10 !='')?'target="_blank"':''}} class="col-md-2">
-	            		<button class="btn btn-float btn-{{ ($doc_10 !='')?'primary':'secondary'}}" {{ ($doc_10 !='')?'':'disabled'}} style="margin-bottom: 3px;">
+	            	<a href="{{ ($doc_10 !='')? url($doc_10):'#'}}" {{ ($doc_10 !='')?'target="_blank"':''}} class="col-md-3">
+	            		<button class="btn btn-float btn-{{ ($doc_10 !='')?'primary':'secondary'}}" {{ ($doc_10 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
 							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>POD Firmado
 						</button>
 					</a>
@@ -328,23 +335,23 @@
 	        <div class="card-content collpase show">
 	          <div class="card-body">
 	            <div class="row">
-	            	<a href="{{ ($doc_11 !='')? url($doc_11):'#'}}" {{ ($doc_11 !='')?'target="_blank"':''}} class="col-md-3 mr-1">
-	            		<button class="btn btn-float btn-{{ ($doc_11 !='')?'primary':'secondary'}} " {{ ($doc_11 !='')?'':'disabled'}} style="margin-bottom: 3px;">
+	            	<a href="{{ ($doc_11 !='')? url($doc_11):'#'}}" {{ ($doc_11 !='')?'target="_blank"':''}} class="col-md-3">
+	            		<button class="btn btn-float btn-{{ ($doc_11 !='')?'primary':'secondary'}} " {{ ($doc_11 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
 							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Verificacion Fracciones USA
 						</button>
 					</a>
-					<a href="{{ ($doc_12 !='')? url($doc_12):'#'}}" {{ ($doc_12 !='')?'target="_blank"':''}} class="col-md-3 mr-1">
-	            		<button class="btn btn-float btn-{{ ($doc_12 !='')?'primary':'secondary'}} " {{ ($doc_12 !='')?'':'disabled'}} style="margin-bottom: 3px;">
+					<a href="{{ ($doc_12 !='')? url($doc_12):'#'}}" {{ ($doc_12 !='')?'target="_blank"':''}} class="col-md-3">
+	            		<button class="btn btn-float btn-{{ ($doc_12 !='')?'primary':'secondary'}} " {{ ($doc_12 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
 							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Pre File (Shipment Advice)
 						</button>
 					</a>
-					<a href="{{ ($doc_13 !='')? url($doc_13):'#'}}" {{ ($doc_13 !='')?'target="_blank"':''}} class="col-md-2 mr-1">
-	            		<button class="btn btn-float btn-{{ ($doc_13 !='')?'primary':'secondary'}} " {{ ($doc_13 !='')?'':'disabled'}} style="margin-bottom: 3px;">
+					<a href="{{ ($doc_13 !='')? url($doc_13):'#'}}" {{ ($doc_13 !='')?'target="_blank"':''}} class="col-md-3">
+	            		<button class="btn btn-float btn-{{ ($doc_13 !='')?'primary':'secondary'}} " {{ ($doc_13 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
 							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Carta de Aduana
 						</button>
 					</a>
-					<a href="{{ ($doc_14 !='')? url($doc_14):'#'}}" {{ ($doc_14 !='')?'target="_blank"':''}}>
-	            		<button class="btn btn-float btn-{{ ($doc_14 !='')?'primary':'secondary'}}" {{ ($doc_14 !='')?'':'disabled'}} style="margin-bottom: 3px;">
+					<a href="{{ ($doc_14 !='')? url($doc_14):'#'}}" {{ ($doc_14 !='')?'target="_blank"':''}} class="col-md-3">
+	            		<button class="btn btn-float btn-{{ ($doc_14 !='')?'primary':'secondary'}}" {{ ($doc_14 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
 							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Bill of Lading USA
 						</button>
 					</a>

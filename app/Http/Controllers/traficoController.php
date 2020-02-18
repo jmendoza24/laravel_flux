@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\trafico;
 use App\Models\clientes;
 use App\Models\Trafico_documentos;
+use App\Models\Trafico_tarimas;
+use App\Models\Trafico_flete;
 use App\Http\Requests\CreatetraficoRequest;
 use App\Http\Requests\UpdatetraficoRequest;
 use App\Repositories\traficoRepository;
@@ -37,6 +39,8 @@ class traficoController extends AppBaseController
     public function index(Request $request){
         #$files = db::table('traficos_documentos')->where('id_trafico',83)->get();
        # dd($files);
+        
+        
         $trafic = new trafico;       
         $traficos = $trafic->get_trafico();
        
@@ -142,11 +146,13 @@ class traficoController extends AppBaseController
         return json_encode($options);
 
     }
-
+ 
     function seguimiento_trafico(Request $request){
         $trafico = $request->ide;
         $files = db::table('traficos_documentos')->where('id_trafico',$request->ide)->get();
-        $options = view('traficos.show_fields',compact('trafico','files'))->render();
+        $tarimas = Trafico_tarimas::where('id_trafico',$trafico)->get();
+        $options = view('traficos.show_fields',compact('trafico','files','tarimas'))->render();
+
         return json_encode($options);
     }
 
@@ -174,6 +180,68 @@ class traficoController extends AppBaseController
 
         $options = view('traficos.show_fields',compact('trafico','files'))->render();
         return $options;
+    }
+
+    function guarda_trafico_tarima(Request $request){
+        Trafico_tarimas::insert(['id_trafico'=>$request->id_trafico,
+                                  'peso'=>$request->peso,
+                                  'altura'=>$request->altura,
+                                  'ancho'=>$request->ancho,
+                                  'largo'=>$request->largo,
+                                  'pero_tarima'=>$request->pero_tarima]);
+
+        $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
+
+        $options = view('traficos.tarimas',compact('tarimas'))->render();
+        return $options;
+    }
+
+    function actualiza_tarimas(Request $request){
+        Trafico_tarimas::where('id',$request->id)
+                        ->update([$request->campo=>$request->valor]);
+        $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
+        $options = view('traficos.tarimas',compact('tarimas'))->render();
+        return $options;
+    }
+    
+    function elimina_tarifa(Request $request){
+        Trafico_tarimas::where('id',$request->id)->delete();
+        $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
+        $options = view('traficos.tarimas',compact('tarimas'))->render();
+
+        return json_encode($options);
+    }
+
+    function guarda_flete(Request $request){
+    #    Trafico_flete::truncate();
+
+        $trafico = new Trafico_flete;
+
+        $existe = Trafico_flete::where('id_trafico',$request->id_trafico)->count();
+
+        if($existe> 0){
+            $trafico::find($request->id_trafico);
+        }
+        $trafico->id_trafico        = $request->id_trafico;
+        $trafico->agencia_mx        = $request->aduanal_mx;
+        $trafico->no_plataforma     = $request->no_plataforma;
+        $trafico->placas            = $request->placas;
+        $trafico->pais_orige        = $request->pais_or;
+        $trafico->largo             = $request->amb_largo;
+        $trafico->scac              = $request->scac;
+        $trafico->caat              = $request->caat;
+        $trafico->no_referencia     = $request->num_referencia;
+        $trafico->entrada_camion    = $request->entrada_camion;
+        $trafico->salida_camion     = $request->salida_camion;
+        $trafico->arancelaria_usa   = $request->fraccion_arra;
+        $trafico->fecha_entrega     = $request->fecha_entrega;
+        $trafico->tipo_cambio       = $request->tipo_cambio;
+        $trafico->arancelaria_mx    = $request->fraccion_arra_mx;
+        
+        $trafico->save();
+
+        $var = Trafico_flete::count();
+        dd($var);
     }
     
 }

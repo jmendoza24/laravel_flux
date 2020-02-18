@@ -132,7 +132,13 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/seguimiento_trafico', 'traficoController@seguimiento_trafico');
 	Route::get('/finaliza_trafico', 'traficoController@finaliza_trafico');
 	Route::post('/carga_files_trafico', 'traficoController@carga_files_trafico');
-		
+	Route::post('/guarda_trafico_tarima', 'traficoController@guarda_trafico_tarima');
+	Route::get('/actualiza_tarimas', 'traficoController@actualiza_tarimas');
+	Route::get('/elimina_tarifa', 'traficoController@elimina_tarifa');
+	Route::post('/guarda_flete', 'traficoController@guarda_flete');
+	
+
+	
 	
 });
 
