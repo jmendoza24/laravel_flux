@@ -7,6 +7,9 @@ use App\Models\clientes;
 use App\Models\Trafico_documentos;
 use App\Models\Trafico_tarimas;
 use App\Models\Trafico_flete;
+use App\Models\planta;
+use App\Models\tarimas_idns;
+use App\Models\logistica;
 use App\Http\Requests\CreatetraficoRequest;
 use App\Http\Requests\UpdatetraficoRequest;
 use App\Repositories\traficoRepository;
@@ -39,8 +42,10 @@ class traficoController extends AppBaseController
     public function index(Request $request){
         #$files = db::table('traficos_documentos')->where('id_trafico',83)->get();
        # dd($files);
-        
-        
+     # db::select('alter table traficos add column shipping_id int after id_planta');
+      #  $var = db::table('traficos')->get();
+     # dd($var);
+
         $trafic = new trafico;       
         $traficos = $trafic->get_trafico();
        
@@ -148,9 +153,22 @@ class traficoController extends AppBaseController
     }
  
     function seguimiento_trafico(Request $request){
+        $logistica = new logistica;
+        $trafic = new trafico;
+
         $trafico = $request->ide;
         $files = db::table('traficos_documentos')->where('id_trafico',$request->ide)->get();
         $tarimas = Trafico_tarimas::where('id_trafico',$trafico)->get();
+        $plantas = planta::get();
+        $info_trafico = trafico::where('id',$trafico)->get();
+        $info_trafico = $info_trafico[0];
+
+        $cliente_actual  = $trafic->cliente_actual($trafico); 
+        $cliente_actual = $cliente_actual[0];
+
+        $logistica->id_cliente = $cliente_actual->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
+
         $fletes = Trafico_flete::where('id_trafico',$trafico)->get();
         if(sizeof($fletes)>0){
             $fletes = $fletes[0];
@@ -175,8 +193,9 @@ class traficoController extends AppBaseController
                             'entrega_bodega'    =>'');
             $fletes = (object)$fletes;
         }
-        
-        $options = view('traficos.show_fields',compact('trafico','files','tarimas','fletes'))->render();
+        $tarimas_idns = tarimas_idns::where('id_trafico',$trafico)->get();
+        $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$trafico)->orderby('id_detalle')->get();
+        $options = view('traficos.show_fields',compact('trafico','files','tarimas','fletes','plantas','info_trafico','tarimas_idns','traficos_detalle','logisticas'))->render();
 
         return json_encode($options);
     }
@@ -208,24 +227,48 @@ class traficoController extends AppBaseController
     }
 
     function guarda_trafico_tarima(Request $request){
-        Trafico_tarimas::insert(['id_trafico'=>$request->id_trafico,
-                                  'peso'=>$request->peso,
-                                  'altura'=>$request->altura,
-                                  'ancho'=>$request->ancho,
-                                  'largo'=>$request->largo,
-                                  'pero_tarima'=>$request->pero_tarima]);
+        $idns = $request->idns;
+        #dd($idns);
+
+        $last_id = Trafico_tarimas::insertGetId(['id_trafico'=>$request->id_trafico,
+                                                  'peso'=>$request->peso,
+                                                  'altura'=>$request->altura,
+                                                  'ancho'=>$request->ancho,
+                                                  'largo'=>$request->largo,
+                                                  'pero_tarima'=>$request->pero_tarima]);
+
+        foreach($idns as $idn) {
+            tarimas_idns::insert(['id_trafico'=>$request->id_trafico,
+                                  'id_tarima'=>$last_id,
+                                  'idn'=>$idn]);
+        }
+
+        $tarimas_idns = tarimas_idns::where('id_trafico',$request->id_trafico)->get();
 
         $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
 
-        $options = view('traficos.tarimas',compact('tarimas'))->render();
+        $options = view('traficos.tarimas',compact('tarimas','tarimas_idns'))->render();
         return $options;
     }
 
     function actualiza_tarimas(Request $request){
-        Trafico_tarimas::where('id',$request->id)
-                        ->update([$request->campo=>$request->valor]);
+        if($request->campo=='idns'){
+            $idns = $request->valor;
+            tarimas_idns::where('id_tarima',$request->id)->delete();
+            foreach($idns as $idn) {
+            tarimas_idns::insert(['id_trafico'=>$request->id_trafico,
+                                  'id_tarima'=>$request->id,
+                                  'idn'=>$idn]);
+            }
+
+        }else{
+            Trafico_tarimas::where('id',$request->id)
+                        ->update([$request->campo=>$request->valor]);    
+        }
+        $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$request->id_trafico)->orderby('id_detalle')->get();
+        $tarimas_idns = tarimas_idns::where('id_trafico',$request->id_trafico)->get();
         $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
-        $options = view('traficos.tarimas',compact('tarimas'))->render();
+        $options = view('traficos.tarimas',compact('tarimas','traficos_detalle','tarimas_idns'))->render();
         return $options;
     }
     
@@ -295,6 +338,14 @@ class traficoController extends AppBaseController
 
         $options = view('traficos.trafico_informacion',compact('traficos','status_prod'))->render();
         return json_encode($options);
+    }
+
+    function packing_list(Request $request){
+        return view('traficos.packing_list');
+    }
+    function guarda_planta_trafico(Request $request){
+        trafico::where('id',$request->id_trafico)->update([$request->campo=>$request->valor]);
+        return 1;
     }
     
 }

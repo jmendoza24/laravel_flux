@@ -17,6 +17,8 @@ class CreateTraficosTable extends Migration
             $table->increments('id');
             $table->integer('id_usuario');
             $table->integer('estatus');
+            $table->integer('id_planta');
+            $table->integer('shipping_id');
             $table->timestamps();
             $table->softDeletes();
         });

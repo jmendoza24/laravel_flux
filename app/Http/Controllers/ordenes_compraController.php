@@ -89,6 +89,7 @@ class ordenes_compraController extends AppBaseController
         $income = DB::table('income_terms')->get();
         $clientes = clientes::get();
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
 

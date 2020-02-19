@@ -97,7 +97,27 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Tarimas</h6>
+	          <h6 class="card-title">Tarimas
+	          	<span class="form-inline pull-right" style="font-size: 14px;">
+	          		<select class="form-control" id="id_planta" onchange="guarda_planta_trafico('id_planta',{{ $trafico}})">
+		          		<option value="">Planta</option>
+		          		@foreach($plantas as $pla)
+		          		<option value="{{ $pla->id}}" {{ ($info_trafico->id_planta==$pla->id)?'selected':''}}>{{ $pla->nombre}}</option>
+		          		@endforeach
+		          	</select>
+		          	&nbsp;
+		          	&nbsp;
+		          	<select class="form-control" id="shipping_id" onchange="guarda_planta_trafico('shipping_id',{{ $trafico}})" >
+		                <option value="">Ship to</option>
+		                @foreach($logisticas as $logistica)
+		                <option value="{{$logistica->id}}" {{($logistica->id==$info_trafico->shipping_id)?'selected':''}} >
+		                  {{$logistica->calle . ', ' .$logistica->municipio .', '. $logistica->nestado .', '. $logistica->npais}}
+		                </option>
+		                @endforeach
+		              </select>
+		      </span>
+	          </h6>
+	          
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -107,6 +127,14 @@
 		            			{{ csrf_field() }}
 		            			<input type="hidden" name="id_trafico" value="{{ $trafico}}">
 							<tr>
+								<td>
+									<select name="idns[]" class="select2-placeholder-multiple form-control" multiple="multiple" style="width: 150px;" >
+										@foreach($traficos_detalle as $idns)
+										<option value="{{$idns->id_detalle}}">{{$idns->id_detalle}}</option>
+										@endforeach
+									</select>
+								</td>
+								<!--<td><input type="text"  name="idns" class="form-control" placeholder="IDNS" id="idns"></td>-->
 								<td><input type="number" min="0" step="any" name="peso" id="peso" class="form-control" placeholder="Peso Kg"></td>
 								<td><input type="number" min="0" step="any" name="altura" id="altura" class="form-control" placeholder="Altura"></td>
 								<td><input type="number" min="0" step="any" name="ancho" id="ancho" class="form-control" placeholder="Ancho"></td>
@@ -139,8 +167,8 @@
 	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>POD
 	            		</button>
 	            	</a>
-					<a href="{{ ($doc_19 !='')? url($doc_19):'#'}}" {{ ($doc_19 !='')?'target="_blank"':''}}>
-						<button class="btn btn-float btn-{{ ($doc_19 !='')?'primary':'secondary'}} col-md-2" {{ ($doc_19 !='')?'':'disabled'}}>
+					<a href="{{ route('download.package')}}" target="_blank">
+						<button class="btn btn-float btn-primary col-md-2">
 							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Packing List
 						</button>
 					</a>
@@ -221,10 +249,13 @@
 						    {!! Form::label('salida_camion', 'Hora de salida Camión') !!}
 						    <input type="text" name="salida_camion" id="salida_camion" class="form-control" value="{{ $fletes->salida_camion}}">
 						</div>
+						<input type="hidden" name="fraccion_arra" id="fraccion_arra" >
+						<input type="hidden" name="fraccion_arra_mx" id="fraccion_arra_mx" >
+						<!--
 						<div class="form-group col-md-3">
 						    {!! Form::label('fraccion_arra', 'Fracciones Arancelarias USA') !!}
 						    <input type="text" name="fraccion_arra" id="fraccion_arra" class="form-control" value="{{ $fletes->arancelaria_usa}}">
-						</div>
+						</div>-->
 						<div class="form-group col-md-3">
 						    {!! Form::label('fecha_entrega', 'Fecha entrega') !!}
 						    <input type="text" name="fecha_entrega" id="fecha_entrega" class="form-control" value="{{ $fletes->fecha_entrega}}">
@@ -233,16 +264,43 @@
 						    {!! Form::label('tipo_cambio', 'Tipo cambio') !!}
 						    <input type="text" name="tipo_cambio" id="tipo_cambio" class="form-control" value="{{ $fletes->tipo_cambio}}">
 						</div>
+						<!--
 						<div class="form-group col-md-3">
 						    {!! Form::label('fraccion_arra_mx', 'Fraccion Arancelaria MX') !!}
 						    <input type="text" name="fraccion_arra_mx" id="fraccion_arra_mx" class="form-control" value="{{ $fletes->arancelaria_mx}}">
-						</div>
+						</div>-->
 						<div class="form-group col-md-3">
 							<a href="{{ ($doc_3 !='')? url($doc_3):'#'}}" {{ ($doc_3 !='')?'target="_blank"':''}}>
 			            		<button class="btn btn-float btn-{{ ($doc_3 !='')?'primary':'secondary'}}" {{ ($doc_3 !='')?'':'disabled'}} style="margin-bottom: 3px;">
 			            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Notificacion de Embarque
 			            		</button>
 			            	</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<table class="table table-bordered table-striped small">
+								<tr>
+									<td>IDN</td>
+									<td>No. Parte</td>
+									<td>Fracción MX</td>
+									<td>Fraccion US</td>
+								</tr>
+								@foreach($traficos_detalle as $for_ind)
+								<tr>
+									<td>
+										{{ $for_ind->id_detalle}}
+									</td>
+									<td></td>
+									<td>
+										<input type="text" name="" class="form-control">
+									</td>
+									<td>
+										<input type="text" name="" class="form-control">
+									</td>
+								</tr>
+								@endforeach
+							</table>
 						</div>
 					</div>
 	            </div>

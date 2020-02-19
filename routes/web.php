@@ -52,6 +52,8 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/ordenesporenviar', 'ordenes_compraController@ordenesporenviar')->name('enviados.index');
 	Route::resource('traficos', 'traficoController');
 	Route::get('/factura', 'FacturacionController@index')->name('factura.index');
+	Route::get('/packing_list', 'traficoController@packing_list')->name('download.package');
+	
 
 });
 
@@ -138,6 +140,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/elimina_tarifa', 'traficoController@elimina_tarifa');
 	Route::post('/guarda_flete', 'traficoController@guarda_flete');
 	Route::get('/informacion_trafico', 'traficoController@informacion_trafico');
+	Route::get('/guarda_planta_trafico', 'traficoController@guarda_planta_trafico');
 	
 });
 

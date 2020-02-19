@@ -2,6 +2,7 @@
 <table class="table table-bordered table-striped small">
 	<tr>
 		<td># Tarima</td>
+		<td>IDNS</td>
 		<td>Peso Kg.</td>
 		<td>Altura</td>
 		<td>Ancho</td>
@@ -12,6 +13,21 @@
 	@foreach($tarimas as $tar)
 	<tr>
 		<td>{{$i}}</td>
+		<td>
+			<select name="idns[]" onchange="actualiza_tarima('idns',{{$tar->id}},{{ $tar->id_trafico}})" id="idns{{$tar->id}}" class="select2-placeholder-multiple form-control" multiple="multiple" style="width: 150px;" >
+					@foreach($traficos_detalle as $idns)
+						<option value="{{$idns->id_detalle}}"
+						@foreach($tarimas_idns as $taridns)
+							
+							@if($idns->id_detalle==$taridns->idn && $taridns->id_tarima == $tar->id)
+								 {{'selected'}}
+							@endif
+						@endforeach
+						>{{$idns->id_detalle}}</option>
+					@endforeach
+			</select>
+		</td>
+		<!--<td><input type="text" class="form-control" name="idns{{$tar->id}}" onchange="actualiza_tarima('idns',{{$tar->id}},{{ $tar->id_trafico}})" id="idns{{$tar->id}}" value="{{ $tar->idns}}"></td>--->
 		<td><input type="number" step="any" min="0" name="peso{{$tar->id}}" onchange="actualiza_tarima('peso',{{$tar->id}},{{ $tar->id_trafico}})" id="peso{{$tar->id}}" class="form-control" value="{{ $tar->peso}}"></td>
 		<td><input type="number" step="any" min="0" name="altura{{$tar->id}}" onchange="actualiza_tarima('altura',{{$tar->id}},{{ $tar->id_trafico}})" id="altura{{$tar->id}}" class="form-control" value="{{ $tar->altura}}"></td>
 		<td><input type="number" step="any" min="0" name="ancho{{$tar->id}}" onchange="actualiza_tarima('ancho',{{$tar->id}},{{ $tar->id_trafico}})" id="ancho{{$tar->id}}" class="form-control" value="{{ $tar->ancho}}"></td>

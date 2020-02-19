@@ -17,7 +17,7 @@ class Trafico_tarimas extends Model
 {
 
     public $table = 'traficos_tarimas';
-    
+     
 
 
 
