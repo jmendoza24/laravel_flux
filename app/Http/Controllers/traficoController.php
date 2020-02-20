@@ -10,6 +10,7 @@ use App\Models\Trafico_flete;
 use App\Models\planta;
 use App\Models\tarimas_idns;
 use App\Models\logistica;
+use App\Models\flete_fracciones;
 use App\Http\Requests\CreatetraficoRequest;
 use App\Http\Requests\UpdatetraficoRequest;
 use App\Repositories\traficoRepository;
@@ -155,7 +156,7 @@ class traficoController extends AppBaseController
     function seguimiento_trafico(Request $request){
         $logistica = new logistica;
         $trafic = new trafico;
-
+        
         $trafico = $request->ide;
         $files = db::table('traficos_documentos')->where('id_trafico',$request->ide)->get();
         $tarimas = Trafico_tarimas::where('id_trafico',$trafico)->get();
@@ -195,7 +196,15 @@ class traficoController extends AppBaseController
         }
         $tarimas_idns = tarimas_idns::where('id_trafico',$trafico)->get();
         $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$trafico)->orderby('id_detalle')->get();
-        $options = view('traficos.show_fields',compact('trafico','files','tarimas','fletes','plantas','info_trafico','tarimas_idns','traficos_detalle','logisticas'))->render();
+        $flete_fracciones = db::table('traficos_detalle as d')
+                                ->join('ordencompra_detalle as od','od.id','d.id_detalle')
+                                ->join('productos as p','p.id','od.producto')
+                                ->leftjoin('flete_fracciones as ff', 'ff.id_detalle','d.id_detalle')
+                                ->where('d.id_trafico',$trafico)
+                                ->orderby('d.id_detalle')
+                                ->selectraw('p.numero_parte, d.id_detalle, ff.fraccion_mx, ff.fraccion_us')
+                                ->get();
+        $options = view('traficos.show_fields',compact('trafico','files','tarimas','fletes','plantas','info_trafico','tarimas_idns','traficos_detalle','logisticas','flete_fracciones'))->render();
 
         return json_encode($options);
     }
@@ -246,8 +255,8 @@ class traficoController extends AppBaseController
         $tarimas_idns = tarimas_idns::where('id_trafico',$request->id_trafico)->get();
 
         $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
-
-        $options = view('traficos.tarimas',compact('tarimas','tarimas_idns'))->render();
+        $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$request->id_trafico)->orderby('id_detalle')->get();
+        $options = view('traficos.tarimas',compact('tarimas','tarimas_idns','traficos_detalle'))->render();
         return $options;
     }
 
@@ -274,8 +283,11 @@ class traficoController extends AppBaseController
     
     function elimina_tarifa(Request $request){
         Trafico_tarimas::where('id',$request->id)->delete();
+
+        $tarimas_idns = tarimas_idns::where('id_trafico',$request->id_trafico)->get();
+        $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$request->id_trafico)->orderby('id_detalle')->get();
         $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
-        $options = view('traficos.tarimas',compact('tarimas'))->render();
+        $options = view('traficos.tarimas',compact('tarimas','traficos_detalle','tarimas_idns'))->render();
 
         return json_encode($options);
     }
@@ -343,9 +355,26 @@ class traficoController extends AppBaseController
     function packing_list(Request $request){
         return view('traficos.packing_list');
     }
+
     function guarda_planta_trafico(Request $request){
         trafico::where('id',$request->id_trafico)->update([$request->campo=>$request->valor]);
         return 1;
+    }
+
+    function guarda_fracciones(Request $request){
+        $existe = flete_fracciones::where('id_detalle',$request->id)->count();
+        if($existe > 0){
+            flete_fracciones::where([['id_detalle',$request->id],
+                                     ['id_trafico',$request->id_trafico]])
+                        ->update([$request->campo=>$request->valor]);
+        }else{
+            flete_fracciones::insert(['id_trafico'=>$request->id_trafico,
+                                      'id_detalle'=>$request->id,
+                                      $request->campo=>$request->valor]);    
+        }
+
+        return 1;
+        
     }
     
 }

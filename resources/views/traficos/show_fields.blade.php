@@ -286,17 +286,15 @@
 									<td>Fracción MX</td>
 									<td>Fraccion US</td>
 								</tr>
-								@foreach($traficos_detalle as $for_ind)
+								@foreach($flete_fracciones as $for_ind)
 								<tr>
+									<td>{{ $for_ind->id_detalle}}</td>
+									<td>{{ $for_ind->numero_parte}}</td>
 									<td>
-										{{ $for_ind->id_detalle}}
-									</td>
-									<td></td>
-									<td>
-										<input type="text" name="" class="form-control">
+										<input type="text" id="fraccion_mx_{{ $for_ind->id_detalle}}" onchange="guarda_fracciones('fraccion_mx',{{ $for_ind->id_detalle}},{{ $trafico}})" class="form-control" value="{{ $for_ind->fraccion_mx}}">
 									</td>
 									<td>
-										<input type="text" name="" class="form-control">
+										<input type="text" id="fraccion_us_{{ $for_ind->id_detalle}}" onchange="guarda_fracciones('fraccion_mx',{{ $for_ind->id_detalle}},{{ $trafico}})" class="form-control" value="{{ $for_ind->fraccion_us}}">
 									</td>
 								</tr>
 								@endforeach

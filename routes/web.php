@@ -141,6 +141,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::post('/guarda_flete', 'traficoController@guarda_flete');
 	Route::get('/informacion_trafico', 'traficoController@informacion_trafico');
 	Route::get('/guarda_planta_trafico', 'traficoController@guarda_planta_trafico');
+	Route::get('/guarda_fracciones', 'traficoController@guarda_fracciones');
+	
 	
 });
 
