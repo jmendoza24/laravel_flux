@@ -80,6 +80,17 @@ class logistica extends Model
         return $logisticas;
     }
 
+     function cliente_logisticas_actual($filtros){
+        $logisticas = DB::table('logisticas as a')
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where('a.id',$filtros->id_logistica)
+                    ->selectraw("a.*, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
+                    ->get();
+
+        return $logisticas;
+    }
+
 
 
     

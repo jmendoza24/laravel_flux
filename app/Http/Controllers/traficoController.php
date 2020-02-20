@@ -22,6 +22,7 @@ use Response;
 use DB;
 use Auth;
 use Session;
+use PDF;
 
 class traficoController extends AppBaseController
 {
@@ -43,8 +44,8 @@ class traficoController extends AppBaseController
     public function index(Request $request){
         #$files = db::table('traficos_documentos')->where('id_trafico',83)->get();
        # dd($files);
-     # db::select('alter table traficos add column shipping_id int after id_planta');
-      #  $var = db::table('traficos')->get();
+    #  db::select('alter table traficos_tarimas add column shipping_id int after id_trafico');
+    #    $var = db::table('traficos_tarimas')->get();
      # dd($var);
 
         $trafic = new trafico;       
@@ -353,7 +354,49 @@ class traficoController extends AppBaseController
     }
 
     function packing_list(Request $request){
-        return view('traficos.packing_list');
+       # db::select('truncate table tarimas_idns');
+        $logistic = new logistica;
+        #$planta = new planta;
+
+
+        $trafico = db::table('traficos')->where('id',$request->id_trafico)->get();
+        $logistic->id_logistica = $trafico[0]->shipping_id;
+        $logistica = $logistic->cliente_logisticas_actual($logistic);
+        $planta = db::table('plantas as p')
+                    ->leftjoin('estados as e', 'e.id','p.estado')
+                    ->where('p.id',$trafico[0]->id_planta)
+                    ->selectraw('p.*, e.estado as nestado')
+                    ->get();
+        $planta = $planta[0];
+        $logistica = $logistica[0];
+        $tarimas_idns = db::table('tarimas_idns as t')
+                            ->join('ordencompra_detalle as d','t.idn','d.id')
+                            ->join('ordenes_compras as o','o.id','d.id_orden')
+                            ->join('productos as p','p.id','d.producto')
+                            #->where('id_trafico',$request->id_trafico)
+                            #->selectraw('t.*, p.numero_parte, o.orden_compra ')
+                            ->where('id_trafico',$request->id_trafico)
+                            ->selectraw('t.*,p.numero_parte, o.orden_compra ,d.incremento ')
+                            #->groupby('id_tarima','id_trafico')
+                            ->get();
+
+        $idns_conteo = tarimas_idns::where('id_trafico',$request->id_trafico)
+                       ->groupby('id_tarima')
+                       ->selectraw('count(*) as conteo, id_tarima')
+                       ->get();
+
+        $tarimas = db::table('traficos_tarimas as t')
+                        ->join('tarimas_idns as i','i.id_tarima','t.id')
+                        ->where('t.id_trafico',$request->id_trafico)
+                        ->selectraw('distinct t.*')
+                        ->get();
+        
+        
+        #return view('traficos.packing_list',compact('logistica','planta','tarimas','tarimas_idns','idns_conteo'));
+        $pdf = \PDF::loadView('traficos.packing_list',compact('logistica','planta','tarimas','tarimas_idns','idns_conteo'))->setPaper('A4','portrait');
+        return $pdf->download('Packing_List_'.$request->id_trafico.'.pdf');
+         #Storage::put('Cotizacion_'.$num_cotizacion.'.pdf', $pdf->output());
+
     }
 
     function guarda_planta_trafico(Request $request){
@@ -375,6 +418,34 @@ class traficoController extends AppBaseController
 
         return 1;
         
+    }
+
+    function report_pod(Request $request){
+        $items = db::table('traficos_detalle as t')
+                    ->join('ordencompra_detalle as d','t.id_detalle','d.id')
+                    ->join('ordenes_compras as o','o.id','d.id_orden')
+                    ->join('productos as p','p.id','d.producto')
+                    ->where('id_trafico',$request->id_trafico)
+                    ->groupby('p.numero_parte','incremento','o.orden_compra','p.descripcion')
+                    ->selectraw('count(*) as conteo,p.numero_parte, incremento, o.orden_compra, p.descripcion')
+                    ->get();
+        #return view('traficos.pod',compact('items'));
+        $pdf = \PDF::loadView('traficos.pod',compact('items'))->setPaper('A4-L','portrait');
+        return $pdf->download('POD_'.$request->id_trafico.'.pdf');
+    }
+
+    function report_invoice(Request $request){
+        $items = db::table('traficos_detalle as t')
+                    ->join('ordencompra_detalle as d','t.id_detalle','d.id')
+                    ->join('ordenes_compras as o','o.id','d.id_orden')
+                    ->join('productos as p','p.id','d.producto')
+                    ->where('id_trafico',$request->id_trafico)
+                    #->groupby('p.numero_parte','incremento','o.orden_compra','p.descripcion')
+                    ->selectraw('1 as conteo,p.numero_parte, incremento, o.orden_compra, p.descripcion, p.costo_produccion')
+                    ->get();
+        #return view('traficos.invoice',compact('items'));
+        $pdf = \PDF::loadView('traficos.invoice',compact('items'))->setPaper('A4-L','portrait');
+        return $pdf->download('Invoice_'.$request->id_trafico.'.pdf');
     }
     
 }

@@ -53,6 +53,8 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::resource('traficos', 'traficoController');
 	Route::get('/factura', 'FacturacionController@index')->name('factura.index');
 	Route::get('/packing_list', 'traficoController@packing_list')->name('download.package');
+	Route::get('/report_pod', 'traficoController@report_pod')->name('download.pod');
+	Route::get('/invoice', 'traficoController@report_invoice')->name('download.invoice');
 	
 
 });
