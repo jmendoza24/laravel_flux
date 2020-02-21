@@ -15,7 +15,7 @@
 	</tr>
 	@foreach($tarimas as $tar)
 	<tr>
-		<td>{{$i}}</td>
+		<td>{{$i}} - {{ $tar->id}}</td>
 		<td>
 			<select name="idns[]" onchange="actualiza_tarima('idns',{{$tar->id}},{{ $tar->id_trafico}})" id="idns{{$tar->id}}" class="select2-placeholder-multiple form-control" multiple="multiple" style="width: 150px;" >
 					@foreach($traficos_detalle as $idns)

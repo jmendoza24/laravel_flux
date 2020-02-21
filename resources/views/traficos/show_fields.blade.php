@@ -131,7 +131,7 @@
 								<td><input type="number" min="0" step="any" name="largo" id="largo" class="form-control" placeholder="Largo"></td>
 								<td><input type="number" min="0" step="any" name="pero_tarima" id="pero_tarima" class="form-control" placeholder="Peso tarima"></td>
 								<td>
-									<select class="form-control" id="shipping_id"  style="width: 110px;">
+									<select class="form-control" name="shipping_id"  style="width: 110px;">
 						                <option value="">Ship to</option>
 						                @foreach($logisticas as $logistica)
 						                <option value="{{$logistica->id}}"  >
@@ -161,22 +161,8 @@
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
-	            <div class="card-text">
-	            	<a href="{{ route('download.pod',['id_trafico'=>$trafico])}}" target="_blank">
-	            		<button class="btn btn-float btn-primary col-md-2">
-	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>POD
-	            		</button>
-	            	</a>
-					<a href="{{ route('download.package',['id_trafico'=>$trafico])}}" target="_blank">
-						<button class="btn btn-float btn-primary col-md-2">
-							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Packing List
-						</button>
-					</a>
-					<a href="{{ route('download.invoice',['id_trafico'=>$trafico])}}" target="_blank">
-						<button class="btn btn-float btn-primary col-md-2">
-							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Invoice
-						</button>
-					</a>
+	            <div class="card-text" id="preparacion_pod">
+	            	@include('traficos.preparacion_pod')
 	            </div>
 	          </div>
 	        </div>

@@ -91,6 +91,17 @@ class logistica extends Model
         return $logisticas;
     }
 
+    function logisticas_tarima($trafico){
+       return  db::table('traficos_tarimas as t')
+                    ->join('logisticas as a','a.id','t.shipping_id')
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where([['id_trafico',$trafico],['t.shipping_id','>',0]])
+                    ->groupby('t.shipping_id','p.nombre','e.estado','a.municipio','a.calle')
+                    ->selectraw('p.nombre as npais, e.estado as nestado, a.municipio , t.shipping_id, a.calle')
+                    ->get();
+    }
+
 
 
     

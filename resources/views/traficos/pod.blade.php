@@ -5,7 +5,8 @@
 			CUSTUMER RECEIVING
 			</b><br/>
 			PROOF OF DELIVERY <br>
-			DATE: {{ date('m-d-Y')}}
+			DATE: {{ date('m-d-Y')}}<br>
+			<label style="font-size: 14px;"> POD - {{$pod->calle . ', ' .$pod->municipio .', '. $pod->nestado .', '. $pod->npais}}</label>
 		</td>
 	</tr>
 </table>
