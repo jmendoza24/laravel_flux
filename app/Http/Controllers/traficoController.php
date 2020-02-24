@@ -487,5 +487,34 @@ class traficoController extends AppBaseController
         $pdf = \PDF::loadView('traficos.invoice',compact('items'))->setPaper('A4-L','portrait');
         return $pdf->download('Invoice_'.$request->id_trafico.'.pdf');
     }
+
+    function report_notificacion(Request $request){
+        $trafico = db::table('traficos as t')
+                    ->leftjoin('plantas as p','p.id','t.id_planta')
+                    ->leftjoin('estados as e','e.id','p.estado')
+                    ->leftjoin('paises as pa','pa.id','id_pais')
+                    ->where('t.id',$request->id_trafico)
+                    ->selectraw('t.*, p.*, e.estado, pa.nombre as npais')
+                    ->get();
+        $trafico = $trafico[0];
+        $info = Trafico_flete::where('id_trafico',$request->id_trafico)->get();
+        $info = $info[0];
+       #return view('traficos.notificacion_embarque',compact('info','trafico')); 
+        $pdf = \PDF::loadView('traficos.notificacion_embarque',compact('info','trafico'))->setPaper('A4-L','portrait');
+        return $pdf->download('Notificacion_Embarque_'.$request->id_trafico.'.pdf');
+    }
+
+    function complemento_ext(Request $request){
+        $trafico = db::table('traficos_detalle as t')
+                    ->join('ordencompra_detalle as d','t.id_detalle','d.id')
+                    ->join('ordenes_compras as o','o.id','d.id_orden')
+                    ->join('productos as p','p.id','d.producto')
+                    ->where('id_trafico',$request->id_trafico)
+                    ->selectraw('p.numero_parte, t.id_detalle, t.id_trafico')
+                    ->get();
+       #return view('traficos.complemento_ext',compact('trafico')); 
+        $pdf = \PDF::loadView('traficos.complemento_ext',compact('trafico'))->setPaper('A4-L','portrait');
+        return $pdf->download('Complemento_Comercio_Ext_'.$request->id_trafico.'.pdf');
+    }
     
 }

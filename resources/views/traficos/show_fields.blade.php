@@ -244,7 +244,7 @@
 						</div>-->
 						<div class="form-group col-md-3">
 						    {!! Form::label('fecha_entrega', 'Fecha entrega') !!}
-						    <input type="text" name="fecha_entrega" id="fecha_entrega" class="form-control" value="{{ $fletes->fecha_entrega}}">
+						    <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" value="{{ $fletes->fecha_entrega}}">
 						</div>
 						<div class="form-group col-md-3">
 						    {!! Form::label('tipo_cambio', 'Tipo cambio') !!}
@@ -256,11 +256,11 @@
 						    <input type="text" name="fraccion_arra_mx" id="fraccion_arra_mx" class="form-control" value="{{ $fletes->arancelaria_mx}}">
 						</div>-->
 						<div class="form-group col-md-3">
-							<a href="{{ ($doc_3 !='')? url($doc_3):'#'}}" {{ ($doc_3 !='')?'target="_blank"':''}}>
-			            		<button class="btn btn-float btn-{{ ($doc_3 !='')?'primary':'secondary'}}" {{ ($doc_3 !='')?'':'disabled'}} style="margin-bottom: 3px;">
-			            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Notificacion de Embarque
-			            		</button>
-			            	</a>
+							<a href="{{ route('download.notificacion',['id_trafico'=>$trafico])}}" target="_blank">
+								<span class="btn btn-float btn-primary ">
+									<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Notificacion de Embarque
+								</span>
+							</a>
 						</div>
 					</div>
 					<div class="row">
@@ -308,11 +308,11 @@
 	            </div>
 	            <br>
 	            <div class="row">
-	            	<a href="#" class="col-md-3">
-	            		<button class="btn btn-float btn-secondary" style="margin-bottom: 3px; width: 100%">
-	            			<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Comp. Comercio Exterior
-	            		</button>
-	            	</a>
+	            	<a href="{{ route('download.complemento_ext',['id_trafico'=>$trafico])}}" class="col-md-3" target="_blank">
+						<span class="btn btn-float btn-primary ">
+							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Comp. Comercio Exterior
+						</span>
+					</a>
 	            	<!--<button class="btn btn-float btn-outline-primary col-md-3" style="margin-bottom: 3px;"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></button>-->
 	            </div>
 	            <br>

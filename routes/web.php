@@ -55,8 +55,9 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/packing_list', 'traficoController@packing_list')->name('download.package');
 	Route::get('/report_pod', 'traficoController@report_pod')->name('download.pod');
 	Route::get('/invoice', 'traficoController@report_invoice')->name('download.invoice');
+	Route::get('/notificacion', 'traficoController@report_notificacion')->name('download.notificacion');
+	Route::get('/complemento_ext', 'traficoController@complemento_ext')->name('download.complemento_ext');
 	
-
 });
 
 Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
