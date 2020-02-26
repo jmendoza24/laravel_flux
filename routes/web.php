@@ -145,8 +145,9 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/informacion_trafico', 'traficoController@informacion_trafico');
 	Route::get('/guarda_planta_trafico', 'traficoController@guarda_planta_trafico');
 	Route::get('/guarda_fracciones', 'traficoController@guarda_fracciones');
-	
-	
+	Route::get('/muestra_line_facturado', 'FacturacionController@muestra_line_facturado');
+	Route::get('/muestra_line_productos', 'FacturacionController@muestra_line_productos');
+
 });
 
 

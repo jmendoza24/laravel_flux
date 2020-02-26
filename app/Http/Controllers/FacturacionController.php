@@ -24,6 +24,15 @@ class FacturacionController extends Controller
         return view('factura.index',compact('ordenes_compra'));
     }
 
+    function muestra_line_productos(Request $request){
+        $options = view('factura.informacion')->render();
+        return json_encode($options);
+    }
+
+    function muestra_line_facturado(Request $request){
+     $options = view('factura.info_factura')->render();   
+     return json_encode($options);
+    }
     /**
      * Show the form for creating a new resource.
      *
