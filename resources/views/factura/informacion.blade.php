@@ -1,3 +1,4 @@
+<h5>{{ $informacion[0]->orden_compra}}</h5>
 <table class="table table-bordered table-striped small">
 	<tr>
 		<td>Linea</td>
@@ -8,4 +9,15 @@
 		<td>Invoice</td>
 		<td>Estatus</td>
 	</tr>
+	@foreach($informacion as $info)
+		<tr>
+			<td>{{ $info->incremento}}</td>
+			<td>{{ $info->numero_parte}}</td>
+			<td>{{ $info->id}}</td>
+			<td>{{ $info->id_trafico}}</td>
+			<td>{{ $info->fecha_entrega}}</td>
+			<td>{{ $info->invoice}}</td>
+			<td></td>
+		</tr>
+	@endforeach
 </table>
