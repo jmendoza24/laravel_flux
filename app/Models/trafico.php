@@ -79,7 +79,7 @@ class trafico extends Model
                                 left join plantas as a on a.id = d.planta
                                 left join estados as e on e.id = l.estado
                                 left join paises as p on p.id = l.pais
-                                where o.tipo = 2
+                                where o.tipo in (2,3)
                                 '.$where.'
                                 and d.id not in (select id_detalle from traficos_detalle where id_trafico not in('.$trafico_numero.') )
                                 order by d.id asc');

@@ -69,7 +69,6 @@ class ordenes_compra extends Model
                         inner join ordencompra_detalle d on d.id_orden = c.id
                         left join productos as p on d.producto = p.id
                         inner join clientes as cl on cl.id = c.cliente
-                        where d.hijo = 0
                         group by c.id');
 
      $productos = db::table('ordenes_compras as c')
@@ -147,7 +146,7 @@ class ordenes_compra extends Model
             #dd($det);
             for($i=1; $i<= $det->cantidad-1; $i++){
               db::select("insert into ordencompra_detalle(id_orden,incremento, producto, dibujo,cantidad,costo,hijo)
-                    select id_orden,0, producto, dibujo,cantidad,costo,1
+                    select id_orden,incremento, producto, dibujo,cantidad,costo,1
                     from ordencompra_detalle
                     where id = ".$det->id.'
                     group by id_orden,producto, dibujo,cantidad,costo');

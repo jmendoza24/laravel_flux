@@ -10,7 +10,7 @@
     </h1>
 </div>
 <br><br><br>
-<div class="col-md-12">
+<div class="col-md-12" style="overflow:scroll; ">
      @include('ordenes_compras.table')
 </div>
 @endsection
@@ -20,7 +20,8 @@
     $('#ordenesCompras-table').DataTable( {
         "paging":   false,
         "ordering": true,
-        "info":     true
+        "info":     true,
+        "order": [[ 1, "desc" ]]
     } );
 } );
 

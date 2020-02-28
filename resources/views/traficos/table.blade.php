@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>IDN</th>
-            <th>Cliente</th>
+            <th>Cliente</th> 
             <th>Linea</th>
             <th>Producto</th>
             <th>OCC</th>

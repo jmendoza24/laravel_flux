@@ -1,7 +1,8 @@
 {{ sizeof($ordenesCompras)}} {{ Auth::user()->tipo}}
-<table class="table display nowrap table-striped table-bordered" id="ordenesCompras-table">
+<table class="table table-striped table-bordered" id="ordenesCompras-table">
     <thead>
         <tr>
+            <th>#</th>
             <th>OCC</th>
             <th>Cliente</th>
             <th>Fecha OCC</th>            
@@ -16,7 +17,8 @@
     
         @if($ordenesCompra->tipo==2 && Auth::user()->tipo==0)
         <tr>
-            <th>{{ $ordenesCompra->orden_compra}}</th>
+            <td>{{$ordenesCompra->id}}</td>
+            <td>{{ $ordenesCompra->orden_compra}}</td>
             <td>{!! $ordenesCompra->nombre_corto !!}</td>
             <td>{{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}</td>
             <td>
@@ -39,6 +41,7 @@
         </tr>
         @elseif(Auth::user()->tipo==1)
         <tr>
+            <td>{{$ordenesCompra->id}}</td>
             <th>{{ $ordenesCompra->orden_compra}}</th>
             <td>{!! $ordenesCompra->nombre_corto !!}</td>
             <td>{{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}</td>
