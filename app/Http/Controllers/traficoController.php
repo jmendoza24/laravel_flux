@@ -10,6 +10,7 @@ use App\Models\Trafico_flete;
 use App\Models\planta;
 use App\Models\tarimas_idns;
 use App\Models\logistica;
+use App\Models\invoices;
 use App\Models\flete_fracciones;
 use App\Http\Requests\CreatetraficoRequest;
 use App\Http\Requests\UpdatetraficoRequest;
@@ -213,7 +214,28 @@ class traficoController extends AppBaseController
     }
 
     function finaliza_trafico(Request $request){
-        //$trafico_numero = $request->session()->get('no_track');
+        $trafico_numero = $request->session()->get('no_track');
+       
+        $informacion = db::select('select td.id_trafico,orden_compra, count(*) as cant, d.id_orden, sum(costo_produccion) as costo_produccion
+                                   from  ordenes_compras as o 
+                                   inner join ordencompra_detalle as d on o.id = d.id_orden
+                                   inner join traficos_detalle as td on td.id_detalle = d.id
+                                   left join productos p on p.id = d.producto
+                                   where td.id_trafico = '.$trafico_numero .' 
+                                   group by td.id_trafico, orden_compra, d.id_orden');
+    #dd($informacion);
+        #invoices::truncate();
+        foreach ($informacion as $info) {
+            invoices::insert(['id_trafico'=>$info->id_trafico,
+                              'id_orden'=>$info->id_orden,
+                              'orden_compra'=>$info->orden_compra,
+                              'fecha_entrega'=>date('Y-m-d'),
+                              'fecha_pago'=>date('Y-m-d'),
+                              'monto'=>$info->costo_produccion,
+                              'monto_pagado'=>0]);
+        }
+
+        #$trafico_numero = $request->session()->get('no_track');
         $request->session()->forget('no_track');
         return 1;
 
