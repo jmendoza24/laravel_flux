@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titulo') Trafico @endsection
+@section('titulo') Trafico IDE: {{ $trafico_numero}} @endsection
 
 @section('content')
     <div class="row">

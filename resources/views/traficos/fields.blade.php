@@ -32,7 +32,9 @@
   <script type="text/javascript">
     var table = $('#trafico_nuevo').DataTable({
       "scrollX": true,
-      "paging": false
+      "paging": false,
+      "ordering": true,
+      "order": [[ 0, "desc" ]]
     });
   </script>
   @endsection
