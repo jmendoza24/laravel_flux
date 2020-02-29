@@ -1,4 +1,4 @@
-<h5>{{ $informacion[0]->orden_compra}}</h5>
+<h5>OCC: {{ $informacion[0]->orden_compra}}</h5>
 <table class="table table-bordered table-striped small">
 	<tr>
 		<td>Linea</td>

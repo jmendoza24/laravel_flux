@@ -15,7 +15,7 @@
             </select>
         </div> 
         <div class="col-md-3 form-group">
-            <button class="btn btn-warning  pull-right" onclick="finaliza_trafico()">Finalizar</button>
+            <button class="btn btn-warning  pull-right" onclick="finaliza_trafico({{ $trafico_numero}})">Finalizar</button>
         </div>        
     </div>
     <div class="row">
