@@ -71,6 +71,13 @@ class ordenes_compra extends Model
                         inner join clientes as cl on cl.id = c.cliente
                         group by c.id');
 
+     $var = db::select('select c.*, cl.nombre_corto , count(d.cantidad) as cantidad
+                        from ordenes_compras as c 
+                        inner join ordencompra_detalle d on d.id_orden = c.id
+                        left join productos as p on d.producto = p.id
+                        inner join clientes as cl on cl.id = c.cliente
+                        group by c.id');
+
      $productos = db::table('ordenes_compras as c')
                      ->join('ordencompra_detalle as d','d.id_orden','c.id')
                      ->join('productos as p','d.producto','p.id')
@@ -121,7 +128,7 @@ class ordenes_compra extends Model
                                            group by producto ) as co on co.producto = c.producto
                                 where c.id_orden = '.$id_orden .'
                                 and hijo  '.$query.'
-                                order by c.id asc');
+                                order by c.id asc, c.incremento asc');
     }
 
     function agrega_cantidades($filto){

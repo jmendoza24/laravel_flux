@@ -27,7 +27,7 @@ Seguimiento ordenes de trabajo
         </select>
     </div>
     <div class="row" style="">              
-      <table class="table table-striped table-bordered order-column" id="seguimiento_subproceso">
+      <table class="table  table-bordered order-column" id="seguimiento_subproceso">
         <thead>
           <tr>
             <th colspan="6">Información general</th>
@@ -38,7 +38,7 @@ Seguimiento ordenes de trabajo
             <th class="trafico">Tráfico</th>
             <th class="factura">Facturación</th>
           </tr>
-          <tr>
+          <tr class="bg-success">
             <th>IDN</th>
             <th>#Parte</th>
             <th>Fecha entrega</th>
@@ -60,7 +60,7 @@ Seguimiento ordenes de trabajo
             <th class="planeacion">Prog. Corte</th>
             <th class="planeacion">TACM</th>
             {{--  End Planeacion --}}
-            <th>Fecha estimada termino</th> 
+            <th>Fecha producción</th> 
             <th class="produccion">Corte</th>
             <th class="produccion">Forma</th>
             <th class="produccion">Soldado</th>
@@ -89,7 +89,7 @@ Seguimiento ordenes de trabajo
             <td style="z-index: 1000;">
              <label  style="width: 90px;">SG-00{{ $producto->id_detalle }}</label>
             </td>
-            <td style="z-index: 1000;"> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm" data-toggle="modal" data-backdrop="false" data-target="#primary" onclick="informacion_producto({{$producto->idproducto}})" ><i class="fa fa-info"></i></span></label></td>
+            <td style="z-index: 1000;"> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm" style="background-color: #518a87 !important" data-toggle="modal" data-backdrop="false" data-target="#primary" onclick="informacion_producto({{$producto->idproducto}})" ><i class="fa fa-info"></i></span></label></td>
             <td style="z-index: 1000;"> {{  date("m-d-Y", strtotime($producto->fecha_entrega)) }}</td>
             <td>{{ $producto->nombre_corto }}</td>
             <td>{{ $producto->orden_compra}}</td>

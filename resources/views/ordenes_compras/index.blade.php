@@ -21,7 +21,7 @@
         "paging":   false,
         "ordering": true,
         "info":     true,
-        "order": [[ 1, "desc" ]]
+        "order": [[ 0, "desc" ]]
     } );
 } );
 

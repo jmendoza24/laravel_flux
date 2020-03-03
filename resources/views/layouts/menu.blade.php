@@ -51,13 +51,13 @@
 <li class=" nav-item {{ Request::is('traficos*') ? 'active' : '' }}">
     <a href="{!! route('traficos.index') !!}">
         <i class="ft-sliders"></i>
-        <span class="menu-title" data-i18n="">Trafico</span>
+        <span class="menu-title" data-i18n="">Tráfico</span>
     </a>
 </li>
 <li class=" nav-item {{ Request::is('factura*') ? 'active' : '' }}">
     <a href="{!! route('factura.index') !!}">
         <i class="ft-smartphone"></i>
-        <span class="menu-title" data-i18n="">Factura</span>
+        <span class="menu-title" data-i18n="">Facturación</span>
     </a>
 </li>
 

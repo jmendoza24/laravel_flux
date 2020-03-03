@@ -10,7 +10,7 @@ use DB;
 
 class FacturacionController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -22,7 +22,12 @@ class FacturacionController extends Controller
                             ->WhereNotNUll('orden_compra')
                             ->selectraw('distinct o.orden_compra, c.nombre_corto')
                             ->get();
-        return view('factura.index',compact('ordenes_compra'));
+        $invoices = db::table('invoices as i')
+                        ->join('ordenes_compras as o','o.id','i.id_orden')
+                        ->join('clientes as c', 'c.id','o.cliente')
+                        ->selectraw('i.*, c.nombre_corto')
+                        ->get();
+        return view('factura.index',compact('ordenes_compra','invoices'));
     }
 
     function muestra_line_productos(Request $request){
@@ -34,6 +39,8 @@ class FacturacionController extends Controller
                         ->where('o.orden_compra',$request->id_orden)
                         ->selectraw('p.numero_parte, o.orden_compra,d.id, td.id_trafico, d.incremento,d.fecha_entrega, i.id as invoice')
                         ->get();
+        
+
 /**
         $informacion = db::table('ordenes_compras as o')
                         ->join('ordencompra_detalle as d','o.id','d.id_orden')

@@ -35,9 +35,10 @@ class MaterialesController extends AppBaseController
         $materiales = DB::table('materiales as m')
                       ->leftjoin('tipoaceros as t','t.id','m.tipo_acero')
                       ->leftjoin('formas as f','f.id','m.forma')
-                      ->leftjoin('proveedores as p','p.id','m.id_proveedor')
-                      ->selectraw('m.*, f.forma as nforma, p.nombre, t.acero as nacero')
+                      ->leftjoin('plantas as p', 'p.id','m.planta')
+                      ->selectraw('m.*, f.forma as nforma, p.nombre as nplanta')
                       ->get();
+       # dd($materiales);
 
         return view('materiales.index')
             ->with('materiales', $materiales);

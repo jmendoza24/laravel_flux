@@ -27,7 +27,7 @@
         <td><label id="clientenombre">{{ $ordenesCompra->nombre_corto}}</label></td>
       </tr>
       <tr>
-        <td><label class="label-control" for="descripcion">Orden compra cliente:</label></td>
+        <td><label class="label-control" for="descripcion">OCC:</label></td>
         <td>
               <input type="text" id="orden_compra" {{ $ordenesCompra->tipo==3?'disabled':'' }} onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control" {{ ($editar ==1)?'disabled':''}} />
         </td>
@@ -84,7 +84,7 @@
         @if($editar ==0)
         <th>Cantidad</th>
         @endif
-        <th>Tiempo entrega (dias)</th>
+        <th>Tiempo entrega (días)</th>
         @if($editar ==0)
         <th>Costo unitario</th>
         <th>Precio unitario</th>

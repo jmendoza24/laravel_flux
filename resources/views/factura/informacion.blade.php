@@ -1,3 +1,4 @@
+@if(sizeof($informacion)>0)
 <h5>{{ $informacion[0]->orden_compra}}</h5>
 <table class="table table-bordered table-striped small">
 	<tr>
@@ -21,3 +22,6 @@
 		</tr>
 	@endforeach
 </table>
+@else
+<h5>Sin información</h5>
+@endif

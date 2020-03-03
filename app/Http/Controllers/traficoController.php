@@ -232,7 +232,8 @@ class traficoController extends AppBaseController
                               'fecha_entrega'=>date('Y-m-d'),
                               'fecha_pago'=>date('Y-m-d'),
                               'monto'=>$info->costo_produccion,
-                              'monto_pagado'=>0]);
+                              'monto_pagado'=>0,
+                              'created_at'=>date('Y-m-d')]);
         }
 
         #$trafico_numero = $request->session()->get('no_track');

@@ -86,6 +86,7 @@ class ordenes_compraController extends AppBaseController
 
         $ordenesCompra = $orden->header_orden($num_orden);
         $detalle = $orden->detalle_orden($num_orden,0);
+       # dd($detalle);
         $income = DB::table('income_terms')->get();
         $clientes = clientes::get();
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
@@ -305,10 +306,10 @@ class ordenes_compraController extends AppBaseController
     function seguimiento(){
         $orden = new ordenes_compra;
        # $ordenesCompra = $orden->header_orden($id);
-        $productos = db::table('ordencompra_detalle as d')
+        /*$productos = db::table('ordencompra_detalle as d')
                         ->join('ordenes_compras as o','o.id','d.id_orden')
                         ->where('o.tipo',2)
-                        ->get();
+                        ->get();*/
         #dd($productos); 
         #51
         $productos = db::table('ordencompra_detalle as d')
@@ -316,10 +317,11 @@ class ordenes_compraController extends AppBaseController
                         ->leftjoin('productos as pr','pr.id','d.producto')
                         ->leftjoin('clientes as c','id_empresa','c.id')
                         ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
-                        ->where('o.tipo',2)
+                        ->wherein('o.tipo',[2,3])
                         ->selectraw('pr.*, pr.id as idproducto, o.orden_compra, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
                         ->orderby('d.id','asc')
                         ->get();
+        #dd($productos);
         
          $plantas = DB::table('plantas')->get();  
          $calida_seg = db::table('seguimiento_calidad')
@@ -506,9 +508,11 @@ class ordenes_compraController extends AppBaseController
 
         $materiales = $filtro->get_materiales($filtro);
 
+
         $material = $materiales['materiales'];
         $mat_forma = $materiales['mat_formas'];
 
+       # dd(sizeof($mat_forma));
         #dd($material);
         $options = view('ordenes_compras.seguimiento_materiales',compact('material','mat_forma'))->render();
         return json_encode($options);
@@ -596,6 +600,7 @@ class ordenes_compraController extends AppBaseController
         $orden = new ordenes_compra;
         $orden->id_planta = $request->id_planta;
         $detalle = $orden->obtiene_info_plantas($orden);
+       # dd($detalle);
 
         $option =  view('ordenes_compras.tabla_plantas',compact('detalle'))->render();
         return json_encode($option);
