@@ -18,7 +18,7 @@
   <div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
   	<div class="col-md-12" style="overflow-x: scroll;">
 	  	<table class="table table-bordered table-striped">
-	  		<thead>
+	  		<thead class="bg-success">
 	  			<tr>
 	  				<th>Invoice</th>
 	  				<th>Fecha</th>

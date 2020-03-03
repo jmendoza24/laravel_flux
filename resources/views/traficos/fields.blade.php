@@ -1,12 +1,12 @@
 <table class="table table-bordered table-colapsed " id="trafico_nuevo">
-	<thead>
+	<thead class="bg-success">
 		<tr>
 			<th>IDE</th>
 			<th>Cliente</th>
 			<th>Fecha entrega</th>
 			<th>Lugar entrega</th>
-			<th>Estatus prod.</th>
-			<th>Estatus logist</th>
+			<th>Est. Producción</th>
+			<th>Est. Tráfico</th>
 			<th></th>
 		</tr>
 	</thead>

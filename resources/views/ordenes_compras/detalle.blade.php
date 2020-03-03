@@ -68,6 +68,7 @@
           </option>
           @endforeach
         </select>&nbsp;
+        <input type="number" name="cantidad_p" id="cantidad_p" class="form-control" value="1">&nbsp;
     <button class="btn btn-primary" onclick="agrega_producto_ot({{ $ordenesCompra->id }})">Agregar</button>
   </div>
 </div>
@@ -81,9 +82,6 @@
         <th>Descripción</th>
         <th>Familia</th>
         <th>Id Dibujo</th>
-        @if($editar ==0)
-        <th>Cantidad</th>
-        @endif
         <th>Tiempo entrega (días)</th>
         @if($editar ==0)
         <th>Costo unitario</th>
@@ -113,11 +111,6 @@
         <td>{{ $det->descripcion}}</td>
         <td>{{ $det->nfamilia }}</td>
         <td>{{ $det->dibujo_nombre}}</td>
-        @if($editar ==0)
-        <td>
-          <input type="number" {{($ordenesCompra->tipo==2)?'readonly':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} style="text-align: right;" name="cantidad{{$det->id}}" id="cantidad{{$det->id}}" class="form-control" min="1" value="{{ $det->cantidad}}" onchange="actualiza_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})">
-        </td>
-        @endif
         <td style="text-align: center;">{{ $det->tiempo_entrega }}</td>
         @if($editar ==0)
         <td style="text-align: right;">${{ number_format($det->costo_material,2)}}</td>

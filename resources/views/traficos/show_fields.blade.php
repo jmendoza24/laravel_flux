@@ -99,6 +99,7 @@
 	        <div class="card-header">
 	          <h6 class="card-title">Tarimas
 	          	<span class="form-inline pull-right" style="font-size: 14px;">
+	          		Planta Concentradora: &nbsp;
 	          		<select class="form-control" id="id_planta" onchange="guarda_planta_trafico('id_planta',{{ $trafico}})">
 		          		<option value="">Planta</option>
 		          		@foreach($plantas as $pla)

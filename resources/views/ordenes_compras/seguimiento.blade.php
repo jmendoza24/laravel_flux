@@ -109,22 +109,22 @@ Seguimiento ordenes de trabajo
             {{-- FIn estatus --}}
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group" style="">
-                <span class="badge badge-{{ ($producto->lanzamiento != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_lanzamiento==1)?'SI':'NO' }}</span>
-                <!--<input type="checkbox" class="switch" {{ ($producto->st_lanzamiento==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_lanzamiento{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(2,{{ $producto->id_detalle }},'st_lanzamiento',{{$producto->id_orden}})" >-->
+                <!--<span class="badge badge-{{ ($producto->lanzamiento != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_lanzamiento==1)?'SI':'NO' }}</span>--->
+                <input type="checkbox" class="switch" {{ ($producto->st_lanzamiento==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_lanzamiento{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(2,{{ $producto->id_detalle }},'st_lanzamiento',{{$producto->id_orden}})" >
                 &nbsp;<span id="span{{$producto->id_detalle}}_2" class=""   onclick="agrega_comentarios(2,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-{{ ($producto->informacion != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_informacion==1)?'SI':'NO' }}</span>
-                <!--<input type="checkbox" class="switch" {{ ($producto->st_informacion==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_informacion{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(3,{{ $producto->id_detalle }},'st_informacion',{{$producto->id_orden}})" >--->
+                <!--<span class="badge badge-{{ ($producto->informacion != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_informacion==1)?'SI':'NO' }}</span>--->
+                <input type="checkbox" class="switch" {{ ($producto->st_informacion==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_informacion{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(3,{{ $producto->id_detalle }},'st_informacion',{{$producto->id_orden}})" >
                 &nbsp;<span id="span{{$producto->id_detalle}}_3" class=""  onclick="agrega_comentarios(3,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-{{ ($producto->pregunta !='')?'success':'warning' }} badge-outlined">{{ ($producto->st_pregunta==1)?'SI':'NO' }}</span>
-                <!--<input type="checkbox" class="switch" {{ ($producto->st_pregunta==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_pregunta{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(4,{{ $producto->id_detalle }},'st_pregunta',{{$producto->id_orden}})" >--->
+                <!--<span class="badge badge-{{ ($producto->pregunta !='')?'success':'warning' }} badge-outlined">{{ ($producto->st_pregunta==1)?'SI':'NO' }}</span>--->
+                <input type="checkbox" class="switch" {{ ($producto->st_pregunta==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_pregunta{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(4,{{ $producto->id_detalle }},'st_pregunta',{{$producto->id_orden}})" >
                 &nbsp;<span id="span{{$producto->id_detalle}}_4" class="" onclick="agrega_comentarios(4,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
             </div>
             </td>
@@ -133,23 +133,23 @@ Seguimiento ordenes de trabajo
             </td>
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-{{ ($producto->pintura != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_pintura==1)?'SI':'NO' }}</span>
-                <!--<input type="checkbox" class="switch" {{ ($producto->st_pintura==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_pintura{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(5,{{ $producto->id_detalle }},'st_pintura',{{$producto->id_orden}})" >--->
+                <!--<span class="badge badge-{{ ($producto->pintura != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_pintura==1)?'SI':'NO' }}</span>-->
+                <input type="checkbox" class="switch" {{ ($producto->st_pintura==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_pintura{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(5,{{ $producto->id_detalle }},'st_pintura',{{$producto->id_orden}})" >
                 &nbsp;<span id="span{{$producto->id_detalle}}_5" class=""  onclick="agrega_comentarios(5,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
             </div>
             </td>
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-{{ ($producto->prog_corte != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_prog_corte==1)?'SI':'NO' }}</span>
-                <!--<input type="checkbox" class="switch" {{ ($producto->st_prog_corte==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_prog_corte{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(6,{{ $producto->id_detalle }},'st_prog_corte',{{$producto->id_orden}})" >--->
+                <!--<span class="badge badge-{{ ($producto->prog_corte != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_prog_corte==1)?'SI':'NO' }}</span>--->
+                <input type="checkbox" class="switch" {{ ($producto->st_prog_corte==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_prog_corte{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(6,{{ $producto->id_detalle }},'st_prog_corte',{{$producto->id_orden}})" >
                 &nbsp;<span id="span{{$producto->id_detalle}}_6" class=""   onclick="agrega_comentarios(6,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
 
             <td style="text-align: center;" class="planeacion">
               <div class="btn-group mx-2" role="group">
-                <span class="badge badge-{{ ($producto->tacm != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_tacm==1)?'SI':'NO' }}</span>
-                <!--<input type="checkbox" class="switch" {{ ($producto->st_tacm==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_tacm{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(7,{{ $producto->id_detalle }},'st_tacm',{{$producto->id_orden}})" >--->
+                <!--<span class="badge badge-{{ ($producto->tacm != '')?'success':'warning' }} badge-outlined">{{ ($producto->st_tacm==1)?'SI':'NO' }}</span>--->
+                <input type="checkbox" class="switch" {{ ($producto->st_tacm==1)?'checked':'' }} data-on-label="&nbsp;Si&nbsp;" id="st_tacm{{$producto->id_detalle}}" data-group-cls="btn-group-sm" onchange="guarda_detalles_pro(7,{{ $producto->id_detalle }},'st_tacm',{{$producto->id_orden}})" >
                 &nbsp;<span id="span{{$producto->id_detalle}}_7" class=""  onclick="agrega_comentarios(7,{{$producto->id_detalle}},{{$producto->id_orden}})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
             </div>
             </td>

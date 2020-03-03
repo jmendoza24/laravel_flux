@@ -18,7 +18,10 @@
         @if($ordenesCompra->tipo==2 && Auth::user()->tipo==0)
         <tr>
             <td>{{$ordenesCompra->id}}</td>
-            <td>{{ $ordenesCompra->orden_compra}}</td>
+            <td>
+                <span class=""><i class="fa fa-info" aria-hidden="true"></i></span>
+                {{ $ordenesCompra->orden_compra}}
+            </td>
             <td>{{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}</td>
             <td>{!! $ordenesCompra->nombre_corto !!}</td>
             
@@ -52,7 +55,10 @@
         @elseif(Auth::user()->tipo==1)
         <tr>
             <td>{{$ordenesCompra->id}}</td>
-            <th>{{ $ordenesCompra->orden_compra}}</th>
+            <th>
+                <span class="badge badge-success" style="cursor: pointer;" data-toggle="modal" data-backdrop="false" data-target="#primary" onclick="muestra_productos({{$ordenesCompra->id}})"><i class="fa fa-info" aria-hidden="true"></i></span>
+                {{ $ordenesCompra->orden_compra}}
+            </th>
             <td>{{  date("m-d-Y", strtotime($ordenesCompra->fecha)) }}</td>
             <td>{!! $ordenesCompra->nombre_corto !!}</td>
             {{-- <td>

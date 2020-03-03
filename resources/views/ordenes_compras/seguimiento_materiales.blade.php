@@ -5,12 +5,14 @@ $altura = array(5,6,7,8,9,10);
 $peso = array(7,8,9,10,13);
 
  ?>
- @if($material[0]->asigan_meterial != 1)
- <button class="btn btn-primary pull-right" onclick="finaliza_material_asigna({{ $material[0]->id_orden}},{{ $material[0]->id}},1)">Finaliza asignación</button>
- <br><br>
- @elseif($material[0]->asigan_meterial==1 && Auth::user()->tipo==1)
- <button class="btn btn-primary pull-right" onclick="finaliza_material_asigna({{ $material[0]->id_orden}},{{ $material[0]->id}},0)">Modificar asignación</button>
- <br><br>
+ @if(sizeof($material)>0)
+	 @if($material[0]->asigan_meterial != 1)
+	 <button class="btn btn-primary pull-right" onclick="finaliza_material_asigna({{ $material[0]->id_orden}},{{ $material[0]->id}},1)">Finaliza asignación</button>
+	 <br><br>
+	 @elseif($material[0]->asigan_meterial==1 && Auth::user()->tipo==1)
+	 <button class="btn btn-primary pull-right" onclick="finaliza_material_asigna({{ $material[0]->id_orden}},{{ $material[0]->id}},0)">Modificar asignación</button>
+	 <br><br>
+	 @endif
  @endif
 <table class="table table-bordered table-striped" id="tbl_materiales">
 	<thead>
@@ -26,13 +28,13 @@ $peso = array(7,8,9,10,13);
 				<div>
 					<h6><b>{{ $mat_for->forma}}</b></h6>
 						@if(in_array($mat_for->idforma,$espesor))
-				      		<span class="badge bg-blue-grey">Espesor(Thickness): {{ $mat_for->espesor}}</span>
+				      		<span class="badge bg-blue-grey">Espesor: {{ $mat_for->espesor}}</span>
 				      	@endif
 				      	@if(in_array($mat_for->idforma,$ancho))
-				      		<span class="badge bg-blue-grey">Ancho (Wide): {{$mat_for->ancho}}</span>
+				      		<span class="badge bg-blue-grey">Ancho: {{$mat_for->ancho}}</span>
 				      	@endif
 				      	@if(in_array($mat_for->idforma,$altura))
-				      		<span class="badge bg-blue-grey">Altura (Height): {{$mat_for->altura}}</span>
+				      		<span class="badge bg-blue-grey">Altura: {{$mat_for->altura}}</span>
 				      	@endif
 				      	@if(in_array($mat_for->idforma,$peso))
 				      		<span class="badge bg-blue-grey">Peso por Distancia: {{$mat_for->peso_distancia}}</span>

@@ -325,7 +325,7 @@ class ordenes_compra extends Model
         
         $result = array('materiales'=>$materiales,
                         'mat_formas'=>$mat_formas);
-#        dd($mat_formas);
+        #dd($result);
         return $result;
     }
 
@@ -346,9 +346,13 @@ class ordenes_compra extends Model
                ->join('ordencompra_detalle as d','d.id_orden','o.id')
                ->leftjoin('productos as p','p.id','d.producto')
                ->leftjoin('plantas as pl','pl.id','d.planta')
+               ->leftjoin('planta_horas as hp', function ($join) {
+                        $join->on('hp.id_producto','d.producto');
+                        $join->on('hp.id_planta','d.planta');
+                    })
                ->where([['o.tipo',3],['d.planta',$filtros->id_planta],['o.tipo','!=',4]])
                ->whereNull('enviado_planta')
-               ->selectraw('d.*, pl.nombre,p.descripcion,p.costo_produccion')
+               ->selectraw('d.*, pl.nombre,p.descripcion,hp.costo as costo_produccion')
                ->get();
     }
 
