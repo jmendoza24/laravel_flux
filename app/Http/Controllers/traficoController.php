@@ -48,11 +48,23 @@ class traficoController extends AppBaseController
     #  db::select('alter table traficos_tarimas add column shipping_id int after id_trafico');
     #    $var = db::table('traficos_tarimas')->get();
      # dd($var);
+         $traficos_det = db::select('select dt.id_trafico,o.cliente as idcliente,pr.*, if(dt.id_detalle is null, 0,1) as existe, o.shipping, c.nombre_corto, sp.fecha_estimado_termino, a.nombre as planta_name, l.calle,   p.nombre as npais, e.estado as nestado, l.municipio as nmunicipio, pr.id as idproducto, o.orden_compra, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega
+                                    from ordencompra_detalle as  d
+                                    inner join  ordenes_compras as o on o.id = d.id_orden
+                                    left join traficos_detalle as dt on dt.id_detalle = d.id 
+                                    left join clientes as c on c.id = o.cliente
+                                    left join productos as pr on pr.id = d.producto
+                                    left join seguimiento_planeacion as sp on sp.id_detalle = d.id
+                                    left join logisticas as l on l.id = o.shipping
+                                    left join plantas as a on a.id = d.planta
+                                    left join estados as e on e.id = l.estado
+                                    left join paises as p on p.id = l.pais
+                                    where o.tipo in (2,3)
+                                    order by d.id asc');
 
         $trafic = new trafico;       
         $traficos = $trafic->get_trafico();
-       
-        return view('traficos.index',compact('traficos'));
+        return view('traficos.index',compact('traficos','traficos_det'));
     }
 
     function agrega_trafico(Request $request){
