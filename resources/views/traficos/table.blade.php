@@ -1,5 +1,5 @@
 <table class="table table-bordered table-striped" id="trafico_seg">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>IDN</th>
             <th>Cliente</th> 

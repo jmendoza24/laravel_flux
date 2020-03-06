@@ -70,7 +70,7 @@
 		<td>{{ $trafic->numero_parte}}</td>
 	</tr>
 	<tr>
-		<td>Fracción arancelaria</td>
+		<td>Fracción MX</td>
 		<td></td>
 	</tr>
 	<tr>

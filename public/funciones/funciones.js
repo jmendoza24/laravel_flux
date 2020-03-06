@@ -922,6 +922,11 @@ function agrega_material_forma(id_producto){
         type:  'get',
         success:  function (response) {  
           $("#listamateriales").html(response);
+          $('#prod_materiales').DataTable({
+                   "scrollY":        "300px",
+                   "scrollCollapse": true,
+                   "paging":         false
+                });
         }
     }); 
 }else{
@@ -942,6 +947,11 @@ function elimina_producforma(id_mat, id_producto){
                           type:  'get',
                           success:  function (response) {  
                             $("#listamateriales").html(response);
+                            $('#prod_materiales').DataTable({
+                               "scrollY":        "300px",
+                               "scrollCollapse": true,
+                               "paging":         false
+                            });
                           }
                       }); 
 
@@ -1059,7 +1069,7 @@ function detalle_cotizacion(id_cotizacion){
             url:   '/api/v1/detalle_cotizacion',
             dataType: 'json',
             type:  'get',
-            success:  function (response) {  
+            success:  function (response) { 
               $("#contenido").html(response);      
             }
         });

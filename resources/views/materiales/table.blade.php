@@ -1,13 +1,13 @@
-<table class="table display nowrap table-striped table-bordered scroll-horizontal" id="materiales-table">
+<table class="table table-striped table-bordered" id="materiales-table">
     <thead>
         <tr>
-            <th>Material</th>
-            <th>Proveedor</th>
-            <th>Tipo Acero</th>
+            <th>ID Material</th>
+            <th>Planta</th>
             <th>Forma</th>
-            <th>Fecha</th>
-            <th>Num Orden</th>
-            <th>Num Embarque</th>
+            <th>Espesor</th>
+            <th>Ancho</th>
+            <th>Altura</th>
+            <th>Pesos por distancia</th>
             <th></th>
         </tr>
     </thead>
@@ -15,12 +15,12 @@
     @foreach($materiales as $materiales)
         <tr>
             <td>{!! $materiales->material !!}</td>
-            <td>{!! $materiales->nombre !!}</td>
-            <td>{!! $materiales->nacero !!}</td>
+            <td>{{ $materiales->nplanta}}</td>
             <td>{!! $materiales->nforma !!}</td>
-            <td>{!! $materiales->fecha !!}</td>
-            <td>{!! $materiales->num_orden !!}</td>
-            <td>{!! $materiales->num_embarque !!}</td>
+            <td>{{ $materiales->espesor}}</td>
+            <td>{{ $materiales->ancho}}</td>
+            <td>{{ $materiales->altura}}</td>
+            <td>{{ $materiales->peso_distancia}}</td>
             <td>
                 {!! Form::open(['route' => ['materiales.destroy', $materiales->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

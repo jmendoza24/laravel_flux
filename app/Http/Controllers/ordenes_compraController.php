@@ -86,6 +86,7 @@ class ordenes_compraController extends AppBaseController
 
         $ordenesCompra = $orden->header_orden($num_orden);
         $detalle = $orden->detalle_orden($num_orden,0);
+       # dd($detalle);
         $income = DB::table('income_terms')->get();
         $clientes = clientes::get();
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
@@ -180,7 +181,7 @@ class ordenes_compraController extends AppBaseController
                   'income'=>$request->income]);
     
         $orden->id_orden = $request->id_orden;
-        $orden->agrega_cantidades($orden);
+        #$orden->agrega_cantidades($orden);
         $request->session()->forget('num_orden');
         return 1;
     }
@@ -305,10 +306,10 @@ class ordenes_compraController extends AppBaseController
     function seguimiento(){
         $orden = new ordenes_compra;
        # $ordenesCompra = $orden->header_orden($id);
-        $productos = db::table('ordencompra_detalle as d')
+        /*$productos = db::table('ordencompra_detalle as d')
                         ->join('ordenes_compras as o','o.id','d.id_orden')
                         ->where('o.tipo',2)
-                        ->get();
+                        ->get();*/
         #dd($productos); 
         #51
         $productos = db::table('ordencompra_detalle as d')
@@ -316,10 +317,11 @@ class ordenes_compraController extends AppBaseController
                         ->leftjoin('productos as pr','pr.id','d.producto')
                         ->leftjoin('clientes as c','id_empresa','c.id')
                         ->leftjoin('seguimiento_planeacion as sp','d.id','sp.id_detalle')
-                        ->where('o.tipo',2)
+                        ->wherein('o.tipo',[2,3])
                         ->selectraw('pr.*, pr.id as idproducto, o.orden_compra, sp.*, d.planta as idplanta, d.id_orden as id_orden, nombre_corto, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega')
                         ->orderby('d.id','asc')
                         ->get();
+        #dd($productos);
         
          $plantas = DB::table('plantas')->get();  
          $calida_seg = db::table('seguimiento_calidad')
@@ -334,11 +336,6 @@ class ordenes_compraController extends AppBaseController
                                                    from seguimiento_produccion
                                                    where fecha_fin is null
                                                    group by id_detalle, id_proceso) p2 on p2.id_detalle = p.id_detalle and p.id_proceso = p2.id_proceso');
-
-        # $procesos = $orden->get_procesos_ordenes();
-         #$sub_procesos = $orden->get_sub_procesos_ordenes($id);
-        # dd($sub_procesos);
-    
         return view('ordenes_compras.seguimiento',compact('productos','plantas','calida_seg','seg_produccion'));
     }
 
@@ -506,9 +503,11 @@ class ordenes_compraController extends AppBaseController
 
         $materiales = $filtro->get_materiales($filtro);
 
+
         $material = $materiales['materiales'];
         $mat_forma = $materiales['mat_formas'];
 
+       # dd(sizeof($mat_forma));
         #dd($material);
         $options = view('ordenes_compras.seguimiento_materiales',compact('material','mat_forma'))->render();
         return json_encode($options);
@@ -532,19 +531,26 @@ class ordenes_compraController extends AppBaseController
                                              WHERE id IN (SELECT MAX(id)  FROM producto_dibujos WHERE id_producto = '.$request->producto_ot.')) d ON d.id_producto = p.id
                                       where p.id ='. $request->producto_ot);
             $info_producto = $info_producto[0];
+            #dd($request->cantidad);
 
-            db::table('ordencompra_detalle')->insert(['id_orden'=>$request->id_orden,
-                                         'incremento'=>0,
-                                         'producto'=>$request->producto_ot,
-                                         'dibujo'=>$info_producto->id,
-                                         'cantidad'=>1,
-                                         'fecha_entrega'=>date('Y-m-d'),
-                                         'costo'=>$info_producto->costo_produccion,
-                                         'hijo'=>0
-                                     ]); 
+            for($i=1; $i<=$request->cantidad; $i++){
+                db::table('ordencompra_detalle')
+                    ->insert(['id_orden'=>$request->id_orden,
+                              'incremento'=>0,
+                              'producto'=>$request->producto_ot,
+                              'dibujo'=>$info_producto->id,
+                              'cantidad'=>1,
+                              'fecha_entrega'=>date('Y-m-d'),
+                              'costo'=>$info_producto->costo_produccion,
+                              'hijo'=>0
+                            ]); 
+              }
+
+
             ordenes_compra::where('id',$request->id_orden)->update(['cliente'=>$info_producto->id_empresa]);
             $ordenesCompra = $orden->header_orden($request->id_orden);
             $detalle = $orden->detalle_orden($request->id_orden,1);
+           # dd($detalle);
             $editar = 0;
             $nuevo = 1;
             $plantas = db::table('plantas')->get();
@@ -596,6 +602,7 @@ class ordenes_compraController extends AppBaseController
         $orden = new ordenes_compra;
         $orden->id_planta = $request->id_planta;
         $detalle = $orden->obtiene_info_plantas($orden);
+       # dd($detalle);
 
         $option =  view('ordenes_compras.tabla_plantas',compact('detalle'))->render();
         return json_encode($option);
@@ -677,7 +684,7 @@ class ordenes_compraController extends AppBaseController
                           'id_proceso'=>$request->id_proceso,
                           'tipo'=>$request->tipo,
                           'nombre'=>$request->nombre,
-                          'archivo'=>$img,
+                          'archivo'=>$img, 
                           'fecha'=>date('Y-m-d'),
                           'id_usuario'=>$user]);
         }
@@ -726,5 +733,17 @@ class ordenes_compraController extends AppBaseController
                          ]);
         }
         return 1;
+    }
+
+    function muestra_productos(Request $request){
+      $productos = db::table('ordencompra_detalle as d')
+                      ->join('productos as p', 'p.id', 'd.producto')
+                      ->where('id_orden',$request->id_orden)
+                      ->selectraw('numero_parte, fecha_entrega')
+                      ->get();
+                      
+      $options = view('ordenes_compras.productos_occ',compact('productos'))->render();
+      return json_encode($options);
+     
     }
 }

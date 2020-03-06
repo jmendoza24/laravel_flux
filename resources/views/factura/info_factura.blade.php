@@ -1,5 +1,5 @@
 <table class="table table-bordered table-striped small">
-	<tr>
+	<tr class="bg-success">
 		<td>Invoice</td>
 		<td>Ide</td>
 		<td>Fecha entrega</td>

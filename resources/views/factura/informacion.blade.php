@@ -1,6 +1,7 @@
+@if(sizeof($informacion)>0)
 <h5>OCC: {{ $informacion[0]->orden_compra}}</h5>
 <table class="table table-bordered table-striped small">
-	<tr>
+	<tr class="bg-success">
 		<td>Linea</td>
 		<td>Producto</td>
 		<td>IDN's</td>
@@ -21,3 +22,6 @@
 		</tr>
 	@endforeach
 </table>
+@else
+<h5>Sin información</h5>
+@endif

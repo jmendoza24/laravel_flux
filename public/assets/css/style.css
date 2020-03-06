@@ -161,3 +161,35 @@ background: #518a87 !important;
 	border-color: #6d6d6d;
 	color: #6d6d6d;
 }
+
+.modal-dialog {
+  position: fixed;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+}
+
+
+.bg-blue-grey{
+	border-color: #6d6d6d !important;
+    background-color: #6d6d6d !important;
+    color: white;
+}
+
+.icheckbox_line-blue, .iradio_line-blue{
+	background: #518a87 !important;	
+	border-color: #518a87;
+}
+
+.btn-group > .btn:focus, .btn-group > .btn:active, .btn-group > .btn.active, .btn-group-vertical > .btn:focus, .btn-group-vertical > .btn:active, .btn-group-vertical > .btn.active {
+    z-index: 0;
+}
+
+.bg-success, .badge-success{
+	background-color:#518a87 !important;  
+	color: white;
+}
+.success_info{
+	color:#518a87 !important;  
+}
+

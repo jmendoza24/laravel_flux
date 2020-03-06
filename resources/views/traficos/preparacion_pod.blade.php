@@ -13,6 +13,6 @@
 </a>
 <a href="{{ route('download.invoice',['id_trafico'=>$trafico])}}" target="_blank">
 	<button class="btn btn-float btn-primary col-md-2">
-		<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Invoice
+		<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Invoice proforma
 	</button>
 </a>

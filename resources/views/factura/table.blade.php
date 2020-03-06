@@ -1,5 +1,5 @@
 <table class="table display nowrap table-striped table-bordered" id="factura-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>OCC</th>
             <th>Estatus</th>

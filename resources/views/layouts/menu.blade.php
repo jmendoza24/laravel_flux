@@ -4,7 +4,7 @@
         <li class="{{ Request::is('equipos*') ? 'active' : '' }}"><a href="{!! route('equipos.index') !!}">Equipos</span></a></li>
         <li class="{{ Request::is('materiales*') ? 'active' : '' }}"><a href="{!! route('materiales.index') !!}"><span>Inv. Materiales</span></a></li>
         <li class="{{ Request::is('plantas*') ? 'active' : '' }}"><a href="{!! route('plantas.index') !!}"><span>Plantas</span></a></li>
-        <li class="{{ Request::is('productos*') ? 'active' : '' }}"><a href="{!! route('productos.index') !!}"><span>Productos</span></a></li>
+        <li class="{{ Request::is('productos*') ? 'active' : '' }}"><a href="{!! route('productos.index') !!}"><span>Piezas</span></a></li>
         <li class="{{ Request::is('proveedores*') ? 'active' : '' }}"><a href="{!! route('proveedores.index') !!}"><span>Proveedores</span></a></li>
         <li class=" nav-item"><a href="#"><i class="ft-folder"></i><span class="menu-title" data-i18n="">Subcatálogos</span></a>
             <ul class="menu-content">       
@@ -51,13 +51,13 @@
 <li class=" nav-item {{ Request::is('traficos*') ? 'active' : '' }}">
     <a href="{!! route('traficos.index') !!}">
         <i class="ft-sliders"></i>
-        <span class="menu-title" data-i18n="">Trafico</span>
+        <span class="menu-title" data-i18n="">Tráfico</span>
     </a>
 </li>
 <li class=" nav-item {{ Request::is('factura*') ? 'active' : '' }}">
     <a href="{!! route('factura.index') !!}">
         <i class="ft-smartphone"></i>
-        <span class="menu-title" data-i18n="">Factura</span>
+        <span class="menu-title" data-i18n="">Facturación</span>
     </a>
 </li>
 

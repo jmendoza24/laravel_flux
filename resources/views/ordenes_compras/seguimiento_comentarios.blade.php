@@ -5,7 +5,7 @@
 </div>
 <hr>
 <div class="col-md-12" style="text-align: right;">
-	<button class="btn btn-info" onclick="guarda_planeacion({{ $data['columna']}},{{ $data['id_detalle']}},{{$data['id_orden']}});">
+	<button class="btn btn-success" onclick="guarda_planeacion({{ $data['columna']}},{{ $data['id_detalle']}},{{$data['id_orden']}});">
 		Guardar
 	</button>
 </div>

@@ -161,18 +161,19 @@ class traficoController extends AppBaseController
         
         $trafico = $request->ide;
         $files = db::table('traficos_documentos')->where('id_trafico',$request->ide)->get();
-        $tarimas = Trafico_tarimas::where('id_trafico',$trafico)->get();
+        $tarimas = db::table('traficos_tarimas as t')
+                    ->join('logisticas as a', 'a.id','t.shipping_id')
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where('id_trafico',$trafico)
+                    ->selectraw("t.*, a.calle, a.numero, a.cp, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
+                    ->get();
+
         $tarimas_pod = $logistica->logisticas_tarima($trafico);
 
         $plantas = planta::get();
         $info_trafico = trafico::where('id',$trafico)->get();
         $info_trafico = $info_trafico[0];
-
-        $cliente_actual  = $trafic->cliente_actual($trafico); 
-        $cliente_actual = $cliente_actual[0];
-
-        $logistica->id_cliente = $cliente_actual->cliente;
-        $logisticas = $logistica->cliente_logisticas($logistica);
 
         $fletes = Trafico_flete::where('id_trafico',$trafico)->get();
         if(sizeof($fletes)>0){
@@ -199,7 +200,11 @@ class traficoController extends AppBaseController
             $fletes = (object)$fletes;
         }
         $tarimas_idns = tarimas_idns::where('id_trafico',$trafico)->get();
-        $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$trafico)->orderby('id_detalle')->get();
+        $traficos_detalle = db::table('traficos_detalle as td')
+                                ->where('id_trafico',$trafico)
+                                ->orderby('id_detalle')
+                                ->get();
+
         $flete_fracciones = db::table('traficos_detalle as d')
                                 ->join('ordencompra_detalle as od','od.id','d.id_detalle')
                                 ->join('productos as p','p.id','od.producto')
@@ -208,7 +213,13 @@ class traficoController extends AppBaseController
                                 ->orderby('d.id_detalle')
                                 ->selectraw('p.numero_parte, d.id_detalle, ff.fraccion_mx, ff.fraccion_us')
                                 ->get();
-        $options = view('traficos.show_fields',compact('trafico','files','tarimas','fletes','plantas','info_trafico','tarimas_idns','traficos_detalle','logisticas','flete_fracciones','tarimas_pod'))->render();
+        $estatus_i = db::select('select t.id_trafico, count(*) as conteo
+                                       from traficos_detalle t
+                                       left join seguimiento_calidad s on s.id_detalle = t.id_detalle and s.estatus = 2
+                                       where id_trafico = '.$trafico.' 
+                                       group by t.id_trafico');
+
+        $options = view('traficos.show_fields',compact('trafico','files','tarimas','fletes','plantas','info_trafico','tarimas_idns','traficos_detalle','flete_fracciones','tarimas_pod','estatus_i'))->render();
 
         return json_encode($options);
     }
@@ -232,7 +243,8 @@ class traficoController extends AppBaseController
                               'fecha_entrega'=>date('Y-m-d'),
                               'fecha_pago'=>date('Y-m-d'),
                               'monto'=>$info->costo_produccion,
-                              'monto_pagado'=>0]);
+                              'monto_pagado'=>0,
+                              'created_at'=>date('Y-m-d')]);
         }
 
         #$trafico_numero = $request->session()->get('no_track');
@@ -267,7 +279,8 @@ class traficoController extends AppBaseController
         $idns = $request->idns;
         #dd($idns);
 
-        $last_id = Trafico_tarimas::insertGetId(['id_trafico'=>$request->id_trafico,
+        if($request->id_tarima == 0){
+            $last_id = Trafico_tarimas::insertGetId(['id_trafico'=>$request->trafico,
                                                   'peso'=>$request->peso,
                                                   'altura'=>$request->altura,
                                                   'ancho'=>$request->ancho,
@@ -276,24 +289,56 @@ class traficoController extends AppBaseController
                                                   'shipping_id'=>$request->shipping_id]);
 
         foreach($idns as $idn) {
-            tarimas_idns::insert(['id_trafico'=>$request->id_trafico,
-                                  'id_tarima'=>$last_id,
-                                  'idn'=>$idn]);
-        }
+                tarimas_idns::insert(['id_trafico'=>$request->trafico,
+                                      'id_tarima'=>$last_id,
+                                      'idn'=>$idn]);
+            }    
+    
+        }else{
+            Trafico_tarimas::where('id',$request->id_tarima)
+                            ->update(['peso'=>$request->peso,
+                                      'altura'=>$request->altura,
+                                      'ancho'=>$request->ancho,
+                                      'largo'=>$request->largo,
+                                      'pero_tarima'=>$request->pero_tarima,
+                                      'shipping_id'=>$request->shipping_id]);
+            
+            tarimas_idns::where('id_tarima',$request->id_tarima)->delete();
 
-        $tarimas_idns = tarimas_idns::where('id_trafico',$request->id_trafico)->get();
+            foreach($idns as $idn) {
+                tarimas_idns::insert(['id_trafico'=>$request->trafico,
+                                      'id_tarima'=>$request->id_tarima,
+                                      'idn'=>$idn]);
+            }
+
+        }
+        
+
+        $tarimas_idns = tarimas_idns::where('id_trafico',$request->trafio)->get();
         
 
 
-        $cliente_actual  = $trafic->cliente_actual($request->id_trafico); 
+        $cliente_actual  = $trafic->cliente_actual($request->trafico); 
         $cliente_actual = $cliente_actual[0];
 
         $logistica->id_cliente = $cliente_actual->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
+        $traficos_detalle = db::table('traficos_detalle as td')
+                                ->join('ordencompra_detalle as od','td.id_detalle','od.id')
+                                ->join('ordenes_compras as o','o.id','od.id_orden')
+                                ->where([['id_trafico',$request->trafico],['shipping',$request->shipping_id]])
+                                ->selectraw('td.*, o.shipping')
+                                ->orderby('id_detalle')
+                                ->get();
 
+        $tarimas = db::table('traficos_tarimas as t')
+                    ->join('logisticas as a', 'a.id','t.shipping_id')
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where('id_trafico',$request->trafico)
+                    ->selectraw("t.*, a.calle, a.numero, a.cp, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
+                    ->get();
 
-        $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
-        $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$request->id_trafico)->orderby('id_detalle')->get();
         $options = view('traficos.tarimas',compact('tarimas','tarimas_idns','traficos_detalle','logisticas'))->render();
         return $options;
     }
@@ -335,8 +380,20 @@ class traficoController extends AppBaseController
         Trafico_tarimas::where('id',$request->id)->delete();
 
         $tarimas_idns = tarimas_idns::where('id_trafico',$request->id_trafico)->get();
-        $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$request->id_trafico)->orderby('id_detalle')->get();
-        $tarimas = Trafico_tarimas::where('id_trafico',$request->id_trafico)->orderBy('id', 'DESC')->get();
+        $tarimas = db::table('traficos_tarimas as t')
+                    ->join('logisticas as a', 'a.id','t.shipping_id')
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where('id_trafico',$request->id_trafico)
+                    ->selectraw("t.*, a.calle, a.numero, a.cp, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
+                    ->get();
+
+        $traficos_detalle = db::table('traficos_detalle as td')
+                                ->where('id_trafico',$request->id_trafico)
+                                ->orderby('id_detalle')
+                                ->get();
+
+        
         $cliente_actual  = $trafic->cliente_actual($request->id_trafico); 
         $cliente_actual = $cliente_actual[0];
 
@@ -404,7 +461,13 @@ class traficoController extends AppBaseController
         $traficos = $trafi['trafico'];
         $status_prod = $trafi['status_prod'];
 
-        $options = view('traficos.trafico_informacion',compact('traficos','status_prod'))->render();
+        $estatus_calidad = db::select('select t.id_detalle, t.id_trafico, count(*) as conteo
+                                       from traficos_detalle t
+                                       left join seguimiento_calidad s on s.id_detalle = t.id_detalle and s.estatus = 2
+                                       where id_trafico = '.$request->id_trafico.' 
+                                       group by t.id_detalle, t.id_trafico');
+
+        $options = view('traficos.trafico_informacion',compact('traficos','status_prod','estatus_calidad'))->render();
         return json_encode($options);
     }
 
@@ -537,6 +600,67 @@ class traficoController extends AppBaseController
        #return view('traficos.complemento_ext',compact('trafico')); 
         $pdf = \PDF::loadView('traficos.complemento_ext',compact('trafico'))->setPaper('A4-L','portrait');
         return $pdf->download('Complemento_Comercio_Ext_'.$request->id_trafico.'.pdf');
+    }
+
+    function nueva_tarima(Request $request){
+        $trafic = new trafico();
+        $logistica = new logistica;
+
+        $trafico = $request->trafico;
+        $cliente_actual  = $trafic->cliente_actual($trafico); 
+        $cliente_actual = $cliente_actual[0];
+
+        $logistica->id_cliente = $cliente_actual->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
+        
+        if($request->id==0){
+            $tarimas = array('id'=>0,
+                             'peso'=>'',
+                             'altura'=>'',
+                             'ancho'=>'',
+                             'largo'=>'',
+                             'pero_tarima'=>'',
+                             'shipping_id'=>''
+                        );
+
+            $tarimas = (object)$tarimas;
+            $traficos_detalle = db::table('traficos_detalle')->where('id_trafico',$trafico)->orderby('id_detalle')->get();
+        }else{
+            $tarimas = db::table('traficos_tarimas')->where('id',$request->id)->get();    
+            $tarimas = $tarimas[0];
+
+            $traficos_detalle = db::table('traficos_detalle as td')
+                                ->join('ordencompra_detalle as od','td.id_detalle','od.id')
+                                ->join('ordenes_compras as o','o.id','od.id_orden')
+                                ->where([['id_trafico',$request->trafico],['shipping',$tarimas->shipping_id]])
+                                ->selectraw('td.*, o.shipping')
+                                ->orderby('id_detalle')
+                                ->get();
+        }
+        
+        $tarimas_idns = tarimas_idns::where('id_trafico',$trafico)->get();
+        
+
+        $options = view('traficos.nuevo_trafico',compact('trafico','logisticas','traficos_detalle','tarimas','tarimas_idns'))->render();
+        return json_encode($options);
+    }
+
+    function obtiene_idns_trafico(Request $request){
+        $trafico = $request->trafico;
+
+        $traficos_detalle = db::table('traficos_detalle as td')
+                                ->join('ordencompra_detalle as od','td.id_detalle','od.id')
+                                ->join('ordenes_compras as o','o.id','od.id_orden')
+                                ->where([['id_trafico',$trafico],['shipping',$request->ship_to]])
+                                ->selectraw('td.*, o.shipping')
+                                ->orderby('id_detalle')
+                                ->get();
+        $select = "<option>Seleccione...</option>";
+        foreach ($traficos_detalle as $detalle) {
+           $select .= "<option value= '".$detalle->id."'>".$detalle->id."</option>"; 
+        }
+
+        return json_encode($select);
     }
     
 }
