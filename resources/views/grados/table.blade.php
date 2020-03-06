@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="grados-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Grado</th>
             <th>Descripción</th>

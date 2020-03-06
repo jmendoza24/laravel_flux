@@ -19,7 +19,7 @@
                 <li class="{{ Request::is('formas*') ? 'active' : '' }}"><a href="{!! route('formas.index') !!}">Formas</span></a></li>
                 <li class="{{ Request::is('incomeTerms*') ? 'active' : '' }}"><a href="{!! route('incomeTerms.index') !!}">Inco Terms</span></a></li>
                 <li class="{{ Request::is('actividades*') ? 'active' : '' }}"><a href="{!! route('actividades.index') !!}"><span>Actividades</span></a></li>
-                <li class="{{ Request::is('documentos*') ? 'active' : '' }}"><a href="{!! route('documentos.index') !!}"><span>Documentos</span></a></li>
+                <!--<li class="{{ Request::is('documentos*') ? 'active' : '' }}"><a href="{!! route('documentos.index') !!}"><span>Documentos</span></a></li>-->
                 <li class="{{ Request::is('condiciones*') ? 'active' : '' }}"><a href="{!! route('condiciones.index') !!}"><span>Condiciones</span></a></li>
                 <li class="{{ Request::is('tipoaceros*') ? 'active' : '' }}"><a href="{!! route('tipoaceros.index') !!}"><span>Tipos de aceros</span></a></li>
                 <li class="{{ Request::is('tipoestructuras*') ? 'active' : '' }}"><a href="{!! route('tipoestructuras.index') !!}"><span>Tipos de estructuras</span></a></li>

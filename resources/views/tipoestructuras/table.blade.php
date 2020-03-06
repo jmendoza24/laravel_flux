@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" id="tipoestructuras-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Estructura</th>
             <th>Descripción</th>

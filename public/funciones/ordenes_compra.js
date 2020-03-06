@@ -324,7 +324,17 @@ function guarda_planeacion(id_columna, id_detalle, id_orden){
             method: "get",                     
             success: function(result){
                $("#primary").modal('hide');
-               $.alert('Comentario Guardado');
+               $.confirm({
+                      title: 'Fluxmetals',
+                      content: 'Comentario guardado',
+                      autoClose: 'logoutUser|1500',
+                      buttons: {
+                          logoutUser: {
+                              text: 'Ok'
+                          }
+                      }
+                  });
+
                $("#comentario_seg").val('');
             }
         });

@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation"  id="actividades-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Actividad</th>
             <th>Descripción</th>

@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered" id="materiales-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>ID Material</th>
             <th>Planta</th>

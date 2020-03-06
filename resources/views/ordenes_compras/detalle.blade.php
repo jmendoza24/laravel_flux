@@ -77,78 +77,76 @@
 <table class="table table-bordered">
     <thead class="" style="background: #518a87; border: 1px solid #518a87; color: white;">
       <tr>
-        <td>Item</td> 
-        <th>Número parte</th>
-        <th>Descripción</th>
-        <th>Familia</th>
-        <th>Id Dibujo</th>
-        <th>Tiempo entrega (días)</th>
-        @if($editar ==0)
-        <th>Costo unitario</th>
-        <th>Precio unitario</th>
+        @if($editar==0 || $nuevo == 1)
+          <td>Item</td> 
+          <th>Número parte</th>
+          <th>Descripción</th>
+          <th>Familia</th>
+          <th>Id Dibujo</th>
+          <th>Tiempo entrega (días)</th>
+          <th>Costo unitario</th>
+          <th>Precio unitario</th>
+          <th>Fecha entrega</th>
+          <th>Notas</th>
+          <th></th>
         @endif
-        @if($editar ==1)
-        <th>Planta</th>
-        @endif
-        @if($nuevo==1)
-        <th>Fecha entrega</th>
-        <th>Notas</th>
-        <th></th>
-       @endif
+        @if($editar==1)
+          <td>Item</td> 
+          <th>Número parte</th>
+          <th>Descripción</th>
+          <th>Familia</th>
+          <th>Fecha entrega</th>
+          <th>Tiempo entrega (días)</th>
+          <th>Planta</th>
+         @endif
+        
       </tr>
     </thead>
     <tbody>
       @foreach($detalle as $det)
-      <tr>
+      @if($editar==0 || $nuevo == 1)
+        <tr>
+            <td>
+              <input type="text" style="width: 60px;" {{ $ordenesCompra->tipo==3?'disabled':'' }} name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+          </td>
+          <td>{{ $det->numero_parte }}</td>
+          <td>{{ $det->descripcion}}</td>
+          <td>{{ $det->nfamilia }}</td>
+          <td>{{ $det->dibujo_nombre}}</td>
+          <td style="text-align: center;">{{ $det->tiempo_entrega }}</td>
+          
+          <td style="text-align: right;">${{ number_format($det->costo_material,2)}}</td>
+          <td style="text-align: right;">${{ number_format($det->costo_produccion,2)}}</td>
           <td>
-          @if($editar ==0)
-            <input type="text" style="width: 60px;" {{ $ordenesCompra->tipo==3?'disabled':'' }} name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
-          @else
-          <label>{{ $det->incremento }}</label>
-          @endif
-        </td>
-        <td>{{ $det->numero_parte }}</td>
-        <td>{{ $det->descripcion}}</td>
-        <td>{{ $det->nfamilia }}</td>
-        <td>{{ $det->dibujo_nombre}}</td>
-        <td style="text-align: center;">{{ $det->tiempo_entrega }}</td>
-        @if($editar ==0)
-        <td style="text-align: right;">${{ number_format($det->costo_material,2)}}</td>
-        <td style="text-align: right;">${{ number_format($det->costo_produccion,2)}}</td>
+            <input type="date" id="fecha_entrega{{$det->id}}" class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+          </td>
+          <td>
+            <textarea class="form-control" style="width: 200px;" id="notas_det" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">{{$det->nota_det}}</textarea>
+          </td>
+          <td>
+            <a class='btn btn-float btn-outline-danger btn-round' onclick="borra_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-trash"></i></a>
+          </td>
+        </tr>
         @endif
-        @if($editar ==1)
-        <td>
-          <select class="form-control select2" id="planta{{$det->id}}" style="width: 150px;" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
-            <option value="0">Seleccione...</option>
-            @foreach($plantas as $planta)
-              <option value="{{$planta->id}}" {{($planta->id==$det->planta) ? 'selected':'' }}>{{$planta->nombre}}</option>
-            @endforeach
-          </select>
-        </td>
-        @endif
-        @if($nuevo==1)
-        <td>
-          <input type="date" id="fecha_entrega{{$det->id}}" class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
-        </td>
-        <td>
-          <textarea class="form-control" style="width: 200px;" id="notas_det" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">{{$det->nota_det}}</textarea>
-        </td>
-        <td>
-          <a class='btn btn-float btn-outline-danger btn-round' onclick="borra_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-trash"></i></a>
-        </td>
+        @if($editar==1)
+          <tr>
+            <td>{{ $det->incremento }}</td>
+            <td>{{ $det->numero_parte }}</td>
+            <td>{{ $det->descripcion}}</td>
+            <td>{{ $det->nfamilia }}</td>
+            <td>{{$det->fecha_entrega}}</td>
+            <td>{{ $det->tiempo_entrega }}</td>
+            <td>
+              <select class="form-control select2" id="planta{{$det->id}}" style="width: 150px;" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+                <option value="0">Seleccione...</option>
+                @foreach($plantas as $planta)
+                  <option value="{{$planta->id}}" {{($planta->id==$det->planta) ? 'selected':'' }}>{{$planta->nombre}}</option>
+                @endforeach
+              </select>
+            </td>
+          </tr>
         @endif
 
-       <!-- <td>
-          <div class="btn-group">
-            @if($editar ==1 && $det->cantidad > 1 and $det->conteo < $det->cantidad)
-            <a class='btn btn-float btn-outline-info btn-round' onclick="agrega_subproducto({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-plus"></i></a>
-            @endif
-            @if($det->incremento >1 and $editar ==1)
-            
-            @endif
-          </div>
-        </td>-->
-      </tr>
       @endforeach
     </tbody>
   </table>

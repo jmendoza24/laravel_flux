@@ -1,5 +1,5 @@
 <table class="table display nowrap table-striped table-bordered scroll-horizontal" style="" id="productos-table">
-        <thead>
+        <thead class="bg-success">
             <tr>
                 <th>Nombre</th>
                 <th>Marca</th>

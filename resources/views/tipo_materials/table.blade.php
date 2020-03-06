@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="tipoMaterials-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Material</th>
             <th>Descripción</th>

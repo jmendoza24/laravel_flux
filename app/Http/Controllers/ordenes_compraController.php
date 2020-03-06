@@ -36,6 +36,10 @@ class ordenes_compraController extends AppBaseController
         $ordenes = $orden->ordenesCompra();
         $ordenesCompras = $ordenes['var'];
         $productos = $ordenes['productos'];
+        
+        $plantas = $orden->obtiene_plantas();
+        $detalle = array();
+
       #  db::select('drop table seguimiento_produccion_files');
        /**  db::select('CREATE TABLE seguimiento_calidad (
  id int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -52,7 +56,7 @@ class ordenes_compraController extends AppBaseController
       $dd = db::table('seguimiento_calidad')->get();
        
         dd($dd);*/
-        return view('ordenes_compras.index',compact('ordenesCompras','productos'));
+        return view('ordenes_compras.index',compact('ordenesCompras','productos','plantas','detalle'));
     
     }
 

@@ -1,5 +1,5 @@
 <table class="table display nowrap table-striped table-bordered scroll-horizontal" id="clientes-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Nombre Corto</th>                
             <th>País</th>

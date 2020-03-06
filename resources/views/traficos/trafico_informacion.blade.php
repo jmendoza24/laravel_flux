@@ -3,6 +3,7 @@
 	<table class="table table-bordered table-striped small">
 		<tr>
 			<td>IDN</td>
+			<td>OCC</td>
 			<td>Producto</td>
 			<td>Est. Producción</td> 
 			<td>Est. Calidad</td>
@@ -11,6 +12,7 @@
 		@foreach($traficos as $traff)
 		<tr>
 			<td>{{ $traff->id_detalle}}</td>
+			<td>{{ $traff->orden_compra}}</td>
 			<td>{{ $traff->numero_parte}}</td>
 			<td>
 				@foreach($status_prod as $status)

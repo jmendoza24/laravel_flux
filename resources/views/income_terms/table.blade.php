@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="incomeTerms-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Inco</th>
             <th>Descripción</th>

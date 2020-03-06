@@ -7,8 +7,8 @@
             <th>Producto</th>
             <th>OCC</th>
             <th>Lugar de entrega</th>
-            <th>Fecha entrega solicitada</th>
-            <th>Fecha entrega producción</th>
+            <th>Fecha entrega</th>
+            <th>Fecha producción</th>
             <th>Planta</th>
             <th>Estatus</th>
             <!--<th>IDE</th>-->

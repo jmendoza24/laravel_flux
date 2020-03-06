@@ -1,14 +1,3 @@
-@extends('layouts.app')
-
-@section('titulo')
-    Ordenes de trabajo por enviar
-@endsection  
-
-@section('content')
-@php($editar = 0)
-@php($nuevo = 1)
-
-
 <div class="row" style="background: #F5F7FA; padding: 10px;">
   @foreach($plantas as $planta)
   <div class="col-xl-3 col-lg-6 col-12">
@@ -35,5 +24,3 @@
     @include('ordenes_compras.tabla_plantas')
   </div>
 </div>
-
-@endsection

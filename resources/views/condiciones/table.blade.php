@@ -1,5 +1,5 @@
 <table class="table display nowrap table-striped table-bordered scroll-horizontal" id="condiciones-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Tipo</th>
             <th>Condición</th>

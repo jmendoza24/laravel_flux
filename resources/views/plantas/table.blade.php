@@ -1,5 +1,5 @@
 <table class="table display nowrap table-striped table-bordered scroll-horizontal" id="plantas-table">
-<thead>
+<thead class="bg-success">
     <tr>
         <th>Razón social</th>
         <th>Planta</th>

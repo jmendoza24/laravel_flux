@@ -2,7 +2,7 @@
 <a href="{{ route('envia_plantas',['id_planta'=>$detalle[0]->planta])}}"><button class="btn btn-primary pull-right">Enviar</button></a> 
 <br><br>
 @endif
-<table class="table display nowrap table-striped table-bordered small" id="tabla_plantas_n">
+<table class="table display nowrap table-striped table-bordered" id="tabla_plantas_n">
 	<thead>
 		<tr style="background: #518a87; color: white;">
 			<td>IDN</td>

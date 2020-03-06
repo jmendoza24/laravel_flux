@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" id="tipoaceros-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Acero</th>
             <th>Descripción</th>

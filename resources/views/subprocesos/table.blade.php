@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="subprocesos-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Proceso</th>
             <th>Subproceso</th>

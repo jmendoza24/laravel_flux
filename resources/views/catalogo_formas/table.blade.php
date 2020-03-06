@@ -15,7 +15,7 @@
         </div>
         <div class="card-content collapse show">
             <table class="table table-striped table-bordered scroll-vertical display">
-              <thead>
+              <thead class="bg-success">
               <tr>
                 <th>Forma</th>
                 <th>Valor</th>
@@ -48,7 +48,7 @@
         </div>
         <div class="card-content collapse show">
           <table class="table table-striped table-bordered scroll-vertical display">
-              <thead>
+              <thead class="bg-success">
               <tr>
                 <th>Forma</th>
                 <th>Valor</th>
@@ -80,7 +80,7 @@
         </div>
         <div class="card-content collapse show">
           <table class="table table-striped table-bordered scroll-vertical display">
-              <thead>
+              <thead class="bg-success">
               <tr>
                 <th>Forma</th>
                 <th>Valor</th>
@@ -113,7 +113,7 @@
         </div>
         <div class="card-content collapse show">
           <table class="table table-striped table-bordered scroll-vertical display">
-              <thead>
+              <thead class="bg-success">
               <tr>
                 <th>Forma</th>
                 <th>Valor</th>
