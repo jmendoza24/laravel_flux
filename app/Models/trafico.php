@@ -98,7 +98,7 @@ class trafico extends Model
     function trafico_info($filtro){
       $trafico = db::table('traficos_detalle as td')
                 ->join('ordencompra_detalle as od', 'od.id' , 'td.id_detalle')
-                ->join('ordenes_compras as o','t.id','od.id_orden')
+                ->join('ordenes_compras as o','td.id','od.id_orden')
                 ->join('productos as p','p.id','od.producto')
                 ->where('id_trafico',$filtro->id_trafico)
                 ->selectraw('td.id_detalle,p.numero_parte, od.fecha_entrega, o.orden_compra')
