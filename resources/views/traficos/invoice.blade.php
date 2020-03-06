@@ -6,7 +6,7 @@
 			fluxmetals.com
 		</td>
 		<td style="background: black; color: white; text-align: center;">
-			<h2><b>INVOICE</b></h2>
+			<h2><b>INVOICE PROFORMA</b></h2>
 		</td>
 	</tr>
 </table>

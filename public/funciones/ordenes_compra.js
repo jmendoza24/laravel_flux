@@ -21,7 +21,7 @@ function convierte_occ(id_cotizacion, tipo){
 
                 },
                 cancelar: function () {}
-              }
+              } 
           });
 }
 
@@ -29,8 +29,8 @@ function validar_orden(id_orden){
   var parametros = {"notas":$("#notas").val(),
                     "income":$("#income").val(),
                     "id_orden":id_orden};
-    if($("#orden_compra").val()==''){
-      $.alert("Para validar es necesario tener capturado la orden de compra")
+    if($("#orden_compra").val()=='' || $("#cliente").val()=='' || $("#shipping_id").val() =='' || $("#income").val() || $("#lugar").val()==''){
+      $.alert("Para validar es necesario tener capturado los campos requeridos")
     }else{
       $.ajax({
               data: parametros,
@@ -750,12 +750,7 @@ function seguimiento_trafico(ide){
           console.log(result);
           $("#contenido").html(result);
           $('.modal-dialog').draggable({handle: ".modal-header"});
-          $("#footer_primary").hide();
-           $(".select2-placeholder-multiple").select2({
-              placeholder: "Seleccionar idns",
-            });
-
-           
+          $("#footer_primary").hide();           
         }
     });
   
@@ -900,9 +895,10 @@ function informacion_trafico(trafico){
         dataType: "json",
         method: "get",                     
         success: function(result){
-          console.log(1);
+
           $("#titulo_default").html('Información trafico | '+ trafico);
           $("#default_contenido").html(result);
+          $("#modal_default").addClass("modal-lg");
         }
     });
 }
@@ -998,6 +994,38 @@ function muestra_productos(id_orden){
           $("#modal_primary").removeClass("modal-xl");
           $('.modal-dialog').draggable({handle: ".modal-header"});
           $("#footer_primary").hide();
+        }
+    });
+}
+
+function nueva_tarima(trafico,id){
+  $.ajax({
+        url: '/api/v1/nueva_tarima',          
+        data: {"trafico":trafico,'id':id},
+        dataType: "json",
+        method: "get",                     
+        success: function(result){
+          console.log(result);
+          $("#default_contenido").html(result);
+          $("#modal_default").addClass("modal-lg");
+          $("#titulo_default").html('Tráfico');
+          $('.modal-dialog').draggable({handle: ".modal-header"});
+          $(".select2-placeholder-multiple").select2({
+              placeholder: "Seleccionar idns",
+            });
+        }
+    });
+}
+
+function obtiene_idns(trafico){
+  $.ajax({
+        url: '/api/v1/obtiene_idns_trafico',          
+        data: {"trafico":trafico,'ship_to':$("#shipping_id").val()},
+        dataType: "json",
+        method: "get",                     
+        success: function(result){
+          console.log(result);
+          $("#idns_mul").html(result);
         }
     });
 }

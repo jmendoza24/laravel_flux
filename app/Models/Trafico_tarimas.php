@@ -13,13 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string actividad
  * @property string descripcion
  */
-class Trafico_tarimas extends Model
-{
+class Trafico_tarimas extends Model{
 
     public $table = 'traficos_tarimas';
-     
-
-
-
-    
+         
 }

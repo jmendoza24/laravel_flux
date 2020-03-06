@@ -2,7 +2,7 @@
 	<thead>
 		<tr>
 			<th>Número parte</th>
-			<th>Cantidad solicitada</th>
+			<th>IDN</th>
 			<th>Fecha entrega</th>
 		</tr>
 	</thead>

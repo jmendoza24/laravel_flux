@@ -50,7 +50,11 @@
 		<div class="col-md-12" style="" >
 	      <div class="card" style=" border:2px solid #518a87 !important;">
 	        <div class="card-header" style="background: #F5F7FA;">
-	          <h6 class="card-title">Carga de documentos <span class="pull-right" style="cursor: pointer;" data-toggle="modal" data-target="#default" onclick="informacion_trafico({{ $trafico}})"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></span></h6>
+	          	<h6 class="card-title">Carga de documentos 
+	          		<span class="pull-right" style="cursor: pointer;" data-toggle="modal" data-target="#default" onclick="informacion_trafico({{ $trafico}})">
+	          			<i class="fa fa-info-circle fa-2x {{ ($estatus_i[0]->conteo==7)?'success_info':'warning'}}" aria-hidden="true"></i>
+	          		</span>
+	      		</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -113,40 +117,10 @@
 	        <div class="card-content collpase show">
 	          <div class="card-body">
 	            <div class="card-text">
-	            	<form id="nueva_tarima" enctype="multipart/form-data">
-		            	<table class="" style="width: 100%">	
-		            			{{ csrf_field() }}
-		            			<input type="hidden" name="id_trafico" value="{{ $trafico}}">
-							<tr>
-								<td>
-									<select name="idns[]" class="select2-placeholder-multiple form-control" multiple="multiple" style="width: 150px;" >
-										@foreach($traficos_detalle as $idns)
-										<option value="{{$idns->id_detalle}}">{{$idns->id_detalle}}</option>
-										@endforeach
-									</select>
-								</td>
-								<!--<td><input type="text"  name="idns" class="form-control" placeholder="IDNS" id="idns"></td>-->
-								<td><input type="number" min="0" step="any" name="peso" id="peso" class="form-control" placeholder="Peso Kg"></td>
-								<td><input type="number" min="0" step="any" name="altura" id="altura" class="form-control" placeholder="Altura"></td>
-								<td><input type="number" min="0" step="any" name="ancho" id="ancho" class="form-control" placeholder="Ancho"></td>
-								<td><input type="number" min="0" step="any" name="largo" id="largo" class="form-control" placeholder="Largo"></td>
-								<td><input type="number" min="0" step="any" name="pero_tarima" id="pero_tarima" class="form-control" placeholder="Peso tarima"></td>
-								<td>
-									<select class="form-control" name="shipping_id"  style="width: 110px;">
-						                <option value="">Ship to</option>
-						                @foreach($logisticas as $logistica)
-						                <option value="{{$logistica->id}}"  >
-						                  {{$logistica->calle . ', ' .$logistica->municipio .', '. $logistica->nestado .', '. $logistica->npais}}
-						                </option>
-						                @endforeach
-						              </select>
-								</td>
-								<td>
-									<span class="btn btn-primary" onclick="guarda_tarima()"><i class="fa fa-plus"></i> Tarimas</span>
-								</td>
-							</tr>
-	            		</table>
-	            	</form>
+	            	<div class="col-md-12" style="text-align: right;">
+	            		<span class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#default"  onclick="nueva_tarima({{ $trafico}},0)"><i class="fa fa-plus"></i> Tarimas</span>	            		
+	            	</div>
+	            	<br>
 	            	<div id="listado_tarimas">
 	              		@include('traficos.tarimas')
 					</div>
@@ -244,7 +218,7 @@
 						    <input type="text" name="fraccion_arra" id="fraccion_arra" class="form-control" value="{{ $fletes->arancelaria_usa}}">
 						</div>-->
 						<div class="form-group col-md-3">
-						    {!! Form::label('fecha_entrega', 'Fecha entrega') !!}
+						    {!! Form::label('fecha_entrega', 'Fecha entrega OCC') !!}
 						    <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" value="{{ $fletes->fecha_entrega}}">
 						</div>
 						<div class="form-group col-md-3">
@@ -266,7 +240,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<table class="table table-bordered table-striped small">
+							<table class="table table-bordered table-striped">
 								<tr>
 									<td>IDN</td>
 									<td>No. Parte</td>

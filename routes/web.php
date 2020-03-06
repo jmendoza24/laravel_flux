@@ -149,6 +149,10 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/muestra_line_productos', 'FacturacionController@muestra_line_productos');
 	Route::get('/actualiza_monto_factura', 'FacturacionController@actualiza_monto_factura');
 	Route::get('/muestra_productos', 'ordenes_compraController@muestra_productos');
+	Route::get('/nueva_tarima', 'traficoController@nueva_tarima');
+	Route::get('/obtiene_idns_trafico', 'traficoController@obtiene_idns_trafico');
+	
+
 	
 });
 

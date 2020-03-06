@@ -1,5 +1,5 @@
 @if(sizeof($informacion)>0)
-<h5>{{ $informacion[0]->orden_compra}}</h5>
+<h5>OCC: {{ $informacion[0]->orden_compra}}</h5>
 <table class="table table-bordered table-striped small">
 	<tr class="bg-success">
 		<td>Linea</td>

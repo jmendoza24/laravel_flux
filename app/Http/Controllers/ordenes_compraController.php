@@ -336,11 +336,6 @@ class ordenes_compraController extends AppBaseController
                                                    from seguimiento_produccion
                                                    where fecha_fin is null
                                                    group by id_detalle, id_proceso) p2 on p2.id_detalle = p.id_detalle and p.id_proceso = p2.id_proceso');
-
-        # $procesos = $orden->get_procesos_ordenes();
-         #$sub_procesos = $orden->get_sub_procesos_ordenes($id);
-        # dd($sub_procesos);
-    
         return view('ordenes_compras.seguimiento',compact('productos','plantas','calida_seg','seg_produccion'));
     }
 
@@ -689,7 +684,7 @@ class ordenes_compraController extends AppBaseController
                           'id_proceso'=>$request->id_proceso,
                           'tipo'=>$request->tipo,
                           'nombre'=>$request->nombre,
-                          'archivo'=>$img,
+                          'archivo'=>$img, 
                           'fecha'=>date('Y-m-d'),
                           'id_usuario'=>$user]);
         }
