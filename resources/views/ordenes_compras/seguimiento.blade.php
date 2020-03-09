@@ -89,7 +89,7 @@ Seguimiento ordenes de trabajo
             <td style="z-index: 1000;">
              <label  style="width: 90px;">SG-00{{ $producto->id_detalle }}</label>
             </td>
-            <td style="z-index: 1000;"> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm" style="background-color: #518a87 !important" data-toggle="modal" data-backdrop="false" data-target="#primary" onclick="informacion_producto({{$producto->idproducto}})" ><i class="fa fa-info"></i></span></label></td>
+            <td style="z-index: 1000;"> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm" style="background-color: #518a87 !important" data-toggle="modal" data-backdrop="false" data-target="#primary" onclick="informacion_producto({{$producto->idproducto}},{{$producto->id_detalle}})" ><i class="fa fa-info"></i></span></label></td>
             <td style="z-index: 1000;"> {{  date("m-d-Y", strtotime($producto->fecha_entrega)) }}</td>
             <td>{{ $producto->nombre_corto }}</td>
             <td>{{ $producto->orden_compra}}</td>

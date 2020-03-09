@@ -1,3 +1,4 @@
+
 <table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="1">
 	<tr>
 		<td rowspan="3">Logo</td>
@@ -15,6 +16,7 @@
 	</tr>
 </table>
 <br>
+@if(sizeof($trafico)> 0)
 <table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="1">
 	<tr>
 		<td>Dirección de recolección:</td>
@@ -118,3 +120,6 @@
 		<td></td>
 	</tr>
 </table>
+@else
+<h3>Sin datos</h3>
+@endif

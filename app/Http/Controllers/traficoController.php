@@ -43,11 +43,19 @@ class traficoController extends AppBaseController
      * @return Response
      */
     public function index(Request $request){
-        #$files = db::table('traficos_documentos')->where('id_trafico',83)->get();
-       # dd($files);
-    #  db::select('alter table traficos_tarimas add column shipping_id int after id_trafico');
-    #    $var = db::table('traficos_tarimas')->get();
-     # dd($var);
+#       $trafic = new trafico;
+
+        if($request->session()->has('no_track')) {
+            $trafico_numero = $request->session()->get('no_track');
+
+         }else{
+            $fecha = date('Y-m-d');
+            $id = trafico::insertGetId(['id_usuario'=>auth()->id(),
+                                        'estatus'=>0]);
+            $request->session()->put('no_track',$id);
+            $trafico_numero = $request->session()->get('no_track');
+         }
+
          $traficos_det = db::select('select dt.id_trafico,o.cliente as idcliente,pr.*, if(dt.id_detalle is null, 0,1) as existe, o.shipping, c.nombre_corto, sp.fecha_estimado_termino, a.nombre as planta_name, l.calle,   p.nombre as npais, e.estado as nestado, l.municipio as nmunicipio, pr.id as idproducto, o.orden_compra, d.id as id_detalle, pr.numero_parte, d.incremento, d.fecha_entrega
                                     from ordencompra_detalle as  d
                                     inner join  ordenes_compras as o on o.id = d.id_orden
@@ -63,8 +71,22 @@ class traficoController extends AppBaseController
                                     order by d.id asc');
 
         $trafic = new trafico;       
-        $traficos = $trafic->get_trafico();
-        return view('traficos.index',compact('traficos','traficos_det'));
+        $trafico = $trafic->get_trafico();
+
+        $traficos = $trafic->filtro_trafico(0,$trafico_numero);
+        $cliente_actual  = $trafic->cliente_actual($trafico_numero); 
+        if(sizeof($cliente_actual)>0){
+            $cliente_actual = $cliente_actual[0];    
+        }else{
+            $cliente_actual = array('cliente'=>0,
+                                    'nombre_corto'=>'');
+            $cliente_actual = (object)$cliente_actual;
+        }
+        
+        
+        $cliente = clientes::get();
+
+        return view('traficos.index',compact('trafico','traficos','cliente_actual','cliente', 'traficos_det','trafico_numero'));
     }
 
     function agrega_trafico(Request $request){

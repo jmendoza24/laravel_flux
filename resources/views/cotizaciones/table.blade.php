@@ -1,5 +1,5 @@
 <table class="table display nowrap table-striped table-bordered scroll-horizontal" id="cotizaciones-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <th>Cotización</th>
             <th>Cliente</th>

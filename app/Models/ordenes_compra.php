@@ -187,15 +187,17 @@ class ordenes_compra extends Model
     }
 
     function informacion_producto($filtro){
-        return db::select('select p.*,dibujo, dibujo_nombre,revision
+        return db::select('select p.*, d.dibujo, d.dibujo_nombre,revision, o.orden_compra
                            from productos p 
+                           left join ordencompra_detalle dt on dt.producto = p.id and dt.id = '. $filtro->id_detalle.'
+                           left join ordenes_compras o on o.id = dt.id_orden
                            left join(
-                                       select id_producto, dibujo, dibujo_nombre,revision
-                                       from  producto_dibujos 
+                                       select id_producto, e.dibujo, dibujo_nombre,revision
+                                       from  producto_dibujos e
                                         where id_producto = '.$filtro->id_producto.'
                                         order by id desc 
                                         limit 1 ) d on d.id_producto = p.id
-                            where id  = '.$filtro->id_producto);
+                            where p.id  = '.$filtro->id_producto);
     }
 
     function informacion_subprocesos($filtro){

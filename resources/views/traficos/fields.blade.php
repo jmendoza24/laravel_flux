@@ -11,7 +11,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($traficos as $detalle)
+		@foreach($trafico as $detalle)
 		<tr>
 			<td>{{ $detalle->ide}}</td>
 			<td>{{ $detalle->nombre_corto}}</td>

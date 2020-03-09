@@ -231,8 +231,8 @@
 						    <input type="text" name="fraccion_arra_mx" id="fraccion_arra_mx" class="form-control" value="{{ $fletes->arancelaria_mx}}">
 						</div>-->
 						<div class="form-group col-md-3">
-							<a href="{{ route('download.notificacion',['id_trafico'=>$trafico])}}" target="_blank">
-								<span class="btn btn-float btn-primary ">
+							<a href="{{$fletes->agencia_mx != '' ? route('download.notificacion',['id_trafico'=>$trafico]) : '#'}}" {{$fletes->agencia_mx != '' ? 'target="_blank"':''}}>
+								<span class="btn btn-float btn-{{$fletes->agencia_mx != '' ?'primary':'secondary'}} ">
 									<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Notificacion de Embarque
 								</span>
 							</a>

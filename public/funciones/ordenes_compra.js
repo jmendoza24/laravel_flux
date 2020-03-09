@@ -217,9 +217,9 @@ function seguimiento_subproceso(id_proceso, id_producto,id_detalle){
         });
 }
 
-function informacion_producto(id_producto){
+function informacion_producto(id_producto,id_detalle){
   //alert(id_producto);
-  var parametros = {"id_producto":id_producto};
+  var parametros = {"id_producto":id_producto,'id_detalle':id_detalle};
     $.ajax({
             url: '/api/v1/informacion_producto',          
             data: parametros,
@@ -906,7 +906,7 @@ function informacion_trafico(trafico){
         method: "get",                     
         success: function(result){
 
-          $("#titulo_default").html('Información trafico | '+ trafico);
+          $("#titulo_default").html('Información IDE: '+ trafico);
           $("#default_contenido").html(result);
           $("#modal_default").addClass("modal-lg");
         }

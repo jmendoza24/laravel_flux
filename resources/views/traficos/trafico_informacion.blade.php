@@ -5,15 +5,17 @@
 			<td>IDN</td>
 			<td>OCC</td>
 			<td>Producto</td>
+			<td>Fecha entrega</td>
 			<td>Est. Producción</td> 
-			<td>Est. Calidad</td>
-			<td>Fecha comp. entrega</td>
+			<!--<td>Est. Calidad</td>-->
+			
 		</tr>
 		@foreach($traficos as $traff)
 		<tr>
 			<td>{{ $traff->id_detalle}}</td>
 			<td>{{ $traff->orden_compra}}</td>
 			<td>{{ $traff->numero_parte}}</td>
+			<td>{{ $traff->fecha_entrega}}</td>
 			<td>
 				@foreach($status_prod as $status)
 					@if($status->id_detalle==$traff->id_detalle && $status->conteo > 0)
@@ -23,6 +25,7 @@
 					@endif
 				@endforeach
 			</td>
+			<!---
 			<td>
 				@foreach($estatus_calidad as $calidad)
 					@if($calidad->id_detalle == $traff->id_detalle)
@@ -34,7 +37,7 @@
 					@endif
 				@endforeach
 			</td>
-			<td>{{ $traff->fecha_entrega}}</td>
+			--->
 		</tr>
 		@endforeach
 	</table>

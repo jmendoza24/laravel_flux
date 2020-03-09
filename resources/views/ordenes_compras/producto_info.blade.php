@@ -22,6 +22,10 @@
 			<td>Num. Dibujo:</td>
 			<td>{{ $producto->revision}}</td>
 		</tr>
+    <tr>
+      <td>OCC:</td>
+      <td>{{ $producto->orden_compra}}</td>
+    </tr>
     @if($producto->dibujo != '')
 		<tr>
 			<td colspan="2">

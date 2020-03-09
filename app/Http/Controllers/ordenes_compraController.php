@@ -403,9 +403,11 @@ class ordenes_compraController extends AppBaseController
 
         $filtro = new ordenes_compra;
         $filtro->id_producto = $request->id_producto;
+        $filtro->id_detalle = $request->id_detalle;
+        
 
         $producto = $filtro->informacion_producto($filtro);
-        #dd($producto);
+       # dd($producto);
         $producto = $producto[0];
 
         $options = view('ordenes_compras.producto_info',compact('producto'))->render();
