@@ -634,10 +634,13 @@ class ordenes_compraController extends AppBaseController
         if($request->valor==1){
             seguimiento_materiales::insert(['id_orden'=>$request->id_orden,
                                             'id_detalle'=>$request->id_detalle,
-                                            'id_materia'=>$request->id_material]);    
+                                            'id_materia'=>$request->id_material,
+                                            'id_forma'=>$request->id_forma
+                                          ]);    
         }else{
-            seguimiento_materiales::where([['id_orden',$request->id_orden],['id_detalle',$request->id_detalle],['id_materia',$request->id_material]])->delete();
+            seguimiento_materiales::where([['id_orden',$request->id_orden],['id_detalle',$request->id_detalle],['id_materia',$request->id_material],['id_forma',$request->id_forma]])->delete();
         }        
+
     }
 
     function finalizar_asignacion(Request $request){
@@ -723,7 +726,7 @@ class ordenes_compraController extends AppBaseController
         $existe = db::table('seguimiento_calidad')
                     ->where([['id_orden',$request->id_orden],['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso]])
                     ->count();
-        
+        // dd($existe);
         if($existe >0){
 
             db::table('seguimiento_calidad')

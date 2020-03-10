@@ -20,7 +20,7 @@
             <td>
                 <div class="d-inline-block custom-control custom-checkbox mr-1">
                     <input type="checkbox" {{($trafico->existe ==1)?'checked':''}} onchange="agrega_trafico({{$trafico->id_detalle}},{{ $trafico->idcliente}})"  class="custom-control-input" name="trafic_{{$trafico->id_detalle}}" id="trafic_{{$trafico->id_detalle}}" >
-                    <label class="custom-control-label" for="trafic_{{$trafico->id_detalle}}">TR00{{$trafico->id_detalle}}</label>
+                    <label class="custom-control-label" for="trafic_{{$trafico->id_detalle}}">FM{{str_pad($trafico->id_detalle,6,"0",STR_PAD_LEFT)}}</label>
                 </div>
             </td>
             <td>{{ $trafico->nombre_corto}}</td>

@@ -4,14 +4,6 @@ Seguimiento ordenes de trabajo
 @endsection
 @php($id_detalle = '')
 @section('content')
-@php($color = 'secondary')
-@php($color2 = 'secondary')
-@php($color3 = 'secondary')
-@php($color4 = 'secondary')
-@php($color5 = 'secondary')
-@php($color6 = 'secondary')
-@php($color7 = 'secondary')
-@php($color_p = 'secondary')
     <div class="row">
       <label class="col-md-9"></label>
         <select class="form-control col-md-3" id="bloque_muesta" onchange="muestra_bloque()">
@@ -87,7 +79,7 @@ Seguimiento ordenes de trabajo
           @foreach($productos as $producto)
           <tr>
             <td style="z-index: 1000;">
-             <label  style="width: 90px;">SG-00{{ $producto->id_detalle }}</label>
+             <label  style="width: 90px;">FM{{ str_pad($producto->id_detalle,6,"0",STR_PAD_LEFT) }}</label>
             </td>
             <td style="z-index: 1000;"> <label style="width: 120px;">{{ $producto->numero_parte}} <span class="btn btn-icon btn-info btn-sm" style="background-color: #518a87 !important" data-toggle="modal" data-backdrop="false" data-target="#primary" onclick="informacion_producto({{$producto->idproducto}},{{$producto->id_detalle}})" ><i class="fa fa-info"></i></span></label></td>
             <td style="z-index: 1000;"> {{  date("m-d-Y", strtotime($producto->fecha_entrega)) }}</td>
@@ -158,6 +150,7 @@ Seguimiento ordenes de trabajo
             </td>
             <td class="produccion">
               <div class="btn-group mx-2" role="group">
+                @php($color_p = 'secondary')
                 @foreach($seg_produccion as $s_prod)
                 @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 1 && $s_prod->conteo==0)
                   @php($color_p = 'primary')
@@ -166,6 +159,7 @@ Seguimiento ordenes de trabajo
                 @endif
                 @endforeach
                 <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
+                @php($color = 'secondary')
                 @foreach($calida_seg as $calidad)
                   @if($calidad->id_detalle==$producto->id_detalle && $calidad->id_proceso ==1 && $calidad->estatus==0)
                   @php($color = 'secondary')
@@ -180,6 +174,7 @@ Seguimiento ordenes de trabajo
               </div>
             </td>
             <td class="produccion">
+              @php($color2 = 'secondary')
               @foreach($calida_seg as $calidad)
                   @if($calidad->id_detalle==$producto->id_detalle && $calidad->id_proceso ==2 && $calidad->estatus==0)
                   @php($color2 = 'secondary')
@@ -191,6 +186,7 @@ Seguimiento ordenes de trabajo
                 @endforeach
 
               <div class="btn-group mx-2" role="group">
+                @php($color_p = 'secondary')
                 @foreach($seg_produccion as $s_prod)
                 @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 2 && $s_prod->conteo==0)
                   @php($color_p = 'primary')
@@ -204,6 +200,7 @@ Seguimiento ordenes de trabajo
               </div>
             </td>
             <td class="produccion">
+              @php($color3 = 'secondary')
               @foreach($calida_seg as $calidad)
                   @if($calidad->id_detalle==$producto->id_detalle && $calidad->id_proceso ==3 && $calidad->estatus==0)
                     @php($color3 = 'secondary')
@@ -214,6 +211,7 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
+                @php($color_p = 'secondary')
                 @foreach($seg_produccion as $s_prod)
                 @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 3 && $s_prod->conteo==0)
                   @php($color_p = 'primary')
@@ -227,6 +225,7 @@ Seguimiento ordenes de trabajo
               </div>
             </td>
             <td class="produccion">
+              @php($color4 = 'secondary')
               @foreach($calida_seg as $calidad)
                   @if($calidad->id_detalle==$producto->id_detalle && $calidad->id_proceso ==4 && $calidad->estatus==0)
                     @php($color4 = 'secondary')
@@ -237,6 +236,7 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
+                @php($color_p = 'secondary')
                 @foreach($seg_produccion as $s_prod)
                 @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 4 && $s_prod->conteo==0)
                   @php($color_p = 'primary')
@@ -250,6 +250,7 @@ Seguimiento ordenes de trabajo
               </div>
             </td>
             <td class="produccion">
+              @php($color5 = 'secondary')
               @foreach($calida_seg as $calidad)
                   @if($calidad->id_detalle==$producto->id_detalle && $calidad->id_proceso ==5 && $calidad->estatus==0)
                     @php($color5 = 'secondary')
@@ -260,6 +261,7 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
+                @php($color_p = 'secondary')
                 @foreach($seg_produccion as $s_prod)
                 @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 5 && $s_prod->conteo==0)
                   @php($color_p = 'primary')
@@ -273,6 +275,7 @@ Seguimiento ordenes de trabajo
               </div>
             </td>
             <td class="produccion">
+              @php($color6 = 'secondary')
               @foreach($calida_seg as $calidad)
                   @if($calidad->id_detalle==$producto->id_detalle && $calidad->id_proceso ==6 && $calidad->estatus==0)
                   @php($color6 = 'secondary')
@@ -284,6 +287,7 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
+                @php($color_p = 'secondary')
                 @foreach($seg_produccion as $s_prod)
                 @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 6 && $s_prod->conteo==0)
                   @php($color_p = 'primary')
@@ -298,6 +302,7 @@ Seguimiento ordenes de trabajo
             </td>
 
             <td class="produccion">
+              @php($color7 = 'secondary')
               @foreach($calida_seg as $calidad)
                   @if($calidad->id_detalle==$producto->id_detalle && $calidad->id_proceso ==7 && $calidad->estatus==0)
                   @php($color7 = 'secondary')
@@ -308,6 +313,7 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
               <div class="btn-group mx-2" role="group">
+                @php($color_p = 'secondary')
                 @foreach($seg_produccion as $s_prod)
                 @if($s_prod->id_detalle == $producto->id_detalle && $s_prod->id_proceso == 7 && $s_prod->conteo==0)
                   @php($color_p = 'primary')

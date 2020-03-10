@@ -14,7 +14,7 @@
 	</thead>
 	@foreach($detalle as $det)
 	<tr>
-		<td>{{ str_pad($det->id,8,'0',STR_PAD_LEFT) }}</td>
+		<td>FM{{ str_pad($det->id,6,'0',STR_PAD_LEFT) }}</td>
 		<td>{{ $det->nombre}}</td>
 		<td>1</td>
 		<td>{{ $det->descripcion}}</td>

@@ -288,7 +288,7 @@ class ordenes_compra extends Model
                 ->where([['id_orden',$filtro->id_orden],['id_detalle',$filtro->id_detalle]])->get();
 
     }
-    
+     
 
     function get_materiales($filtro){
         $prod = db::table('seguimiento_materiales as d')
@@ -296,9 +296,8 @@ class ordenes_compra extends Model
                 ->where('id_orden',14)
                 #->selectraw('d.*')
                 ->get();
-
           #dd($prod);
-        $materiales = db::select('select s.id_materia, d.asigan_meterial, p.id as idmaterial, d.id_orden, d.id, m.forma as idforma, f.forma as nforma, m.id as idmaterial, d.id as id_detalle, d.producto, m.espesor, p.espesor as pespesor, m.ancho, p.ancho as pancho, m.altura, p.altura as paltura, m.peso_distancia, p.peso_distancia as ppeso_distancia,
+        $materiales = db::select('select s.id_materia, s.id_forma, d.asigan_meterial, p.id as idmaterial, d.id_orden, d.id, m.forma as idforma, f.forma as nforma, m.id as idmaterial, d.id as id_detalle, d.producto, m.espesor, p.espesor as pespesor, m.ancho, p.ancho as pancho, m.altura, p.altura as paltura, m.peso_distancia, p.peso_distancia as ppeso_distancia,
                                  p.espesor as pespesor, p.ancho as pancho, p.altura as paltura, p.peso_distancia as pdisct, c.valor as nespesor, c2.valor as nancho, c3.valor as naltura, c4.valor as npeso_distancia, colada_numero
                                  from ordencompra_detalle as d
                                  inner join producto_materialesforma p on d.producto = p.id_producto
@@ -308,7 +307,7 @@ class ordenes_compra extends Model
                                  left join catalogo_formas c3 on p.altura = c3.id
                                  left join catalogo_formas c4 on p.peso_distancia = c4.id
                                  left join formas as f on f.id = p.forma
-                                 left join seguimiento_materiales as s on s.id_materia = m.id
+                                 left join seguimiento_materiales as s on s.id_materia = m.id and s.id_forma  = p.id
                                  where d.id = ' .$filtro->id_detalle);
         #dd($materiales);    #and p.ancho = m.ancho and p.altura = m.altura and p.peso_distancia = m.peso_distancia 
          #  and p.espesor = m.espesor and p.ancho = m.ancho and p.altura = m.altura and ifnull(p.peso_distancia,0) = ifnull(m.peso_distancia,0)

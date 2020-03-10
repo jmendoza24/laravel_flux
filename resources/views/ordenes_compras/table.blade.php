@@ -39,11 +39,17 @@
             <td></td>
             <td>
                 @if($ordenesCompra->tipo < 2)
-                 No Asignado
+                 No Asignada
                 @elseif($ordenesCompra->tipo==3)
-                Asignado
+                Asignada
                 @elseif($ordenesCompra->tipo==4)
-                Enviado
+                Enviada
+                @elseif($ordenesCompra->tipo==5)
+                Produccion
+                @elseif($ordenesCompra->tipo==6)
+                Flete
+                @elseif($ordenesCompra->tipo==7)
+                Facturacion
                 @endif
             </td>
             <td>

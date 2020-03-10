@@ -26,7 +26,7 @@ $peso = array(7,8,9,10,13);
 		<tr>
 			<td>
 				<div>
-					<h6><b>{{ $mat_for->forma}}</b></h6>
+					<h6><b>{{ $mat_for->forma}} | {{$mat_for->id}}</b></h6>
 						@if(in_array($mat_for->idforma,$espesor))
 				      		<span class="badge bg-blue-grey">Espesor: {{ $mat_for->espesor}}</span>
 				      	@endif
@@ -45,19 +45,19 @@ $peso = array(7,8,9,10,13);
 					@foreach($material as $mat)
 						@if($mat_for->idforma == $mat->idforma)
 						 <div class="d-inline-block custom-control custom-checkbox mr-1">
-	                      <input type="checkbox" {{ $mat->id_materia >0?'checked':'' }} {{ ($mat->asigan_meterial==1)?'disabled':''}} class="custom-control-input" name="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial}}" id="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial}}" onchange="seguimiento_materiales({{ $mat->id_orden}},{{ $mat->id}},{{$mat->idmaterial}})" >
-	                      <label class="custom-control-label" for="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial}}">
-	                      	<!--{{ $mat->nforma}} <br>-->
-					      	@if(in_array($mat_for->idforma,$espesor))
+	                      <input type="checkbox" {{ $mat->id_forma ==$mat_for->id ?'checked':'' }} {{ ($mat->asigan_meterial==1)?'disabled':''}} class="custom-control-input" name="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial.'_'.$mat_for->id}}" id="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial.'_'.$mat_for->id}}" onchange="seguimiento_materiales({{ $mat->id_orden}},{{ $mat->id}},{{$mat->idmaterial}},{{$mat_for->id}})" >
+	                      <label class="custom-control-label" for="mat_{{ $mat->id_orden.'_'. $mat->id.'_'.$mat->idmaterial.'_'.$mat_for->id}}">
+	                      	{{ $mat->nforma}} <br>
+					      	@if(in_array($mat_for->idforma,$espesor) && $mat_for->espesor==$mat->nespesor)
 					      		 <span class="badge badge-primary"> Espesor: {{ $mat->nespesor}} </span>
 					      	@endif
-					      	@if(in_array($mat_for->idforma,$ancho))
+					      	@if(in_array($mat_for->idforma,$ancho) && $mat_for->ancho==$mat->nancho)
 					      		<span class="badge badge-primary"> Ancho: {{ $mat->nancho}}</span>
 					      	@endif
-					      	@if(in_array($mat_for->idforma,$altura))
+					      	@if(in_array($mat_for->idforma,$altura) && $mat_for->altura==$mat->naltura)
 					      		<span class="badge badge-primary"> Altura: {{ $mat->naltura}}</span>
 					      	@endif
-					      	@if(in_array($mat_for->idforma,$peso))
+					      	@if(in_array($mat_for->idforma,$peso) && $mat_for->peso_distancia==$mat->npeso_distancia)
 					      		<span class="badge badge-primary"> Peso distancia: {{ $mat->npeso_distancia}}</span>
 					      	@endif
 					      		<span class="badge badge-primary"> Colada: {{ $mat->colada_numero }}</span>
