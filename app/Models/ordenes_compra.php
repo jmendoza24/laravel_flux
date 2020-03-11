@@ -298,7 +298,7 @@ class ordenes_compra extends Model
                 ->get();
           #dd($prod);
         $materiales = db::select('select s.id_materia, s.id_forma, d.asigan_meterial, p.id as idmaterial, d.id_orden, d.id, m.forma as idforma, f.forma as nforma, m.id as idmaterial, d.id as id_detalle, d.producto, m.espesor, p.espesor as pespesor, m.ancho, p.ancho as pancho, m.altura, p.altura as paltura, m.peso_distancia, p.peso_distancia as ppeso_distancia,
-                                 p.espesor as pespesor, p.ancho as pancho, p.altura as paltura, p.peso_distancia as pdisct, c.valor as nespesor, c2.valor as nancho, c3.valor as naltura, c4.valor as npeso_distancia, colada_numero
+                                 p.espesor as pespesor, p.ancho as pancho, p.altura as paltura, p.peso_distancia as pdisct, ifnull(c.valor,0) as nespesor, ifnull(c2.valor,0) as nancho, ifnull(c3.valor,0) as naltura, ifnull(c4.valor,0) as npeso_distancia, colada_numero
                                  from ordencompra_detalle as d
                                  inner join producto_materialesforma p on d.producto = p.id_producto
                                  inner join materiales m on m.forma = p.forma and ifnull(p.espesor,0) = ifnull(m.espesor,0) and ifnull(p.ancho,0) = ifnull(m.ancho,0) and ifnull(p.altura,0) = ifnull(m.altura,0) and ifnull(p.peso_distancia,0) = ifnull(m.peso_distancia,0) and m.planta = d.planta
@@ -309,7 +309,7 @@ class ordenes_compra extends Model
                                  left join formas as f on f.id = p.forma
                                  left join seguimiento_materiales as s on s.id_materia = m.id and s.id_forma  = p.id
                                  where d.id = ' .$filtro->id_detalle);
-        #dd($materiales);    #and p.ancho = m.ancho and p.altura = m.altura and p.peso_distancia = m.peso_distancia 
+       # dd($materiales);    #and p.ancho = m.ancho and p.altura = m.altura and p.peso_distancia = m.peso_distancia 
          #  and p.espesor = m.espesor and p.ancho = m.ancho and p.altura = m.altura and ifnull(p.peso_distancia,0) = ifnull(m.peso_distancia,0)
 
         $mat_formas =  db::table('ordencompra_detalle as d')

@@ -476,8 +476,8 @@ function envia_info_planta(id_planta){
         });
 }
 
-function seguimiento_materiales(id_orden,id_detalle,id_material){
-  if($("#mat_"+id_orden+'_'+id_detalle + '_'+id_material).is(":checked")){
+function seguimiento_materiales(id_orden,id_detalle,id_material,id_forma){
+  if($("#mat_"+id_orden+'_'+id_detalle + '_'+id_material+'_'+id_forma).is(":checked")){
       valor = 1;  
     }else{
       valor = 0;
@@ -486,6 +486,7 @@ function seguimiento_materiales(id_orden,id_detalle,id_material){
     var parametros = {'id_orden':id_orden,
                       'id_detalle':id_detalle,
                       'id_material':id_material,
+                      'id_forma':id_forma,
                       'valor':valor};
 
     $.ajax({
@@ -588,7 +589,7 @@ function carga_documentos(id){
             //async: false,
             cache: false,
             contentType: false,
-            processData: false,
+            processData: false, 
             success: function(respuesta){
               $('#seguimiento_calidad').html(respuesta);
             }

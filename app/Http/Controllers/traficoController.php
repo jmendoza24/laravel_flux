@@ -519,7 +519,8 @@ class traficoController extends AppBaseController
                     ->selectraw('p.*, e.estado as nestado')
                     ->get();
         $planta = $planta[0];
-        $logistica = $logistica[0];
+       # $logistica = $logistica[0];
+
         $tarimas_idns = db::table('tarimas_idns as t')
                             ->join('ordencompra_detalle as d','t.idn','d.id')
                             ->join('ordenes_compras as o','o.id','d.id_orden')
@@ -544,7 +545,8 @@ class traficoController extends AppBaseController
         
         
         #return view('traficos.packing_list',compact('logistica','planta','tarimas','tarimas_idns','idns_conteo'));
-        $pdf = \PDF::loadView('traficos.packing_list',compact('logistica','planta','tarimas','tarimas_idns','idns_conteo'))->setPaper('A4','portrait');
+        $pdf = \PDF::loadView('traficos.packing_list',compact('planta','tarimas','tarimas_idns','idns_conteo'))->setPaper('A4','portrait');
+        #$pdf = \PDF::loadView('traficos.packing_list',compact('logistica','planta','tarimas','tarimas_idns','idns_conteo'))->setPaper('A4','portrait');
         return $pdf->download('Packing_List_'.$request->id_trafico.'.pdf');
          #Storage::put('Cotizacion_'.$num_cotizacion.'.pdf', $pdf->output());
 

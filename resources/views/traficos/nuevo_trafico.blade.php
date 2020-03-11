@@ -28,7 +28,7 @@
             @foreach($traficos_detalle as $det)
                 @foreach($tarimas_idns as $idn)
                   @if($idn->id_tarima==$tarimas->id)  
-                    <option value="{{ $det->id}}" {{ ($det->id== $idn->idn)?'selected':'' }}>{{ $det->id}}</option>
+                    <option value="{{ $det->id_detalle}}" {{ ($det->id_detalle== $idn->idn)?'selected':'' }}>{{ $det->id_detalle}}</option>
                   @endif
                 @endforeach              
             @endforeach

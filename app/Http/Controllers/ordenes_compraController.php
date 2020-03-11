@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ordenes_compra;
 use App\Models\productos;
-use App\Models\logistica;
+use App\Models\logistica; 
 use App\Models\clientes;
 use App\Models\plantas;
 use App\Models\Seguimiento_materiales;

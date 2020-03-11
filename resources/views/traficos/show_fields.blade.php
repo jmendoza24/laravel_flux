@@ -50,7 +50,7 @@
 		<div class="col-md-12" style="" >
 	      <div class="card" style=" border:2px solid #518a87 !important;">
 	        <div class="card-header" style="background: #F5F7FA;">
-	          	<h6 class="card-title">Carga de documentos 
+	          	<h6 class="card-title">Carga de documentos:
 	          		<span class="pull-right" style="cursor: pointer;" data-toggle="modal" data-target="#default" onclick="informacion_trafico({{ $trafico}})">
 	          			<i class="fa fa-info-circle fa-2x {{ ($estatus_i[0]->conteo==7)?'success_info':'warning'}}" aria-hidden="true"></i>
 	          		</span>
@@ -101,7 +101,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Tarimas
+	          <h6 class="card-title">Tarimas:
 	          	<span class="form-inline pull-right" style="font-size: 14px;">
 	          		Planta Concentradora: &nbsp;
 	          		<select class="form-control" id="id_planta" onchange="guarda_planta_trafico('id_planta',{{ $trafico}})">
@@ -132,7 +132,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Preparación</h6>
+	          <h6 class="card-title">Aviso de Embarque:</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -146,7 +146,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Confirmación de Envío</h6>
+	          <h6 class="card-title">Confirmación de Envío:</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -163,7 +163,7 @@
             {{ csrf_field() }}
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Información del flete <span class="btn btn-primary pull-right" onclick="guarda_flete()"><i class="fa fa-save"></i> Guardar</span></h6>
+	          <h6 class="card-title">Información de flete <span class="btn btn-primary pull-right" onclick="guarda_flete()"><i class="fa fa-save"></i> Guardar</span></h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -227,7 +227,7 @@
 						</div>
 						<!--
 						<div class="form-group col-md-3">
-						    {!! Form::label('fraccion_arra_mx', 'Fraccion Arancelaria MX') !!}
+						    {!! Form::label('fraccion_arra_mx', 'Fracción Arancelaria MX') !!}
 						    <input type="text" name="fraccion_arra_mx" id="fraccion_arra_mx" class="form-control" value="{{ $fletes->arancelaria_mx}}">
 						</div>-->
 						<div class="form-group col-md-3">
@@ -270,7 +270,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Documentación MX Embarque</h6>
+	          <h6 class="card-title">Información para Aduana:</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -330,7 +330,7 @@
 					</a>
 	            </div>
 	            <br>
-	            <h6 class="card-title">POD</h6>
+	            <h6 class="card-title">POD:</h6>
 	            <hr>
 	            <div class="row">
 	            	<a href="{{ ($doc_10 !='')? url($doc_10):'#'}}" {{ ($doc_10 !='')?'target="_blank"':''}} class="col-md-3">
@@ -346,7 +346,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Documentación US Embarque</h6>
+	          <h6 class="card-title">Documentos trámite USA:</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -379,7 +379,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Liberación</h6>
+	          <h6 class="card-title">Liberación Aduana:</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -400,7 +400,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Entrega</h6>
+	          <h6 class="card-title">Entrega:</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
