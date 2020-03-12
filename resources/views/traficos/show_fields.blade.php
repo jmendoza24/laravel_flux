@@ -65,22 +65,29 @@
 	              	<div class="row">
 						<div class="form-group col-md-4">
 						    <select class="form-control" name="tipo_documento">
-								<option value="">Documento...</option>
-								<option value="1">TR Confirmation</option>
-								<option value="2">Pickup Delivery Note</option>
-								<option value="3">Validacion de Fracciones Mexico</option>
-								<option value="4">Factura PDF (Planta México a FLUX USA)</option>
-								<option value="5">Factura XML</option>
-								<option value="6">Cotizacion de Ag. Aduanal MX</option>
-								<option value="7">Comprobante de Pago Ag. Aduanal</option>
-								<option value="8">Pedimento Aduana MX</option>
-								<option value="9">DODA</option>
-								<option value="10">POD Firmado</option>
-								<option value="11">Verificacion Fracciones USA</option>
-								<option value="12">Pre File (Shipment Advice)</option>
-								<option value="13">Carta de Aduana</option>
-								<option value="14">Bill of Lading USA</option>
-								<option value="15">Documento de Entrega (firmado)</option>
+						    	<optgroup label="Documentos">
+									<option value="">Documento...</option>
+									<option value="1">TR Confirmation</option>
+									<option value="2">Pickup Delivery Note</option>
+									<option value="3">Validacion de Fracciones Mexico</option>
+									<option value="4">Factura PDF (Planta México a FLUX USA)</option>
+									<option value="5">Factura XML</option>
+									<option value="6">Cotizacion de Ag. Aduanal MX</option>
+									<option value="7">Comprobante de Pago Ag. Aduanal</option>
+									<option value="8">Pedimento Aduana MX</option>
+									<option value="9">DODA</option>
+									<option value="10">POD Firmado</option>
+									<option value="11">Verificacion Fracciones USA</option>
+									<option value="12">Pre File (Shipment Advice)</option>
+									<option value="13">Carta de Aduana</option>
+									<option value="14">Bill of Lading USA</option>
+									<option value="15">Documento de Entrega (firmado)</option>
+								</optgroup>
+								<optgroup label="POD firmados">
+									@foreach($tarimas_pod as $pod)
+										<option value="{{ $trafico}}.{{ $pod->shipping_id}}">POD - ({{ $pod->shipping_id }}) {{$pod->calle . ', ' .$pod->municipio .', '. $pod->nestado .', '. $pod->npais}}</option>
+									@endforeach
+								</optgroup>
 								<!--<option value="16">Nota Credito</option>
 								<option value="17">NCR</option>-->
 							</select>
@@ -104,23 +111,21 @@
 	          <h6 class="card-title">Tarimas:
 	          	<span class="form-inline pull-right" style="font-size: 14px;">
 	          		Planta Concentradora: &nbsp;
-	          		<select class="form-control" id="id_planta" onchange="guarda_planta_trafico('id_planta',{{ $trafico}})">
+	          		<select class="form-control mr-1" id="id_planta" onchange="guarda_planta_trafico('id_planta',{{ $trafico}})">
 		          		<option value="">Planta</option>
 		          		@foreach($plantas as $pla)
 		          		<option value="{{ $pla->id}}" {{ ($info_trafico->id_planta==$pla->id)?'selected':''}}>{{ $pla->nombre}}</option>
 		          		@endforeach
-		          	</select>		          	
+		          	</select>
+		          	<span class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#default"  onclick="nueva_tarima({{ $trafico}},0)"><i class="fa fa-plus"></i> Tarimas</span>	            				          	
 		      </span>
+		      
 	          </h6>
 	          
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
 	            <div class="card-text">
-	            	<div class="col-md-12" style="text-align: right;">
-	            		<span class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#default"  onclick="nueva_tarima({{ $trafico}},0)"><i class="fa fa-plus"></i> Tarimas</span>	            		
-	            	</div>
-	            	<br>
 	            	<div id="listado_tarimas">
 	              		@include('traficos.tarimas')
 					</div>
@@ -153,6 +158,22 @@
 	            <div class="card-text">
 	            	<a href="{{ ($doc_1 !='')? url($doc_1):'#'}}" {{ ($doc_1 !='')?'target="_blank"':''}}><button class="btn btn-float btn-{{ ($doc_1 !='')?'primary':'secondary'}} col-md-2" {{ ($doc_1 !='')?'':'disabled'}}><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>TR Confirmation</button></a>
 					<a href="{{ ($doc_2 !='')? url($doc_2):'#'}}" {{ ($doc_1 !='')?'target="_blank"':''}}><button class="btn btn-float btn-{{ ($doc_2 !='')?'primary':'secondary'}} col-md-2" {{ ($doc_2 !='')?'':'disabled'}}><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Pickup Delivery Note</button></a>		
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-md-12">
+	      <div class="card">
+	        <div class="card-header">
+	          <h6 class="card-title">POD (firmado):</h6>
+	        </div>
+	        <div class="card-content collpase show">
+	          <div class="card-body">
+	            <div class="card-text">
+	            	@foreach($tarimas_pod as $pod)
+	            	<a href="{{ ($doc_10 !='')? url($doc_10):'#'}}" {{ ($doc_10 !='')?'target="_blank"':''}}><button class="btn btn-float btn-{{ ($doc_10 !='')?'primary':'secondary'}} col-md-2" {{ ($doc_10 !='')?'':'disabled'}}><i class="fa fa-file-pdf-o" aria-hidden="true"></i><label style="font-size: 11px;"> POD - {{$pod->calle . ', ' .$pod->municipio .', '. $pod->nestado .', '. $pod->npais}}</label></button></a>
+	            	@endforeach
 	            </div>
 	          </div>
 	        </div>
@@ -330,15 +351,6 @@
 					</a>
 	            </div>
 	            <br>
-	            <h6 class="card-title">POD:</h6>
-	            <hr>
-	            <div class="row">
-	            	<a href="{{ ($doc_10 !='')? url($doc_10):'#'}}" {{ ($doc_10 !='')?'target="_blank"':''}} class="col-md-3">
-	            		<button class="btn btn-float btn-{{ ($doc_10 !='')?'primary':'secondary'}}" {{ ($doc_10 !='')?'':'disabled'}} style="margin-bottom: 3px; width: 100%;">
-							<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>POD Firmado
-						</button>
-					</a>
-	            </div>
 	          </div>
 	        </div>
 	      </div>

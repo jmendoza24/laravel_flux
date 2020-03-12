@@ -16,7 +16,7 @@ class TraficoDocumentos extends Migration
         Schema::create('traficos_documentos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_trafico');
-            $table->integer('documento');
+            $table->string('documento');
             $table->string('file');
             $table->timestamps();
             $table->softDeletes();

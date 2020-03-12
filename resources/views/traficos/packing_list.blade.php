@@ -38,9 +38,9 @@
 	<tr>
 		<td><b>Shipp to:</b></td>
 		<td>		
-			{{-- {{ $logistica->calle}} {{ $logistica->numero}}, {{ $logistica->municipio}}, <br> 
+			{{ $logistica->calle}} {{ $logistica->numero}}, {{ $logistica->municipio}}, <br> 
 			{{ $logistica->nestado}}, {{ $logistica->npais}}, <br>
-			{{ $logistica->cp}} --}}
+			{{ $logistica->cp}}
 		</td>
 	</tr>
 </table>

@@ -1,12 +1,12 @@
 <table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="1">
 	<tr>
 		<td>Logo</td>
-		<td style="text-align: right; "><b>POD-Shipment # FM001-PG-20 <br>
+		<td style="text-align: right; "><b>POD-Shipment # FM001-PG-20 <br><br>
 			CUSTUMER RECEIVING
 			</b><br/>
-			PROOF OF DELIVERY <br>
+			PROOF OF DELIVERY <br><br>
 			DATE: {{ date('m-d-Y')}}<br>
-			<label style="font-size: 14px;"> POD - {{$pod->calle . ', ' .$pod->municipio .', '. $pod->nestado .', '. $pod->npais}}</label>
+			{{-- <label style="font-size: 14px;"> POD - {{$pod->calle . ', ' .$pod->municipio .', '. $pod->nestado .', '. $pod->npais}}</label> --}}
 		</td>
 	</tr>
 </table>
@@ -39,4 +39,13 @@
 
 
 <br><br>
+<br><br>
+<table style="width: 100%; text-align: center; font-family: sans-serif;">
+	<tr>
+		<td style="width: 33%;"><hr>Name</td>
+		<td style="width: 33%;"><hr>Signature</td>
+		<td style="width: 33%;"><hr>Date</td>
+	</tr>
+	
+</table>
 
