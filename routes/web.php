@@ -151,9 +151,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/muestra_productos', 'ordenes_compraController@muestra_productos');
 	Route::get('/nueva_tarima', 'traficoController@nueva_tarima');
 	Route::get('/obtiene_idns_trafico', 'traficoController@obtiene_idns_trafico');
-	
-
-	
+	Route::post('/documentos_anexos', 'traficoController@documentos_anexos');
+	Route::get('/borra_documento_anexo', 'traficoController@borra_documento_anexo');
 });
 
 

@@ -12,6 +12,7 @@ use App\Models\tarimas_idns;
 use App\Models\logistica;
 use App\Models\invoices;
 use App\Models\flete_fracciones;
+use App\Models\documentos_anexos;
 use App\Http\Requests\CreatetraficoRequest;
 use App\Http\Requests\UpdatetraficoRequest;
 use App\Repositories\traficoRepository;
@@ -190,6 +191,8 @@ class traficoController extends AppBaseController
     }
  
     function seguimiento_trafico(Request $request){
+        #$var = db::table('traficos_documentos')->get();
+        #dd($var);
         $logistica = new logistica;
         $trafic = new trafico;
         
@@ -252,8 +255,11 @@ class traficoController extends AppBaseController
                                        left join seguimiento_calidad s on s.id_detalle = t.id_detalle and s.estatus = 2
                                        where id_trafico = '.$trafico.' 
                                        group by t.id_trafico');
+        $anexos = documentos_anexos::where('id_trafico',$trafico)->get();
 
-        $options = view('traficos.show_fields',compact('trafico','files','tarimas','fletes','plantas','info_trafico','tarimas_idns','traficos_detalle','flete_fracciones','tarimas_pod','estatus_i'))->render();
+
+        $options = view('traficos.show_fields',compact('trafico','anexos','files','tarimas','fletes','plantas','info_trafico','tarimas_idns','traficos_detalle','flete_fracciones','tarimas_pod','estatus_i'))->render();
+
 
         return json_encode($options);
     }
@@ -287,12 +293,14 @@ class traficoController extends AppBaseController
 
     }
     function carga_files_trafico(Request $request){
+        $logistica = new logistica;
+
         #Trafico_documentos::truncate();
         $path =  Storage::putFileAs('trafico', $request->file('documento_carga'), $request->file('documento_carga')->getClientOriginalName());
         $existe = Trafico_documentos::where([['id_trafico',$request->id_trafico],['documento',$request->tipo_documento]])->count();
         if($existe > 0){
             Trafico_documentos::where([['id_trafico',$request->id_trafico],['documento',$request->tipo_documento]])
-                                ->update(['file'=>$path]);    
+                                ->update(['file'=>'storage/'.$path]);    
         }else{
             Trafico_documentos::insert(['id_trafico'=>$request->id_trafico,
                                         'documento'=>$request->tipo_documento,
@@ -302,7 +310,62 @@ class traficoController extends AppBaseController
         $files = db::table('traficos_documentos')->where('id_trafico',$request->id_trafico)->get();
         $trafico = $request->id_trafico;
 
-        $options = view('traficos.show_fields',compact('trafico','files'))->render();
+         $estatus_i = db::select('select t.id_trafico, count(*) as conteo
+                                       from traficos_detalle t
+                                       left join seguimiento_calidad s on s.id_detalle = t.id_detalle and s.estatus = 2
+                                       where id_trafico = '.$request->id_trafico.' 
+                                       group by t.id_trafico');
+
+        $tarimas_pod = $logistica->logisticas_tarima($request->id_trafico);
+        $plantas = planta::get();
+        $info_trafico = trafico::where('id',$request->id_trafico)->get();
+        $info_trafico = $info_trafico[0];
+        $tarimas = db::table('traficos_tarimas as t')
+                    ->join('logisticas as a', 'a.id','t.shipping_id')
+                    ->leftjoin('estados as e','e.id','=','a.estado')
+                    ->leftjoin('paises as p','p.id','=','a.pais')
+                    ->where('id_trafico',$request->id_trafico)
+                    ->selectraw("t.*, a.calle, a.numero, a.cp, p.nombre as npais, e.estado as nestado, a.municipio as nmunicipio")
+                    ->get();
+        $tarimas_idns = tarimas_idns::where('id_trafico',$request->id_trafico)->get();
+        $fletes = Trafico_flete::where('id_trafico',$request->id_trafico)->get();
+        if(sizeof($fletes)>0){
+            $fletes = $fletes[0];
+        }else{
+            $fletes = array('id_trafico'        => '',
+                            'agencia_mx'        => '',
+                            'no_plataforma'     => '',
+                            'placas'            => '',
+                            'pais_orige'        => '',
+                            'largo'             => '',
+                            'scac'              => '',
+                            'caat'              => '',
+                            'no_referencia'     => '',
+                            'entrada_camion'    => '',
+                            'salida_camion'     => '',
+                            'arancelaria_usa'   => '',
+                            'fecha_entrega'     => '',
+                            'tipo_cambio'       => '',
+                            'arancelaria_mx'    => '',
+                            'liberacion_ad_mx'  =>'',
+                            'liberacion_ad_usa' =>'',
+                            'entrega_bodega'    =>'');
+            $fletes = (object)$fletes;
+        }
+
+        $flete_fracciones = db::table('traficos_detalle as d')
+                                ->join('ordencompra_detalle as od','od.id','d.id_detalle')
+                                ->join('productos as p','p.id','od.producto')
+                                ->leftjoin('flete_fracciones as ff', 'ff.id_detalle','d.id_detalle')
+                                ->where('d.id_trafico',$trafico)
+                                ->orderby('d.id_detalle')
+                                ->selectraw('p.numero_parte, d.id_detalle, ff.fraccion_mx, ff.fraccion_us')
+                                ->get();
+        $anexos = documentos_anexos::where('id_trafico',$request->id_trafico)->get();
+
+
+        $options = view('traficos.show_fields',compact('trafico','anexos', 'flete_fracciones','fletes','files','estatus_i','tarimas_pod','plantas','info_trafico','tarimas','tarimas_idns'))->render();
+
         return $options;
     }
 
@@ -698,6 +761,30 @@ class traficoController extends AppBaseController
         }
 
         return json_encode($select);
+    }
+
+    function documentos_anexos(Request $request){
+        
+        $path =  Storage::putFileAs('trafico', $request->file('anex_file'), $request->file('anex_file')->getClientOriginalName());
+
+        documentos_anexos::insert(['id_trafico'=>$request->id_trafico,
+                                  'nombre'=>$request->anex_nombre,
+                                  'descripcion'=>$request->anex_descrip,
+                                  'fecha'=>$request->anex_fecha,
+                                  'archivo'=>'storage/'.$path]);
+        $anexos = documentos_anexos::where('id_trafico',$request->id_trafico)->get();
+        
+        $options = view('traficos.documentos_anexo',compact('anexos'))->render();
+        return $options;        
+
+    }
+
+    function borra_documento_anexo(Request $request){
+        documentos_anexos::where('id',$request->id)->delete();
+        $anexos = documentos_anexos::where('id_trafico',$request->id_trafico)->get();
+        
+        $options = view('traficos.documentos_anexo',compact('anexos'))->render();
+        return json_encode($options); 
     }
     
 }

@@ -1,11 +1,11 @@
 <table class="table table-bordered table-striped" id="trafico_seg">
     <thead class="bg-success">
         <tr>
-            <th>IDN</th>
+            <th>Serial</th>
             <th>Cliente</th> 
-            <th>Linea</th>
-            <th>Producto</th>
             <th>OCC</th>
+            <th>Linea</th>
+            <th># Parte</th>
             <th>Lugar de entrega</th>
             <th>Fecha entrega</th>
             <th>Fecha producción</th>
@@ -24,9 +24,9 @@
                 </div>
             </td>
             <td>{{ $trafico->nombre_corto}}</td>
+            <td>{{ $trafico->orden_compra}}</td>
             <td>{{ $trafico->incremento}}</td>
             <td>{{ $trafico->numero_parte}}</td>
-            <td>{{ $trafico->orden_compra}}</td>
             <td>{{ ($trafico->shipping > 0) ?  $trafico->calle . ', '. $trafico->nmunicipio .', '. $trafico->nestado . ', ' . $trafico->npais : ''}}</td>
             <td>{{ $trafico->fecha_entrega}}</td>  
             <td>{{ $trafico->fecha_estimado_termino}}</td> 

@@ -1040,3 +1040,21 @@ function obtiene_idns(trafico){
         }
     });
 }
+
+
+function guarda_anexos(id_trafico){
+  var formData = new FormData($("#documentos_anex")[0]);
+   $.ajax({
+            url:"/api/v1/documentos_anexos",
+            type: 'POST',
+            method: "POST",        
+            data:  formData,
+            //async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(respuesta){
+              console.log(1);
+            }
+        });
+}

@@ -172,7 +172,12 @@
 	          <div class="card-body">
 	            <div class="card-text">
 	            	@foreach($tarimas_pod as $pod)
-	            	<a href="{{ ($doc_10 !='')? url($doc_10):'#'}}" {{ ($doc_10 !='')?'target="_blank"':''}}><button class="btn btn-float btn-{{ ($doc_10 !='')?'primary':'secondary'}} col-md-2" {{ ($doc_10 !='')?'':'disabled'}}><i class="fa fa-file-pdf-o" aria-hidden="true"></i><label style="font-size: 11px;"> POD - {{$pod->calle . ', ' .$pod->municipio .', '. $pod->nestado .', '. $pod->npais}}</label></button></a>
+	            		@foreach($files as $file)
+	            			@php($arr = explode(".", $file->documento))
+	            				@if($arr[0]==$trafico && $arr[1]==$pod->shipping_id)
+	            					<a href="{{ ($file->file !='')? url($file->file):'#'}}" {{ ($file->file !='')?'target="_blank"':''}}><button class="btn btn-float btn-{{ ($file->file !='')?'primary':'secondary'}} col-md-2" {{ ($file->file !='')?'':'disabled'}}><i class="fa fa-file-pdf-o" aria-hidden="true"></i><label style="font-size: 11px;"> POD - {{$pod->calle . ', ' .$pod->municipio .', '. $pod->nestado .', '. $pod->npais}}</label></button></a>
+	            				@endif
+	            		@endforeach
 	            	@endforeach
 	            </div>
 	          </div>
@@ -190,100 +195,104 @@
 	          <div class="card-body">
 	            <div class="row">
             		<input type="hidden" name="id_trafico" value="{{ $trafico}}">
-	            	<div class="row">
-						<div class="form-group col-md-3">
-						    {!! Form::label('aduanal_mx', 'Agrencia aduanal mx') !!}
-						    <input type="text" name="aduanal_mx" id="aduanal_mx" class="form-control" value="{{ $fletes->agencia_mx}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('no_plataforma', 'Plataforma #') !!}
-						    <input type="text" name="no_plataforma" id="no_plataforma" class="form-control" value="{{ $fletes->no_plataforma}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('placas', 'Placas') !!}
-						    <input type="text" name="placas" id="placas" class="form-control" value="{{ $fletes->placas}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('pais_or', 'Pais de Origen') !!}
-						    <input type="text" name="pais_or" id="pais_or" class="form-control" value="{{ $fletes->pais_orige}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('amb_largo', 'Largo') !!}
-						    <input type="text" name="amb_largo" id="amb_largo" class="form-control" value="{{ $fletes->largo}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('scac', 'SCAC') !!}
-						    <input type="text" name="scac" id="scac" class="form-control" value="{{ $fletes->scac}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('caat', 'CAAT') !!}
-						    <input type="text" name="caat" id="caat" class="form-control" value="{{ $fletes->caat}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('num_referencia', 'Número de Referencia Expeditors') !!}
-						    <input type="text" name="num_referencia" id="num_referencia" class="form-control" value="{{ $fletes->no_referencia}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('entrada_camion', 'Hora de entrada Camión') !!}
-						    <input type="text" name="entrada_camion" id="entrada_camion" class="form-control" value="{{ $fletes->entrada_camion}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('salida_camion', 'Hora de salida Camión') !!}
-						    <input type="text" name="salida_camion" id="salida_camion" class="form-control" value="{{ $fletes->salida_camion}}">
-						</div>
-						<input type="hidden" name="fraccion_arra" id="fraccion_arra" >
-						<input type="hidden" name="fraccion_arra_mx" id="fraccion_arra_mx" >
-						<!--
-						<div class="form-group col-md-3">
-						    {!! Form::label('fraccion_arra', 'Fracciones Arancelarias USA') !!}
-						    <input type="text" name="fraccion_arra" id="fraccion_arra" class="form-control" value="{{ $fletes->arancelaria_usa}}">
-						</div>-->
-						<div class="form-group col-md-3">
-						    {!! Form::label('fecha_entrega', 'Fecha entrega OCC') !!}
-						    <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control" value="{{ $fletes->fecha_entrega}}">
-						</div>
-						<div class="form-group col-md-3">
-						    {!! Form::label('tipo_cambio', 'Tipo cambio') !!}
-						    <input type="text" name="tipo_cambio" id="tipo_cambio" class="form-control" value="{{ $fletes->tipo_cambio}}">
-						</div>
-						<!--
-						<div class="form-group col-md-3">
-						    {!! Form::label('fraccion_arra_mx', 'Fracción Arancelaria MX') !!}
-						    <input type="text" name="fraccion_arra_mx" id="fraccion_arra_mx" class="form-control" value="{{ $fletes->arancelaria_mx}}">
-						</div>-->
-						<div class="form-group col-md-3">
-							<a href="{{$fletes->agencia_mx != '' ? route('download.notificacion',['id_trafico'=>$trafico]) : '#'}}" {{$fletes->agencia_mx != '' ? 'target="_blank"':''}}>
-								<span class="btn btn-float btn-{{$fletes->agencia_mx != '' ?'primary':'secondary'}} ">
-									<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Notificacion de Embarque
-								</span>
-							</a>
-						</div>
+            		<input type="hidden" name="aduanal_mx" id="aduanal_mx" class="form-control" value="">
+				
+					<div class="form-group col-md-3">
+					    {!! Form::label('no_plataforma', 'Plataforma #') !!}
+					    <input type="text" name="no_plataforma" id="no_plataforma" class="form-control" value="{{ $fletes->no_plataforma}}">
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<table class="table table-bordered table-striped">
-								<tr>
-									<td>IDN</td>
-									<td>No. Parte</td>
-									<td>Fracción MX</td>
-									<td>Fraccion US</td>
-								</tr>
-								@foreach($flete_fracciones as $for_ind)
-								<tr>
-									<td>{{ $for_ind->id_detalle}}</td>
-									<td>{{ $for_ind->numero_parte}}</td>
-									<td>
-										<input type="text" id="fraccion_mx_{{ $for_ind->id_detalle}}" onchange="guarda_fracciones('fraccion_mx',{{ $for_ind->id_detalle}},{{ $trafico}})" class="form-control" value="{{ $for_ind->fraccion_mx}}">
-									</td>
-									<td>
-										<input type="text" id="fraccion_us_{{ $for_ind->id_detalle}}" onchange="guarda_fracciones('fraccion_mx',{{ $for_ind->id_detalle}},{{ $trafico}})" class="form-control" value="{{ $for_ind->fraccion_us}}">
-									</td>
-								</tr>
-								@endforeach
-							</table>
-						</div>
+					<div class="form-group col-md-3">
+					    {!! Form::label('placas', 'Placas') !!}
+					    <input type="text" name="placas" id="placas" class="form-control" value="{{ $fletes->placas}}">
+					</div>
+					<div class="form-group col-md-3">
+					    {!! Form::label('amb_largo', 'Largo') !!}
+					    <input type="text" name="amb_largo" id="amb_largo" class="form-control" value="{{ $fletes->largo}}">
+					</div>
+					<div class="form-group col-md-3">
+					    {!! Form::label('pais_or', 'País de Origen(Unidad)') !!}
+					    <input type="text" name="pais_or" id="pais_or" class="form-control" value="{{ $fletes->pais_orige}}">
+					</div>
+					<div class="form-group col-md-3">
+					    {!! Form::label('scac', 'SCAC') !!}
+					    <input type="text" name="scac" id="scac" class="form-control" value="{{ $fletes->scac}}">
+					</div>
+					<div class="form-group col-md-3">
+					    {!! Form::label('caat', 'CAAT') !!}
+					    <input type="text" name="caat" id="caat" class="form-control" value="{{ $fletes->caat}}">
+					</div>
+
+					<input type="hidden" name="entrada_camion" id="entrada_camion" class="form-control" value="">
+					<input type="hidden" name="salida_camion" id="salida_camion" class="form-control" value="">
+						
 					</div>
 	            </div>
+	          </div>
+	        </div>
+	    </div>
+	    <div class="col-md-12">
+	      <div class="card">
+	        <div class="card-header">
+	          <h6 class="card-title">Información de Aduana: <span class="btn btn-primary pull-right" onclick="guarda_flete()"><i class="fa fa-save"></i> Guardar</span></h6>
+	        </div>
+	        <div class="card-content collpase show">
+	          <div class="card-body">
+	            <div class="card-text row">
+	            	<div class="form-group col-md-6">
+					    {!! Form::label('fraccion_arra_mx', 'Agencia aduanal MX:') !!}
+						<input type="text" name="fraccion_arra_mx" class="form-control" id="fraccion_arra_mx" value="{{$fletes->fraccion_arra_mx}}" >
+					</div>
+					<div class="form-group col-md-6">
+					    {!! Form::label('fraccion_arra', 'Agencia aduanal USA:') !!}
+						<input type="text" name="fraccion_arra" class="form-control" id="fraccion_arra" value="{{$fletes->fraccion_arra}}" >
+					</div>
+					<div class="form-group col-md-4">
+					    {!! Form::label('num_referencia', 'Número de Referencia Expeditors') !!}
+					    <input type="text" name="num_referencia" id="num_referencia" class="form-control" value="{{ $fletes->no_referencia}}">
+					</div>
+					<div class="form-group col-md-4">
+					    {!! Form::label('fecha_entrega', 'Fecha recolección') !!}
+					    <input type="text" name="fecha_entrega" id="fecha_entrega" class="form-control" value="{{ $fletes->fecha_entrega}}">
+					</div>
+					<div class="form-group col-md-4">
+					    {!! Form::label('tipo_cambio', 'Tipo cambio') !!}
+					    <input type="text" name="tipo_cambio" id="tipo_cambio" class="form-control" value="{{ $fletes->tipo_cambio}}">
+					</div>
+	            </div>
+	            <div class="row">
+					<div class="col-md-3">
+						<a href="{{$fletes->agencia_mx != '' ? route('download.notificacion',['id_trafico'=>$trafico]) : '#'}}" {{$fletes->agencia_mx != '' ? 'target="_blank"':''}}>
+							<span class="btn btn-float btn-{{$fletes->agencia_mx != '' ?'primary':'secondary'}} ">
+								<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>Notificacion de Embarque
+							</span>
+						</a>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered table-striped">
+							<tr>
+								<td>IDN</td>
+								<td>No. Parte</td>
+								<td>Fracción MX</td>
+								<td>Fracción US</td>
+							</tr>
+							@foreach($flete_fracciones as $for_ind)
+							<tr>
+								<td>FM{{str_pad($for_ind->id_detalle,6,"0",STR_PAD_LEFT)}}</td>
+								<td>{{ $for_ind->numero_parte}}</td>
+								<td>
+									<input type="text" id="fraccion_mx_{{ $for_ind->id_detalle}}" onchange="guarda_fracciones('fraccion_mx',{{ $for_ind->id_detalle}},{{ $trafico}})" class="form-control" value="{{ $for_ind->fraccion_mx}}">
+								</td>
+								<td>
+									<input type="text" id="fraccion_us_{{ $for_ind->id_detalle}}" onchange="guarda_fracciones('fraccion_mx',{{ $for_ind->id_detalle}},{{ $trafico}})" class="form-control" value="{{ $for_ind->fraccion_us}}">
+								</td>
+							</tr>
+							@endforeach
+						</table>
+					</div>
+				</div>
 	          </div>
 	        </div>
 	      </div>
@@ -291,7 +300,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Información para Aduana:</h6>
+	          <h6 class="card-title">Documentación Trámites México:</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -358,7 +367,7 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Documentos trámite USA:</h6>
+	          <h6 class="card-title">Documentación Trámites USA:</h6>
 	        </div>
 	        <div class="card-content collpase show">
 	          <div class="card-body">
@@ -432,5 +441,47 @@
 	      </div>
 	    </div>
 	    </form>
+	    <div class="col-md-12">
+	      <div class="card">
+	        <div class="card-header">
+	          <h6 class="card-title">Documentos Anexos:</h6>
+	        </div>
+	        <div class="card-content collpase show">
+	          <div class="card-body">
+	            <form class="form-group card-body" id="documentos_anex" enctype="multipart/form-data">
+	            	<input type="hidden" name="id_trafico" value="{{ $trafico}}">
+	            	{{ csrf_field() }}
+	            	<div class="row">
+	            		<div class="col-md-3">
+	            			<label><span class="red">*</span> Nombre:</label>
+		            		<input type="text" name="anex_nombre" id="anex_nombre" class="form-control">
+		            	</div>	
+		            	<div class="col-md-3">
+		            		<label>Descripción:</label>
+		            		<input type="textarea" name="anex_descrip" class="form-control">
+		            	</div>	
+		            	<div class="col-md-3">
+		            		<label><span class="red">*</span>Fecha:</label>
+		            		<input type="date" name="anex_fecha" id="anex_fecha" class="form-control">
+		            	</div>	
+		            	<div class="col-md-2">
+		            		<label><span class="red">*</span>Archivo:</label>
+		            		<input type="file" name="anex_file" id="anex_file" class="form-control">
+		            	</div>	
+		            	<div class="col-md-1">
+		            		<br>
+		            		<span class="btn btn-primary" style="margin-top: 7px;" onclick="guarda_anexos({{ $trafico}})"><i class="fa fa-save"></i></span>
+		            	</div>	
+	            	</div>
+	            </form>
+	            <div class="row">
+	            	<div class="col-md-12" id="documentos_anexo">
+	            		@include('traficos.documentos_anexo')
+	            	</div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
 	</div>
 </div>
