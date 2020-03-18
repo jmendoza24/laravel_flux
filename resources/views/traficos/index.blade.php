@@ -20,7 +20,7 @@
 	</ul>
 	<div class="tab-content px-1 pt-1">
 	  <div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true" aria-labelledby="base-tab31">
-	    <div class="col-md-12" style="overflow-x: scroll;">
+	    <div class="col-md-12" style="overflow-x: scroll;" id="lista_traficos">
 	      @include('traficos.fields')
 	    </div>
 	  </div>

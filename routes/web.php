@@ -153,6 +153,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/obtiene_idns_trafico', 'traficoController@obtiene_idns_trafico');
 	Route::post('/documentos_anexos', 'traficoController@documentos_anexos');
 	Route::get('/borra_documento_anexo', 'traficoController@borra_documento_anexo');
+	Route::get('/eliminar_trafico', 'traficoController@eliminar_trafico');
+
 });
 
 

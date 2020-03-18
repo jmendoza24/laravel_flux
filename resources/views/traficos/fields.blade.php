@@ -22,6 +22,7 @@
 			<td>
 				<div class="btn-group">
 					<button class="btn btn-float btn-outline-secondary btn-round small" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#primary" onclick="seguimiento_trafico({{$detalle->ide}})"><i class="fa fa-file"></i></button>
+					<button class="btn btn-float btn-outline-danger btn-round small" onclick="eliminar_trafico({{$detalle->ide}})"><i class="fa fa-trash"></i></button>
 				</div>
 			</td>
 		</tr>

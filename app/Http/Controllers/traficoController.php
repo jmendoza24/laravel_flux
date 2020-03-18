@@ -787,4 +787,23 @@ class traficoController extends AppBaseController
         return json_encode($options); 
     }
     
+
+    function eliminar_trafico(Request $request){
+        trafico::where('id',$request->id_trafico)->delete();
+        invoices::where('id_trafico',$request->id_trafico)->delete();
+        Trafico_flete::where('id_trafico',$request->id_trafico)->delete();
+        documentos_anexos::where('id_trafico',$request->id_trafico)->delete();
+        tarimas_idns::where('id_trafico',$request->id_trafico)->delete();
+        db::table('traficos_detalle')->where('id_trafico',$request->id_trafico)->delete();
+        db::table('traficos_documentos')->where('id_trafico',$request->id_trafico)->delete();
+        db::table('traficos_tarimas')->where('id_trafico',$request->id_trafico)->delete();
+        db::table('flete_fracciones')->where('id_trafico',$request->id_trafico)->delete();
+        
+        $trafic = new trafico;       
+        $trafico = $trafic->get_trafico();
+
+        $options = view('traficos.fields',compact('trafico'))->render();
+
+        return json_encode($options);
+    }
 }
