@@ -1,6 +1,6 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" id="equipoHistorials_corect-table">
     <thead>
-        <tr>
+        <tr style="background-color:#427874;color:white">
             <th>Responsable</th>
             <th>Descripción</th>
             <th>Vencimiento</th>
@@ -14,7 +14,7 @@
             <td>{!! $equipoHistorial->responsable !!}</td>
             <td>{!! $equipoHistorial->descripcion !!}</td>
             <td>{{  $equipoHistorial->vencimiento}} </td>
-            <td>{!! $equipoHistorial->activo !!}</td>
+            <td>@if($equipoHistorial->activo==1) Si @else No @endif</td>
             <td>
                 <div class='btn-group'>
                     <a data-toggle="modal" data-target="#equipo_historials" onclick="show_historial({{ $equipoHistorial->id}})"  class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></a>

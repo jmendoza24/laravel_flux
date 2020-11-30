@@ -74,10 +74,9 @@
     @include('materiales.medidas')
 </div>
 <h4 class="form-section"></h4>
-
 <div class="row">
     <div class="form-group col-sm-6" >
-        {!! Form::label('peso_pieza', 'Peso Pieza:') !!}
+        {!! Form::label('peso_pieza', 'Peso Real:') !!}
         {!! Form::number('peso_pieza', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
     </div>
     <div class="form-group col-sm-6">
@@ -86,7 +85,7 @@
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('fecha', 'Fecha de orden de compra:') !!}
-        {!! Form::date('fecha', null, ['class' => 'form-control pickadate-format']) !!}
+        {!! Form::date('fecha', null, ['class' => 'form-control pickadate-dropdown']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('num_orden', 'No. orden de compra:') !!}
@@ -116,11 +115,11 @@
 
     <div class="form-group col-sm-6">
         {!! Form::label('colada_numero', 'Colada Número:') !!}
-        {!! Form::number('colada_numero', null, ['class' => 'form-control']) !!}
+        {!! Form::text('colada_numero', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('fecha_entrega', 'Fecha Entrega:') !!}
-        {!! Form::date('fecha_entrega', null, ['class' => 'form-control pickadate-format']) !!}
+        {!! Form::date('fecha_entrega', null, ['class' => 'form-control pickadate-dropdown']) !!}
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('num_embarque', 'No. Embarque:') !!}

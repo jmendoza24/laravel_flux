@@ -99,7 +99,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/elimina_producforma', 'productosController@elimina_producforma');
 	Route::get('/guarda_materialforma', 'productosController@guarda_materialforma');
 	Route::get('/enviar_cotizacion', 'cotizacionesController@enviar_cotizacion')->name('cotizacion.enviar');
-	Route::get('/guardar_cotizacion', 'cotizacionesController@guardar_cotizacion')->name('cotizacion.guardar');
+	//Route::get('/guardar_cotizacion', 'cotizacionesController@guardar_cotizacion')->name('cotizacion.guardar');
 	Route::get('/guarda_informacion_cot', 'cotizacionesController@guarda_informacion_cot');
 	Route::get('/elimina_cotizacion', 'cotizacionesController@elimina_cotizacion');
 	Route::get('/convierteocc', 'ordenes_compraController@convierteocc');

@@ -1,5 +1,5 @@
 @if(sizeof($detalle)>0)
-<a href="{{ route('envia_plantas',['id_planta'=>$detalle[0]->planta])}}"><button class="btn btn-primary pull-right">Enviar</button></a> 
+<button onclick="envia_plantas({{$detalle[0]->planta}})" class="btn btn-primary pull-right">Enviar</button>
 <br><br>
 @endif
 <table class="table display nowrap table-striped table-bordered" id="tabla_plantas_n">

@@ -43,19 +43,21 @@
         @endforeach
       </select>
 </div>
- <div class="form-group col-sm-6" style="" id="cam5">
+{{-- <div class="form-group col-sm-6" style="" id="cam5">
     {!! Form::label('wide', 'Ancho (Wide):') !!}
     {!! Form::number('wide', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
 </div>
+
 <div class="form-group col-sm-6" style="" id="cam6">
     {!! Form::label('lenght', 'Largo (Length):') !!}
     {!! Form::number('lenght', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
 </div>
+--}}
 <div class="form-group col-sm-6" style="" id="cam7">
-    {!! Form::label('weight', 'Peso (Weight):') !!}
+    {!! Form::label('weight', 'Peso Teórico:') !!}
     {!! Form::number('weight', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
 </div>
 <div class="form-group col-sm-6" style="" id="cam8">
-    {!! Form::label('precio', 'Precio:') !!}
-    {!! Form::number('precio', null, ['class' => 'form-control','min'=>'0','step'=>'any']) !!}
+    {!! Form::label('precio', 'USD/Lb.:') !!}
+    {!! Form::text('precio', null, ['class' => 'form-control currency','min'=>'0','step'=>'any']) !!}
 </div>

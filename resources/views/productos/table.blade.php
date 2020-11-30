@@ -1,11 +1,11 @@
-<table class="table display nowrap table-striped table-bordered scroll-horizontal" style="" id="productos-table">
+<table class="table display nowrap table-striped table-bordered zero-configuration" style="" id="productos-table">
     <thead class="bg-success">
         <tr>
-            <th>Número de parte</th>
+            <th>Número de pieza</th>
             <th>Descripción</th>
             <th>Familia</th>
             <th>Cliente</th>
-            <th>Acero</th>
+            <!--<th>Acero</th>-->
             <th colspan=""></th>
         </tr>
     </thead>
@@ -16,7 +16,7 @@
             <td>{!! $productos->descripcion !!}</td>
             <td>{!! $productos->familia !!}</td>
             <td>{!! $productos->nombre_corto !!}</td>
-            <td>{!! $productos->acero !!}</td>
+            <!--<td>{!! $productos->acero !!}</td>-->
             <td>
                 {!! Form::open(['route' => ['productos.destroy', $productos->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

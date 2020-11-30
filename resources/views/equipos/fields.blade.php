@@ -181,8 +181,8 @@
               @include('equipo_historials.fields')
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-outline-primary" onclick="guarda_historial({{$equipos->id}})">Guardar</button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" onclick="guarda_historial({{$equipos->id}})">Guardar</button>
             </div>
           </div>
       </form>

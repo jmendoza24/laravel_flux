@@ -1,5 +1,5 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation"  id="procesos-table">
-<thead class="bg-success">
+<thead>
     <tr>
         <th>Procesos</th>
         <!--<th>Horas hombre</th>-->

@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
-    <div class="col-md-12" style="overflow-x: scroll;">
+    <div class="col-md-12" style="overflow-x: scroll;" id="ordnesporenviar">
       @include('ordenes_compras.ordnesporenviar')
     </div>
   </div>

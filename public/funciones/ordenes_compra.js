@@ -29,7 +29,7 @@ function validar_orden(id_orden){
   var parametros = {"notas":$("#notas").val(),
                     "income":$("#income").val(),
                     "id_orden":id_orden};
-    if($("#orden_compra").val()=='' || $("#cliente").val()=='' || $("#shipping_id").val() =='' || $("#income").val() || $("#lugar").val()==''){
+    if($(".requerido").val()==''){
       $.alert("Para validar es necesario tener capturado los campos requeridos")
     }else{
       $.ajax({
@@ -1057,4 +1057,12 @@ function guarda_anexos(id_trafico){
               console.log(1);
             }
         });
+}
+
+
+function validar_cotizacion(id_cotiza){
+  if($(".requerido").val()==''){
+    $.alert("LLene los campos requeridos");
+    $(".requerido").css("border-color", "red");   
+  }
 }

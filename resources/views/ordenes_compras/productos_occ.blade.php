@@ -1,7 +1,7 @@
 <table class="table table-bordered table-striped small">
 	<thead>
 		<tr>
-			<th>Número parte</th>
+			<th>Número pieza</th>
 			<th>IDN</th>
 			<th>Fecha entrega</th>
 		</tr>

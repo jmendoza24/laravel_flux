@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\catalogo_forma;
 use App\Models\Materiales;
-
 use App\Http\Requests\CreateMaterialesRequest;
 use App\Http\Requests\UpdateMaterialesRequest;
 use App\Repositories\MaterialesRepository;
@@ -64,6 +63,8 @@ class MaterialesController extends AppBaseController
         $ancho     = $forma->consulta_identificador(2);
         $altura    = $forma->consulta_identificador(3);
         $peso      = $forma->consulta_identificador(4);
+
+        
     
 
         return view('materiales.create',compact('aceros','formas','grados','proveedores','plantas','materiales','espesor','ancho','altura','peso','idforma'));
@@ -79,6 +80,8 @@ class MaterialesController extends AppBaseController
     public function store(CreateMaterialesRequest $request)
     {
         $input = $request->all();
+        $input['precio'] = str_replace('$', '', str_replace(',', '', $input['precio']));
+
         $materiales = $this->materialesRepository->create($input);
 
 
@@ -188,19 +191,19 @@ class MaterialesController extends AppBaseController
 
     function busca_forma(Request $request){
         $forma = new catalogo_forma();
-        $material = new materiales();
+        //$material = new materiales();
 
         $materiales = Materiales::where('id',$request->idmateriales)->get();
         if(sizeof($materiales)>0){
             $materiales = $materiales[0];    
         }else{
-            $materiales->id = 0;
-            $materiales->espesor = 0;
-            $materiales->ancho = 0;
-            $materiales->altura = 0;
-            
+            $materiales = array('id'=>0,
+                                'espesor'=>0,
+                                'ancho'=>0,
+                                'altura'=>0,
+                                'peso_distancia'=>0);
+            $materiales  = (object)$materiales;            
         }
-        
         
         $idforma = $request->forma;
 

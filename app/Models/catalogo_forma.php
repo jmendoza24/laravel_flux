@@ -57,6 +57,7 @@ class catalogo_forma extends Model{
                             ->join('formas as f','c.id_forma','f.id')
                             ->where('c.columna',$id_forma)
                             ->selectraw('c.*,f.forma')
+                            ->orderby('valor')
                             ->get();
 
         return $identificador;

@@ -10,7 +10,7 @@
               @if($nuevo ==0)
               <label id="numproveedor">{{ $ordenesCompra->nombre_corto}}</label>
                @else
-               <select class="form-control" style="width: 100%;" name="cliente"  id="cliente" onchange="obtiene_producto_ot({{ $ordenesCompra->id }})">
+               <select class="form-control requerido" style="width: 100%;" name="cliente"  id="cliente" onchange="obtiene_producto_ot({{ $ordenesCompra->id }})">
                       <option value="">Seleccione una opcion</option>
                       @foreach($clientes as $cliente)
                       <option value="{{ $cliente->id}}" 
@@ -29,7 +29,7 @@
       <tr>
         <td><label class="label-control" for="descripcion"><b style="color: red;">*</b> OCC:</label></td>
         <td>
-              <input type="text" id="orden_compra" {{ $ordenesCompra->tipo==3?'disabled':'' }} onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control" {{ ($editar ==1)?'disabled':''}} />
+              <input type="text" id="orden_compra" {{ $ordenesCompra->tipo==3?'disabled':'' }} onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="{{$ordenesCompra->orden_compra}}" class="form-control requerido" {{ ($editar ==1)?'disabled':''}} />
         </td>
         <td><label class="label-control" for="descripcion">Email  compra:</label></td>
         <td>
@@ -39,7 +39,7 @@
       <tr>
         <td><label class="label-control" for="descripcion" ><b style="color: red;">*</b> Shipping to:</label></td>
         <td colspan="3">
-              <select class="form-control" id="shipping_id" {{($editar ==1)?'disabled':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
+              <select class="form-control requerido" id="shipping_id" {{($editar ==1)?'disabled':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
                 <option value="">Seleccione...</option>
                 @foreach($logisticas as $logistica)
                 <option value="{{$logistica->id}}" {{($ordenesCompra->shipping==$logistica->id)?'selected':'' }}>
@@ -54,9 +54,9 @@
   
   <hr/>
 @if($nuevo==1)
-<div class="row">
+<div class="row" style="{{$ordenesCompra->tipo==3?'display:none':''}}">
   <div class="form-group form-inline">
-    <label>Producto&nbsp;</label>
+    <label class="mr-1">Pieza:</label>
         <select class="form-control" name="producto" id="producto">
           <option value="">Seleccione una opcion</option>
           @foreach($productos as $prod)
@@ -79,7 +79,7 @@
       <tr>
         @if($editar==0 || $nuevo == 1)
           <td>Item</td> 
-          <th>Número parte</th>
+          <th>Número pieza</th>
           <th>Descripción</th>
           <th>Familia</th>
           <th>Id Dibujo</th>
@@ -92,7 +92,7 @@
         @endif
         @if($editar==1)
           <td>Item</td> 
-          <th>Número parte</th>
+          <th>Número pieza</th>
           <th>Descripción</th>
           <th>Familia</th>
           <th>Fecha entrega</th>
@@ -107,7 +107,7 @@
       @if($editar==0 || $nuevo == 1)
         <tr>
             <td>
-              <input type="text" style="width: 60px;" {{ $ordenesCompra->tipo==3?'disabled':'' }} name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+              <input type="text" style="width: 60px;" {{ $ordenesCompra->tipo==3?'disabled':'' }} name="incremento" id="incremento{{$det->id}}" value="{{ $det->incremento }}" class="form-control requerido" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
           </td>
           <td>{{ $det->numero_parte }}</td>
           <td>{{ $det->descripcion}}</td>
@@ -117,24 +117,31 @@
           
           <td style="text-align: right;">${{ number_format($det->costo_material,2)}}</td>
           <td style="text-align: right;">${{ number_format($det->costo_produccion,2)}}</td>
-          <td>
-            <input type="date" id="fecha_entrega{{$det->id}}" class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+          <td>            
+            <input type="date" id="fecha_entrega{{$det->id}}" {{ $ordenesCompra->tipo==3?'disabled':'' }}   class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
           </td>
           <td>
-            <textarea class="form-control" style="width: 200px;" id="notas_det" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">{{$det->nota_det}}</textarea>
+            <textarea class="form-control" style="width: 200px;" {{ $ordenesCompra->tipo==3?'disabled':'' }}  id="notas_det" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">{{$det->nota_det}}</textarea>
           </td>
           <td>
+            @if($ordenesCompra->tipo !=3)
             <a class='btn btn-float btn-outline-danger btn-round' onclick="borra_producto_occ({{ $det->id}},{{ $ordenesCompra->id }})"><i class="fa fa-trash"></i></a>
+            @endif
           </td>
         </tr>
         @endif
         @if($editar==1)
           <tr>
-            <td>{{ $det->incremento }}</td>
+            <td>{{ $det->incremento }}
+              <input type="hidden" id="incremento{{$det->id}}" value="{{$det->incremento}}">
+            </td>
             <td>{{ $det->numero_parte }}</td>
             <td>{{ $det->descripcion}}</td>
             <td>{{ $det->nfamilia }}</td>
-            <td>{{$det->fecha_entrega}}</td>
+            <td>{{  date('m/d/Y', strtotime($det->fecha_entrega))}}
+                <input type="hidden" id="fecha_entrega{{$det->id}}" value="{{$det->fecha_entrega}}">
+              </td>
+
             <td>{{ $det->tiempo_entrega }}</td>
             <td>
               <select class="form-control select2" id="planta{{$det->id}}" style="width: 150px;" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
@@ -155,7 +162,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4"><b style="color: red;">*</b> Incoterms : </label>
-        <select class="form-control custom-select required" {{ $ordenesCompra->tipo==3?'disabled':'' }} {{($editar ==1)?'disabled':''}} style="width: 100%;"name="income" id="income" onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
+        <select class="form-control custom-select requerido" {{ $ordenesCompra->tipo==3?'disabled':'' }} {{($editar ==1)?'disabled':''}} style="width: 100%;"name="income" id="income" onchange="actualiza_info_occ({{ $ordenesCompra->id }})">
             <option value="">Seleccione una opcion</option>
             @foreach($income as $inco)
             <option value="{{ $inco->id}}" 
@@ -171,7 +178,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="lastName4"><b style="color: red;">*</b> Lugar : </label>
-        <input type="text" {{($editar ==1)?'disabled':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} class="form-control" id="lugar" name="lugar" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="<?php echo ($ordenesCompra->lugar);?>">
+        <input type="text" {{($editar ==1)?'disabled':''}} {{ $ordenesCompra->tipo==3?'disabled':'' }} class="form-control requerido" id="lugar" name="lugar" onchange="actualiza_info_occ({{ $ordenesCompra->id }})" value="<?php echo ($ordenesCompra->lugar);?>">
       </div>
     </div>
     <div class="col-md-6">

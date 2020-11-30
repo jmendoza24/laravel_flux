@@ -1,9 +1,14 @@
+
+  @if($editar ==1)
+     <h4>Pieza: {{ $productos->descripcion }}</h4>
+  @endif   
 <ul class="nav nav-tabs nav-underline no-hover-bg nav-justified">
   <li class="nav-item">
     <a class="nav-link active" id="active-tab32" data-toggle="tab" href="#active32" aria-controls="active32"
     aria-expanded="true"><i class="fa fa-info-circle"></i> Información General</a>
   </li>
   @if($editar ==1)
+      
   <li class="nav-item">
     <a class="nav-link" id="link-tab32" data-toggle="tab" href="#link32" aria-controls="link32"
     aria-expanded="false"><i class="fa fa-picture-o"></i> Dibujos</a>
@@ -24,7 +29,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="descripcion">Número de parte:</label>
+          <label class="col-md-3 label-control" for="descripcion">Número de pieza:</label>
           <div class="col-md-9">
             {!! Form::text('numero_parte', null, ['required', 'class' => 'form-control']) !!}  
             <div class="invalid-feedback">Este campo es requerido.</div>
@@ -33,7 +38,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="descripcion">Descripción de parte:</label>
+          <label class="col-md-3 label-control" for="descripcion">Descripción de pieza:</label>
           <div class="col-md-9">
             {!! Form::textarea('descripcion', null, ['required', 'class' => 'form-control']) !!}       
             <div class="invalid-feedback">Este campo es requerido.</div>
@@ -79,7 +84,9 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <input type="hidden" name="id_acero" value="0">
+      <input type="hidden" name="id_estructura" value="0">
+      {{-- <div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Tipo de acero</label>
           <div class="col-md-9">
@@ -96,8 +103,6 @@
           </div>
         </div>
       </div>
-    <!--</div>
-    <div class="row">-->
       <div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput1">Tipo estructura:</label>
@@ -115,7 +120,7 @@
             <div class="invalid-feedback">Este campo es requerido.</div>
           </div>
         </div>
-      </div>
+      </div> --}}
       <!--<div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-3 label-control" for="userinput2">Espesor</label>
@@ -137,7 +142,14 @@
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Peso (Lb):</label>
+          <label class="col-md-3 label-control" for="userinput1"></label>
+          <div class="col-md-9">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="userinput1">Peso:</label>
           <div class="col-md-9">
             {{ Form::text('peso', null, ['placeholder'=>'', 'class' => 'form-control numeros','required']) }}   
             <div class="invalid-feedback">Este campo es requerido.</div>    
@@ -155,7 +167,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Costo Unitario:</label>
+          <label class="col-md-3 label-control" for="userinput1">Costo U:</label>
           <div class="col-md-9">
             {{ Form::text('costo_material', null, ['placeholder'=>'', 'id'=>'costo_material', 'class' => 'form-control currency','min'=>'0','required','step'=>'any']) }}       
             <div class="invalid-feedback">Este campo es requerido.</div>
@@ -173,7 +185,7 @@
       </div>-->
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="userinput1">Precio Unitario:</label>
+          <label class="col-md-3 label-control" for="userinput1">Precio U:</label>
           <div class="col-md-9">
             {{ Form::text('costo_produccion', null, ['placeholder'=>'', 'class' => 'form-control currency','min'=>'0','step'=>'any']) }}       
           </div>
@@ -254,7 +266,7 @@
       </tr>
     </table>
     </div>
-    <div id="listamateriales" style="max-height: 600px;" class="col-md-12">
+    <div id="listamateriales" style="max-height: 600px; overflow-x: scroll;" class="col-md-12">
       @include('productos.productos_materiales')
     </div>
   </div>

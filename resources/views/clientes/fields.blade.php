@@ -10,7 +10,7 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt2" aria-controls="linkOpt2"><i class="fa fa-truck"></i> Logistica</a>
+    <a class="nav-link" id="linkOpt-tab2" data-toggle="tab" href="#linkOpt2" aria-controls="linkOpt2"><i class="fa fa-truck"></i> Logística</a>
   </li>
   @endif
 </ul>
@@ -65,6 +65,9 @@
               <option value="{{ $pais->id}}" 
                 @if(!empty($clientes->pais))
                   {{ ($clientes->pais == $pais->id) ? 'selected' : '' }}
+                @else
+                                  {{ (55 == $pais->id) ? 'selected' : '' }}
+
                 @endif >
                 {{ $pais->nombre}}</option>
               @endforeach
@@ -351,7 +354,7 @@
         </div>
       </div>
     </div>
-    <h4 class="form-section"><i class="ft-mail"></i>Contacto logistica</h4>
+    <h4 class="form-section"><i class="ft-mail"></i>Contacto logística</h4>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">

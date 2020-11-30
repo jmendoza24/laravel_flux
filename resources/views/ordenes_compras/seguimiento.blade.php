@@ -32,7 +32,7 @@ Seguimiento ordenes de trabajo
           </tr>
           <tr class="bg-success">
             <th>IDN</th>
-            <th>#Parte</th>
+            <th>#Pieza</th>
             <th>Fecha entrega</th>
             <th>Nombre corto</th>
             <th>OT</th>

@@ -77,13 +77,12 @@ class productos extends Model
     ];
 
     function forma_identificador($identificador){
-
-        $consulta = db::table('catalogo_formas')
-                        ->where('columna',$identificador)
-                        ->get();
-
-        return $consulta ;
+        return DB::select("SELECT DISTINCT valor,id_forma,columna,valor,id 
+                            FROM catalogo_formas 
+                            WHERE columna = ".$identificador."
+                            order by id_forma, columna, valor");
     }
 
+    
     
 }

@@ -66,7 +66,6 @@ class productosController extends AppBaseController
                                     );
        # $plantas  = DB::table('plantas')->get();
         $info_producto = array('');        
-        #dd($familias);
         return view('productos.create',compact('familias','clientes','tipoacero','tipoestructura','producto_dibujos','info_producto'));
     }
 
@@ -88,9 +87,9 @@ class productosController extends AppBaseController
 #        $productos = $this->productosRepository->update($producto, $id);
         $productos = $this->productosRepository->create($producto);
 
-        Flash::success('Productos saved successfully.');
+        //Flash::success('Productos saved successfully.');
 
-        return redirect(route('productos.index'));
+        return redirect(route('productos.edit',['id'=>$productos->id]));
     }
 
     /**
@@ -129,8 +128,9 @@ class productosController extends AppBaseController
                             ->join('formas as f','p.forma','f.id')
                             ->where('p.id_producto',$id)
                             ->selectraw('p.*, f.forma as nforma, f.id as idforma')
+                            ->orderby('p.id')
                             ->get();
-
+        
          $producto_dibujos = array('tiempo_entrega'=>'',
                                     'revision'=>'',
                                     'dibujo'=>'',
@@ -152,6 +152,7 @@ class productosController extends AppBaseController
                             $join->on('pp.id_proceso','p.id')
                             ->where('pp.id_producto',$id);})
                         ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado , if(pp.horas > 0, pp.horas,p.horas) as horasp')
+                        ->orderby('p.orden')
                         ->get();
 
           $materiales = DB::table('materiales as m')
@@ -218,8 +219,6 @@ class productosController extends AppBaseController
          $ancho = $info_formas->forma_identificador(2);
          $altura = $info_formas->forma_identificador(3);
          $peso = $info_formas->forma_identificador(4);      
-
-         #dd($espesor);
 
         return view('productos.edit',compact('productos','info_mat','info_pro','opcion','procesos','materiales', 'producto_dibujos','familias','clientes','tipoacero','tipoestructura','productoDibujos','procesos','id_producto','subprocesos','materiales','info_producto','plantas','formas','materialesformas','idproceso','espesor','ancho','altura','peso'));
     }
@@ -289,6 +288,7 @@ class productosController extends AppBaseController
                                 $join->on('pp.id_proceso','p.id')
                                 ->where('pp.id_producto',$id);})
                             ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado, if(p.horas > 0, p.horas , pp.horas) as horasp')
+                            ->orderby('orden')
                             ->get();
             $subprocesos = DB::table('subprocesos as p')
                                ->leftjoin('productos_subprocesos as s',function($join)use($id){
@@ -296,6 +296,7 @@ class productosController extends AppBaseController
                                 ->where('s.id_producto',$id);}) 
                                 ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
                                 ->where('p.idproceso',$request->id_proceso)
+                                ->orderby('p.id')
                                 ->get();
 
             $id_producto = $request->id_producto;
@@ -359,6 +360,7 @@ class productosController extends AppBaseController
                             $join->on('pp.id_proceso','p.id')
                             ->where('pp.id_producto',$id);})
                         ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado , if(p.horas > 0, p.horas , pp.horas) as horasp')
+                        ->orderby('orden')
                         ->get();
         $subprocesos = DB::table('subprocesos as p')
                            ->leftjoin('productos_subprocesos as s',function($join)use($id){
@@ -366,6 +368,7 @@ class productosController extends AppBaseController
                                 ->where('s.id_producto',$id);}) 
                             ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
                             ->where('p.idproceso',$request->id_proceso)
+                            ->orderby('p.id')
                             ->get();
 
         $id_producto = $request->id_producto;
@@ -387,6 +390,7 @@ class productosController extends AppBaseController
                             $join->on('pp.id_proceso','p.id')
                             ->where('pp.id_producto',$id);})
                         ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado , if(pp.horas > 0, pp.horas,p.horas) as horasp')
+                        ->orderby('orden')
                         ->get();
         $subprocesos = DB::table('subprocesos as p')
                            ->leftjoin('productos_subprocesos as s',function($join)use($id){
@@ -394,8 +398,8 @@ class productosController extends AppBaseController
                                 ->where('s.id_producto',$id);}) 
                             ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
                             ->where('p.idproceso',$request->id_proceso)
+                            ->orderby('p.id')
                             ->get();
-        //dd($subprocesos);
         $id_producto = $request->id_producto;
         $idproceso = $request->id_proceso;
         $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos','idproceso'))->render();    
@@ -467,6 +471,7 @@ class productosController extends AppBaseController
                                 $join->on('pp.id_proceso','p.id')
                                 ->where('pp.id_producto',$id);})
                             ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado, if(p.horas > 0, p.horas , pp.horas) as horasp')
+                            ->orderby('orden')
                             ->get();
             $subprocesos = DB::table('subprocesos as p')
                                ->leftjoin('productos_subprocesos as s',function($join)use($id){
@@ -474,6 +479,7 @@ class productosController extends AppBaseController
                                     ->where('s.id_producto',$id);}) 
                                 ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
                                 ->where('p.idproceso',$request->id_proceso)
+                                ->orderby('p.id')
                                 ->get();
 
             $id_producto = $request->id_producto;
@@ -493,6 +499,7 @@ class productosController extends AppBaseController
                             $join->on('pp.id_proceso','p.id')
                             ->where('pp.id_producto',$id);})
                         ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado , if(pp.horas > 0, pp.horas,p.horas) as horasp')
+                        ->orderby('orden')
                         ->get();
         $subprocesos = DB::table('subprocesos as p')
                            ->leftjoin('productos_subprocesos as s',function($join)use($id){
@@ -500,8 +507,8 @@ class productosController extends AppBaseController
                                 ->where('s.id_producto',$id);}) 
                             ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
                             ->where('p.idproceso',$request->id_proceso)
+                            ->orderby('p.id')
                             ->get();
-        //dd($subprocesos);
         $id_producto = $request->id_producto;
         $idproceso = $request->id_proceso;
         $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos','idproceso'))->render();    
@@ -801,6 +808,7 @@ class productosController extends AppBaseController
                                 ->where('s.id_producto',$id_producto);}) 
                             ->selectraw('p.*, if(s.id_producto>0,1,0) as asignado')
                             ->where('p.idproceso',$request->id_proceso)
+                            ->orderby('p.id')
                             ->get();
 
              $procesos = DB::table('procesos as p')
@@ -808,6 +816,7 @@ class productosController extends AppBaseController
                                 $join->on('pp.id_proceso','p.id')
                                 ->where('pp.id_producto',$id_producto);})
                             ->selectraw('p.*, if(pp.id_producto>0,1,0) as asignado, if(pp.horas > 0, pp.horas,p.horas) as horasp')
+                            ->orderby('orden')
                             ->get();
              $options = view('productos.productos_procesos',compact('procesos','id_producto','subprocesos'))->render();    
 
@@ -850,6 +859,7 @@ class productosController extends AppBaseController
                             ->join('formas as f','p.forma','f.id')
                             ->where('p.id_producto',$request->id_producto)
                             ->selectraw('p.*, f.forma as nforma, f.id as idforma')
+                            ->orderby('p.id')
                             ->get();
 
          $espesor = $info_formas->forma_identificador(1);
@@ -875,6 +885,7 @@ class productosController extends AppBaseController
                             ->join('formas as f','p.forma','f.id')
                             ->where('p.id_producto',$request->id_producto)
                             ->selectraw('p.*, f.forma as nforma, f.id as idforma')
+                            ->orderby('p.id')
                             ->get();
 
         $espesor = $info_formas->forma_identificador(1);

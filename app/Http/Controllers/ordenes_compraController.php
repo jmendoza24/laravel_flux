@@ -93,7 +93,7 @@ class ordenes_compraController extends AppBaseController
        # dd($detalle);
         $income = DB::table('income_terms')->get();
         $clientes = clientes::get();
-        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get();  
         
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
@@ -104,6 +104,7 @@ class ordenes_compraController extends AppBaseController
 
     
     public function show($id){
+
         $orden = new ordenes_compra;
         $logistica = new logistica;
 
@@ -112,8 +113,10 @@ class ordenes_compraController extends AppBaseController
         $income = DB::table('income_terms')->get();
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
+        $clientes = clientes::get();
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get();  
 
-        return view('ordenes_compras.show',compact('ordenesCompra','detalle','income','logisticas'));
+        return view('ordenes_compras.show',compact('ordenesCompra','detalle','income','logisticas','clientes','productos'));
     }
 
     public function edit($id){
@@ -208,7 +211,7 @@ class ordenes_compraController extends AppBaseController
         $editar = 0;
         $nuevo = 1;
         $clientes = clientes::get();
-        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get();  
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $income = DB::table('income_terms')->get();
@@ -237,7 +240,7 @@ class ordenes_compraController extends AppBaseController
         $editar = 0;
         $nuevo = 1;
         $clientes = clientes::get();
-        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get();  
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $income = DB::table('income_terms')->get();
@@ -269,7 +272,7 @@ class ordenes_compraController extends AppBaseController
         $editar = 0;
         $nuevo = 1;
         $clientes = clientes::get();
-        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get();  
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $income = DB::table('income_terms')->get();
@@ -298,7 +301,7 @@ class ordenes_compraController extends AppBaseController
         $detalle = $orden->detalle_orden($id,1);
         $nuevo = 1;
         $clientes = clientes::get();
-        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->get();  
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get();  
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $income = DB::table('income_terms')->get();
@@ -525,10 +528,12 @@ class ordenes_compraController extends AppBaseController
         $logistica  = new logistica;
 
         
-        $existe = db::table('ordencompra_detalle')->where([['id_orden',$request->id_orden],['producto',$request->producto_ot]])->count();
+        #$existe = db::table('ordencompra_detalle')->where([['id_orden',$request->id_orden],['producto',$request->producto_ot]])->count();
+        $existe = 0;
         if($existe > 0){    
             return  json_encode(1);
         }else{
+
             $info_producto  = DB::select('SELECT p.descripcion, p.tiempo_entrega,p.id_empresa, p.peso, ifnull(p.costo_material,0) as costo_material, ifnull(p.costo_produccion,0) as costo_produccion, p.costo_material,dibujo_nombre, revision,ifnull(d.id,0) as id
                                       FROM productos p
                                       LEFT JOIN (
@@ -542,7 +547,7 @@ class ordenes_compraController extends AppBaseController
             for($i=1; $i<=$request->cantidad; $i++){
                 db::table('ordencompra_detalle')
                     ->insert(['id_orden'=>$request->id_orden,
-                              'incremento'=>0,
+                              'incremento'=>null,
                               'producto'=>$request->producto_ot,
                               'dibujo'=>$info_producto->id,
                               'cantidad'=>1,
@@ -623,6 +628,13 @@ class ordenes_compraController extends AppBaseController
                    inner join ordencompra_detalle  d on d.id_orden= o.id
                    set enviado_planta = 1
                    where o.tipo = 3 and d.planta = '.$request->id_planta.' and o.tipo != 4');
+
+        $orden = new ordenes_compra;
+        $plantas = $orden->obtiene_plantas();
+        $detalle = array();
+
+        $options =  view('ordenes_compras.ordnesporenviar',compact('plantas','detalle'))->render();
+        return json_encode($options);
 
         return redirect('/ordenesporenviar');
         #$pdf = \PDF::loadView('ordenes_compras.plantilla_factura',compact('detalle'))->setPaper('A4-L','landscape');

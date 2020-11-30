@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-5">
       <div class="form-group">
-        <label for="lastName4">Producto : </label>
+        <label for="lastName4">Piezas : </label>
         <select class="form-control custom-select" style="width: 100%;"name="producto" id="producto">
             <option value="">Seleccione una opcion</option>
             @foreach($productos as $prod)
@@ -105,8 +105,8 @@
         <button type="button" class="btn btn-primary btn-min-width dropdown-toggle" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">Seleccione una acción</button>
         <div class="dropdown-menu">
-          <a href="{{ route('cotizacion.guardar') }}"  class="dropdown-item">Guardar</a>
-          <a href="{{ route('cotizacion.enviar') }}"  class="dropdown-item">Enviar</a>
+          <a onclick="validation_cotizacion(2)" class="dropdown-item">Guardar</a>
+          <a onclick="validation_cotizacion(1)"  class="dropdown-item">Enviar</a>
           <a class="dropdown-item" onclick="convierte_occ({{$cotizacion->id}},2)">Crear OT</a>
           <div class="dropdown-divider"></div>
           <a href="/historiaCotizacion" class="dropdown-item">Regresar</a>

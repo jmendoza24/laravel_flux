@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta name="description" content="Fluxmetal Fluxmetal">
   <meta name="keywords" content="Fluxmetal">
-  <meta name="author" content="Fluxmetal">
+  <meta name="author" content="Fluxmetal"> 
   <meta name="google-site-verification" content="SKuO2NOdADnxaV-X-53eTxgnXKRvIABkZB800jV9hWM" />
   <title>Fluxmetals</title> 
   <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png') }}">
