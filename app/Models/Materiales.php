@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Materiales extends Model
 {
-    use SoftDeletes;
+    #use SoftDeletes;
 
     public $table = 'materiales';
     
@@ -62,7 +62,7 @@ class Materiales extends Model
         'weight',
         'precio',
         'peso_pieza',
-        'precion_nacional',
+        'precion_nacional', 
         'fecha',
         'num_orden',
         'id_proveedor',
@@ -102,13 +102,13 @@ class Materiales extends Model
         'precio' => 'string',
         'peso_pieza' => 'string',
         'precion_nacional' => 'string',
-        'fecha' => 'date',
+        'fecha' => 'string',
         'num_orden' => 'string',
         'id_proveedor' => 'integer',
         'molino' => 'string',
         'pais' => 'string',
         'colada_numero' => 'integer',
-        'fecha_entrega' => 'date',
+        'fecha_entrega' => 'string',
         'num_embarque' => 'string',
         'certificado_mat' => 'string',
         'ordencompra' => 'string',

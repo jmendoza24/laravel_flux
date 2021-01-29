@@ -32,7 +32,7 @@ Seguimiento ordenes de trabajo
           </tr>
           <tr class="bg-success">
             <th>IDN</th>
-            <th>#Parte</th>
+            <th>#Pieza</th>
             <th>Fecha entrega</th>
             <th>Nombre corto</th>
             <th>OT</th>
@@ -170,7 +170,7 @@ Seguimiento ordenes de trabajo
                   @endif
                 @endforeach
                 <span class="badge badge-{{ $color}} badge-outlined">C</span>
-                &nbsp;<span  onclick="seguimiento_subproceso(1,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(1,{{$producto->idproducto}},{{ $producto->id_detalle }},'{{ str_pad($producto->id_detalle,6,"0",STR_PAD_LEFT) }}')" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
@@ -196,7 +196,7 @@ Seguimiento ordenes de trabajo
                 @endforeach
                 <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color2}} badge-outlined">C</span>
-                &nbsp;<span  onclick="seguimiento_subproceso(2,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(2,{{$producto->idproducto}},{{ $producto->id_detalle }},'{{ str_pad($producto->id_detalle,6,"0",STR_PAD_LEFT) }}')" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
@@ -221,7 +221,7 @@ Seguimiento ordenes de trabajo
                 @endforeach
                 <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color3}} badge-outlined">C</span>
-                &nbsp;<span  onclick="seguimiento_subproceso(3,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(3,{{$producto->idproducto}},{{ $producto->id_detalle }},'{{ str_pad($producto->id_detalle,6,"0",STR_PAD_LEFT) }}')" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
@@ -246,7 +246,7 @@ Seguimiento ordenes de trabajo
                 @endforeach
                 <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color4}} badge-outlined">C</span>
-                &nbsp;<span  onclick="seguimiento_subproceso(4,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(4,{{$producto->idproducto}},{{ $producto->id_detalle }},'{{ str_pad($producto->id_detalle,6,"0",STR_PAD_LEFT) }}')" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
@@ -271,7 +271,7 @@ Seguimiento ordenes de trabajo
                 @endforeach
                 <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color5}} badge-outlined">C</span>
-                &nbsp;<span  onclick="seguimiento_subproceso(5,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(5,{{$producto->idproducto}},{{ $producto->id_detalle }},'{{ str_pad($producto->id_detalle,6,"0",STR_PAD_LEFT) }}')" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="produccion">
@@ -297,7 +297,7 @@ Seguimiento ordenes de trabajo
                 @endforeach
                 <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color6}} badge-outlined">C</span>
-                &nbsp;<span  onclick="seguimiento_subproceso(6,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(6,{{$producto->idproducto}},{{ $producto->id_detalle }},'{{ str_pad($producto->id_detalle,6,"0",STR_PAD_LEFT) }}')" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
 
@@ -323,7 +323,7 @@ Seguimiento ordenes de trabajo
                 @endforeach
                 <span class="badge badge-{{$color_p}} badge-outlined">P</span>&nbsp;
                 <span class="badge badge-{{ $color7}} badge-outlined">C</span>
-                &nbsp;<span  onclick="seguimiento_subproceso(7,{{$producto->idproducto}},{{ $producto->id_detalle }})" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                &nbsp;<span  onclick="seguimiento_subproceso(7,{{$producto->idproducto}},{{ $producto->id_detalle }},'{{ str_pad($producto->id_detalle,6,"0",STR_PAD_LEFT) }}')" data-toggle="modal" data-backdrop="false" data-target="#primary"><i class="fa fa-plus" aria-hidden="true"></i></span>
               </div>
             </td>
             <td class="calidad">

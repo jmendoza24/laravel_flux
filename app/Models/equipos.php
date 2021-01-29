@@ -39,7 +39,12 @@ class equipos extends Model
         'idequipo',
         'tipo',
         'base',
-        'calibracion'
+        'calibracion',
+         'mantenimiento',
+        'correctivo',
+        'preventivo',
+        'planta',
+        'activo'
     ];
 
     /**
@@ -57,7 +62,12 @@ class equipos extends Model
         'idequipo' => 'integer',
         'tipo' => 'integer',
         'base' => 'integer',
-        'calibracion' => 'string'
+        'calibracion' => 'string',
+        'mantenimiento' => 'date',
+        'correctivo' => 'string',
+        'preventivo' => 'string',
+        'planta' => 'integer',
+        'activo' => 'integer'
     ];
 
     /**

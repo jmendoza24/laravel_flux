@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titulo') Inco Terms @endsection
+@section('titulo') Incoterms @endsection
 @section('content')
  <div class="col-md-12">
     <h1 class="pull-right">

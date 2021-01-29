@@ -1,6 +1,6 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" id="productoDibujos-table">
     <thead>
-        <tr>
+        <tr style="background-color:#427874;color:white">
             <th>Id dibujo</th>
             <th>Fecha de revisión</th>
             <th>Número de revisión</th>

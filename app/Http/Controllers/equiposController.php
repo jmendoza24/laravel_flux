@@ -50,13 +50,17 @@ class equiposController extends AppBaseController
                                     'descripcion'=>'',
                                     'vencimiento'=>'',
                                     'activo'=>'',
-                                    'tipo'=>''
+                                    'tipo'=>'',
+                                    'documento1'=>'',
+                                    'documento2'=>''
                                     );
 
         $equipoHistorials  = (object)$equipoHistorials ;
+        $plantas = db::table('plantas')->get();
+        $valida="0";
 
 
-        return view('equipos.create',compact('equipoHistorials'));
+        return view('equipos.create',compact('valida','plantas','equipoHistorials'));
     }
 
     /**
@@ -69,12 +73,27 @@ class equiposController extends AppBaseController
     public function store(CreateequiposRequest $request)
     {
         $input = $request->all();
+        //$equipos = $this->equiposRepository->create($input);
 
-        $equipos = $this->equiposRepository->create($input);
+      //  $input->mantenimiento=date("Y/m/d",strtotime($input->mantenimiento));
+    //    dd(date("Y/m/d",strtotime($request->mantenimiento)));
+       $id= db::table('equipos')
+        ->insertGetId(['mantenimiento'=>date("Y/m/d",strtotime($request->mantenimiento)),
+                  'nombre'=>$request->nombre,
+                  'marca'=>$request->marca,
+                  'modelo'=>$request->modelo,
+                  'serie'=>$request->serie,
+                  'pedimento'=>$request->pedimento,
+                  'tipo'=>$request->tipo,
+                  'base'=>$request->base,
+                  'planta'=>$request->planta,
+                  'activo'=>$request->activo,
 
-        Flash::success('Equipos saved successfully.');
+                 ]);
+          
 
-        return redirect(route('equipos.index'));
+
+        return redirect(route('equipos.edit', [$id]));
     }
 
     /**
@@ -114,7 +133,10 @@ class equiposController extends AppBaseController
                                     'descripcion'=>'',
                                     'vencimiento'=>'',
                                     'activo'=>'',
-                                    'tipo'=>$id
+                                    'tipo'=>$id,
+                                    'documento1'=>'',
+                                    'documento2'=>''
+                                 
                                     );
         $eqHistofields = (object)$eqHistofields;
 
@@ -133,8 +155,30 @@ class equiposController extends AppBaseController
 
             return redirect(route('equipos.index'));
         }
+        $plantas = db::table('plantas')->get();
+        $valida="1";
 
-        return view('equipos.edit',compact('equipos','equipoHistorials','equipoHistPrev','equipoHistCorrect','eqHistofields'));
+
+        $preventivo=DB::table('equipo_historials')
+                                ->where([['tipo',$id],['historial_tipo',2]])
+                                ->select('vencimiento')
+                                ->max('vencimiento');
+
+
+        $correctivo=DB::table('equipo_historials')
+                                ->where([['tipo',$id],['historial_tipo',3]])
+                                ->select('vencimiento')
+                                ->max('vencimiento');
+
+
+
+        $calibracion=DB::table('equipo_historials')
+                                ->where([['tipo',$id],['historial_tipo',1]])
+                                ->select('vencimiento')
+                                ->max('vencimiento');
+
+
+        return view('equipos.edit',compact('calibracion','correctivo','preventivo','valida','plantas','equipos','equipoHistorials','equipoHistPrev','equipoHistCorrect','eqHistofields'));
     }
 
     /**
@@ -148,16 +192,28 @@ class equiposController extends AppBaseController
     public function update($id, UpdateequiposRequest $request)
     {
         $equipos = $this->equiposRepository->find($id);
+        $request->mantenimiento=date("Y/m/d",strtotime($request->mantenimiento));
 
-        if (empty($equipos)) {
-            Flash::error('Equipos not found');
+          db::table('equipos')
+        ->where('id',$id)
+        ->update(['mantenimiento'=>$request->mantenimiento,
+                  'nombre'=>$request->nombre,
+                  'marca'=>$request->marca,
+                  'modelo'=>$request->modelo,
+                  'serie'=>$request->serie,
+                  'pedimento'=>$request->pedimento,
+                  'tipo'=>$request->tipo,
+                  'base'=>$request->base,
+                  'planta'=>$request->planta,
+                  'activo'=>$request->activo,
 
-            return redirect(route('equipos.index'));
-        }
+                 ]);
 
-        $equipos = $this->equiposRepository->update($request->all(), $id);
 
-        Flash::success('Equipos updated successfully.');
+
+
+     //   $equipos = $this->equiposRepository->update($request,$request->mantenimiento, $id);
+
 
         return redirect(route('equipos.index'));
     }

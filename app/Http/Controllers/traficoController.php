@@ -194,7 +194,7 @@ class traficoController extends AppBaseController
         #$var = db::table('traficos_documentos')->get();
         #dd($var);
         $logistica = new logistica;
-        $trafic = new trafico;
+        $trafic = new trafico; 
         
         $trafico = $request->ide;
         $files = db::table('traficos_documentos')->where('id_trafico',$request->ide)->get();
@@ -610,7 +610,7 @@ class traficoController extends AppBaseController
         
         #return view('traficos.packing_list',compact('logistica','planta','tarimas','tarimas_idns','idns_conteo'));
        # $pdf = \PDF::loadView('traficos.packing_list',compact('planta','tarimas','tarimas_idns','idns_conteo'))->setPaper('A4','portrait');
-        $pdf = \PDF::loadView('traficos.packing_list',compact('logistica','planta','tarimas','tarimas_idns','idns_conteo'))->setPaper('A4','portrait');
+        $pdf = \PDF::loadView('traficos.packing_list',compact('trafico','logistica','planta','tarimas','tarimas_idns','idns_conteo'))->setPaper('A4','portrait');
         return $pdf->download('Packing_List_'.$request->id_trafico.'.pdf');
          #Storage::put('Cotizacion_'.$num_cotizacion.'.pdf', $pdf->output());
 
@@ -697,7 +697,7 @@ class traficoController extends AppBaseController
                     ->where('id_trafico',$request->id_trafico)
                     ->selectraw('p.numero_parte, t.id_detalle, t.id_trafico')
                     ->get();
-       #return view('traficos.complemento_ext',compact('trafico')); 
+    //    return view('traficos.complemento_ext',compact('trafico')); 
         $pdf = \PDF::loadView('traficos.complemento_ext',compact('trafico'))->setPaper('A4-L','portrait');
         return $pdf->download('Complemento_Comercio_Ext_'.$request->id_trafico.'.pdf');
     }

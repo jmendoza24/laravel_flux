@@ -1,7 +1,7 @@
 
-<table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="1">
+<table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="0">
 	<tr>
-		<td rowspan="3">Logo</td>
+		<td rowspan="3"><img src="{{ asset('app-assets/images/logo/flux.png') }}" style="width: 100px;"/></td>
 		<td colspan="4" style="text-align: center;"><b>NOTIFICACIÓN DE EMBARQUE</b></td>
 	</tr>
 	<tr>

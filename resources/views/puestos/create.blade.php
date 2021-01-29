@@ -1,7 +1,24 @@
 @extends('layouts.app')
-@section('titulo')Nuevo puesto @endsection
+
 @section('content')
-{!! Form::open(['route' => 'puestos.store','class'=>'needs-validation','novalidate']) !!}
-    @include('puestos.fields')
-{!! Form::close() !!}
+    <section class="content-header">
+        <h1>
+            Puestos
+        </h1>
+    </section>
+    <div class="content">
+        @include('adminlte-templates::common.errors')
+        <div class="box box-primary">
+
+            <div class="box-body">
+                <div class="row">
+                    {!! Form::open(['route' => 'puestos.store']) !!}
+
+                        @include('puestos.fields')
+
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

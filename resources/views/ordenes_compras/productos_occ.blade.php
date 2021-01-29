@@ -1,7 +1,7 @@
 <table class="table table-bordered table-striped small">
 	<thead>
 		<tr>
-			<th>Número parte</th>
+			<th>Número pieza</th>
 			<th>IDN</th>
 			<th>Fecha entrega</th>
 		</tr>
@@ -11,7 +11,7 @@
 		<tr>
 			<td>{{$producto->numero_parte}}</td>
 			<td>1</td>
-			<td>{{ $producto->fecha_entrega}}</td>
+			<td>{{  date('m/d/Y', strtotime($producto->fecha_entrega))}}</td>
 		</tr>
 		@endforeach
 	</tbody>

@@ -2,16 +2,16 @@
 @php($conteos = 0)
 @php($weight = 0)
 
-<table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="1">
+<table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="0">
 	<tr>
-		<td rowspan="2">Logo</td>
-		<td>Packing List</td>
+		<td rowspan="2"><img src="{{ asset('app-assets/images/logo/flux.png') }}" style="width: 100px;"/></td>
+		<td style="text-align: right;">Packing List</td>
 	</tr>
 	<tr>
 		<td>
-			<label>Packing List num:</label>
-			<label>Date: {{ date('m-d-Y')}}</label>
-			<label>Invoice:</label>
+			<label>FNE: {{ $trafico[0]->id}} </label><br>
+			<label>Date: {{ date('m-d-Y')}}</label> <br>
+			<label>Proforma Invoice: {{ $trafico[0]->id}}</label>
 		</td>
 	</tr>
 </table>
@@ -36,7 +36,7 @@
 <br>
 <table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="1">
 	<tr>
-		<td><b>Shipp to:</b></td>
+		<td><b>Ship to:</b></td>
 		<td>		
 			{{ $logistica->calle}} {{ $logistica->numero}}, {{ $logistica->municipio}}, <br> 
 			{{ $logistica->nestado}}, {{ $logistica->npais}}, <br>
@@ -46,18 +46,18 @@
 </table>
 <br>
 <table style="width: 100%; border-collapse: collapse; font-size: 11px; font-family: sans-serif;" border="1">
-	<tr style="text-align: center;">
-		<td rowspan="2">Boundle/unit</td>
+	<tr style="text-align: center; background: #EEECEB;">
+		<td rowspan="2">Bundle/unit</td>
 		<td rowspan="2">Parts per crate</td>
 		<td rowspan="2">Description / Parts number</td>
 		<td rowspan="2">Customer PO</td>
 		<td rowspan="2">PO Item</td>
-		<td rowspan="2">Wight/Pounds</td>
+		<td rowspan="2">Weight/Pounds</td>
 		<td colspan="3">Dimensions</td>
 	</tr>
-	<tr  style="text-align: center;">
+	<tr  style="text-align: center; background: #EEECEB;">
 		<td>Weight</td>
-		<td>With</td>
+		<td>Width</td>
 		<td>Height</td>
 	</tr>
 	@foreach($tarimas as $tar)
@@ -108,9 +108,9 @@
 	@endforeach
 </table>
 <br>
-<table>
+<table style="font-family:sans-serif;">
 	<tr>
-		<td>Total Unit:</td>
+		<td>Total Units:</td>
 		<td>{{ $conteos}}</td>
 	</tr>
 	<tr>

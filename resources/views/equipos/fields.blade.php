@@ -1,3 +1,8 @@
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <ul class="nav nav-tabs nav-underline no-hover-bg nav-justified">
   <li class="nav-item">
     <a class="nav-link active" id="active-tab32" data-toggle="tab" href="#active32" aria-controls="active32"
@@ -73,17 +78,122 @@
       <div class="row">
        <div class="col-md-6">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="userinput1">Base</label>
+            <label class="col-md-3 label-control" for="userinput1">Ubicación en Planta</label>
             <div class="col-md-9">
-              {!! Form::text('calibracion', null, ['class' => 'form-control']) !!}
+              {!! Form::text('base', null, ['class' => 'form-control']) !!}
             </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="userinput1">Calibración</label>
+            <label class="col-md-3 label-control" for="userinput1">Ultima Calibración</label>
             <div class="col-md-9">
-              {!! Form::text('base', null, ['class' => 'form-control']) !!}
+
+                <input disabled="disabled" type="text" name="calibracion"  @if($valida==1)   @if($calibracion=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($calibracion)) }}"  @endif     @else value=""  @endif  id="calibracion" class="form-control">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+       <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Planta</label>
+            <div class="col-md-9">
+               <select class="form-control select2" id="planta" name="planta" style="width: 100%;">
+                <option value="0">Seleccione...</option>
+                @foreach($plantas as $planta)
+                  <option value="{{$planta->id}}" @if($valida==1) {{ ($equipos->planta==$planta->id) ? 'selected' : '' }}  @endif   >{{$planta->nombre}}</option>
+                @endforeach
+              </select>
+               </div>
+          </div>
+        </div>
+     
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Preventivo</label>
+            <div class="col-md-9">
+
+                              <input disabled="disabled" type="text" name="preventivo"  @if($valida==1)   @if($preventivo=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($preventivo)) }}"  @endif     @else value=""  @endif  id="correctivo" class="form-control">
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+       <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1"></label>
+            <div class="col-md-9">
+            
+            </div>
+          </div>
+        </div>
+     
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Correctivo</label>
+            <div class="col-md-9">
+
+                <input disabled="disabled" type="text" name="correctivo"  @if($valida==1)   @if($correctivo=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($correctivo)) }}"  @endif     @else value=""  @endif  id="correctivo" class="form-control">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+       <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1"></label>
+            <div class="col-md-9">
+            
+            </div>
+          </div>
+        </div>
+     
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Proximo Mtto.</label>
+            <div class="col-md-9">
+              <input type="text" name="mantenimiento"  @if($valida==1) value="{{ date_format($equipos->mantenimiento, 'Y-m-d') }}" @else value="" @endif  id="mantenimiento" class="datepicker form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+       <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1"></label>
+            <div class="col-md-9">
+            
+            </div>
+          </div>
+        </div>
+     
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Activo</label>
+            <div class="col-md-9">
+
+             <select class="form-control" id="activo" name="activo">
+                <option value="">Seleccione una opción:</option>
+                  @if($editar ==1)
+
+                <option value="1" {{ ($equipos->activo==1) ? 'selected' : '' }}>Si</option>
+                <option value="0" {{ ($equipos->activo==0) ? 'selected' : '' }}>No</option>
+                @else
+
+                <option value="1" >Si</option>
+                <option value="0" >No</option>
+                @endif
+            </select>
             </div>
           </div>
         </div>
@@ -112,7 +222,7 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a  data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(1)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</a>
+                     <a  data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial({{ $equipos->id }},1)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</a>
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_historial">
@@ -125,7 +235,7 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(2)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Preventivo</a>
+                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial({{ $equipos->id }},2)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Preventivo</a>
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histPrev">
@@ -138,7 +248,7 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(3)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Correctivo</a>
+                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial({{ $equipos->id }},3)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Correctivo</a>
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histCorrect">
@@ -154,6 +264,7 @@
   @endif
 
 </div>                    
+@if($editar ==1)
 
 <div class="form-actions right">
   <a href="{{ route('equipos.index') }}">
@@ -165,6 +276,7 @@
   <i class="fa fa-check-square-o"></i> Guardar
 </button>
 </div>
+@endif
 @if($editar ==1)
 <div class="modal fade text-left" id="equipo_historials" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -175,18 +287,26 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="form_logistica">
+</form>
+</form>
+
+          <form method="post" enctype="multipart/form-data"  class="form-control" id="documentos_formUpload">
+              {!! csrf_field() !!}
           <div id="campos_equipos">
             <div class="modal-body">
               @include('equipo_historials.fields')
+              <input type="hidden" name="idp" id="idp" value="{{$equipos->id}}">
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-outline-primary" onclick="guarda_historial({{$equipos->id}})">Guardar</button>
-            </div>
-          </div>
+
+
       </form>
+      
       </div>
     </div>
   </div>
+@else
+
+
+
+
   @endif

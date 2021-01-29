@@ -31,7 +31,7 @@ class MaterialesRepository extends BaseRepository
         'weight',
         'precio',
         'peso_pieza',
-        'precion_nacional',
+        'precion_nacional', 
         'fecha',
         'num_orden',
         'id_proveedor',
@@ -46,7 +46,7 @@ class MaterialesRepository extends BaseRepository
         'reporteprod',
         'resolucionprod',
         'cantidad',
-        'metros' 
+        'metros'
     ];
 
     /**

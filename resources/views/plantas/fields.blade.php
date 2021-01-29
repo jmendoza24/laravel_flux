@@ -6,7 +6,7 @@
       <div class="col-md-9">
         {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
 
-      </div>
+      </div> 
     </div>
   </div>
   <div class="col-md-6">
@@ -21,7 +21,7 @@
 <div class="row">
     <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="userinput2">Pais</label>
+      <label class="col-md-3 label-control" for="userinput2">País</label>
       <div class="col-md-9">
         <select class="form-control select2" name="pais" id="pais" onchange="get_estados('pais','estado')" >
           <option value="">Seleccione una opci&oacute;n</option>

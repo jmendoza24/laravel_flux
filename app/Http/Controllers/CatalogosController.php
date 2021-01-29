@@ -30,4 +30,6 @@ class CatalogosController extends Controller{
 
         return $estados;
     }
+
+    
 }

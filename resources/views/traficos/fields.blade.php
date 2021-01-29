@@ -1,8 +1,8 @@
 <table class="table table-bordered table-colapsed " id="trafico_nuevo">
 	<thead class="bg-success">
 		<tr>
-			<th>TR #</th>
-			<th>Cliente</th>
+			<th>FNE</th>
+			<th>CNE</th>
 			<th>Fecha entrega</th>
 			<th>Lugar entrega</th>
 			<th>Est. Producción</th>

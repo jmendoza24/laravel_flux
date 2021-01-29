@@ -25,7 +25,12 @@ class equiposRepository extends BaseRepository
         'idequipo',
         'tipo',
         'base',
-        'calibracion'
+        'calibracion',
+        'mantenimiento',
+        'correctivo',
+        'preventivo',
+        'planta',
+        'activo'
     ];
 
     /**

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta name="description" content="Fluxmetal Fluxmetal">
   <meta name="keywords" content="Fluxmetal">
-  <meta name="author" content="Fluxmetal">
+  <meta name="author" content="Fluxmetal"> 
   <meta name="google-site-verification" content="SKuO2NOdADnxaV-X-53eTxgnXKRvIABkZB800jV9hWM" />
   <title>Fluxmetals</title> 
   <link rel="apple-touch-icon" href="{{ url('app-assets/images/ico/apple-icon-120.png') }}">
@@ -165,7 +165,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-  
+  <script type="text/javascript">
+    
+
+    $(document).ready(function () {
+    
+    var dbDate = "2012-03-06";
+    var date2 = new Date(dbDate);
+
+    $(".datepicker").datepicker({
+        dateFormat: 'mm-dd-yy'
+    }).datepicker('setDate', date2)
+
+
+});
+  </script>
   <script src="{{ url('app-assets/js/scripts/forms/extended/form-inputmask.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/forms/extended/form-maxlength.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/icheck/icheck.min.js') }}" type="text/javascript"></script>
@@ -212,6 +226,8 @@
   <script src="{{ url('app-assets/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+
   <script src="{{ url('app-assets/vendors/js/gallery/masonry/masonry.pkgd.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js')}}" type="text/javascript"></script>
@@ -249,3 +265,6 @@
     </div>
   </div>
 </div>
+
+
+

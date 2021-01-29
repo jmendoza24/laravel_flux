@@ -17,7 +17,7 @@
                 <li class="{{ Request::is('tipoMaterials*') ? 'active' : '' }}"><a href="{!! route('tipoMaterials.index') !!}">Tipo de Materiales</span></a></li>
                 <li class="{{ Request::is('grados*') ? 'active' : '' }}"><a href="{!! route('grados.index') !!}">Grados</span></a></li>
                 <li class="{{ Request::is('formas*') ? 'active' : '' }}"><a href="{!! route('formas.index') !!}">Formas</span></a></li>
-                <li class="{{ Request::is('incomeTerms*') ? 'active' : '' }}"><a href="{!! route('incomeTerms.index') !!}">Inco Terms</span></a></li>
+                <li class="{{ Request::is('incomeTerms*') ? 'active' : '' }}"><a href="{!! route('incomeTerms.index') !!}">Incoterms</span></a></li>
                 <li class="{{ Request::is('actividades*') ? 'active' : '' }}"><a href="{!! route('actividades.index') !!}"><span>Actividades</span></a></li>
                 <!--<li class="{{ Request::is('documentos*') ? 'active' : '' }}"><a href="{!! route('documentos.index') !!}"><span>Documentos</span></a></li>-->
                 <li class="{{ Request::is('condiciones*') ? 'active' : '' }}"><a href="{!! route('condiciones.index') !!}"><span>Condiciones</span></a></li>
@@ -59,6 +59,10 @@
         <i class="ft-smartphone"></i>
         <span class="menu-title" data-i18n="">Facturación</span>
     </a>
+</li>
+
+<li class="{{ Request::is('tblRhs*') ? 'active' : '' }}">
+    <a href="{!! route('tblRhs.index') !!}"><i class="ft-users"></i><span>RH</span></a>
 </li>
 
 

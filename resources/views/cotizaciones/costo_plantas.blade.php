@@ -1,6 +1,6 @@
+@if(count($plantascosto)>0)
 <h4>Costo por planta: <span><b>{{$plantascosto[0]->numero_parte}}</b></span></h4> 
 <hr>
-@if(count($plantascosto)>0)
 <table class="table table-striped table-bordered display">
 	<thead>
 		<tr>

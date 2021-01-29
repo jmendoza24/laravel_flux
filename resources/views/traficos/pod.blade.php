@@ -1,8 +1,8 @@
-<table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="1">
+<table style="width: 100%; border-collapse: collapse; font-family: sans-serif;" border="0">
 	<tr>
-		<td>Logo</td>
-		<td style="text-align: right; "><b>POD-Shipment # FM001-PG-20 <br><br>
-			CUSTUMER RECEIVING
+		<td><img src="{{ asset('app-assets/images/logo/flux.png') }}" style="width: 100px;"/></td>
+		<td style="text-align: right; "><b>Shipment# FM001-PG-20 <br><br>
+			CUSTOMER RECEIVING
 			</b><br/>
 			PROOF OF DELIVERY <br><br>
 			DATE: {{ date('m-d-Y')}}<br>
@@ -12,7 +12,7 @@
 </table>
 <br>
 <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; " border="1">
-	<tr style="text-align: center;">
+	<tr style="text-align: center; background: #EEECEB;">
 		<td>ITEM</td>
 		<td>PART NUMBER</td>
 		<td>DESCRIPTION</td>
@@ -35,7 +35,7 @@
 </table>
 
 <br>
-<b>Note:</b>
+<b style="font-family: sans-serif;">Note:</b>
 
 
 <br><br>

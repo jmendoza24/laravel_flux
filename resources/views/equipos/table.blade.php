@@ -8,6 +8,8 @@
                 <th>Tipo</th>
                 <th>Base</th>
                 <th>Calibración</th>
+                <th>Proximo Mtto.</th>
+
                 <th colspan=""></th>
             </tr>
         </thead>
@@ -21,6 +23,7 @@
                 <td>{!! $equipos->tipo !!}</td>
                 <td>{!! $equipos->base !!}</td>
                 <td>{!! $equipos->calibracion !!}</td>
+                <td>{{date_format($equipos->mantenimiento, 'm-d-Y') }}</td>
                 <td>
                     {!! Form::open(['route' => ['equipos.destroy', $equipos->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

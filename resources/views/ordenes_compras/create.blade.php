@@ -17,6 +17,8 @@
     <hr>
   <div class="form-group col-sm-12" style="text-align: right;">
     <a href="{{ route('ordenesCompras.index')}}" class="btn btn-warning mr-1">Regresar</a>
+    <a href="{!! route('limpiar') !!}" class="btn btn-dark mr-1">Limpiar formulario</a>
+
     @if($ordenesCompra->tipo==1)
     <a style="color: white;" onclick="validar_orden({{ $ordenesCompra->id }})" class="btn btn-primary">Aceptar</a>
     @endif

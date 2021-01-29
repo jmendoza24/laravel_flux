@@ -4,9 +4,9 @@
       <div class="sidebar-content card d-none d-lg-block">
         <div id="users-list" class="list-group position-relative ps-scrollbar-y" style=" overflow-y: scroll; max-height: 500px;">
           <div class="users-list-padding media-list" >
-            <table class="table table-striped table-bordered table-procesos tableFixHead">   
+            <table class="table table-striped table-bordered table-procesos">   
             <thead>
-              <tr>
+              <tr style="background-color:#427874;color:white">
                 <th colspan="2">Procesos</th>
                 <th>Horas</th>
               </tr>
@@ -44,9 +44,9 @@
   </div/>
   <div class="content-right col-md-6" style="overflow-y: scroll; max-height:550px; padding-left: 3px; ">
       <div class="content-body">
-        <table class="table table-striped table-bordered table-procesos tableFixHead">
+        <table class="table table-striped table-bordered table-procesos">
           <thead>
-            <tr>
+            <tr style="background-color:#427874;color:white">
               <th>Subprocesos</th>
             </tr>
           </thead>

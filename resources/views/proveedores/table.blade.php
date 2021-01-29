@@ -3,12 +3,12 @@
             <tr>
                 <th>Razón social</th>
                 <th>Dirección</th>
-                <th>Pais</th>
+                <th>País</th>
                 <th>Estado</th>
                 <th>Ciudad</th>
                 <th>C.P.</th>
                 <th>Rfc</th>
-                <th>Credito</th>
+                <th>Crédito</th>
                 <th>Teléfono</th>
                 <th>Correo</th>
                 <th>Puesto</th>

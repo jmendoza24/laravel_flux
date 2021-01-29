@@ -108,7 +108,23 @@
 	    <div class="col-md-12">
 	      <div class="card">
 	        <div class="card-header">
-	          <h6 class="card-title">Tarimas:
+	            <h3>Indicadores de colores en documentos</h3>
+	          <h6 class="card-title">
+	              <table>
+	    		<tr>
+	    			<td><b>Documentos Autogenerados</b></td>
+	    			<td class="btn-primary"></td>
+	    		</tr><br>
+	    		<tr>
+	    			<td><b>Documentos Cargados</b></td>
+	    			<td class="btn-secondary"></td>
+	    		</tr><br>
+	    		<tr>
+	    			<td><b>Documentos Autogenerados</b></td>
+	    			<td class="bg-success"></td>
+	    		</tr>
+	    	</table><br><br>
+	    	Tarimas:
 	          	<span class="form-inline pull-right" style="font-size: 14px;">
 	          		Planta Concentradora: &nbsp;
 	          		<select class="form-control mr-1" id="id_planta" onchange="guarda_planta_trafico('id_planta',{{ $trafico}})">

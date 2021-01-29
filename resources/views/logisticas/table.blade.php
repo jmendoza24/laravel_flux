@@ -1,9 +1,9 @@
 <table class="table table-striped table-bordered datacol-basic-initialisation" style="" id="logisticas-table">
-    <thead>
+    <thead class="bg-success">
         <tr>
             <!--<th>Nombre</th>
             <th>Correo</th>-->
-            <th>Pais</th>
+            <th>País</th>
             <th>Estado</th>
             <th>Ciudad</th>
             <th>Teléfono</th>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\cotizaciones;
-
+use App\Models\cotizaciones_detalle;
 use App\Mail\EnvioFlux;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CreatecotizacionesRequest;
@@ -18,6 +18,7 @@ use DB;
 use Sesion;
 use view;
 use PDF;
+
 
 class cotizacionesController extends AppBaseController
 {
@@ -37,7 +38,7 @@ class cotizacionesController extends AppBaseController
      * @return Response
      */
     public function index(Request $request){
-
+       #$request->session()->forget('num_cot');
         if ($request->session()->has('num_cot')) {
              
          $num_cotizacion = $request->session()->get('num_cot');
@@ -80,15 +81,15 @@ class cotizacionesController extends AppBaseController
                                                     group by d.id_producto) a
                                             inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
                                 where c.id_cotizacion = '.$num_cotizacion);
-     # dd($cotizacion);
+        //dd($cotizacion);
         $cotizacion = $cotizacion[0];
 
-        $clientes = db::table('clientes')->get();
+        $clientes = db::table('clientes')->get(); 
        
        // $dibujos = DB::table('producto_dibujos')->where('id_producto',$cotizacion->producto)->get();
         $condiciones = DB::table('condiciones')->where('tipo',1)->get();
         $income = DB::table('income_terms')->get();
-        $productos = DB::table('productos')->where('id_empresa',$cotizacion->cliente)->get();      
+        $productos = DB::table('productos')->where('id_empresa',$cotizacion->cliente)->orderby('numero_parte')->get();      
 
 
         return view('cotizaciones.index',compact('cotizacion','condiciones','income','productos','num_cotizacion','clientes','detalle'));
@@ -100,7 +101,7 @@ class cotizacionesController extends AppBaseController
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
                         ->leftjoin('ordenes_compras as o','o.id_cotizacion','c.id')
                         ->selectraw('c.*, ifnull(o.id,0) as idot, name, cl.nombre_corto, cl.compra_nombre, cl.correo_compra')
-                        ->where('enviado','>',0)
+                        ->whereIN('enviado',[1,2])
                         ->get();
 
         return view('cotizaciones.create',compact('cotizaciones'));
@@ -205,6 +206,7 @@ class cotizacionesController extends AppBaseController
     public function guarda_informacion(Request $request){
         $num_cotizacion = $request->session()->get('num_cot');
 
+
         DB::table('cotizaciones')
         ->where('id',$num_cotizacion)
         ->update(['income'=>$request->income]);
@@ -285,9 +287,13 @@ class cotizacionesController extends AppBaseController
             ->delete();
         }
         
+
+        
         $productos = DB::table('productos')
                     ->where('id_empresa',$request->cliente)
+                    ->orderby('numero_parte')
                     ->get();
+
         $prod = '<option value="">Seleccione una opcion</option>';
         foreach ($productos as $p) {
             $prod .= '<option value="'.$p->id.'">'.$p->numero_parte.'</option>';
@@ -321,7 +327,7 @@ class cotizacionesController extends AppBaseController
 
     function agrega_producto(Request $request){
         $num_cotizacion = $request->session()->get('num_cot');
-
+/**
         $existe = DB::table('cotizacion_detalle')
                 ->where([['id_cotizacion',$num_cotizacion],['producto',$request->producto]])
                 ->selectraw('count(*) as existe')
@@ -330,7 +336,7 @@ class cotizacionesController extends AppBaseController
         if($existe[0]->existe > 0){
             return json_encode(1);
         }else{
-
+*/
         $num_cotizacion = $request->session()->get('num_cot');
 
         $info_producto  = DB::select('SELECT p.descripcion, p.tiempo_entrega,p.id_empresa, p.peso, ifnull(p.costo_material,0) as costo_material, ifnull(p.costo_produccion,0) as costo_produccion, p.costo_material,dibujo_nombre, revision,ifnull(d.id,0) as id
@@ -376,7 +382,7 @@ class cotizacionesController extends AppBaseController
             $arrayName = array('options' => $options,
                                 'clientes'=>$clientes );
              return json_encode($arrayName);
-         }
+         #}
 
     }
 
@@ -435,57 +441,73 @@ class cotizacionesController extends AppBaseController
 
     function enviar_cotizacion(Request $request){
         $num_cotizacion = $request->session()->get('num_cot');
+        $existe = cotizaciones_detalle::where('id_cotizacion',$num_cotizacion)->count();
+        if($existe==0){
+            return 0;
+        }else{
+            db::table('cotizaciones')
+                ->where('id',$num_cotizacion)
+                ->update(['enviado'=>$request->tipo]);
+            $request->session()->forget('num_cot');    
 
-        $cotizacion = DB::table('cotizaciones as c')
+            if($request->tipo==1){
+                $cotizacion = DB::table('cotizaciones as c')
                         ->leftjoin('income_terms as ic','ic.id','c.income')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
                         ->leftjoin('estados as e', 'e.id', 'cl.estado')
                         //->leftjoin('tbl_municipios as m','m.id','cl.municipio')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->where('c.id',$num_cotizacion)
-                        ->selectraw("c.*, ic.descripcion as descinco, ic.income as descripcionic, u.name, cl.nombre as nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
+                        ->selectraw("c.*,compra_nombre,correo_compra, ic.descripcion as descinco, ic.income as descripcionic, u.name, cl.nombre as nombre_corto,id_proveedor , correo_compra, compra_telefono, concat(cl.calle, ' ', cl.numero ,', ', cl.municipio,', ', e.estado) as direccion")
                         ->get();
-        $cotizacion = $cotizacion[0];
+                $cotizacion = $cotizacion[0];
 
-        $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
-                               from cotizacion_detalle as c
-                               left join productos as p on c.producto = p.id
-                               left join familias as f on f.id = p.familia 
-                               LEFT JOIN (
-                                            select p.id_producto, dibujo_nombre
-                                            from (
-                                                    SELECT MAX(d.id) as dibujo, id_producto
-                                                    from producto_dibujos  as d
-                                                    inner join cotizacion_detalle cd on cd.producto = d.id_producto
-                                                    WHERE cd.id_cotizacion = '.$num_cotizacion.'
-                                                    group by d.id_producto) a
-                                            inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
-                                where c.id_cotizacion = '.$num_cotizacion);
-         
-         db::table('cotizaciones')
-                ->where('id',$num_cotizacion)
-                ->update(['enviado'=>1]);
+                $detalle = db::select('select c.*, numero_parte, p.descripcion, tiempo_entrega, costo_material, costo_produccion, f.familia as nfamilia, dibujo_nombre
+                                       from cotizacion_detalle as c
+                                       left join productos as p on c.producto = p.id
+                                       left join familias as f on f.id = p.familia 
+                                       LEFT JOIN (
+                                                    select p.id_producto, dibujo_nombre
+                                                    from (
+                                                            SELECT MAX(d.id) as dibujo, id_producto
+                                                            from producto_dibujos  as d
+                                                            inner join cotizacion_detalle cd on cd.producto = d.id_producto
+                                                            WHERE cd.id_cotizacion = '.$num_cotizacion.'
+                                                            group by d.id_producto) a
+                                                    inner join producto_dibujos p on p.id = a.dibujo) d ON d.id_producto = p.id
+                                        where c.id_cotizacion = '.$num_cotizacion);
+                 
+                 db::table('cotizaciones')
+                        ->where('id',$num_cotizacion)
+                        ->update(['enviado'=>1]);
 
-         $envio = 1;
-         $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->setPaper('A4-L','landscape');
-         Storage::put('Cotizacion_'.$num_cotizacion.'.pdf', $pdf->output());
+                 $envio = 1;
+                 $pdf = \PDF::loadView('cotizaciones.cotizacion_envio',compact('cotizacion','detalle','envio'))->setPaper('A4-L','landscape');
+                 Storage::put('Cotizacion_'.$num_cotizacion.'.pdf', $pdf->output());
+                
+                $content = "Hola esto es una prueba";
+
+                $subjects = "Ventas Fluxmetals";
+                $to = "jacob.mendozaha@gmail.com";
+
+                #$to = $cotizacion->correo_compra;
+                $copia = 'salvador@altermedia.mx';
+                // here we add attachment, attachment must be an array
+                $attachment = [ 
+                 Storage::url('Cotizacion_'.$num_cotizacion.'.pdf'),
+                 ];
+
+
+                Mail::to($to)->cc($copia)->send(new EnvioFlux($subjects, $content,$attachment));
+                Storage::delete('Cotizacion_'.$num_cotizacion.'.pdf');
+                $request->session()->forget('num_cot');
+            }
+
+            return 1;
+        }
+
+
         
-        $content = "Hola esto es una prueba";
-
-        $subjects = "Ventas Fluxmetals";
-        $to = "jacob.mendozaha@gmail.com";
-
-        #$to = $cotizacion->correo_compra;
-        $copia = 'salvador@altermedia.mx';
-        // here we add attachment, attachment must be an array
-        $attachment = [ 
-         Storage::url('Cotizacion_'.$num_cotizacion.'.pdf'),
-         ];
-
-
-        Mail::to($to)->cc($copia)->send(new EnvioFlux($subjects, $content,$attachment));
-        Storage::delete('Cotizacion_'.$num_cotizacion.'.pdf');
-        $request->session()->forget('num_cot');
 
         return redirect('/historiaCotizacion');
          
@@ -504,6 +526,8 @@ class cotizacionesController extends AppBaseController
     }
 
     function elimina_cotizacion(Request $request){
+        $num_cotizacion = $request->session()->get('num_cot');
+
         db::table('cotizaciones')
         ->where('id',$request->id)
         ->delete();
@@ -512,12 +536,16 @@ class cotizacionesController extends AppBaseController
         ->where('id_cotizacion',$request->id)
         ->delete();
 
+        if($request->id==$num_cotizacion){
+            $request->session()->forget('num_cot');
+        }
+
         $cotizaciones = db::table('cotizaciones as c')
                         ->leftjoin('users as u','u.id','c.vendedor')
                         ->leftjoin('clientes as cl', 'cl.id','c.cliente')
                         ->leftjoin('ordenes_compras as o','o.id_cotizacion','c.id')
                         ->selectraw('c.*, ifnull(o.id,0) as idot, name, cl.nombre_corto, cl.compra_nombre, cl.correo_compra')
-                        ->where('enviado','>',0)
+                        ->whereIn('enviado',[1,2])
                         ->get();
 
         $options =  view('cotizaciones.table',compact('cotizaciones'))->render();
@@ -559,10 +587,7 @@ class cotizacionesController extends AppBaseController
         return json_encode($options);
     }
 
-    function guardar_cotizacion(Request $request){
-         $request->session()->forget('num_cot');
-         return redirect('historiaCotizacion');
-    }
+
 
     function revive_cotizacion(Request $request){
         $request->session()->put('num_cot',$request->id);

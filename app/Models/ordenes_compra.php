@@ -64,19 +64,20 @@ class ordenes_compra extends Model
     ];
 
     function ordenesCompra(){
-     $var = db::select('select c.*, cl.nombre_corto , count(d.producto) as cantidad, sum(d.cantidad * costo_produccion) as total
+     $var = db::select('select c.id, c.orden_compra, c.fecha , cl.nombre_corto , ifnull(count(d.producto),0) as cantidad ,c.tipo
                         from ordenes_compras as c 
-                        inner join ordencompra_detalle d on d.id_orden = c.id
-                        left join productos as p on d.producto = p.id
-                        inner join clientes as cl on cl.id = c.cliente
-                        group by c.id');
+                        left join ordencompra_detalle d on d.id_orden = c.id 
+                        left join productos as p on d.producto = p.id 
+                        left join clientes as cl on cl.id = c.cliente 
+                        group BY c.id, c.orden_compra, c.fecha , cl.nombre_corto,c.tipo');
+     
 
-     $var = db::select('select c.*, cl.nombre_corto , count(d.cantidad) as cantidad
+     /*$var = db::select('select c.*, cl.nombre_corto , count(d.cantidad) as cantidad
                         from ordenes_compras as c 
                         inner join ordencompra_detalle d on d.id_orden = c.id
                         left join productos as p on d.producto = p.id
                         inner join clientes as cl on cl.id = c.cliente
-                        group by c.id');
+                        group by c.id');*/
 
      $productos = db::table('ordenes_compras as c')
                      ->join('ordencompra_detalle as d','d.id_orden','c.id')
@@ -336,7 +337,7 @@ class ordenes_compra extends Model
                ->join('plantas as p','p.id','d.planta')
                ->where([['o.tipo',3],['d.planta','>',0],['o.tipo','!=',4]])
                ->whereNull('enviado_planta')
-               ->groupBy('d.planta')
+               ->groupBy('d.planta','p.nombre')
                ->selectraw('d.planta, count(*) conteo, p.nombre')
                ->get();
                
@@ -358,7 +359,12 @@ class ordenes_compra extends Model
     }
 
     function guarda_seguimiento_subprocesos($filtros){
-        $existe = db::table('seguimiento_produccion')
+
+
+
+          //  dd($filtros);
+           
+       $existe = db::table('seguimiento_produccion')
                     ->where([['id_orden',$filtros->id_orden],['id_detalle',$filtros->id_detalle],['id_subproceso',$filtros->id_sub]])
                     ->count();
         
@@ -369,6 +375,7 @@ class ordenes_compra extends Model
                 ->update([$filtros->campo=>$filtros->valor]);
                 
         }else{
+
             db::table('seguimiento_produccion')
                 ->insert(['id_orden'=>$filtros->id_orden,
                           'id_detalle'=>$filtros->id_detalle,
@@ -377,7 +384,10 @@ class ordenes_compra extends Model
                           $filtros->campo=>$filtros->valor
                          ]);
         }
+        
       #  $var = db::table('seguimiento_produccion')->get();
         #dd($var);
+
+        return 1; 
     }
 }

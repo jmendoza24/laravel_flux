@@ -1,23 +1,26 @@
-  <table class="table display nowrap table-striped table-bordered scroll-horizontal" id="prod_materiales">  
+<style type="text/css">
+  #prod_materiales td{padding: 3px;}
+</style>
+  <table class="table display nowrap table-striped table-bordered" id="prod_materiales">  
     <thead>
-      <tr>
+      <tr style="background-color:#427874;color:white">
         <th>Forma</th>
         <th>Espesor (Thickness)</th>
         <th>Ancho (Wide)</th>
         <th>Altura (Height)</th>
         <th>Peso por Distancia</th>
-        <th>Precio</th>
+        <th>UDS/Lbs</th>
         <th></th>
       </tr>
     </thead>   
     <tbody>
     <?php 
-      $tipos12  = array(1,2);
+      $tipos12  = array(1,2); 
       $tipo3414 = array(3,4,14);
       $tipo56 = array(5,6);
       $tipo78910 = array(7,8,9,10);
       $tipo1112 = array(11,12);
-      $tipo13 = array(13);
+      $tipo13 = array(13); 
     ?>
 
       @foreach($materialesformas  as $mat)
@@ -89,7 +92,7 @@
               @endif
             @endforeach
           </select>
-        <td><input  type="number" id="precio{{ $mat->id}}" {{ $display8 }}  style="width: 110px;" class="form-control" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'precio')" value="{{ $mat->precio}}"></td>
+        <td><input  type="text" id="precio{{ $mat->id}}" {{ $display8 }}  style="width: 110px;" class="form-control currency" step="any" min="0" onchange="guarda_materialforma({{ $mat->id}},'precio')" value="{{ $mat->precio}}"></td>
         <td>
           <span class="btn btn-float btn-outline-danger btn-round" onclick="elimina_producforma({{ $mat->id }},{{ $mat->id_producto }})"><i class="fa fa-trash"></i></span>
         </td>
