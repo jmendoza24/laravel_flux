@@ -1,7 +1,3 @@
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <ul class="nav nav-tabs nav-underline no-hover-bg nav-justified">
   <li class="nav-item">
@@ -222,7 +218,9 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a  data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial({{ $equipos->id }},1)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</a>
+
+                     <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',1,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</span>
+
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_historial">
@@ -235,7 +233,8 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial({{ $equipos->id }},2)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Preventivo</a>
+                     <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',2,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Preventivo</a>
+
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histPrev">
@@ -248,7 +247,9 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial({{ $equipos->id }},3)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Correctivo</a>
+
+                     <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',3,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Correctivo</a>
+
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histCorrect">
@@ -276,37 +277,3 @@
   <i class="fa fa-check-square-o"></i> Guardar
 </button>
 </div>
-@endif
-@if($editar ==1)
-<div class="modal fade text-left" id="equipo_historials" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel17"></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-</form>
-</form>
-
-          <form method="post" enctype="multipart/form-data"  class="form-control" id="documentos_formUpload">
-              {!! csrf_field() !!}
-          <div id="campos_equipos">
-            <div class="modal-body">
-              @include('equipo_historials.fields')
-              <input type="hidden" name="idp" id="idp" value="{{$equipos->id}}">
-            </div>
-
-
-      </form>
-      
-      </div>
-    </div>
-  </div>
-@else
-
-
-
-
-  @endif

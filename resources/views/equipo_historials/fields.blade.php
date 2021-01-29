@@ -1,10 +1,10 @@
-@if(!empty($eqHistofields->id))
-<div class="modal-body">
-@endif
-<input type="text" name="id_tipo" id="id_tipo" value="{{ $eqHistofields->historial_tipo}}">
+<form enctype="multipart/form-data" id="catalogos_forma" action="">
+  @csrf
+<input type="hidden" name="tipo" id="id_tipo" value="{{ $eqHistofields->tipo}}">
+<input type="hidden" name="id" id="id_historia" value="{{ $eqHistofields->id}}">
+<input type="hidden" name="historial_tipo" id="historia_tipo" value="{{ $eqHistofields->historial_tipo}}">
+<input type="hidden" name="id_catalogo" value="1" id="id_catalogo">
 
-<input type="text" name="id_historia" id="id_historia" value="{{ $eqHistofields->id}}">
-<input type="text" name="historia_tipo" id="historia_tipo" value="{{ $eqHistofields->historial_tipo}}">
 <div class="row">
   <div class="col-md-6">
       <div class="form-group row">
@@ -14,11 +14,11 @@
         </div>
       </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6"> 
       <div class="form-group row">
         <div class="col-md-12">
             <label>Fecha:</label>
-        <input type="text" name="fecha" id="fecha" class="form-control pickadate-format" value="{{ $eqHistofields->fecha}}" >
+            <input type="date" name="fecha" id="fecha" class="form-control" value="{{ substr($eqHistofields->fecha,0,10) }}">
         </div>
       </div>
   </div>      
@@ -27,8 +27,8 @@
   <div class="col-md-6">
       <div class="form-group row">
         <div class="col-md-12">
-            <label>{{ utf8_encode("Descripci?:") }}</label>
-            <textarea name="descripcion" id="descripcion" placeholder="{{ utf8_encode("Descripci?:") }}" class="form-control">{{ $eqHistofields->descripcion}}</textarea>
+            <label>{{ utf8_encode("Descripción:") }}</label>
+            <textarea name="descripcion" id="descripcion" placeholder="{{ utf8_encode("Descripción:") }}" class="form-control">{{ $eqHistofields->descripcion}}</textarea>
         </div>
       </div>
   </div>       
@@ -36,7 +36,7 @@
       <div class="form-group row">
         <div class="col-md-12">
             <label>Fecha vencimiento:</label>
-        <input type="text" name="vencimiento" id="vencimiento" class="form-control pickadate-format" value="{{ $eqHistofields->vencimiento}}">
+            <input type="date" name="vencimiento" id="vencimiento" class="form-control" value="{{ substr($eqHistofields->vencimiento,0,10)}}">
         </div>
       </div>
   </div>
@@ -53,12 +53,14 @@
 <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-4 label-control" for="userinput2">
+          <label class="col-md-12 label-control" for="userinput2">
+
             @if($eqHistofields->documento1 != '') <a id="doc1" href="{{ $eqHistofields->documento1}}" target="_blank"> <span><i class="fa fa-file-pdf-o"></i></span></a>@endif
             Documento 1: 
           </label>
           <div class="col-md-12">
-                <input id="doc_prev1" name="doc_prev1" type="file" class="form-control" >
+                <input id="doc_prev1" name="documento1" type="file" class="form-control" >
+
           </div>
         </div>   
     </div>
@@ -77,27 +79,3 @@
 
 
         
-@if(!empty($eqHistofields->id) && $a=1)
-
-
-<div class="modal-footer">
-  <button type="button" class="btn grey btn-secondary" data-dismiss="modal">Cancelar</button>
-  <button type="button" class="btn btn-primary" onclick="actualiza_historia({{$eqHistofields->id}},{{ $eqHistofields->historial_tipo}})">Guardar</button>
-</div>
-@else
-
-
-          <div class="modal-footer">
-              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-              <button type="button"  class="btn btn-primary" onclick="guarda_historial({{$equipos->id}})">Guardar</button>
-            </div>
-
-@endif
-
-@if($a=0)
-
-          <div class="modal-footer">
-              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-              <button type="button"  class="btn btn-primary" onclick="guarda_historial({{$equipos->id}})">Guardar</button>
-            </div>
-@endif

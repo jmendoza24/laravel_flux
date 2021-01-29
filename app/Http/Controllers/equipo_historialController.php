@@ -58,8 +58,8 @@ class equipo_historialController extends AppBaseController
      */
     public function guarda_historial2(Request $request){
         
-           $file_img = $request->file('doc_prev1');
-           $file_img2 = $request->file('doc_prev2');
+           $file_img = $request->file('documento1');
+           $file_img2 = $request->file('documento2');
 
            if(!empty($file_img)){
                   $img = Storage::url($file_img->store('documentos', 'public'));
@@ -161,6 +161,8 @@ class equipo_historialController extends AppBaseController
         $a=1;
         
         $options = view("equipo_historials.fields",compact('eqHistofields','a'))->render();    
+        
+        
         return json_encode($options);
     
     }
@@ -243,8 +245,8 @@ class equipo_historialController extends AppBaseController
         }else if($request->historia_tipo==2){
             $equipoHistPrev = $equipoHistorials;
             $options = view("equipo_historials.table_preventivo",compact('equipoHistPrev'))->render();  
-        }else{
-
+        }else{ 
+            
             $equipoHistCorrect = $equipoHistorials;
             $options = view("equipo_historials.table_correctivo",compact('equipoHistCorrect'))->render();  
         }

@@ -23,6 +23,7 @@
       <div class="form-group">
         <label for="lastName4">Piezas : </label>
         <select class="form-control custom-select required" style="width: 100%;"name="producto" id="producto">
+
             <option value="">Seleccione una opcion</option>
             @foreach($productos as $prod)
             <option value="{{ $prod->id}}" 

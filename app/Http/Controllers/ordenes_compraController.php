@@ -180,6 +180,7 @@ class ordenes_compraController extends AppBaseController
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $clientes = clientes::get();
+
         $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get(); 
 
 
@@ -193,6 +194,7 @@ class ordenes_compraController extends AppBaseController
         }
 
         return view('ordenes_compras.show',compact('estatus','ordenesCompra','detalle','income','logisticas','clientes','productos'));
+
     }
 
     public function edit($id){

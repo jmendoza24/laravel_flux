@@ -201,6 +201,11 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 
 	
 
+	Route::get('/opciones_catalogo', 'CatalogosController@opciones_catalogo');
+	Route::post('/guarda_catalogo', 'CatalogosController@guarda_catalogo');
+	Route::get('/elimina_catalogo', 'CatalogosController@elimina_catalogo');
+
+
 });
 
 

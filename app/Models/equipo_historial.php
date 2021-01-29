@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class equipo_historial extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
 
     public $table = 'equipo_historials';
     

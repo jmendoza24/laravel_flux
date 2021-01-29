@@ -120,6 +120,7 @@
           <td style="text-align: right;">${{ number_format($det->costo_material,2)}}</td>
           <td style="text-align: right;">${{ number_format($det->costo_produccion,2)}}</td>
           <td>            
+
               <input type="date" id="fecha_entrega{{$det->id}}" {{ $ordenesCompra->tipo==3?'disabled':'' }}   class=".datepicker form-control" value="{{$det->fecha_entrega}}" onblur="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
           </td>
 

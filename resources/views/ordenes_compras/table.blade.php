@@ -28,15 +28,25 @@
                 <td style="text-align: center;">{{ $ordenesCompra->cantidad}}</td>
 
                 <td>
+<<<<<<< HEAD
+=======
+                    
+>>>>>>> e4f8d9bcb30fcac4784edf8ddd2b1308d364a7ad
                     @if($ordenesCompra->tipo ==1)
                      Por validar
                     @elseif($ordenesCompra->tipo==2)
                     Por asignar
                     @elseif($ordenesCompra->tipo==3)
+<<<<<<< HEAD
                     En enviar
                     @elseif($ordenesCompra->tipo==4)
                       En seguimiento
 
+=======
+                    Por enviar
+                    @elseif($ordenesCompra->tipo==4)
+                    Proceso
+>>>>>>> e4f8d9bcb30fcac4784edf8ddd2b1308d364a7ad
                     @endif
                 </td>
                 <td>
@@ -74,8 +84,12 @@
                 @elseif($ordenesCompra->tipo==3)
                 Por enviar
                 @elseif($ordenesCompra->tipo==4)
+<<<<<<< HEAD
                  En seguimiento
 
+=======
+                Proceso
+>>>>>>> e4f8d9bcb30fcac4784edf8ddd2b1308d364a7ad
                 @endif
             </td>
             <td>
