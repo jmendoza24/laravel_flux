@@ -1,30 +1,18 @@
-<!-- Id Field -->
-<div class="form-group">
-    {!! Form::label('id', 'Id:') !!}
-    <p>{!! $puesto->id !!}</p>
-</div>
-
 <!-- Puesto Field -->
 <div class="form-group">
     {!! Form::label('puesto', 'Puesto:') !!}
-    <p>{!! $puesto->puesto !!}</p>
-</div>
-
-<!-- Descripcion Field -->
-<div class="form-group">
-    {!! Form::label('descripcion', 'Descripcion:') !!}
-    <p>{!! $puesto->descripcion !!}</p>
+    <p>{!! $puestos->puesto !!}</p>
 </div>
 
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', 'Created At:') !!}
-    <p>{!! $puesto->created_at !!}</p>
+    <p>{!! $puestos->created_at !!}</p>
 </div>
 
 <!-- Updated At Field -->
 <div class="form-group">
     {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{!! $puesto->updated_at !!}</p>
+    <p>{!! $puestos->updated_at !!}</p>
 </div>
 

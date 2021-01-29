@@ -19,6 +19,7 @@ use Sesion;
 use view;
 use PDF;
 
+
 class cotizacionesController extends AppBaseController
 {
     /** @var  cotizacionesRepository */

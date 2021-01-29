@@ -42,7 +42,7 @@
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
-            <input type="number" min="0" name="numero_log" id="numero_log" class="form-control" value="{{ $logisticas_fields->numero}}" placeholder='Numero'>
+            <input type="number" min="0" name="numero_log" id="numero_log" class="form-control" value="{{ $logisticas_fields->numero}}" placeholder='Número'>
           </div>
         </div>
       </div>      
@@ -53,7 +53,7 @@
         <div class="form-group row">
           <div class="col-md-12">
           <select class="form-control" name="pais_log" style="width: 100%;" id="pais_log" onchange="get_estados('pais_log','estado_log')">
-            <option value="">Pais</option>
+            <option value="">País</option>
             @foreach($paises as $pais)
               <option value="{{ $pais->id}}" 
                 @if(!empty($logisticas_fields->pais))
@@ -91,7 +91,7 @@
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">
-            <input type="text" name="cp_log" id="cp_log" class="form-control" value="{{ $logisticas_fields->cp}}" placeholder='Codigo postal'>
+            <input type="text" name="cp_log" id="cp_log" class="form-control" value="{{ $logisticas_fields->cp}}" placeholder='Código postal'>
           </div>
         </div>
       </div>            
@@ -100,7 +100,7 @@
       <div class="col-md-6">
         <div class="form-group row">
           <div class="col-md-12">        
-            <input type="text" name="telefono_log" id="telefono_log" class="form-control phone-inputmask" value="{{ $logisticas_fields->telefono}}" placeholder='Telefono'>
+            <input type="text" name="telefono_log" id="telefono_log" class="form-control phone-inputmask" value="{{ $logisticas_fields->telefono}}" placeholder='Teléfono'>
           </div>
         </div>
       </div>

@@ -1,10 +1,10 @@
+
 <table class="table table-striped table-bordered zero-configuration" id="equipoHistorials-table">
     <thead>
         <tr style="background-color:#427874;color:white">
             <th>Responsable</th>
             <th>Descripción</th>
             <th>Vencimiento</th>
-            <th>Activo</th>
             <th colspan=""></th>
         </tr>
     </thead>

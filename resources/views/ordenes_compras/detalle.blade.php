@@ -1,6 +1,8 @@
+ 
  <div class="row">
     <div class="col-md-12">
       <h5>Datos del cliente</h5>
+      <h5>{{ $estatus }}</h5>
       <hr>
     </div>
     <table style="width: 100%;" border="0">
@@ -118,8 +120,13 @@
           <td style="text-align: right;">${{ number_format($det->costo_material,2)}}</td>
           <td style="text-align: right;">${{ number_format($det->costo_produccion,2)}}</td>
           <td>            
-            <input type="date" id="fecha_entrega{{$det->id}}" {{ $ordenesCompra->tipo==3?'disabled':'' }}   class="form-control" value="{{$det->fecha_entrega}}" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
+
+              <input type="date" id="fecha_entrega{{$det->id}}" {{ $ordenesCompra->tipo==3?'disabled':'' }}   class=".datepicker form-control" value="{{$det->fecha_entrega}}" onblur="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">
           </td>
+
+
+
+
           <td>
             <textarea class="form-control" style="width: 200px;" {{ $ordenesCompra->tipo==3?'disabled':'' }}  id="notas_det" onchange="actualiza_producto_occ2({{ $det->id}},{{ $ordenesCompra->id }})">{{$det->nota_det}}</textarea>
           </td>

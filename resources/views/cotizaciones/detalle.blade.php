@@ -6,7 +6,7 @@
         <th>Familia</th>
         <th>Id Dibujo</th> 
         <th>Cantidad</th>
-        <th>Tiempo entrega (dias)</th>
+        <th>Tiempo entrega (días)</th>
         <th>Costo unitario</th>
         <th>Precio unitario</th>
         <th></th>

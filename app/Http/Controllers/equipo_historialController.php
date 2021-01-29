@@ -158,12 +158,31 @@ class equipo_historialController extends AppBaseController
                             ->where('id',$request->id_historia)
                             ->get();
         $eqHistofields = $eqHistofields[0];
+        $a=1;
+        
+        $options = view("equipo_historials.fields",compact('eqHistofields','a'))->render();    
         
         
-        $options = view("equipo_historials.fields",compact('eqHistofields'))->render();    
         return json_encode($options);
-
+    
     }
+
+
+
+    public function show_historia2(Request $request){
+        $eqHistofields = DB::table('equipo_historials')
+                            ->where('id',$request->id_historia)
+                            ->get();
+        $eqHistofields = $eqHistofields[0];
+        
+        $a=0;
+        $options = view("equipo_historials.fields",compact('eqHistofields','a'))->render();    
+        return json_encode($options);
+    
+    }
+
+
+    
 
     /**
      * Update the specified equipo_historial in storage.
@@ -227,7 +246,7 @@ class equipo_historialController extends AppBaseController
             $equipoHistPrev = $equipoHistorials;
             $options = view("equipo_historials.table_preventivo",compact('equipoHistPrev'))->render();  
         }else{ 
-
+            
             $equipoHistCorrect = $equipoHistorials;
             $options = view("equipo_historials.table_correctivo",compact('equipoHistCorrect'))->render();  
         }

@@ -1,3 +1,4 @@
+
 <ul class="nav nav-tabs nav-underline no-hover-bg nav-justified">
   <li class="nav-item">
     <a class="nav-link active" id="active-tab32" data-toggle="tab" href="#active32" aria-controls="active32"
@@ -73,17 +74,122 @@
       <div class="row">
        <div class="col-md-6">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="userinput1">Base</label>
+            <label class="col-md-3 label-control" for="userinput1">Ubicación en Planta</label>
             <div class="col-md-9">
-              {!! Form::text('calibracion', null, ['class' => 'form-control']) !!}
+              {!! Form::text('base', null, ['class' => 'form-control']) !!}
             </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="userinput1">Calibración</label>
+            <label class="col-md-3 label-control" for="userinput1">Ultima Calibración</label>
             <div class="col-md-9">
-              {!! Form::text('base', null, ['class' => 'form-control']) !!}
+
+                <input disabled="disabled" type="text" name="calibracion"  @if($valida==1)   @if($calibracion=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($calibracion)) }}"  @endif     @else value=""  @endif  id="calibracion" class="form-control">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+       <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Planta</label>
+            <div class="col-md-9">
+               <select class="form-control select2" id="planta" name="planta" style="width: 100%;">
+                <option value="0">Seleccione...</option>
+                @foreach($plantas as $planta)
+                  <option value="{{$planta->id}}" @if($valida==1) {{ ($equipos->planta==$planta->id) ? 'selected' : '' }}  @endif   >{{$planta->nombre}}</option>
+                @endforeach
+              </select>
+               </div>
+          </div>
+        </div>
+     
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Preventivo</label>
+            <div class="col-md-9">
+
+                              <input disabled="disabled" type="text" name="preventivo"  @if($valida==1)   @if($preventivo=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($preventivo)) }}"  @endif     @else value=""  @endif  id="correctivo" class="form-control">
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+       <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1"></label>
+            <div class="col-md-9">
+            
+            </div>
+          </div>
+        </div>
+     
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Correctivo</label>
+            <div class="col-md-9">
+
+                <input disabled="disabled" type="text" name="correctivo"  @if($valida==1)   @if($correctivo=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($correctivo)) }}"  @endif     @else value=""  @endif  id="correctivo" class="form-control">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+       <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1"></label>
+            <div class="col-md-9">
+            
+            </div>
+          </div>
+        </div>
+     
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Proximo Mtto.</label>
+            <div class="col-md-9">
+              <input type="text" name="mantenimiento"  @if($valida==1) value="{{ date_format($equipos->mantenimiento, 'Y-m-d') }}" @else value="" @endif  id="mantenimiento" class="datepicker form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+       <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1"></label>
+            <div class="col-md-9">
+            
+            </div>
+          </div>
+        </div>
+     
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="userinput1">Activo</label>
+            <div class="col-md-9">
+
+             <select class="form-control" id="activo" name="activo">
+                <option value="">Seleccione una opción:</option>
+                  @if($editar ==1)
+
+                <option value="1" {{ ($equipos->activo==1) ? 'selected' : '' }}>Si</option>
+                <option value="0" {{ ($equipos->activo==0) ? 'selected' : '' }}>No</option>
+                @else
+
+                <option value="1" >Si</option>
+                <option value="0" >No</option>
+                @endif
+            </select>
             </div>
           </div>
         </div>
@@ -112,7 +218,9 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
+
                      <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',1,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</span>
+
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_historial">
@@ -126,6 +234,7 @@
                   <h1 class="pull-right">
                     <br>
                      <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',2,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Preventivo</a>
+
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histPrev">
@@ -138,7 +247,9 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
+
                      <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',3,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Correctivo</a>
+
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histCorrect">
@@ -154,6 +265,7 @@
   @endif
 
 </div>                    
+@if($editar ==1)
 
 <div class="form-actions right">
   <a href="{{ route('equipos.index') }}">

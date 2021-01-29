@@ -98,9 +98,75 @@ class ordenes_compraController extends AppBaseController
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
 
-        return view('ordenes_compras.create',compact('ordenesCompra','detalle','income','clientes','productos','logisticas'));
+        $pro = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get()->count();
+       // $prod=$prod[0];  
+        if($pro==0){
+          $estatus="";
+        }else{
+          $estatus="Orden de trabajo en curso";
+        }
+
+  
+        return view('ordenes_compras.create',compact('estatus','ordenesCompra','detalle','income','clientes','productos','logisticas'));
 
     }
+
+
+
+
+
+
+
+
+    public function limpiar(Request $request){
+
+
+         $logistica = new logistica;
+        $orden = new ordenes_compra;
+
+             
+            $fecha = date('Y-m-d');
+
+            $id = DB::table('ordenes_compras')
+                    ->insertGetId(['id_cotizacion'=>0,
+                                   'cliente'=>0,
+                                   'notas'=>'',
+                                   'income'=>0,     
+                                   'termino_pago'=>0,
+                                   'vendedor'=>auth()->id(),
+                                   'fecha' => $fecha,
+                                   'orden_compra'=>'',
+                                   'lugar'=>'',
+                                   'tipo'=>1]);       
+            $request->session()->put('num_orden',$id);
+            $num_orden = $request->session()->get('num_orden');
+
+         
+        
+
+        $ordenesCompra = $orden->header_orden($num_orden);
+        $detalle = $orden->detalle_orden($num_orden,0);
+       # dd($detalle);
+        $income = DB::table('income_terms')->get();
+        $clientes = clientes::get();
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get();  
+        
+        $logistica->id_cliente = $ordenesCompra->cliente;
+        $logisticas = $logistica->cliente_logisticas($logistica);
+
+        $pro = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get()->count();
+       // $prod=$prod[0];  
+        if($pro==0){
+          $estatus="";
+        }else{
+          $estatus="Orden de trabajo en curso";
+        }
+
+  
+        return view('ordenes_compras.create',compact('estatus','ordenesCompra','detalle','income','clientes','productos','logisticas'));
+
+    }
+
 
     
     public function show($id){
@@ -114,9 +180,21 @@ class ordenes_compraController extends AppBaseController
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $clientes = clientes::get();
-        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get();  
 
-        return view('ordenes_compras.show',compact('ordenesCompra','detalle','income','logisticas','clientes','productos'));
+        $productos = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get(); 
+
+
+
+        $pro = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get()->count();
+       // $prod=$prod[0];  
+        if($pro==0){
+          $estatus="";
+        }else{
+          $estatus="Orden de trabajo en curso";
+        }
+
+        return view('ordenes_compras.show',compact('estatus','ordenesCompra','detalle','income','logisticas','clientes','productos'));
+
     }
 
     public function edit($id){
@@ -130,7 +208,9 @@ class ordenes_compraController extends AppBaseController
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
 
-        return view('ordenes_compras.edit',compact('detalle','ordenesCompra','income','plantas','logisticas'));
+        $estatus="";
+
+        return view('ordenes_compras.edit',compact('estatus','detalle','ordenesCompra','income','plantas','logisticas'));
     }
 
     
@@ -215,7 +295,17 @@ class ordenes_compraController extends AppBaseController
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $income = DB::table('income_terms')->get();
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
+
+
+        $pro = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get()->count();
+       // $prod=$prod[0];  
+        if($pro==0){
+          $estatus="";
+        }else{
+          $estatus="Orden de trabajo en curso";
+        }
+
+        $options =  view('ordenes_compras.detalle',compact('estatus','ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
 
         return json_encode($options);
     }
@@ -244,7 +334,17 @@ class ordenes_compraController extends AppBaseController
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $income = DB::table('income_terms')->get();
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
+
+
+        $pro = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get()->count();
+       // $prod=$prod[0];  
+        if($pro==0){
+          $estatus="";
+        }else{
+          $estatus="Orden de trabajo en curso";
+        }
+
+        $options =  view('ordenes_compras.detalle',compact('estatus','ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
 
         return json_encode($options);
     }
@@ -276,7 +376,16 @@ class ordenes_compraController extends AppBaseController
         $logistica->id_cliente = $ordenesCompra->cliente;
         $logisticas = $logistica->cliente_logisticas($logistica);
         $income = DB::table('income_terms')->get();
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
+
+
+        $pro = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get()->count();
+       // $prod=$prod[0];  
+        if($pro==0){
+          $estatus="";
+        }else{
+          $estatus="Orden de trabajo en curso";
+        }
+        $options =  view('ordenes_compras.detalle',compact('estatus','ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
 
         return json_encode($options);
 
@@ -306,7 +415,17 @@ class ordenes_compraController extends AppBaseController
         $logisticas = $logistica->cliente_logisticas($logistica);
         $income = DB::table('income_terms')->get();
 
-        $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
+
+        $pro = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get()->count();
+       // $prod=$prod[0];  
+        if($pro==0){
+          $estatus="";
+        }else{
+          $estatus="Orden de trabajo en curso";
+        }
+
+
+        $options =  view('ordenes_compras.detalle',compact('estatus','ordenesCompra','detalle','editar','plantas','nuevo','clientes','productos','logisticas','income'))->render();
         return json_encode($options);
     }
 
@@ -551,7 +670,6 @@ class ordenes_compraController extends AppBaseController
                               'producto'=>$request->producto_ot,
                               'dibujo'=>$info_producto->id,
                               'cantidad'=>1,
-                              'fecha_entrega'=>date('Y-m-d'),
                               'costo'=>$info_producto->costo_produccion,
                               'hijo'=>0
                             ]); 
@@ -570,7 +688,19 @@ class ordenes_compraController extends AppBaseController
             $logistica->id_cliente = $ordenesCompra->cliente;
             $logisticas = $logistica->cliente_logisticas($logistica);   
             $income = DB::table('income_terms')->get();
-            $options =  view('ordenes_compras.detalle',compact('ordenesCompra','detalle','editar','plantas','clientes','nuevo','productos','logisticas','income'))->render();
+
+
+        $pro = productos::where('id_empresa',$ordenesCompra->cliente)->orderby('numero_parte')->get()->count();
+       // $prod=$prod[0];  
+        if($pro==0){
+          $estatus="";
+        }else{
+          $estatus="Orden de trabajo en curso";
+        }
+
+
+
+            $options =  view('ordenes_compras.detalle',compact('estatus','ordenesCompra','detalle','editar','plantas','clientes','nuevo','productos','logisticas','income'))->render();
             return json_encode($options);
 
         }
@@ -626,7 +756,7 @@ class ordenes_compraController extends AppBaseController
 
         db::update('update ordenes_compras  o
                    inner join ordencompra_detalle  d on d.id_orden= o.id
-                   set enviado_planta = 1
+                   set enviado_planta = 1 , tipo=4
                    where o.tipo = 3 and d.planta = '.$request->id_planta.' and o.tipo != 4');
 
         $orden = new ordenes_compra;
@@ -734,6 +864,38 @@ class ordenes_compraController extends AppBaseController
 
     }
 
+
+
+
+
+    function carga_files_produccion_ac(Request $request){
+        $filtro = new ordenes_compra;
+
+        $arreglo = $request->all();
+                
+        $filtro->id_producto = $request->id_producto;
+        $filtro->id_proceso  = $request->id_proceso;
+        $filtro->id_detalle  = $request->id_detalle;
+        $filtro->id_orden    = $request->id_orden;
+
+        $images_produccion = db::table('seguimiento_produccion_files')
+                            ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso],['tipo',1],['id_orden',$request->id_orden]])
+                            ->get();
+        $files_produccion = db::table('seguimiento_produccion_files as f')
+                            ->join('users as u', 'u.id','f.id_usuario')
+                            ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso],['f.tipo',2],['id_orden',$request->id_orden]])
+                            ->selectraw('f.*, u.name as user_name')
+                            ->get();
+        $seguimiento_calidad = db::table('seguimiento_calidad')
+                              ->where([['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso],['id_orden',$request->id_orden]])
+                              ->get();
+        $seguimiento_calidad = $seguimiento_calidad[0];
+        $options = view('ordenes_compras.informe_seguimiento',compact('seguimiento_calidad', 'filtro','files_produccion','images_produccion'))->render();
+        
+        return $options;
+
+    }
+
     function seguimiento_calidad_proceso(Request $request){
         $existe = db::table('seguimiento_calidad')
                     ->where([['id_orden',$request->id_orden],['id_detalle',$request->id_detalle],['id_proceso',$request->id_proceso]])
@@ -766,5 +928,21 @@ class ordenes_compraController extends AppBaseController
       $options = view('ordenes_compras.productos_occ',compact('productos'))->render();
       return json_encode($options);
      
+    }
+
+
+
+     public function carga_files_borra(Request $request)
+    {
+
+
+              db::table('seguimiento_produccion_files')
+            ->where('id',$request->id)
+            ->delete();
+            
+
+        return 1;
+
+
     }
 }

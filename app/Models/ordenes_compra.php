@@ -359,7 +359,12 @@ class ordenes_compra extends Model
     }
 
     function guarda_seguimiento_subprocesos($filtros){
-        $existe = db::table('seguimiento_produccion')
+
+
+
+          //  dd($filtros);
+           
+       $existe = db::table('seguimiento_produccion')
                     ->where([['id_orden',$filtros->id_orden],['id_detalle',$filtros->id_detalle],['id_subproceso',$filtros->id_sub]])
                     ->count();
         
@@ -370,6 +375,7 @@ class ordenes_compra extends Model
                 ->update([$filtros->campo=>$filtros->valor]);
                 
         }else{
+
             db::table('seguimiento_produccion')
                 ->insert(['id_orden'=>$filtros->id_orden,
                           'id_detalle'=>$filtros->id_detalle,
@@ -378,7 +384,10 @@ class ordenes_compra extends Model
                           $filtros->campo=>$filtros->valor
                          ]);
         }
+        
       #  $var = db::table('seguimiento_produccion')->get();
         #dd($var);
+
+        return 1; 
     }
 }

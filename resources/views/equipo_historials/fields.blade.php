@@ -4,6 +4,7 @@
 <input type="hidden" name="id" id="id_historia" value="{{ $eqHistofields->id}}">
 <input type="hidden" name="historial_tipo" id="historia_tipo" value="{{ $eqHistofields->historial_tipo}}">
 <input type="hidden" name="id_catalogo" value="1" id="id_catalogo">
+
 <div class="row">
   <div class="col-md-6">
       <div class="form-group row">
@@ -53,29 +54,28 @@
       <div class="col-md-6">
         <div class="form-group row">
           <label class="col-md-12 label-control" for="userinput2">
+
             @if($eqHistofields->documento1 != '') <a id="doc1" href="{{ $eqHistofields->documento1}}" target="_blank"> <span><i class="fa fa-file-pdf-o"></i></span></a>@endif
             Documento 1: 
           </label>
           <div class="col-md-12">
                 <input id="doc_prev1" name="documento1" type="file" class="form-control" >
+
           </div>
         </div>   
     </div>
     <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-md-12 label-control" for="userinput2">
+          <label class="col-md-4 label-control" for="userinput2">
             @if($eqHistofields->documento2 != '') <a id="doc2" href="{{ $eqHistofields->documento2}}" target="_blank"> <span><i class="fa fa-file-pdf-o"></i></span></a>@endif
 
           Documento 2:</label>
           <div class="col-md-12">
-                <input id="doc_prev2" name="documento2" type="file"  class="form-control" >
+                <input id="doc_prev2" name="doc_prev2" type="file"  class="form-control" >
           </div>
         </div>   
     </div>
 </div>
-<div class="row">
-  <div class="col-md-12">
-    <span class="btn btn-primary pull-right" onclick="guardar_catalogos(1,{{$eqHistofields->id}},1,'tabla',1)">Guardar</span>
-  </div>
-</div>
-</form>
+
+
+        

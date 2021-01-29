@@ -57,6 +57,31 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/invoice', 'traficoController@report_invoice')->name('download.invoice');
 	Route::get('/notificacion', 'traficoController@report_notificacion')->name('download.notificacion');
 	Route::get('/complemento_ext', 'traficoController@complemento_ext')->name('download.complemento_ext');
+
+	Route::get('/limpiar', 'ordenes_compraController@limpiar')->name('limpiar');
+
+	
+
+	Route::resource('tblEquipos', 'tbl_equiposController');
+
+	Route::resource('tblRhs', 'tbl_rhController');
+
+	Route::resource('puestos', 'puestosController');
+
+	Route::resource('departamentos', 'departamentosController');
+
+	Route::resource('departamentos', 'departamentoController');
+
+	Route::resource('datosPersonales', 'datos_personalesController');
+
+	Route::resource('catBeneficiarios', 'cat_beneficiariosController');
+
+	Route::resource('catIncidencias', 'cat_incidenciasController');
+
+	Route::resource('catReportes', 'cat_reportesController');
+
+	Route::resource('catReportesMedicos', 'cat_reportes_medicosController');
+
 	
 });
 
@@ -68,9 +93,16 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('show_logistica', 'logisticaController@edit');
 	Route::get('update_address', 'logisticaController@update');
 	Route::get('delete_logistica', 'logisticaController@eliminar');
-	Route::get('guarda_historial', 'equipo_historialController@store');
-	Route::get('show_historia', 'equipo_historialController@edit');
-	Route::get('actualiza_historial', 'equipo_historialController@update');
+
+
+	Route::post('/guarda_historial', 'equipo_historialController@guarda_historial')->name('ajaxupload.guarda_historial');
+	Route::post('/guarda_historial2', 'equipo_historialController@guarda_historial2');
+
+
+	Route::get('show_historia', 'equipo_historialController@edit');  
+		Route::get('show_historia2', 'equipo_historialController@show_historia2');  
+
+	Route::post('actualiza_historial', 'equipo_historialController@update');
 	Route::get('delete_historial', 'equipo_historialController@destroy');
 	Route::get('agrega_proceso', 'productosController@agrega_proceso');
 	Route::get('show_proceso', 'productosController@show_proceso');
@@ -132,6 +164,8 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::get('/finaliza_material_asigna', 'ordenes_compraController@finaliza_material_asigna');
 	Route::get('/guarda_seg_produccion', 'ordenes_compraController@guarda_seg_produccion');
 	Route::post('/carga_files_produccion', 'ordenes_compraController@carga_files_produccion');
+	Route::post('/carga_files_produccion_ac', 'ordenes_compraController@carga_files_produccion_ac');
+
 	Route::get('/seguimiento_calidad_proceso', 'ordenes_compraController@seguimiento_calidad_proceso');
 	Route::get('/agrega_trafico', 'traficoController@agrega_trafico');
 	Route::get('/muestra_trafico', 'traficoController@muestra_trafico');
@@ -154,6 +188,18 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 	Route::post('/documentos_anexos', 'traficoController@documentos_anexos');
 	Route::get('/borra_documento_anexo', 'traficoController@borra_documento_anexo');
 	Route::get('/eliminar_trafico', 'traficoController@eliminar_trafico');
+	Route::get('/carga_files_borra', 'ordenes_compraController@carga_files_borra');
+	Route::get('/virtus', 'tbl_rhController@virtus');
+	Route::get('/MyersBriggs', 'tbl_rhController@MyersBriggs');
+	Route::get('/salario', 'tbl_rhController@salario');
+
+	Route::get('/delete_salario', 'tbl_rhController@delete_salario');
+	Route::get('/sal_actualiza', 'tbl_rhController@sal_actualiza');
+
+
+
+
+	
 
 	Route::get('/opciones_catalogo', 'CatalogosController@opciones_catalogo');
 	Route::post('/guarda_catalogo', 'CatalogosController@guarda_catalogo');

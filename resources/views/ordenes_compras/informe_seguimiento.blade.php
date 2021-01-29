@@ -28,7 +28,7 @@
     </td>
 	</tr>
 	<tr>
-		<td colspan="4"> Cargar Archivos y Fotos<br> 
+		<td colspan="4"> Cargar Archivos y Fotos<b class="red">*</b><br> 
       <form method="post" enctype="multipart/form-data" class="form-inline" id="formUpload">
               {!! csrf_field() !!}
         <input type="hidden" name="id_orden" value="{{ $filtro->id_orden}}">
@@ -39,7 +39,7 @@
           <option value="2">Archivos</option>
           <option value="1">Fotos</option>
         </select>&nbsp;&nbsp;
-        <input type="text" name="nombre" class="form-control">&nbsp;&nbsp;
+        <input type="text" name="nombre" id="nombre" class="form-control">&nbsp;&nbsp;
         <span class="btn btn-primary" onclick="carga_documentos(1)">Cargar</span>
       </form>
     </td>
@@ -50,7 +50,7 @@
         <div class="row">
           @foreach($images_produccion as $images)
           <div class="col-md-3">
-           <center> <span class="btn btn-danger" style="margin-bottom: 5px;"><i class="fa fa-trash"></i></span></center>
+           <center> <span class="btn btn-danger" onclick="borra_ft({{ $images->id }},{{ $filtro->id_orden}},{{ $filtro->id_detalle }},{{ $filtro->id_proceso}})" style="margin-bottom: 5px;"><i class="fa fa-trash"></i></span></center>
           <figure class="col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
             <a href="{{ url($images->archivo)}}" itemprop="contentUrl" data-size="480x360">
               <img class="img-thumbnail img-fluid" src="{{ url($images->archivo)}}"
