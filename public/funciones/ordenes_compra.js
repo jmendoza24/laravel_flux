@@ -1,23 +1,39 @@
+
+    $(document).ready(function () {
+
+    $( ".datepicker" ).datepicker("option", "dateFormat", 'mm-dd-yy');
+
+});
+
+
 function convierte_occ(id_cotizacion, tipo){
    $.confirm({
             title: 'Fluxmetals',
             content: 'Deseas convertir esta cotización en orden de trabajo?',
             buttons: {
                 confirmar: function () {
-                  $.ajax({
-                          data: {"id_cotizacion":id_cotizacion,"tipo":tipo},
-                          url: '/api/v1/convierteocc',
-                          dataType: 'json',
-                          type:  'get',
-                          success:  function (response) {  
-                            console.log(response);
-                            console.log("ordenesCompras/"+response);
-                            $.alert('La cotizacion ahora es una orden de trabajo')                            
-                            setTimeout(function() {
-                                    window.location.href = "ordenesCompras/"+response;
-                                  }, 2000);
-                          }
-                      }); 
+
+
+
+                   if($('input:text').val().length == 0 ){
+                          $(".required").css("border-color", "red");
+                          $.alert("Para validar es necesario tener capturado los campos requeridos")
+                        }else{
+
+                            $.ajax({
+                                    data: {"id_cotizacion":id_cotizacion,"tipo":tipo},
+                                    url: '/api/v1/convierteocc',
+                                    dataType: 'json',
+                                    type:  'get',
+                                    success:  function (response) {  
+                                      $.alert('La cotizacion ahora es una orden de trabajo')                            
+                                      setTimeout(function() {
+                                              window.location.href = "ordenesCompras/"+response;
+                                            }, 2000);
+                                    }
+                                }); 
+
+                        }
 
                 },
                 cancelar: function () {}
@@ -25,26 +41,69 @@ function convierte_occ(id_cotizacion, tipo){
           });
 }
 
-function validar_orden(id_orden){
+function validar_orden(id_orden){   
   var parametros = {"notas":$("#notas").val(),
                     "income":$("#income").val(),
                     "id_orden":id_orden};
-    if($(".requerido").val()==''){
-      $.alert("Para validar es necesario tener capturado los campos requeridos")
+
+    //if($("#cliente").val()=='' || $("#orden_compra").val()=='' || $("#shipping_id").val()=='' || $("#income").val()=='' || $("#lugar").val()=='' || $(".requerido").val()==''){
+    if($('input:text').val().length == 0 ){
+      $(".requerido").css("border-color", "red");
+      $.alert("Completar toda la información")
     }else{
-      $.ajax({
-              data: parametros,
-              url: '/api/v1/validar_orden',
-              dataType: 'json',
-              type:  'get',
-              success:  function (response) {  
-                console.log(response);
-                $.alert('La orden de trabajo se a guardado como valido')
-                setTimeout(function() {
-                    window.location.href = "/ordenesCompras";
-                  }, 2000);
-              }
-          }); 
+
+        var valida=0;
+        $('input[type=date]').each(function(){
+          if($(this).val()==''){
+
+             valida=1;
+          }
+
+       });
+
+       if(valida==1){
+            $.alert("Completar toda la información");
+
+       }else{
+
+
+                 $('input[type=text]').each(function(){
+
+                   if($(this).val()==''){
+
+                       valida=2;
+                    }
+
+                 });
+
+
+           if(valida==2){
+            $.alert("Completar toda la información");
+
+           }else{
+
+
+              $.ajax({
+                      data: parametros,
+                      url: '/api/v1/validar_orden',
+                      dataType: 'json',
+                      type:  'get',
+                      success:  function (response) {  
+                        console.log(response);
+                        $.alert('La orden de trabajo se a guardado como valido')
+                        setTimeout(function() {
+                            window.location.href = "/ordenesCompras";
+                          }, 2000);
+                      }
+                  });
+           }
+
+
+       }
+
+/*
+ 
+      */    
     }
    /**$.confirm({
             title: 'Fluxmetals',
@@ -58,6 +117,8 @@ function validar_orden(id_orden){
               }
           }); */
   }
+
+
 
   function agrega_subproducto(id_det,id_ot){
       $.ajax({
@@ -95,15 +156,19 @@ function actualiza_producto_occ2(producto,id_ot){
                     "planta":$("#planta"+producto).val(),
                     "notas_det":$("#notas_det").val()
                     };
-  $.ajax({
-    data: parametros,
-    url: '/api/v1/actualiza_producto_occ2',
-    dataType: 'json',
-    type:  'get',
-    success:  function (response) {  
-      // $("#detalle_cotiza").html(response);
-    }
-}); 
+
+
+      $.ajax({
+        data: parametros,
+        url: '/api/v1/actualiza_producto_occ2',
+        dataType: 'json',
+        type:  'get',
+        success:  function (response) {  
+          // $("#detalle_cotiza").html(response);
+        }
+    });
+  
+   
 }
 
 function borra_producto_occ(producto, id_ot){
@@ -126,6 +191,9 @@ function actualiza_info_occ(orden){
                     "lugar":$("#lugar").val(),
                     'logistica':$("#shipping_id").val()
                   };
+
+
+
   $.ajax({
             data: parametros,
             url: '/api/v1/actualiza_info_occ',
@@ -188,7 +256,7 @@ function agrega_comentarios(columna,detalle,orden){
         });
 }
 
-function seguimiento_subproceso(id_proceso, id_producto,id_detalle){
+function seguimiento_subproceso(id_proceso, id_producto,id_detalle,prod){
   var parametros = {"id_proceso":id_proceso,
                     "id_producto":id_producto,
                     "id_detalle":id_detalle};
@@ -201,18 +269,32 @@ function seguimiento_subproceso(id_proceso, id_producto,id_detalle){
             success: function(result){
                $("#contenido").html(result);
                $('#tabla_procesos_seg').DataTable({
+
+
                   "scrollX": true,
                   "fixedColumns":   {
                         leftColumns:2
                   },
                   "scrollCollapse": true,
+                  "searching": false,
+                    "showNEntries" : false,
+                      "info": false,
+
                   "paging": false
                 });
+
+
                $("#modal_primary").addClass("modal-xl");
                //$("#modal_primary").addClass("modal-lg");
                $('.modal-dialog').draggable({handle: ".modal-header"});
                $("#footer_primary").hide();
                initPhotoSwipeFromDOM('.my-gallery');
+
+               $("#producto").val('IDN: '+ '  '+' FM'+prod);
+               $(".mask").inputmask('Regex', {regex: "^[0-9]{1,6}(\\.\\d{1,2})?$"});
+
+
+
             }
         });
 }
@@ -254,7 +336,7 @@ function muestra_bloque(){
     table.columns([6,7,8,9,10,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]).visible(false);
   }else if(bloque_muesta == 'produccion'){
     table.columns([18,19,20,21,22,23,24,25]).visible(true);
-    table.columns([6,7,8,9,10,11,12,13,14,15,16,17,26,27,28,29,30,31,32,33,34]).visible(false);
+    table.columns([6,8,9,10,11,12,13,14,15,16,17,26,27,28,29,30,31,32,33,34]).visible(false);
   }else if(bloque_muesta == 'calidad'){
     table.columns([26,27,28,29,30,31,32]).visible(true);
     table.columns([6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,33,34]).visible(false);
@@ -508,7 +590,7 @@ function  finalizar_asignacion(id_orden){
             method: "get",                     
             success: function(result){
                console.log(1);
-               $.alert("Asignacion finalizada");
+               $.alert("Asignación finalizada");
                setTimeout(function() {
                       window.location.href = "/ordenesCompras";
                     }, 2000);
@@ -520,7 +602,7 @@ function finaliza_material_asigna(id_orden,id_detalle,tipo){
   if(tipo==0){
     $.confirm({
             title: 'Fluxmetals',
-            content: 'Estas seguro deseas modificar la asinacion?',
+            content: 'Estas seguro deseas modificar la asinación?',
             buttons: {
                 confirmar: function () {
                   $.ajax({
@@ -556,6 +638,8 @@ function guarda_seg_produccion(campo, id_detalle, id_sub, id_orden){
                       'id_sub':id_sub,
                       'valor':$("#"+campo+'_'+id_detalle+'_'+id_sub).val()
                     };
+     var p=$("#producto").val();
+
                
   $.ajax({
             url: '/api/v1/guarda_seg_produccion',          
@@ -563,23 +647,90 @@ function guarda_seg_produccion(campo, id_detalle, id_sub, id_orden){
             dataType: "json",
             method: "get",                     
             success: function(result){
+
               $("#seg_produccion").html(result);
+
+              $("#producto").val(p);
               $('#tabla_procesos_seg').DataTable({
                   "scrollX": true,
                   "fixedColumns":   {
                         leftColumns:2
                   },
                   "scrollCollapse": true,
+                    "searching": false,
+                      "info": false,
+
+                    "showNEntries" : false,
+
                   "paging": false
                 });
+                                           $(".mask").inputmask('Regex', {regex: "^[0-9]{1,6}(\\.\\d{1,2})?$"});
+
+
             }
         });
 }
+
+
+function borra_ft(id,orden,detalle,pro){
+
+
+    var parametros = {
+                      'id':id,
+                      'id_orden':orden,
+                      'id_detalle':detalle,
+                      'id_proceso':pro
+                    };
+
+
+    $.ajax({
+            url:"/api/v1/carga_files_borra",
+            data: parametros,   
+            dataType: "json",
+            method: "get",  
+            success: function(respuesta){
+
+             carga_files_produccion_ac();
+            }
+        });
+}
+
+function carga_files_produccion_ac(){
+
+    var formData = new FormData($("#formUpload")[0]);
+
+    $.ajax({
+            url:"/api/v1/carga_files_produccion_ac",
+            type: 'POST',
+            method: "POST",        
+            data:  formData,
+            //async: false,
+            cache: false,
+            contentType: false,
+            processData: false, 
+            success: function(respuesta){
+              $('#seguimiento_calidad').html(respuesta);
+            }
+        });
+   
+
+
+}
+
 
 function carga_documentos(id){
 
    var nombre=  $("#documento"+id).val();
    var formData = new FormData($("#formUpload")[0]);
+var nombre =$("#nombre").val();
+var fotos_im =$("#fotos_im").val();
+
+
+   if(nombre=="" || fotos_im==""){
+                    $.alert('Verificar campos requeridos');
+
+   }else{
+
 
     $.ajax({
             url:"/api/v1/carga_files_produccion",
@@ -594,6 +745,7 @@ function carga_documentos(id){
               $('#seguimiento_calidad').html(respuesta);
             }
         });
+   } 
 }
 
 function seguimiento_calidad_proceso(id_proceso, id_detalle, id_orden,campo){
@@ -1042,7 +1194,11 @@ function obtiene_idns(trafico){
 }
 
 
-function guarda_anexos(id_trafico){
+
+function guarda_anexos(){
+  if($("#anex_nombre").val()=='' || $("#anex_fecha").val()=='' || $("#anex_file").val()==''){
+    $.alert("Llene los campo solicitados")
+  }else{
   var formData = new FormData($("#documentos_anex")[0]);
    $.ajax({
             url:"/api/v1/documentos_anexos",
@@ -1054,15 +1210,76 @@ function guarda_anexos(id_trafico){
             contentType: false,
             processData: false,
             success: function(respuesta){
-              console.log(1);
+              $("#documentos_anexo").html(respuesta);
             }
         });
+ }
+}
+
+function borra_documento_anexo(trafico,id){
+  $.ajax({
+        url: '/api/v1/borra_documento_anexo',          
+        data: {"id_trafico":trafico,'id':id},
+        dataType: "json",
+        method: "get",                     
+        success: function(result){
+          $("#documentos_anexo").html(result);
+        }
+    });
 }
 
 
-function validar_cotizacion(id_cotiza){
-  if($(".requerido").val()==''){
-    $.alert("LLene los campos requeridos");
-    $(".requerido").css("border-color", "red");   
-  }
+function eliminar_trafico(ide){
+  $.confirm({
+            title: 'Fluxmetals',
+            content: 'Estas seguro deseas eliminar este trafico?',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          data: {"id_trafico":ide},
+                          url: '/api/v1/eliminar_trafico',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                            console.log(1);
+                            $("#lista_traficos").html(response);
+                            $('#trafico_nuevo').DataTable({
+                                                          "scrollX": true,
+                                                          "paging": false,
+                                                          "ordering": true,
+                                                          "order": [[ 0, "desc" ]]
+                                                        });
+                          }
+                      }); 
+
+                },
+                cancelar: function () {}
+              } 
+          });
+}
+
+
+function envia_plantas(id_planta){
+  $.confirm({
+            title: 'Fluxmetals',
+            content: 'Estas seguro deseas enviar las ordenes de compras?',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          data: {"id_planta":id_planta},
+                          url: '/api/v1/envia_info_planta',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (response) {  
+                          //  console.log(1);
+                        //    $("#ordnesporenviar").html(response);
+                            window.location.href = "ordenesCompras";
+
+                          }
+                      }); 
+
+                },
+                cancelar: function () {}
+              } 
+          });
 }

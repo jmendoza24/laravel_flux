@@ -1,9 +1,9 @@
-@if(!empty($eqHistofields->id))
-<div class="modal-body">
-@endif
-<input type="hidden" id="id_historia" value="{{ $eqHistofields->id}}">
-<input type="hidden" id="historia_tipo" value="{{ $eqHistofields->historial_tipo}}">
-<input type="hidden" id="id_tipo" value="{{ $eqHistofields->tipo}}">
+<form enctype="multipart/form-data" id="catalogos_forma" action="">
+  @csrf
+<input type="hidden" name="tipo" id="id_tipo" value="{{ $eqHistofields->tipo}}">
+<input type="hidden" name="id" id="id_historia" value="{{ $eqHistofields->id}}">
+<input type="hidden" name="historial_tipo" id="historia_tipo" value="{{ $eqHistofields->historial_tipo}}">
+<input type="hidden" name="id_catalogo" value="1" id="id_catalogo">
 <div class="row">
   <div class="col-md-6">
       <div class="form-group row">
@@ -13,21 +13,21 @@
         </div>
       </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6"> 
       <div class="form-group row">
         <div class="col-md-12">
             <label>Fecha:</label>
-        <input type="text" name="fecha" id="fecha" class="form-control pickadate-format" value="{{ $eqHistofields->fecha}}" >
+            <input type="date" name="fecha" id="fecha" class="form-control" value="{{ substr($eqHistofields->fecha,0,10) }}">
         </div>
       </div>
-  </div>       
+  </div>      
 </div>
 <div class="row">
   <div class="col-md-6">
       <div class="form-group row">
         <div class="col-md-12">
-            <label>DescripciÃ³n:</label>
-            <textarea name="descripcion" id="descripcion" placeholder="DescripciÃ³n" class="form-control">{{ $eqHistofields->descripcion}}</textarea>
+            <label>{{ utf8_encode("Descripción:") }}</label>
+            <textarea name="descripcion" id="descripcion" placeholder="{{ utf8_encode("Descripción:") }}" class="form-control">{{ $eqHistofields->descripcion}}</textarea>
         </div>
       </div>
   </div>       
@@ -35,7 +35,7 @@
       <div class="form-group row">
         <div class="col-md-12">
             <label>Fecha vencimiento:</label>
-        <input type="text" name="vencimiento" id="vencimiento" class="form-control pickadate-format" value="{{ $eqHistofields->vencimiento}}">
+            <input type="date" name="vencimiento" id="vencimiento" class="form-control" value="{{ substr($eqHistofields->vencimiento,0,10)}}">
         </div>
       </div>
   </div>
@@ -44,21 +44,38 @@
   <div class="col-md-6">
       <div class="form-group row">
         <div class="col-md-12">
-            <label>Activo:</label>
-            <select class="form-control" id="activo" name="activo">
-                <option value="">Seleccione una opcion</option>
-                <option value="1" @if($eqHistofields->activo=='1'){{ "selected"}} @endif>Si</option>
-                <option value="0" @if($eqHistofields->activo=='0'){{ "selected"}} @endif>No</option>
-            </select>
+         
         </div>
       </div>
   </div>       
 </div>
-@if(!empty($eqHistofields->id))
-</div>
+<div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-12 label-control" for="userinput2">
+            @if($eqHistofields->documento1 != '') <a id="doc1" href="{{ $eqHistofields->documento1}}" target="_blank"> <span><i class="fa fa-file-pdf-o"></i></span></a>@endif
+            Documento 1: 
+          </label>
+          <div class="col-md-12">
+                <input id="doc_prev1" name="documento1" type="file" class="form-control" >
+          </div>
+        </div>   
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-12 label-control" for="userinput2">
+            @if($eqHistofields->documento2 != '') <a id="doc2" href="{{ $eqHistofields->documento2}}" target="_blank"> <span><i class="fa fa-file-pdf-o"></i></span></a>@endif
 
-<div class="modal-footer">
-  <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-  <button type="button" class="btn btn-outline-primary" onclick="actualiza_historia({{$eqHistofields->id}})">Guardar</button>
+          Documento 2:</label>
+          <div class="col-md-12">
+                <input id="doc_prev2" name="documento2" type="file"  class="form-control" >
+          </div>
+        </div>   
+    </div>
 </div>
-@endif
+<div class="row">
+  <div class="col-md-12">
+    <span class="btn btn-primary pull-right" onclick="guardar_catalogos(1,{{$eqHistofields->id}},1,'tabla',1)">Guardar</span>
+  </div>
+</div>
+</form>

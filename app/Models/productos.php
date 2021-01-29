@@ -80,7 +80,7 @@ class productos extends Model
         return DB::select("SELECT DISTINCT valor,id_forma,columna,valor,id 
                             FROM catalogo_formas 
                             WHERE columna = ".$identificador."
-                            order by id_forma, columna, valor");
+                            order by  CAST(valor AS float)");
     }
 
     

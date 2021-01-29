@@ -162,13 +162,6 @@ background: #518a87 !important;
 	color: #6d6d6d;
 }
 
-.modal-dialog {
-  position: fixed;
-  width: 100%;
-  margin: 0;
-  padding: 10px;
-}
-
 
 .bg-blue-grey{
 	border-color: #6d6d6d !important;
@@ -192,4 +185,5 @@ background: #518a87 !important;
 .success_info{
 	color:#518a87 !important;  
 }
+
 

@@ -112,7 +112,7 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a  data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(1)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</a>
+                     <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',1,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Calibración</span>
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_historial">
@@ -125,7 +125,7 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(2)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Preventivo</a>
+                     <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',2,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Preventivo</a>
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histPrev">
@@ -138,7 +138,7 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-                     <a data-toggle="modal" data-target="#equipo_historials" onclick="agrega_historial(3)" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;" >+ Correctivo</a>
+                     <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',3,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Correctivo</a>
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histCorrect">
@@ -165,28 +165,3 @@
   <i class="fa fa-check-square-o"></i> Guardar
 </button>
 </div>
-@if($editar ==1)
-<div class="modal fade text-left" id="equipo_historials" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel17"></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form id="form_logistica">
-          <div id="campos_equipos">
-            <div class="modal-body">
-              @include('equipo_historials.fields')
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" onclick="guarda_historial({{$equipos->id}})">Guardar</button>
-            </div>
-          </div>
-      </form>
-      </div>
-    </div>
-  </div>
-  @endif

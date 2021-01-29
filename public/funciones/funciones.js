@@ -19,8 +19,10 @@
 })();
 
 
-
 $( document ).ready(function() {
+
+  //$(document.body).on('hidden.bs.modal', function () { $('#equipo_historials').removeData('bs.modal') });
+
   Inputmask.extendAliases({
       numeros: {
                 groupSeparator: ".",
@@ -35,7 +37,99 @@ $( document ).ready(function() {
 
     $(".currency").inputmask({ alias : "currency", prefix: '$ ' });
     $(".numeros").inputmask({ alias : "numeros", prefix: '' });
+    $(".mask").inputmask('Regex', {regex: "^[0-9]{1,6}(\\.\\d{1,2})?$"});
+
 });
+
+function ver_catalogo(catalogo,id,tipo,data_table,datos1,datos2){
+ var parameters = {'catalogo':catalogo,
+                    'id':id,
+                    'tipo':tipo,
+                    'datos':datos1,
+                    'datos2':datos2
+                    }
+  $.ajax({
+            data: parameters,
+            url:   '/api/v1/opciones_catalogo',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) { 
+              $("#contenido").html(response);
+              $("#modal_primary").removeClass("modal-xl"); 
+              $("#modal_primary").addClass("modal-lg"); 
+              $('.modal-dialog').draggable({handle: ".modal-header"});
+              $("#footer_primary").hide();
+            }
+        }); 
+}
+
+function guardar_catalogos(catalogo,id,tipo,nom_table,dato){
+    var formData = new FormData($("#catalogos_forma")[0]);
+
+    $.ajax({
+            url:"/api/v1/guarda_catalogo",
+            type: 'POST',
+            method: "POST",        
+            data:  formData,
+            //async: false,
+            cache: false,
+            contentType: false,
+            processData: false, 
+            success: function(respuesta){
+              if(catalogo==1 && dato==1){
+                $("#equipo_historial").html(respuesta);
+              }else if(catalogo==1 && dato==2){
+                $("#equipo_histPrev").html(respuesta);
+              }else if(catalogo==1 && dato==3){
+                $("#equipo_histCorrect").html(respuesta);
+              }
+
+              $(".zero-configuration").DataTable();
+              $("#primary").modal('hide');
+              $("#catalogos_forma")[0].reset();
+          }
+        });
+}
+
+
+function elimina_catalogo(catalogo,id,nom_table,dato,dato2){
+  var parameters = {'catalogo':catalogo,
+                    'id':id,
+                    'dato':dato,
+                    'dato2':dato2
+                    }
+
+  $.confirm({
+            title: 'Fluxmetals',
+            content: 'Estas seguro deseas elimniar este registro?',
+            type:'orange',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          data: parameters,
+                          url: '/api/v1/elimina_catalogo',
+                          dataType: 'json',
+                          type:  'get',
+                          success:  function (respuesta) {  
+                            if(catalogo==1 && dato==1){
+                              $("#equipo_historial").html(respuesta);
+                            }else if(catalogo==1 && dato==2){
+                              $("#equipo_histPrev").html(respuesta);
+                            }else if(catalogo==1 && dato==3){
+                              $("#equipo_histCorrect").html(respuesta);
+                            }
+                            
+                            $(".zero-configuration").DataTable();
+                          }
+                      }); 
+
+                },
+                cancelar: function () {}
+              } 
+          });
+}
+
+
 
 function get_municipios(estado,municipio){
   var id_estado = $("#"+estado).val();
@@ -53,6 +147,125 @@ function get_municipios(estado,municipio){
               }      
             }
         }); 
+}
+
+
+function virtus(id){
+
+  var parameters = {
+                    "Emociones":$("#Emociones").val(),
+                    "Pensamientos":$("#Pensamientos").val(),
+                    "Compromiso":$("#Compromiso").val(),
+                    "Relaciones":$("#Relaciones").val(),
+                    "Sentido":$("#Sentido").val(),
+                    "Logros":$("#Logros").val(),
+                    "Salud":$("#Salud").val(),
+                    "Soledad":$("#Soledad").val(),
+                    "Felicidad":$("#Felicidad").val(),
+                    "Promedio":$("#Promedio").val(),
+                    "Sabiduria":$("#Sabiduria").val(),
+                    "Valor":$("#Valor").val(),
+                    "Humanidad":$("#Humanidad").val(),
+                    "Justicia":$("#Justicia").val(),
+                    "Trascendencia":$("#Trascendencia").val(),
+                    "Templanza":$("#Templanza").val(),
+                    "Creatividad":$("#Creatividad").val(),
+                    "Amor":$("#Amor").val(),
+                    "Curiosidad":$("#Curiosidad").val(),
+                    "Perspectiva":$("#Perspectiva").val(),
+                    "Juicio":$("#Juicio").val(),
+                    "Honestidad":$("#Honestidad").val(),
+                    "Perseverancia":$("#Perseverancia").val(),
+                    "Entusiasmo":$("#Entusiasmo").val(),
+                    "Valentia":$("#Valentia").val(),
+                    "Amabilidad":$("#Amabilidad").val(),
+                    "Inteligencia":$("#Inteligencia").val(),
+                    "Amor_amor":$("#Amor_amor").val(),
+                    "Equidad":$("#Equidad").val(),
+                    "Liderazgo":$("#Liderazgo").val(),
+                    "Trabajo":$("#Trabajo").val(),
+                    "Esperitualidad":$("#Esperitualidad").val(),
+                    "Gratitud":$("#Gratitud").val(),
+                    "Esperanza":$("#Esperanza").val(),
+                    "Humor":$("#Humor").val(),
+                    "Belleza":$("#Belleza").val(),
+                    "Prudencia":$("#Prudencia").val(),
+                    "Humildad":$("#Humildad").val(),
+                    "Perdon":$("#Perdon").val(),
+                    "Control":$("#Control").val(),
+                    "id":id,
+
+                    };
+
+
+
+                       $.ajax({
+                        data: parameters,
+                        url:   '/api/v1/virtus',
+                        dataType: 'json',
+                        type:  'get',
+                        success:  function (response) {         
+                        
+                        }
+                    }); 
+}
+
+
+function guarda_sal(id){
+
+
+  var parameters = {
+                    "salario":$("#salario").val(),
+                   
+                    "id":id,
+
+                    };
+
+
+                       $.ajax({
+                        data: parameters,
+                        url:   '/api/v1/salario',
+                        dataType: 'json',
+                        type:  'get',
+                        success:  function (response) {         
+                          
+                          $("#salario").val('');
+               $('#abc').modal('toggle');
+
+
+                        }
+                    }); 
+
+
+}
+
+function MyersBriggs(id){
+
+
+
+  var parameters = {
+                    "Introversion":$("#Introversion").val(),
+                    "Extroversion":$("#Extroversion").val(),
+                    "Intuitivo":$("#Intuitivo").val(),
+                    "Sensorial":$("#Sensorial").val(),
+                    "Pensamiento":$("#Pensamiento").val(),
+                    "IEmocional":$("#IEmocional").val(),
+                    "Calificador":$("#Calificador").val(),
+                    "Perceptivo":$("#Perceptivo").val(),
+                    "id":id,
+
+                    };
+
+
+                       $.ajax({
+                        data: parameters,
+                        url:   '/api/v1/MyersBriggs',
+                        dataType: 'json',
+                        type:  'get',
+                        success:  function (response) {         
+                        
+                        }
+                    }); 
 }
 
 function guarda_direccion(id_producto){
@@ -164,8 +377,11 @@ function delete_logistica(id_logistica, id_producto){
         });
 }
 
-function agrega_historial(tipo){
+function agrega_historial(equipo,tipo){
   
+show_historial2(equipo,tipo);
+
+
   $("#id_tipo").val('');
   $("#historia_tipo").val('');
   $("#responsable").val('');
@@ -173,6 +389,15 @@ function agrega_historial(tipo){
   $("#descripcion").val('');
   $("#vencimiento").val('');
   $("#activo").val('');
+  $("#id_historia").val('');
+  $("#doc_prev1").val('');
+  $("#doc_prev2").val('');
+
+
+    $('#doc1').css('display', 'none');
+    $('#doc2').css('display', 'none'); 
+ 
+
   
   if(tipo==1){
     $("#myModalLabel17").html('Calibración');
@@ -183,54 +408,148 @@ function agrega_historial(tipo){
   }
 
   $("#historia_tipo").val(tipo);
+  $("#id_tipo").val(equipo);
   $('.pickadate-format').pickadate();
+  $('#b').css('display', 'none'); 
+ // $('#c').css('display', 'none'); 
+
+  //show_historial2(equipo,tipo);
   
 }
 
 
-function guarda_historial(tipo){
 
-    var parameters = {"tipo":tipo,
-                      "historia_tipo":$("#historia_tipo").val(),
-                      "responsable":$("#responsable").val(),
-                      "fecha":$("#fecha").val(),
-                      "descripcion":$("#descripcion").val(),
-                      "vencimiento":$("#vencimiento").val(),
-                      "activo":$("#activo").val()
-                    };
+    function guarda_historial(id){
+
+    var formData = new FormData($("#documentos_formUpload")[0]);
     $.ajax({
-            data: parameters,
-            url: '/api/v1/guarda_historial',
-            dataType: 'json',
-            type:  'get',
-            success:  function (response) {  
-              $.alert('Historial guardado');
-              if($("#historia_tipo").val()==1){
-                $("#equipo_historial").html(response); 
-                $("#equipoHistorials-table").dataTable();
-              }else if($("#historia_tipo").val()==2){
-                $("#equipo_histPrev").html(response); 
-                $("#equipoHistorials_prev-table").dataTable();
-              }else if($("#historia_tipo").val()==3){
-                $("#equipo_histCorrect").html(response); 
-                $("#equipoHistorials_corect-table").dataTable();
-              }
+            url:"/api/v1/guarda_historial2",
+            type: 'POST',
+            method: "POST",        
+            data:  formData,
+            //async: false,
+            cache: false,
+            contentType: false,
+            processData: false, 
+            success: function(response){
+            $.alert('Historial guardado');
 
-             $("#historia_tipo").val('');
-              $("#responsable").val('');
-              $("#fecha").val('');
-              $("#descripcion").val('');
-              $("#vencimiento").val('');
-              $("#activo").val('');
-              $("#equipo_historials").modal('toggle');
+
+
+
+
+
+                              if($("#historia_tipo").val()==1){
+                                $("#equipo_historial").html(response); 
+
+                                 $('#equipoHistorials-table').DataTable({
+                                    "scrollX": true,
+                                    "scrollCollapse": true,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+
+
+
+                              }else if($("#historia_tipo").val()==2){
+                                $("#equipo_histPrev").html(response); 
+
+                                 $('#equipoHistorials_prev').DataTable({
+                                    "scrollX": true,
+                                    "scrollCollapse": true,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+                              }else if($("#historia_tipo").val()==3){
+                                $("#equipo_histCorrect").html(response); 
+
+
+                                 $('#equipoHistorials_corect-table').DataTable({
+                                    "scrollX": true,
+                                    "scrollCollapse": true,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+                              }
+                             $("#historia_tipo").val('');
+                              $("#responsable").val('');
+                              $("#fecha").val('');
+                              $("#descripcion").val('');
+                              $("#vencimiento").val('');
+                              $("#activo").val('');
+
+                              $("#doc_prev1").val('');
+                              $("#doc_prev2").val('');
+                              $("#equipo_historials").modal('toggle');
+
+
             }
-        });     
+        });
+   
 
-        
+
 
 }
 
-function show_historial(id_historia){
+
+
+/*
+
+function guarda_historial(tipo){
+   
+  var formData3 = new FormData($("#formUpload")[0]);
+
+                        $.ajax({
+                          url:"/api/v1/guarda_historial",
+                          type: 'post',
+                          method: "POST",        
+                          data:  formData3,
+                          //async: false,
+                          cache: false,
+                          contentType: false,
+                          processData: false,
+                          data:formData3,
+                          success: function(respuesta){ 
+                            
+
+                              $.alert('Historial guardado');
+                              if($("#historia_tipo").val()==1){
+                                $("#equipo_historial").html(response); 
+                                $("#equipoHistorials-table").dataTable();
+                              }else if($("#historia_tipo").val()==2){
+                                $("#equipo_histPrev").html(response); 
+                                $("#equipoHistorials_prev-table").dataTable();
+                              }else if($("#historia_tipo").val()==3){
+                                $("#equipo_histCorrect").html(response); 
+                                $("#equipoHistorials_corect-table").dataTable();
+                              }
+
+                             $("#historia_tipo").val('');
+                              $("#responsable").val('');
+                              $("#fecha").val('');
+                              $("#descripcion").val('');
+                              $("#vencimiento").val('');
+                              $("#activo").val('');
+                              $("#equipo_historials").modal('toggle');
+
+                          },  
+                          error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                              //alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                          }   
+
+                      });
+}
+*/
+function show_historial(tipo,id_historia){
   var parameters = {"id_historia":id_historia};
 
   $.ajax({
@@ -241,48 +560,106 @@ function show_historial(id_historia){
             success:  function (response) {     
               $("#campos_equipos").html(response); 
               $('.pickadate-format').pickadate();
+                $("#id_tipo").val(tipo);
+
             }
-        }); 
+        });      
 
 }
 
-function actualiza_historia(id_historia){
-  var parameters = {  "tipo":$("#id_tipo").val(),
-                      "id_historia":id_historia,
-                      "historial_tipo":$("#historia_tipo").val(),
-                      "responsable":$("#responsable").val(),
-                      "fecha":$("#fecha").val(),
-                      "descripcion":$("#descripcion").val(),
-                      "vencimiento":$("#vencimiento").val(),
-                      "activo":$("#activo").val()
-                    };
-    $.ajax({
+function show_historial2(tipo,id_historia){
+  var parameters = {"id_historia":id_historia};
+
+  $.ajax({
             data: parameters,
-            url: '/api/v1/actualiza_historial',
+            url:   '/api/v1/show_historia2',
             dataType: 'json',
             type:  'get',
-            success:  function (response) {  
-              $.alert('Historial actualizado');
-              if($("#historia_tipo").val()==1){
-                $("#equipo_historial").html(response); 
-                $("#equipoHistorials-table").dataTable();
-              }else if($("#historia_tipo").val()==2){
-                $("#equipo_histPrev").html(response); 
-                $("#equipoHistorials_prev-table").dataTable();
-              }else if($("#historia_tipo").val()==3){
-                $("#equipo_histCorrect").html(response); 
-                $("#equipoHistorials_corect-table").dataTable();
-              }
+            success:  function (response) {     
+             
+            }
+        });      
 
-             // 
-            $("#id_tipo").val('');
-            $("#historia_tipo").val('');
-            $("#responsable").val('');
-            $("#fecha").val('');
-            $("#descripcion").val('');
-            $("#vencimiento").val('');
-            $("#activo").val('');
-            $("#equipo_historials").modal('toggle');
+}
+
+function actualiza_historia(id_historia,tipo){
+
+    var formData = new FormData($("#documentos_formUpload")[0]);
+    $.ajax({
+            url:"/api/v1/actualiza_historial",
+            type: 'POST',
+            method: "POST",        
+            data:  formData,
+            //async: false,
+            cache: false,
+            contentType: false,
+            processData: false, 
+            success: function(response){
+
+
+              $.alert('Historial actualizado');
+              
+
+
+
+                              if(tipo==1){
+                                $("#equipo_historial").html(response); 
+
+                                 $('#equipoHistorials-table').DataTable({
+                                    "scrollX": false,
+                                    "scrollCollapse": false,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+
+
+
+                              }else if(tipo==2){
+                                $("#equipo_histPrev").html(response); 
+
+                                 $('#equipoHistorials_prev').DataTable({
+                                    "scrollX": false,
+                                    "scrollCollapse": false,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+                              }else if(tipo==3){
+                                $("#equipo_histCorrect").html(response); 
+
+
+                                 $('#equipoHistorials_corect-table').DataTable({
+                                    "scrollX": false,
+                                    "scrollCollapse": false,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+                              }
+
+                             $("#historia_tipo").val('');
+                              $("#responsable").val('');
+                              $("#fecha").val('');
+                              $("#descripcion").val('');
+                              $("#vencimiento").val('');
+                              $("#activo").val('');
+                              $("#doc_prev1").val('');
+                              $("#doc_prev2").val('');
+
+                              $("#equipo_historials").modal('toggle');
+//equipoHistorials_prev-table
+//equipoHistorials_corect-table
+
+                 
+
+
             }
         });      
 }
@@ -303,19 +680,63 @@ function delete_historial(id_historia, tipo, historia_tipo){
                                           dataType: 'json',
                                           type:  'get',
                                           success:  function (response) {  
-                                            if(historia_tipo==1){
-                                              $("#equipo_historial").html(response); 
-                                              $("#equipoHistorials-table").dataTable();
-                                            }else if(historia_tipo==2){
-                                              $("#equipo_histPrev").html(response); 
-                                              $("#equipoHistorials_prev-table").dataTable();
-                                            }else if(historia_tipo==3){
-                                              $("#equipo_histCorrect").html(response); 
-                                              $("#equipoHistorials_corect-table").dataTable();
-                                            } 
+                                            
+
+
+                              if(historia_tipo==1){
+                                $("#equipo_historial").html(response); 
+
+                                 $('#equipoHistorials-table').DataTable({
+                                    "scrollX": false,
+                                    "scrollCollapse": false,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+
+
+
+                              }else if(historia_tipo==2){
+                                $("#equipo_histPrev").html(response); 
+
+                                 $('#equipoHistorials_prev').DataTable({
+                                    "scrollX": false,
+                                    "scrollCollapse": false,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+                              }else if(historia_tipo==3){
+                                $("#equipo_histCorrect").html(response); 
+
+
+                                 $('#equipoHistorials_corect-table').DataTable({
+                                    "scrollX": false,
+                                    "scrollCollapse": false,
+                                    "searching": false,
+                                      "showNEntries" : false,
+                                        "info": false,
+
+                                    "paging": false
+                                  });
+                              }
+
+                             $("#historia_tipo").val('');
+                              $("#responsable").val('');
+                              $("#fecha").val('');
+                              $("#descripcion").val('');
+                              $("#vencimiento").val('');
+                              $("#activo").val('');
+                              $("#doc_prev1").val('');
+                              $("#doc_prev2").val('');
+
                                           }
                                       }); 
-                                 $.alert('Historial actualizado');
+                                 $.alert('Historial borrado');
                             },
                             cancelar: function () {
                                 $.alert('Canceledo!');
@@ -922,11 +1343,6 @@ function agrega_material_forma(id_producto){
         type:  'get',
         success:  function (response) {  
           $("#listamateriales").html(response);
-          $('#prod_materiales').DataTable({
-                   "scrollY":        "300px",
-                   "scrollCollapse": true,
-                   "paging":         false
-                });
         }
     }); 
 }else{
@@ -947,11 +1363,6 @@ function elimina_producforma(id_mat, id_producto){
                           type:  'get',
                           success:  function (response) {  
                             $("#listamateriales").html(response);
-                            $('#prod_materiales').DataTable({
-                               "scrollY":        "300px",
-                               "scrollCollapse": true,
-                               "paging":         false
-                            });
                           }
                       }); 
 
@@ -1002,6 +1413,7 @@ function elimina_cotizacion(id_cotizacion){
                           type:  'get',
                           success:  function (response) {  
                               $("#table_cotizacion").html(response);
+                              $("#cotizaciones-table").DataTable();
                           }
                       }); 
 
@@ -1143,4 +1555,20 @@ function show_dibujo_producto(dibujo, num_parte){
   $('.modal-dialog').draggable({handle: ".modal-header"});
   $("#footer_primary").hide();
 
+}
+
+function validation_cotizacion(tipo){
+  $.ajax({
+            data: {"tipo":tipo},
+            url:   '/api/v1/enviar_cotizacion',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) { 
+                  if(response==1){
+                    window.location.href='/historiaCotizacion';
+                  }else{
+                    $.alert("Para conitnuar necesitar tener agregado al menos una pieza");
+                  }
+            }
+        });
 }
