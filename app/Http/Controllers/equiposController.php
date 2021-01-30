@@ -58,9 +58,13 @@ class equiposController extends AppBaseController
         $equipoHistorials  = (object)$equipoHistorials ;
         $plantas = db::table('plantas')->get();
         $valida="0";
+        $equipos  = array('mantenimiento'=>'');
+        $equipos = (object)$equipos;
+        $preventivo = '';
+        $correctivo = '';
 
 
-        return view('equipos.create',compact('valida','plantas','equipoHistorials'));
+        return view('equipos.create',compact('valida','plantas','equipoHistorials','equipos','preventivo','correctivo'));
     }
 
     /**
@@ -78,16 +82,16 @@ class equiposController extends AppBaseController
       //  $input->mantenimiento=date("Y/m/d",strtotime($input->mantenimiento));
     //    dd(date("Y/m/d",strtotime($request->mantenimiento)));
        $id= db::table('equipos')
-        ->insertGetId(['mantenimiento'=>date("Y/m/d",strtotime($request->mantenimiento)),
-                  'nombre'=>$request->nombre,
-                  'marca'=>$request->marca,
-                  'modelo'=>$request->modelo,
-                  'serie'=>$request->serie,
-                  'pedimento'=>$request->pedimento,
-                  'tipo'=>$request->tipo,
-                  'base'=>$request->base,
-                  'planta'=>$request->planta,
-                  'activo'=>$request->activo,
+        ->insertGetId(['mantenimiento'=>$request->mantenimiento,
+                          'nombre'=>$request->nombre,
+                          'marca'=>$request->marca,
+                          'modelo'=>$request->modelo,
+                          'serie'=>$request->serie,
+                          'pedimento'=>$request->pedimento,
+                          'tipo'=>$request->tipo,
+                          'base'=>$request->base,
+                          'planta'=>$request->planta,
+                          'activo'=>$request->activo,
 
                  ]);
           
@@ -189,30 +193,28 @@ class equiposController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateequiposRequest $request)
-    {
-        $equipos = $this->equiposRepository->find($id);
-        $request->mantenimiento=date("Y/m/d",strtotime($request->mantenimiento));
-
+    public function update($id, UpdateequiposRequest $request){
+        //$equipos = $this->equiposRepository->find($id);
+        //$request->mantenimiento=date("Y/m/d",strtotime($request->mantenimiento));
+        //dd($request->mantenimiento);
           db::table('equipos')
-        ->where('id',$id)
-        ->update(['mantenimiento'=>$request->mantenimiento,
-                  'nombre'=>$request->nombre,
-                  'marca'=>$request->marca,
-                  'modelo'=>$request->modelo,
-                  'serie'=>$request->serie,
-                  'pedimento'=>$request->pedimento,
-                  'tipo'=>$request->tipo,
-                  'base'=>$request->base,
-                  'planta'=>$request->planta,
-                  'activo'=>$request->activo,
-
-                 ]);
-
+                ->where('id',$id)
+                ->update(['mantenimiento'=>$request->mantenimiento,
+                          'nombre'=>$request->nombre,
+                          'marca'=>$request->marca,
+                          'modelo'=>$request->modelo,
+                          'serie'=>$request->serie,
+                          'pedimento'=>$request->pedimento,
+                          'tipo'=>$request->tipo,
+                          'base'=>$request->base,
+                          'planta'=>$request->planta,
+                          'activo'=>$request->activo,
+                         ]);
 
 
 
-     //   $equipos = $this->equiposRepository->update($request,$request->mantenimiento, $id);
+
+        //$equipos = $this->equiposRepository->update($request,$request->mantenimiento, $id);
 
 
         return redirect(route('equipos.index'));

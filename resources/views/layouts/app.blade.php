@@ -28,9 +28,6 @@
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/js/gallery/photo-swipe/photoswipe.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/js/gallery/photo-swipe/default-skin/default-skin.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/pages/gallery.css')}}">
-   
-  <!-- END VENDOR CSS-->
-  <!-- BEGIN STACK CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/css/app.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/forms/selects/select2.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('app-assets/vendors/css/ui/dragula.min.css') }}">
@@ -165,21 +162,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-  <script type="text/javascript">
-    
-
-    $(document).ready(function () {
-    
-    var dbDate = "2012-03-06";
-    var date2 = new Date(dbDate);
-
-    $(".datepicker").datepicker({
-        dateFormat: 'mm-dd-yy'
-    }).datepicker('setDate', date2)
-
-
-});
-  </script>
+  
   <script src="{{ url('app-assets/js/scripts/forms/extended/form-inputmask.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/js/scripts/forms/extended/form-maxlength.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/forms/icheck/icheck.min.js') }}" type="text/javascript"></script>
@@ -215,18 +198,14 @@
   <script src="{{ url('app-assets/js/scripts/cards/draggable.js') }}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js')}}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/js/scripts/tables/datatables/datatable-basic.js')}}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/vendors/js/tables/datatable/dataTables.colVis.js')}}" type="text/javascript"></script>
-  <script src="{{ url('app-assets/js/scripts/tables/datatables-extensions/datatable-colvis.js')}}" type="text/javascript"></script>
-
+  <script src="{{ url('app-assets/js/scripts/tables/datatables/datatable-basic.js') }}"  type="text/javascript"></script>
+  
   
   <script src="{{ url('funciones/jquery.SimpleMask.js') }}" type="text/javascript"></script>
   <script src="{{ url('funciones/funciones.js') }}" type="text/javascript"></script>
   <script src="{{ url('funciones/ordenes_compra.js') }}" type="text/javascript"></script>  
   <script src="{{ url('app-assets/js/scripts/modal/components-modal.js')}}" type="text/javascript"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
 
   <script src="{{ url('app-assets/vendors/js/gallery/masonry/masonry.pkgd.min.js')}}" type="text/javascript"></script>
   <script src="{{ url('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js')}}" type="text/javascript"></script>
@@ -265,6 +244,3 @@
     </div>
   </div>
 </div>
-
-
-

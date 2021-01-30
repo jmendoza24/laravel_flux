@@ -1,4 +1,3 @@
-
 <ul class="nav nav-tabs nav-underline no-hover-bg nav-justified">
   <li class="nav-item">
     <a class="nav-link active" id="active-tab32" data-toggle="tab" href="#active32" aria-controls="active32"
@@ -112,7 +111,7 @@
             <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Preventivo</label>
             <div class="col-md-9">
 
-                              <input disabled="disabled" type="text" name="preventivo"  @if($valida==1)   @if($preventivo=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($preventivo)) }}"  @endif     @else value=""  @endif  id="correctivo" class="form-control">
+              <input disabled="disabled" type="text" name="preventivo" value="{{ $preventivo}}"   id="correctivo" class="form-control">
 
 
             </div>
@@ -134,9 +133,7 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Correctivo</label>
             <div class="col-md-9">
-
-                <input disabled="disabled" type="text" name="correctivo"  @if($valida==1)   @if($correctivo=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($correctivo)) }}"  @endif     @else value=""  @endif  id="correctivo" class="form-control">
-
+                <input disabled="disabled" type="text" name="correctivo" value="{{ $correctivo != '0000-00-00' ? $correctivo :''}}"   class="form-control">
             </div>
           </div>
         </div>
@@ -156,7 +153,7 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Proximo Mtto.</label>
             <div class="col-md-9">
-              <input type="text" name="mantenimiento"  @if($valida==1) value="{{ date_format($equipos->mantenimiento, 'Y-m-d') }}" @else value="" @endif  id="mantenimiento" class="datepicker form-control">
+              <input type="date" name="mantenimiento"  value="{{ substr($equipos->mantenimiento,0,10) }}"  id="mantenimiento" class="form-control">
             </div>
           </div>
         </div>
@@ -193,6 +190,16 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="form-actions right">
+        <a href="{{ route('equipos.index') }}">
+      <button type="button" class="btn btn-warning mr-1">
+        <i class="ft-x"></i> Cancel
+      </button>
+      </a>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-check-square-o"></i> Guardar
+      </button>
       </div>
   </div>
   @if($editar ==1)
@@ -247,9 +254,7 @@
               <div class="col-md-12">
                   <h1 class="pull-right">
                     <br>
-
                      <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,0,1,'',3,{{$equipos->id}})" class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px; color: white;">+ Correctivo</a>
-
                   </h1>
               </div>
               <div class="col-md-12" id="equipo_histCorrect">
@@ -262,18 +267,6 @@
     </div>
 
   </div>
-  @endif
+@endif
 
 </div>                    
-@if($editar ==1)
-
-<div class="form-actions right">
-  <a href="{{ route('equipos.index') }}">
-<button type="button" class="btn btn-warning mr-1">
-  <i class="ft-x"></i> Cancelar
-</button>
-</a>
-<button type="submit" class="btn btn-primary">
-  <i class="fa fa-check-square-o"></i> Guardar
-</button>
-</div>

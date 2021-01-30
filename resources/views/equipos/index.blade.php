@@ -9,7 +9,7 @@
         </h1>
     </div>
     <br><br><br>
-    <div class="col-md-12">
+    <div class="col-md-12" style="overflow-x: scroll;">
         @include('equipos.table')
     </div>
 @endsection

@@ -80,7 +80,7 @@
             <div class="form-group row">
               <label class="col-md-3 label-control" for="planta">Tel. Celular</label>
               <div class="col-md-9">
-                  {!! Form::text('tcf', null, ['class' => 'form-control']) !!}
+                  {!! Form::text('tcf', null, ['class' => 'form-control international-inputmask']) !!}
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <div class="form-group row">
               <label class="col-md-3 label-control" for="nombre">Tel. Casa</label>
               <div class="col-md-9">
-                {!! Form::text('tc', null, ['class' => 'form-control']) !!}
+                {!! Form::text('tc', null, ['class' => 'form-control international-inputmask']) !!}
               </div> 
             </div>
            </div>
@@ -99,7 +99,7 @@
              <div class="form-group row">
               <label class="col-md-3 label-control" for="nombre">Correo</label>
               <div class="col-md-9">
-                {!! Form::text('correo', null, ['class' => 'form-control']) !!}
+                {!! Form::text('correo', null, ['class' => 'form-control email-inputmask' ]) !!}
 
               </div> 
             </div>
@@ -289,7 +289,7 @@
             <div class="form-group row">
               <label class="col-md-3 label-control" for="userinput1">Teléfono Casa  </label>
               <div class="col-md-9">
-                     {!! Form::text('t1ct', null, ['class' => 'form-control']) !!}
+                     {!! Form::text('t1ct', null, ['class' => 'form-control international-inputmask']) !!}
 
                  </div>
             </div>
@@ -320,7 +320,7 @@
             <div class="form-group row">
               <label class="col-md-3 label-control" for="userinput1">Teléfono Celular</label>
               <div class="col-md-9">
-                      {!! Form::text('t1cc', null, ['class' => 'form-control']) !!}
+                      {!! Form::text('t1cc', null, ['class' => 'form-control international-inputmask']) !!}
                  </div>
             </div>
           </div>
@@ -343,7 +343,7 @@
             <div class="form-group row">
               <label class="col-md-3 label-control" for="userinput1">Teléfono Casa  </label>
               <div class="col-md-9">
-                     {!! Form::text('t2cc', null, ['class' => 'form-control']) !!}
+                     {!! Form::text('t2cc', null, ['class' => 'form-control international-inputmask']) !!}
 
                  </div>
             </div>
@@ -374,7 +374,7 @@
             <div class="form-group row">
               <label class="col-md-3 label-control" for="userinput1">Teléfono Celular</label>
               <div class="col-md-9">
-                      {!! Form::text('t2ct', null, ['class' => 'form-control']) !!}
+                      {!! Form::text('t2ct', null, ['class' => 'form-control international-inputmask']) !!}
                  </div>
             </div>
           </div>
@@ -512,7 +512,7 @@
                  <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Porcentaje</label>
                   <div class="col-md-9">
-                    {!! Form::text('porcentaje', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('porcentaje', null, ['class' => 'form-control percentage-inputmask']) !!}
 
                   </div> 
                 </div>
@@ -606,7 +606,7 @@
                  <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Porcentaje</label>
                   <div class="col-md-9">
-                    {!! Form::text('porcentaje2', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('porcentaje2', null, ['class' => 'form-control percentage-inputmask']) !!}
 
                   </div> 
                 </div>
@@ -700,7 +700,7 @@
                  <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Porcentaje</label>
                   <div class="col-md-9">
-                    {!! Form::text('porcentaje3', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('porcentaje3', null, ['class' => 'form-control percentage-inputmask']) !!}
 
                   </div> 
                 </div>

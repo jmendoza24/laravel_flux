@@ -46,7 +46,11 @@ class tbl_rhController extends AppBaseController
      */
     public function create()
     {
-        return view('tbl_rhs.create');
+      $tblRh = array('id_empleado'=>'',
+        'id'=>0);
+      $tblRh = (object)$tblRh;
+
+        return view('tbl_rhs.create',compact('tblRh'));
     }
 
     /**

@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class equipos extends Model
 {
-    use SoftDeletes;
+   // use SoftDeletes;
 
     public $table = 'equipos';
     

@@ -67,7 +67,7 @@ function guardar_catalogos(catalogo,id,tipo,nom_table,dato){
     var formData = new FormData($("#catalogos_forma")[0]);
 
     $.ajax({
-            url:"/api/v1/guarda_catalogo",
+            url:"/api/v1/guardar_catalogos",
             type: 'POST',
             method: "POST",        
             data:  formData,
@@ -128,7 +128,6 @@ function elimina_catalogo(catalogo,id,nom_table,dato,dato2){
               } 
           });
 }
-
 
 
 function get_municipios(estado,municipio){

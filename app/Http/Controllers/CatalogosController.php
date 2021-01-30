@@ -120,16 +120,18 @@ class CatalogosController extends Controller{
             }
             
             $equipoHistorials = equipo_historial::where([['tipo',$request->tipo],['historial_tipo',$request->historial_tipo]])->get();
-            if($request->dato==1){
+
+            if($request->historial_tipo==1){
                 $options = view('equipo_historials.table',compact('equipoHistorials'))->render();
-            }else if($request->dato==2){
+            }else if($request->historial_tipo==2){
                 $equipoHistCorrect = $equipoHistorials;
                 $options = view('equipo_historials.table_correctivo',compact('equipoHistCorrect'))->render();
-            }else if($request->dato==3){
+            }else if($request->historial_tipo==3){
                 $equipoHistPrev = $equipoHistorials;
                 $options = view('equipo_historials.table_preventivo',compact('equipoHistPrev'))->render();
             }
             
+
         }
 
         return $options;

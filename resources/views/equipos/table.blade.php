@@ -1,4 +1,4 @@
-<table class="table display nowrap table-striped table-bordered scroll-horizontal" style="" id="productos-table">
+<table class="table display nowrap table-striped table-bordered zero-configuration" style="" id="productos-table">
         <thead class="bg-success">
             <tr>
                 <th>Nombre</th>
@@ -23,7 +23,7 @@
                 <td>{!! $equipos->tipo !!}</td>
                 <td>{!! $equipos->base !!}</td>
                 <td>{!! $equipos->calibracion !!}</td>
-                <td>{{date_format($equipos->mantenimiento, 'm-d-Y') }}</td>
+                <td>{{ substr($equipos->mantenimiento,0,10)}}</td>
                 <td>
                     {!! Form::open(['route' => ['equipos.destroy', $equipos->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
