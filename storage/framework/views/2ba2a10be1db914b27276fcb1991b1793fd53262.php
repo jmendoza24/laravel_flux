@@ -1,4 +1,4 @@
-<table class="table display nowrap table-striped table-bordered scroll-horizontal" id="plantas-table">
+<table class="table display nowrap table-striped table-bordered zero-configuration" id="plantas-table" style="width: 100%;">
 <thead class="bg-success">
     <tr>
         <th>Num Empleado</th>

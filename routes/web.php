@@ -195,6 +195,7 @@ Route::group(['middleware' => 'auth','prefix'=>'api/v1/'], function () {
 
 	Route::get('/delete_salario', 'tbl_rhController@delete_salario');
 	Route::get('/sal_actualiza', 'tbl_rhController@sal_actualiza');
+	Route::get('/guarda_check', 'tbl_rhController@guarda_check');
 
 
 

@@ -39,18 +39,22 @@
 	$('.currency-inputmask').inputmask("$9999");
 
 	// Percentage
+	/**
 	$('.percentage-inputmask').inputmask({
 						            alias: "porcentaje",
 						            placeholder: "0",
 						            digitsOptional: !1,
 						            clearMaskOnLostFocus: !1,
 						            max:100,
-						            mask: "999.99%",
-						        });
+						            min:0
+						            //mask: "999.99%",
+						        });*/
 
 	// Decimal
 	$('.decimal-inputmask').inputmask({ "alias": "decimal" , "radixPoint": "." });
- 
+ 	$(".percentage-inputmask").inputmask('Regex', { regex: "^[1-9][0-9]?$|^100$" });
+ 	
+
 	// Email mask
 	$('.email-inputmask').inputmask({
 		mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[*{2,6}][*{1,2}].*{1,}[.*{2,6}][.*{1,2}]",

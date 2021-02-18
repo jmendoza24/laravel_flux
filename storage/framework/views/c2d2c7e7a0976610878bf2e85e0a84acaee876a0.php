@@ -75,7 +75,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <span class="btn btn-primary pull-right" onclick="guardar_catalogos(1,<?php echo e($eqHistofields->id); ?>,1,'tabla',1)">Guardar</span>
+    <span class="btn btn-primary pull-right" onclick="guardar_catalogos(1,<?php echo e($eqHistofields->id); ?>,1,'tabla',<?php echo e($eqHistofields->historial_tipo); ?>)">Guardar</span>
   </div>
 </div>
 </form><?php /**PATH C:\wamp64\www\laravel\laravel_flux\resources\views/equipo_historials/fields.blade.php ENDPATH**/ ?>

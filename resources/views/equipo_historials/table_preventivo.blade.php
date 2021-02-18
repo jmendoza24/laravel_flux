@@ -13,7 +13,7 @@
         <tr>
             <td>{!! $equipoHistorial->responsable !!}</td>
             <td>{!! $equipoHistorial->descripcion !!}</td>
-            <td>{{  $equipoHistorial->vencimiento}} </td>
+            <td>{{  $equipoHistorial->vencimiento != '' ? date("m-d-Y",strtotime(substr($equipoHistorial->vencimiento,0,10))) :''}}</td>
             <td>@if($equipoHistorial->activo==1) Si @else No @endif</td>
             <td>
                 <div class='btn-group'>

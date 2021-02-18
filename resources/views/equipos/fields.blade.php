@@ -83,9 +83,7 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Ultima Calibración</label>
             <div class="col-md-9">
-
-                <input disabled="disabled" type="text" name="calibracion"  @if($valida==1)   @if($calibracion=="")  value=""  @else  value="{{ date("m-d-Y",strtotime($calibracion)) }}"  @endif     @else value=""  @endif  id="calibracion" class="form-control">
-
+              <input disabled="disabled" type="text" value="{{ $equipos->calibracion != '0000-00-00' ? date("m-d-Y",strtotime($equipos->calibracion)) :''}}"  name="calibracion" id="calibracion" class="form-control">
             </div>
           </div>
         </div>
@@ -96,10 +94,10 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Planta</label>
             <div class="col-md-9">
-               <select class="form-control select2" id="planta" name="planta" style="width: 100%;">
+               <select class="form-control" id="planta" name="planta" style="width: 100%;">
                 <option value="0">Seleccione...</option>
                 @foreach($plantas as $planta)
-                  <option value="{{$planta->id}}" @if($valida==1) {{ ($equipos->planta==$planta->id) ? 'selected' : '' }}  @endif   >{{$planta->nombre}}</option>
+                  <option value="{{$planta->id}}" {{ ($equipos->planta==$planta->id) ? 'selected' : '' }}   >{{$planta->nombre}}</option>
                 @endforeach
               </select>
                </div>
@@ -108,10 +106,10 @@
      
         <div class="col-md-6">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Preventivo</label>
+            <label class="col-md-3 label-control" for="userinput1">Próximo Mtto.</label>
             <div class="col-md-9">
 
-              <input disabled="disabled" type="text" name="preventivo" value="{{ $preventivo}}"   id="correctivo" class="form-control">
+              <input disabled="disabled" type="text" name="preventivo" value="{{ $equipos->preventivo != '0000-00-00' ? date("m-d-Y",strtotime($equipos->preventivo)) :''}}"   id="correctivo" class="form-control">
 
 
             </div>
@@ -133,12 +131,12 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Correctivo</label>
             <div class="col-md-9">
-                <input disabled="disabled" type="text" name="correctivo" value="{{ $correctivo != '0000-00-00' ? $correctivo :''}}"   class="form-control">
+                <input disabled="disabled" type="text" name="correctivo" value="{{ $equipos->correctivo != '0000-00-00' ? date("m-d-Y",strtotime($equipos->correctivo)) :''}}"   class="form-control">
             </div>
           </div>
         </div>
       </div>
-
+<!--
       <div class="row">
        <div class="col-md-6">
           <div class="form-group row">
@@ -158,6 +156,7 @@
           </div>
         </div>
       </div>
+    -->
 
 
       <div class="row">

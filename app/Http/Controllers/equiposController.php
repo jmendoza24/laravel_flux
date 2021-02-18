@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateequiposRequest;
 use App\Repositories\equiposRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\Models\equipos;
 use Flash;
 use Response;
 use DB;
@@ -28,12 +29,27 @@ class equiposController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
-    {
-        $equipos = $this->equiposRepository->all();
+    public function index(Request $request){
+        $fechas =   db::select("SELECT e.tipo, e.historial_tipo, if(e.historial_tipo = 2, e.vencimiento, e.fecha) AS fecha, 
+                                        case e.historial_tipo when 1 then 'calibracion' when 2 then 'preventivo' when 3 then 'correctivo' ELSE '' END AS nombre_campo   
+                                FROM equipo_historials e
+                                INNER JOIN (
+                                                SELECT MAX(id) id, historial_tipo
+                                                FROM equipo_historials
+                                                GROUP BY historial_tipo) a ON e.id = a.id ");
 
-        return view('equipos.index')
-            ->with('equipos', $equipos);
+        foreach($fechas as $f){
+           equipos::where('id',$f->tipo)
+                        ->update([$f->nombre_campo => $f->fecha]);
+        }
+
+        $equipos = db::select('SELECT e.*, p.nombre as nom_planta
+                                FROM equipos e
+                                left JOIN plantas p ON p.id = e.planta');
+
+
+
+        return view('equipos.index',compact('equipos'));
     }
 
     /**
@@ -58,7 +74,11 @@ class equiposController extends AppBaseController
         $equipoHistorials  = (object)$equipoHistorials ;
         $plantas = db::table('plantas')->get();
         $valida="0";
-        $equipos  = array('mantenimiento'=>'');
+        $equipos  = array('mantenimiento'=>'',
+                          'calibracion'=>'',
+                          'planta'=>'',
+                          'preventivo'=>'',
+                          'correctivo'=>'');
         $equipos = (object)$equipos;
         $preventivo = '';
         $correctivo = '';
@@ -160,29 +180,23 @@ class equiposController extends AppBaseController
             return redirect(route('equipos.index'));
         }
         $plantas = db::table('plantas')->get();
-        $valida="1";
 
+        $fechas =   db::select("SELECT e.tipo, e.historial_tipo, if(e.historial_tipo = 2, e.vencimiento, e.fecha) AS fecha, 
+                                        case e.historial_tipo when 1 then 'calibracion' when 2 then 'preventivo' when 3 then 'correctivo' ELSE '' END AS nombre_campo   
+                                FROM equipo_historials e
+                                INNER JOIN (
+                                                SELECT MAX(id) id, historial_tipo
+                                                FROM equipo_historials
+                                                WHERE tipo = $id
+                                                GROUP BY historial_tipo) a ON e.id = a.id ");
 
-        $preventivo=DB::table('equipo_historials')
-                                ->where([['tipo',$id],['historial_tipo',2]])
-                                ->select('vencimiento')
-                                ->max('vencimiento');
+        foreach($fechas as $f){
+           equipos::where('id',$id)
+                        ->update([$f->nombre_campo => $f->fecha]);
+        }
+        
 
-
-        $correctivo=DB::table('equipo_historials')
-                                ->where([['tipo',$id],['historial_tipo',3]])
-                                ->select('vencimiento')
-                                ->max('vencimiento');
-
-
-
-        $calibracion=DB::table('equipo_historials')
-                                ->where([['tipo',$id],['historial_tipo',1]])
-                                ->select('vencimiento')
-                                ->max('vencimiento');
-
-
-        return view('equipos.edit',compact('calibracion','correctivo','preventivo','valida','plantas','equipos','equipoHistorials','equipoHistPrev','equipoHistCorrect','eqHistofields'));
+        return view('equipos.edit',compact('plantas','equipos','equipoHistorials','equipoHistPrev','equipoHistCorrect','eqHistofields'));
     }
 
     /**

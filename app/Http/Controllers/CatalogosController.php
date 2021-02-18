@@ -1,9 +1,15 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Models\mes_salarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\equipo_historial;
+use App\Models\documentos_rh;
 use Storage;
+
+date_default_timezone_set("America/Mexico_City");
+
 class CatalogosController extends Controller{
 
 	public function __construct(){
@@ -49,6 +55,28 @@ class CatalogosController extends Controller{
                 $eqHistofields = $eqHistofields[0];
             }
             $options =  view('equipo_historials.fields',compact('eqHistofields'))->render();
+        }else if($request->catalogo==2){
+          if($request->tipo==1){
+              $salarios = array('id'=>0,
+                                'id_empleado' =>$request->datos,
+                                'salario'=>'');
+              $salarios = (object)$salarios;
+          }else if($request->tipo==2){
+            $salarios = mes_salarios::where('id',$request->id)->get();
+            $salarios = $salarios[0];
+          }
+
+          $options =  view('tbl_rhs.fields_salarios',compact('salarios'))->render();
+        }else if($request->catalogo==3){
+          $docs  = db::table('documentos_lista')->orderby('documento')->get();
+          if($request->tipo==1){
+              $documentos = array('id'=>0,
+                                  'tipo'=>$request->datos2,
+                                  'id_empleado' =>$request->datos);
+              $documentos = (object)$documentos;
+          }
+
+          $options =  view('tbl_rhs.carga_documentos',compact('documentos','docs'))->render();
         }
 
         return json_encode($options);
@@ -132,6 +160,102 @@ class CatalogosController extends Controller{
             }
             
 
+        }else if($request->id_catalogo == 2){
+            $existe = mes_salarios::where('id',$request->id)->count();
+            if($existe>0){
+              mes_salarios::where('id',$request->id)
+                          ->update(['salario'=>$request->salario,
+                                    'fecha'=>date('Y-m-d')]);
+            }else{
+              mes_salarios::insert(['salario'=>$request->salario,
+                                    'fecha'=>date('Y-m-d'),
+                                    'id_empleado'=>$request->id_empleado]);
+            }
+            $mes_salarios  = mes_salarios::where('id_empleado',$request->id_empleado)->get();
+            $options = view('tbl_rhs.salarios',compact('mes_salarios'))->render();
+        }else if($request->id_catalogo == 3){
+
+            $file_img = $request->file('archivo');
+            if(!empty($file_img)){
+                $img = Storage::url($file_img->store('documentos_rh', 'public'));
+                $imgp = strpos($img,'/storage/');
+                $doc_prev2 = substr($img, $imgp, strlen($img)); 
+
+                $existe = documentos_rh::where([['id_empleado',$request->id_empleado],['id_documento',$request->tipo_archivo]])->count();
+                $dc =  array(6,7,8,9,10,11);
+
+                if($existe > 0 and in_array($request->tipo_archivo, $dc)){
+                  documentos_rh::where([['id_empleado',$request->id_empleado],['id_documento',$request->tipo_archivo]])
+                                ->update(['archivo'=>$doc_prev2,
+                                          'fecha'=>date('Y-m-d')]);
+                }else{
+                  documentos_rh::insert(['id_empleado'=>$request->id_empleado,
+                                       'id_documento'=>$request->tipo_archivo,
+                                       'descripcion'=>$request->descripcion,
+                                       'archivo'=>$doc_prev2,
+                                       'fecha'=>date('Y-m-d')]);
+                }
+              }
+
+              if($request->tipo==1){
+                $documentos = documentos_rh::where('id_empleado',$request->id_empleado)->orderby('id_documento')->get();
+                $conteos = db::select('SELECT d2.id_empleado, doc2, doc3, doc4, doc5
+                                  FROM (
+                                      SELECT id_empleado, COUNT(*) AS doc2
+                                      FROM documentos_rh
+                                      WHERE id_empleado = '.$request->id_empleado.'
+                                      AND id_documento = 2
+                                      GROUP BY id_empleado) d2 
+                                  LEFT JOIN (
+                                      SELECT id_empleado, COUNT(*) AS doc3
+                                      FROM documentos_rh
+                                      WHERE id_empleado = '.$request->id_empleado.'
+                                      AND id_documento = 3
+                                      GROUP BY id_empleado) AS d3 ON d3.id_empleado = d2.id_empleado
+                                  LEFT JOIN (
+                                      SELECT id_empleado, COUNT(*) AS doc4
+                                      FROM documentos_rh
+                                      WHERE id_empleado = '.$request->id_empleado.'
+                                      AND id_documento = 4
+                                      GROUP BY id_empleado) AS d4 ON d4.id_empleado = d2.id_empleado
+                                  LEFT JOIN (
+                                      SELECT id_empleado, COUNT(*) AS doc5
+                                      FROM documentos_rh
+                                      WHERE id_empleado = '.$request->id_empleado.'
+                                      AND id_documento = 5
+                                      GROUP BY id_empleado) AS d5 ON d5.id_empleado = d2.id_empleado');
+                if(sizeof($conteos)>0){
+                  $conteos = $conteos[0];  
+                }else{
+                  $conteos = array('doc2'=>0,
+                                   'doc3'=>0,
+                                   'doc4'=>0,
+                                   'doc5'=>0);
+                  
+                  $conteos = (object)$conteos;
+                }
+                $options = view('tbl_rhs.lista_docs',compact('documentos','conteos'))->render();
+              }else{
+
+                $archivos =  documentos_rh::where('id_empleado',$request->id_empleado)
+                                          ->whereIn('id_documento',[6,7,8,9,10,11,12])
+                                          ->orderby('fecha','desc')
+                                          ->get();
+                $virtus  = DB::table('virtus')
+                                ->where('id_empleado',$request->id_empleado)
+                                ->get();
+                $virtus=$virtus[0];
+
+
+                $MyersBriggs  = DB::table('MyersBriggs')
+                                        ->where('id_empleado',$request->id_empleado)
+                                        ->get();
+                $MyersBriggs=$MyersBriggs[0];
+                $tblRh =  db::select('SELECT * FROM tbl_rhs where id = '.$request->id_empleado);
+                $tblRh = $tblRh[0];
+                $options = view('tbl_rhs.evaluaciones',compact('archivos','virtus','MyersBriggs','tblRh'))->render();
+              }
+            
         }
 
         return $options;
@@ -151,6 +275,10 @@ class CatalogosController extends Controller{
                 $options = view('equipo_historials.table_preventivo',compact('equipoHistPrev'))->render();
             }
             
+        }else if($request->catalogo==2){
+          mes_salarios::where('id',$request->id)->delete();
+          $mes_salarios  = mes_salarios::where('id_empleado',$request->dato)->get();
+          $options = view('tbl_rhs.salarios',compact('mes_salarios'))->render();
         }
 
         return json_encode($options);

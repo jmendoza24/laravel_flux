@@ -2,7 +2,7 @@
 <?php $__env->startSection('content'); ?>
 <?php ($editar=1); ?>
   <?php echo $__env->make('adminlte-templates::common.errors', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-  <?php echo Form::model($tblRh, ['route' => ['tblRhs.update', $tblRh->id], 'method' => 'patch']); ?>
+  <?php echo Form::model($tblRh, ['route' => ['tblRhs.update', $tblRh->id], 'method' => 'patch','enctype'=>'multipart/form-data']); ?>
 
     <?php echo $__env->make('tbl_rhs.fields', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
    <?php echo Form::close(); ?>

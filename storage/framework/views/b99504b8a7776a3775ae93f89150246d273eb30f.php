@@ -13,7 +13,7 @@
         <tr>
             <td><?php echo $equipoHistorial->responsable; ?></td>
             <td><?php echo $equipoHistorial->descripcion; ?></td>
-            <td><?php echo e($equipoHistorial->vencimiento); ?> </td>
+            <td><?php echo e($equipoHistorial->vencimiento != '' ? date("m-d-Y",strtotime(substr($equipoHistorial->vencimiento,0,10))) :''); ?></td>
             <td><?php if($equipoHistorial->activo==1): ?> Si <?php else: ?> No <?php endif; ?></td>
             <td>
                 <div class='btn-group'>

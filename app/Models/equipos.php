@@ -44,6 +44,7 @@ class equipos extends Model
         'correctivo',
         'preventivo',
         'planta',
+        'fcalibracion',
         'activo'
     ];
 
@@ -61,12 +62,13 @@ class equipos extends Model
         'pedimento' => 'string',
         'idequipo' => 'integer',
         'tipo' => 'integer',
-        'base' => 'integer',
+        'base' => 'string',
         'calibracion' => 'string',
         'mantenimiento' => 'date',
         'correctivo' => 'string',
         'preventivo' => 'string',
         'planta' => 'integer',
+        'fcalibracion'=>'datetime',
         'activo' => 'integer'
     ];
 

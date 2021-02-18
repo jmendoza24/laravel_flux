@@ -10,7 +10,12 @@ use Illuminate\Http\Request;
 use Flash;
 use Response;
 use App\Models\Puesto;
+use App\Models\mes_salarios;
+use App\Models\documentos_rh;
+use App\Models\expediente_empleado;
 use DB;
+use Storage;
+use App\Models\tbl_rh;
 use App\Models\Departamentos;
 
 
@@ -47,7 +52,11 @@ class tbl_rhController extends AppBaseController
     public function create()
     {
       $tblRh = array('id_empleado'=>'',
-        'id'=>0);
+                     'id'=>0,
+                     'genero'=>'',
+                     'identificacion'=>'',
+                     'doc_imss'=>'',
+                     'sal_ini_fecha');
       $tblRh = (object)$tblRh;
 
         return view('tbl_rhs.create',compact('tblRh'));
@@ -60,11 +69,45 @@ class tbl_rhController extends AppBaseController
      *
      * @return Response
      */
-    public function store(Createtbl_rhRequest $request)
-    {
+    public function store(Createtbl_rhRequest $request){
         $input = $request->all();
 
+        $doc_imss = $request->file('doc_imss');
+        $identificacion = $request->file('identificacion');
+
+        if(!empty($doc_imss)){
+            $img = Storage::url($doc_imss->store('rh', 'public'));
+            $imgp = strpos($img,'/storage/');
+            $doc_imss = substr($img, $imgp, strlen($img));                  
+        }else{
+            $doc_imss = '' ;        
+        }
+
+        if(!empty($identificacion)){
+            $img = Storage::url($identificacion->store('rh', 'public'));
+            $imgp = strpos($img,'/storage/');
+            $identificacion = substr($img, $imgp, strlen($img));                  
+        }else{
+            $identificacion = '' ;        
+        }
+
+        $input['doc_imss'] = $doc_imss;
+        $input['identificacion'] = $identificacion;
+        
+
         $tblRh = $this->tblRhRepository->create($input);
+
+         $conte = mes_salarios::where('id_empleado',$tblRh->id)->count();
+         if($conte == 0){
+          if($input['sal_ini'] > 0){
+              db::select("insert into mes_salarios(salario,fecha, id_empleado)
+                          select ".$input['sal_ini'] .",CURDATE(),".$input->id);
+              
+              db::select("update tbl_rhs set sal_ini_fecha=  CURDATE() where id = ".$input->id);
+              
+            }
+        }
+
 
         Flash::success('Tbl Rh saved successfully.');
 
@@ -190,9 +233,68 @@ public function sal_actualiza(Request $request){
 
         $puesto = puesto::all();
         $Departamentos = departamentos::all();
-//dd($tblRh);
 
-        return view('tbl_rhs.edit',compact('puesto','Departamentos','virtus','MyersBriggs','mes_salarios'))->with('tblRh', $tblRh);
+        $documentos = db::table('documentos_rh as d')
+                        ->join('documentos_lista as l','d.id_documento','l.id')
+                        ->where('id_empleado',$id)
+                        ->selectraw('d.*, l.documento')
+                        ->orderby('id_documento')
+                        ->get();
+
+        $expediente = documentos_rh::where([['id_empleado',$id],['id_documento',1]])->get();
+        if(sizeof($expediente)>0){
+          $expediente = $expediente[0];  
+        }else{
+          $expediente = array('archivo'=>'');
+          $expediente = (object)$expediente;
+        }
+        
+        $docs = db::select('SELECT d.*, existe
+                            FROM documentos_lista d
+                            LEFT JOIN expediente_empleado e ON d.id = e.id_documento AND id_empleado= '.$id);
+        $conteos = db::select('SELECT d2.id_empleado, doc2, doc3, doc4, doc5
+                                FROM (
+                                    SELECT id_empleado, COUNT(*) AS doc2
+                                    FROM documentos_rh
+                                    WHERE id_empleado = '.$id.'
+                                    AND id_documento = 2
+                                    GROUP BY id_empleado) d2 
+                                LEFT JOIN (
+                                    SELECT id_empleado, COUNT(*) AS doc3
+                                    FROM documentos_rh
+                                    WHERE id_empleado = '.$id.'
+                                    AND id_documento = 3
+                                    GROUP BY id_empleado) AS d3 ON d3.id_empleado = d2.id_empleado
+                                LEFT JOIN (
+                                    SELECT id_empleado, COUNT(*) AS doc4
+                                    FROM documentos_rh
+                                    WHERE id_empleado = '.$id.'
+                                    AND id_documento = 4
+                                    GROUP BY id_empleado) AS d4 ON d4.id_empleado = d2.id_empleado
+                                LEFT JOIN (
+                                    SELECT id_empleado, COUNT(*) AS doc5
+                                    FROM documentos_rh
+                                    WHERE id_empleado = '.$id.'
+                                    AND id_documento = 5
+                                    GROUP BY id_empleado) AS d5 ON d5.id_empleado = d2.id_empleado');
+        if(sizeof($conteos)>0){
+          $conteos = $conteos[0];  
+        }else{
+          $conteos = array('doc2'=>0,
+                           'doc3'=>0,
+                           'doc4'=>0,
+                           'doc5'=>0); 
+          
+          $conteos = (object)$conteos;
+        }
+ 
+        $archivos =  documentos_rh::where('id_empleado',$id)
+                                  ->whereIn('id_documento',[6,7,8,9,10,11,12])
+                                  ->orderby('fecha','desc')
+                                  ->get();
+        
+
+        return view('tbl_rhs.edit',compact('puesto','Departamentos','virtus','MyersBriggs','mes_salarios','documentos','docs','expediente','tblRh','conteos','archivos'));
     }
 
 
@@ -292,8 +394,52 @@ public function sal_actualiza(Request $request){
             return redirect(route('tblRhs.index'));
         }
 
-        $tblRh = $this->tblRhRepository->update($request->all(), $id);
-      //  dd($tblRh);
+        $doc_imss = $request->file('doc_imss');
+        $identificacion = $request->file('identificacion');
+
+        $tblRh = $request->all();
+
+        if(!empty($doc_imss)){
+            $img = Storage::url($doc_imss->store('rh', 'public'));
+            $imgp = strpos($img,'/storage/');
+            $imss = substr($img, $imgp, strlen($img));   
+
+            $tblRh['doc_imss'] = $imss;
+            //tbl_rh::where('id',$id)->update(['doc_imss'=>$imss]);               
+
+        }else{
+          unset($tblRh['doc_imss']);
+        }
+
+        if(!empty($identificacion)){
+            $img = Storage::url($identificacion->store('rh', 'public'));
+            $imgp = strpos($img,'/storage/');
+            $identi = substr($img, $imgp, strlen($img));      
+
+            $tblRh['identificacion'] = $identi;
+            //tbl_rh::where('id',$id)->update(['identificacion'=>$identi]);                           
+        }else{
+          unset($tblRh['identificacion']);
+        }
+
+        $tblRh = $this->tblRhRepository->update($tblRh, $id);
+
+        $conte = mes_salarios::where('id_empleado',$id)->count();
+        if($conte == 0){
+          if($tblRh['sal_ini'] > 0){
+              db::update("insert into mes_salarios(salario,fecha, id_empleado)
+                          select ".$tblRh['sal_ini'] .",CURDATE(),".$id);
+              
+              db::update("update tbl_rhs set sal_ini_fecha=  CURDATE() where id = ".$id);
+              
+            }
+        }
+
+        $conte = mes_salarios::where('id_empleado',$id)->count();
+        
+
+
+        
 
         Flash::success('Tbl Rh updated successfully.');
 
@@ -325,4 +471,19 @@ public function sal_actualiza(Request $request){
 
         return redirect(route('tblRhs.index'));
     }
+
+    function guarda_check(Request $request){
+        $existe = expediente_empleado::where([['id_empleado',$request->id_empleado],['id_documento',$request->id_documento]])->count();
+
+        if($existe > 0){
+            expediente_empleado::where([['id_empleado',$request->id_empleado],['id_documento',$request->id_documento]])
+                              ->update(['existe'=>$request->val]);          
+        }else{
+          expediente_empleado::insert(['existe'=>$request->val,
+                                       'id_documento'=>$request->id_documento,
+                                       'id_empleado'=>$request->id_empleado]);          
+        }
+        return 1;
+    }
+
 }

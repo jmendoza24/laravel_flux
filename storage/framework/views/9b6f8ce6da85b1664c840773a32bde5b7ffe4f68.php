@@ -90,9 +90,7 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Ultima Calibración</label>
             <div class="col-md-9">
-
-                <input disabled="disabled" type="text" name="calibracion"  <?php if($valida==1): ?>   <?php if($calibracion==""): ?>  value=""  <?php else: ?>  value="<?php echo e(date("m-d-Y",strtotime($calibracion))); ?>"  <?php endif; ?>     <?php else: ?> value=""  <?php endif; ?>  id="calibracion" class="form-control">
-
+              <input disabled="disabled" type="text" value="<?php echo e($equipos->calibracion != '0000-00-00' ? date("m-d-Y",strtotime($equipos->calibracion)) :''); ?>"  name="calibracion" id="calibracion" class="form-control">
             </div>
           </div>
         </div>
@@ -103,10 +101,10 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Planta</label>
             <div class="col-md-9">
-               <select class="form-control select2" id="planta" name="planta" style="width: 100%;">
+               <select class="form-control" id="planta" name="planta" style="width: 100%;">
                 <option value="0">Seleccione...</option>
                 <?php $__currentLoopData = $plantas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $planta): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                  <option value="<?php echo e($planta->id); ?>" <?php if($valida==1): ?> <?php echo e(($equipos->planta==$planta->id) ? 'selected' : ''); ?>  <?php endif; ?>   ><?php echo e($planta->nombre); ?></option>
+                  <option value="<?php echo e($planta->id); ?>" <?php echo e(($equipos->planta==$planta->id) ? 'selected' : ''); ?>   ><?php echo e($planta->nombre); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               </select>
                </div>
@@ -115,10 +113,10 @@
      
         <div class="col-md-6">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Preventivo</label>
+            <label class="col-md-3 label-control" for="userinput1">Próximo Mtto.</label>
             <div class="col-md-9">
 
-              <input disabled="disabled" type="text" name="preventivo" value="<?php echo e($preventivo); ?>"   id="correctivo" class="form-control">
+              <input disabled="disabled" type="text" name="preventivo" value="<?php echo e($equipos->preventivo != '0000-00-00' ? date("m-d-Y",strtotime($equipos->preventivo)) :''); ?>"   id="correctivo" class="form-control">
 
 
             </div>
@@ -140,12 +138,12 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Correctivo</label>
             <div class="col-md-9">
-                <input disabled="disabled" type="text" name="correctivo" value="<?php echo e($correctivo != '0000-00-00' ? $correctivo :''); ?>"   class="form-control">
+                <input disabled="disabled" type="text" name="correctivo" value="<?php echo e($equipos->correctivo != '0000-00-00' ? date("m-d-Y",strtotime($equipos->correctivo)) :''); ?>"   class="form-control">
             </div>
           </div>
         </div>
       </div>
-
+<!--
       <div class="row">
        <div class="col-md-6">
           <div class="form-group row">
@@ -165,6 +163,7 @@
           </div>
         </div>
       </div>
+    -->
 
 
       <div class="row">

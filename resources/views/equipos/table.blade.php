@@ -5,11 +5,10 @@
                 <th>Marca</th>
                 <th>Modelo</th>
                 <th>Serie</th>
-                <th>Tipo</th>
-                <th>Base</th>
+                <th>Planta</th>
                 <th>Calibración</th>
-                <th>Proximo Mtto.</th>
-
+                <th>Prox Mtto.</th>
+                <th>Ultimo Mtto. Correctivo</th>
                 <th colspan=""></th>
             </tr>
         </thead>
@@ -20,10 +19,10 @@
                 <td>{!! $equipos->marca !!}</td>
                 <td>{!! $equipos->modelo !!}</td>
                 <td>{!! $equipos->serie !!}</td>
-                <td>{!! $equipos->tipo !!}</td>
-                <td>{!! $equipos->base !!}</td>
-                <td>{!! $equipos->calibracion !!}</td>
-                <td>{{ substr($equipos->mantenimiento,0,10)}}</td>
+                <td>{!! $equipos->nom_planta !!}</td>
+                <td>{{ $equipos->calibracion != '' ? date("m-d-Y",strtotime(substr($equipos->calibracion,0,10))) :''}}</td>
+                <td>{{ $equipos->preventivo != '' ? date("m-d-Y",strtotime(substr($equipos->preventivo,0,10))) :''}}</td>
+                <td>{{ $equipos->correctivo != '' ? date("m-d-Y",strtotime(substr($equipos->correctivo,0,10))) :''}}</td>
                 <td>
                     {!! Form::open(['route' => ['equipos.destroy', $equipos->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

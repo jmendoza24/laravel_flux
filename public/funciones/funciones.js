@@ -18,6 +18,40 @@
 
 })();
 
+function guarda_check(id_empleado, val, id_documento){
+  var parameters = {'id_empleado':id_empleado,
+                    'val':val,
+                    'id_documento':id_documento}
+   $.ajax({
+            data: parameters,
+            url:   '/api/v1/guarda_check',
+            dataType: 'json',
+            type:  'get',
+            success:  function (response) { 
+              console.log(response);
+            }
+        }); 
+  }
+
+function calculo_salario(){
+  var salario = $("#salario_mensual").val() == '' ? 0 : parseInt($("#salario_mensual").val());
+
+  $("#salario_diario").val(((salario * 12)/360).toFixed(2));
+}
+
+function calcular_porcentaje(num){
+  var por1 = $("#porcentaje").val() == '' ? 0 : parseInt($("#porcentaje").val());
+  var por2 = $("#porcentaje2").val() == '' ? 0 : parseInt($("#porcentaje2").val());
+  var por3 = $("#porcentaje3").val() == '' ? 0 : parseInt($("#porcentaje3").val()); 
+  
+  var porcen = por1 + por2 + por3;
+
+  if(porcen > 100){
+    $.alert("El porcentaje debe ser menor a 100 %");
+    $("#porcentaje"+num).val('0');
+  }
+
+}
 
 $( document ).ready(function() {
 
@@ -29,11 +63,11 @@ $( document ).ready(function() {
                 alias: "numeric",
                 placeholder: "0",
                 autoGroup: !0,
-                digits: 3,
+                digits: 3, 
                 digitsOptional: !1,
                 clearMaskOnLostFocus: !1
             }
-    });
+    });  
 
     $(".currency").inputmask({ alias : "currency", prefix: '$ ' });
     $(".numeros").inputmask({ alias : "numeros", prefix: '' });
@@ -56,7 +90,12 @@ function ver_catalogo(catalogo,id,tipo,data_table,datos1,datos2){
             success:  function (response) { 
               $("#contenido").html(response);
               $("#modal_primary").removeClass("modal-xl"); 
-              $("#modal_primary").addClass("modal-lg"); 
+              
+              if(catalogo ==1 || catalogo == 2){
+                $("#modal_primary").addClass("modal-lg");   
+              }
+
+              $('.decimal-inputmask').inputmask({ "alias": "decimal" , "radixPoint": "." });
               $('.modal-dialog').draggable({handle: ".modal-header"});
               $("#footer_primary").hide();
             }
@@ -81,6 +120,14 @@ function guardar_catalogos(catalogo,id,tipo,nom_table,dato){
               }else if(catalogo==1 && dato==2){
                 $("#equipo_histPrev").html(respuesta);
               }else if(catalogo==1 && dato==3){
+                $("#equipo_histCorrect").html(respuesta);
+              }else if(catalogo == 2){
+                $("#dic_sal").html(respuesta);
+              }else if(catalogo==3 && tipo ==1){
+                $("#lista_docs").html(respuesta);
+              }else if(catalogo==3 && tipo == 2){
+                $("#lista_tabla").html(respuesta);
+              }else{
                 $("#equipo_histCorrect").html(respuesta);
               }
 
@@ -117,6 +164,8 @@ function elimina_catalogo(catalogo,id,nom_table,dato,dato2){
                               $("#equipo_histPrev").html(respuesta);
                             }else if(catalogo==1 && dato==3){
                               $("#equipo_histCorrect").html(respuesta);
+                            }else if(catalogo == 2){
+                              $("#dic_sal").html(respuesta);
                             }
                             
                             $(".zero-configuration").DataTable();

@@ -5,11 +5,10 @@
                 <th>Marca</th>
                 <th>Modelo</th>
                 <th>Serie</th>
-                <th>Tipo</th>
-                <th>Base</th>
+                <th>Planta</th>
                 <th>Calibración</th>
-                <th>Proximo Mtto.</th>
-
+                <th>Prox Mtto.</th>
+                <th>Ultimo Mtto. Correctivo</th>
                 <th colspan=""></th>
             </tr>
         </thead>
@@ -20,10 +19,10 @@
                 <td><?php echo $equipos->marca; ?></td>
                 <td><?php echo $equipos->modelo; ?></td>
                 <td><?php echo $equipos->serie; ?></td>
-                <td><?php echo $equipos->tipo; ?></td>
-                <td><?php echo $equipos->base; ?></td>
-                <td><?php echo $equipos->calibracion; ?></td>
-                <td><?php echo e(substr($equipos->mantenimiento,0,10)); ?></td>
+                <td><?php echo $equipos->nom_planta; ?></td>
+                <td><?php echo e($equipos->calibracion != '' ? date("m-d-Y",strtotime(substr($equipos->calibracion,0,10))) :''); ?></td>
+                <td><?php echo e($equipos->preventivo != '' ? date("m-d-Y",strtotime(substr($equipos->preventivo,0,10))) :''); ?></td>
+                <td><?php echo e($equipos->correctivo != '' ? date("m-d-Y",strtotime(substr($equipos->correctivo,0,10))) :''); ?></td>
                 <td>
                     <?php echo Form::open(['route' => ['equipos.destroy', $equipos->id], 'method' => 'delete']); ?>
 
