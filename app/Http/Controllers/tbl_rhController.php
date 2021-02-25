@@ -44,7 +44,7 @@ class tbl_rhController extends AppBaseController
             ->with('tblRhs', $tblRhs);
     }
 
-    /**
+    /** 
      * Show the form for creating a new tbl_rh.
      *
      * @return Response
@@ -56,7 +56,10 @@ class tbl_rhController extends AppBaseController
                      'genero'=>'',
                      'identificacion'=>'',
                      'doc_imss'=>'',
-                     'sal_ini_fecha');
+                     'sal_ini_fecha'=>'',
+                     'fecha_nacimiento'=>'',
+                     'contrato'=>'',
+                     'notas'=>'');
       $tblRh = (object)$tblRh;
 
         return view('tbl_rhs.create',compact('tblRh'));
@@ -96,10 +99,10 @@ class tbl_rhController extends AppBaseController
         
 
         $tblRh = $this->tblRhRepository->create($input);
-
+/**
          $conte = mes_salarios::where('id_empleado',$tblRh->id)->count();
          if($conte == 0){
-          if($input['sal_ini'] > 0){
+          if($input['sal_ini'] != ''){
               db::select("insert into mes_salarios(salario,fecha, id_empleado)
                           select ".$input['sal_ini'] .",CURDATE(),".$input->id);
               
@@ -107,14 +110,14 @@ class tbl_rhController extends AppBaseController
               
             }
         }
-
+*/
 
         Flash::success('Tbl Rh saved successfully.');
 
 
 
 
-        return redirect(route('tblRhs.index'));
+        return redirect('tblRhs/'.$tblRh->id.'/edit');
     }
 
     /**
@@ -184,9 +187,7 @@ public function sal_actualiza(Request $request){
         
 
 
-        $mes_salarios  = DB::table('mes_salarios')
-            ->where('id_empleado',$id)
-            ->get();
+       $mes_salarios  = mes_salarios::where('id_empleado',$id)->orderby('fecha','desc')->get();
 
 
         $v  = DB::table('virtus')
@@ -252,49 +253,19 @@ public function sal_actualiza(Request $request){
         $docs = db::select('SELECT d.*, existe
                             FROM documentos_lista d
                             LEFT JOIN expediente_empleado e ON d.id = e.id_documento AND id_empleado= '.$id);
-        $conteos = db::select('SELECT d2.id_empleado, doc2, doc3, doc4, doc5
-                                FROM (
-                                    SELECT id_empleado, COUNT(*) AS doc2
-                                    FROM documentos_rh
-                                    WHERE id_empleado = '.$id.'
-                                    AND id_documento = 2
-                                    GROUP BY id_empleado) d2 
-                                LEFT JOIN (
-                                    SELECT id_empleado, COUNT(*) AS doc3
-                                    FROM documentos_rh
-                                    WHERE id_empleado = '.$id.'
-                                    AND id_documento = 3
-                                    GROUP BY id_empleado) AS d3 ON d3.id_empleado = d2.id_empleado
-                                LEFT JOIN (
-                                    SELECT id_empleado, COUNT(*) AS doc4
-                                    FROM documentos_rh
-                                    WHERE id_empleado = '.$id.'
-                                    AND id_documento = 4
-                                    GROUP BY id_empleado) AS d4 ON d4.id_empleado = d2.id_empleado
-                                LEFT JOIN (
-                                    SELECT id_empleado, COUNT(*) AS doc5
-                                    FROM documentos_rh
-                                    WHERE id_empleado = '.$id.'
-                                    AND id_documento = 5
-                                    GROUP BY id_empleado) AS d5 ON d5.id_empleado = d2.id_empleado');
-        if(sizeof($conteos)>0){
-          $conteos = $conteos[0];  
-        }else{
-          $conteos = array('doc2'=>0,
-                           'doc3'=>0,
-                           'doc4'=>0,
-                           'doc5'=>0); 
-          
-          $conteos = (object)$conteos;
-        }
- 
+        $conteos = db::select('SELECT id_empleado, id_documento, COUNT(*) AS conteo
+                              FROM documentos_rh
+                              WHERE id_empleado = '.$id.'
+                              AND id_documento IN (2,3,4,5)
+                              GROUP BY id_documento, id_empleado');
+
         $archivos =  documentos_rh::where('id_empleado',$id)
                                   ->whereIn('id_documento',[6,7,8,9,10,11,12])
                                   ->orderby('fecha','desc')
                                   ->get();
         
 
-        return view('tbl_rhs.edit',compact('puesto','Departamentos','virtus','MyersBriggs','mes_salarios','documentos','docs','expediente','tblRh','conteos','archivos'));
+        return view('tbl_rhs.edit',compact('puesto','Departamentos','virtus','MyersBriggs','mes_salarios','documentos','docs','expediente','tblRh','conteos','archivos','id'));
     }
 
 
@@ -423,7 +394,7 @@ public function sal_actualiza(Request $request){
         }
 
         $tblRh = $this->tblRhRepository->update($tblRh, $id);
-
+/**
         $conte = mes_salarios::where('id_empleado',$id)->count();
         if($conte == 0){
           if($tblRh['sal_ini'] > 0){
@@ -438,7 +409,7 @@ public function sal_actualiza(Request $request){
         $conte = mes_salarios::where('id_empleado',$id)->count();
         
 
-
+*/
         
 
         Flash::success('Tbl Rh updated successfully.');

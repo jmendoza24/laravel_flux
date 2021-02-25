@@ -18,6 +18,12 @@
 
 })();
 
+function formato_fechas(campo){
+  var val = $("fecha").val();
+  moment(val,'YYYY-MM-DD').format('YYYY-MM-DD');
+}
+
+
 function guarda_check(id_empleado, val, id_documento){
   var parameters = {'id_empleado':id_empleado,
                     'val':val,
@@ -88,22 +94,60 @@ function ver_catalogo(catalogo,id,tipo,data_table,datos1,datos2){
             dataType: 'json',
             type:  'get',
             success:  function (response) { 
+
               $("#contenido").html(response);
               $("#modal_primary").removeClass("modal-xl"); 
               
-              if(catalogo ==1 || catalogo == 2){
+              if(catalogo ==1){
                 $("#modal_primary").addClass("modal-lg");   
               }
 
               $('.decimal-inputmask').inputmask({ "alias": "decimal" , "radixPoint": "." });
               $('.modal-dialog').draggable({handle: ".modal-header"});
               $("#footer_primary").hide();
+              $('.jit-inputmask').inputmask("mm-dd-yyyy",{ jitMasking: true });
             }
         }); 
-}
+} 
 
 function guardar_catalogos(catalogo,id,tipo,nom_table,dato){
     var formData = new FormData($("#catalogos_forma")[0]);
+    var tipo_doc = $("#tipo_archivo").val();
+    if(catalogo == 3 && tipo_doc == 1){
+      $.confirm({
+            title: 'Fluxmetals',
+            content: 'Estas seguro deseas reemplazar este archivo?',
+            type:'orange',
+            buttons: {
+                confirmar: function () {
+                  $.ajax({
+                          url:"/api/v1/guardar_catalogos",
+                          type: 'POST',
+                          method: "POST",        
+                          data:  formData,
+                          //async: false,
+                          cache: false,
+                          contentType: false,
+                          processData: false, 
+                          success: function(respuesta){
+                            if(catalogo==3 && tipo ==1){
+                              $("#lista_docs").html(respuesta);
+                            }else if(catalogo==3 && tipo == 2){
+                              $("#lista_tabla").html(respuesta);
+                            }
+
+                            $(".zero-configuration").DataTable();
+                            $("#primary").modal('hide');
+                            $("#catalogos_forma")[0].reset();
+                        }
+                      });
+
+                },
+                cancelar: function () {}
+              } 
+          });       
+
+    }else{
 
     $.ajax({
             url:"/api/v1/guardar_catalogos",
@@ -136,6 +180,7 @@ function guardar_catalogos(catalogo,id,tipo,nom_table,dato){
               $("#catalogos_forma")[0].reset();
           }
         });
+  }
 }
 
 
@@ -166,6 +211,10 @@ function elimina_catalogo(catalogo,id,nom_table,dato,dato2){
                               $("#equipo_histCorrect").html(respuesta);
                             }else if(catalogo == 2){
                               $("#dic_sal").html(respuesta);
+                            }else if(catalogo==3 && dato2 ==1){
+                              $("#lista_docs").html(respuesta);
+                            }else if(catalogo==3 && dato2 == 2){
+                              $("#lista_tabla").html(respuesta);
                             }
                             
                             $(".zero-configuration").DataTable();

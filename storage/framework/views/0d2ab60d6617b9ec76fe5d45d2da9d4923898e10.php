@@ -53,8 +53,13 @@
             <div class="form-group row">
               <label class="col-md-3 label-control" for="planta">Contrato</label>
               <div class="col-md-9">
-                  <?php echo Form::text('contrato', null, ['class' => 'form-control']); ?>
-
+                  <select class="form-control" name="contrato">
+                    <option value="">Seleccione...</option>
+                    <option value="1" <?php echo e($tblRh->contrato==1 ?'selected':''); ?>>Administrativo</option>
+                    <option value="2" <?php echo e($tblRh->contrato==2 ?'selected':''); ?>>Practicante</option>
+                    <option value="3" <?php echo e($tblRh->contrato==3 ?'selected':''); ?>>Sindicalizado</option>
+                    <option value="4" <?php echo e($tblRh->contrato==4 ?'selected':''); ?>>Operaciones</option>
+                  </select>
               </div>
             </div>
           </div>
@@ -127,10 +132,9 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="planta">Fecha nac.</label>
+              <label class="col-md-3 label-control" for="planta">Fecha Nac. (mm/dd/aaaa)</label>
               <div class="col-md-9">
-
-                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control" <?php if(empty($tblRh->fecha_nacimiento)): ?> value="" <?php else: ?>  value="<?php echo e(date_format($tblRh->fecha_nacimiento, 'Y-m-d')); ?>" <?php endif; ?> >
+                <input type="text" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control jit-inputmask" value="<?php echo e($tblRh->fecha_nacimiento); ?>" >
               </div>
             </div>
           </div>
@@ -207,7 +211,8 @@
                   <option value="1" <?php if(empty($tblRh->grado_escolaridad)): ?>   <?php else: ?>  <?php echo e(($tblRh->grado_escolaridad==1) ? 'selected' : ''); ?> <?php endif; ?> >Escuela Técnica</option>
                   <option value="2" <?php if(empty($tblRh->grado_escolaridad)): ?>   <?php else: ?>  <?php echo e(($tblRh->grado_escolaridad==2) ? 'selected' : ''); ?> <?php endif; ?>>Preparatoria</option>
                   <option value="3" <?php if(empty($tblRh->grado_escolaridad)): ?>   <?php else: ?>  <?php echo e(($tblRh->grado_escolaridad==3) ? 'selected' : ''); ?> <?php endif; ?>>Universidad</option>
-                  <option value="4" <?php if(empty($tblRh->grado_escolaridad)): ?>   <?php else: ?>  <?php echo e(($tblRh->grado_escolaridad==4) ? 'selected' : ''); ?> <?php endif; ?>>Nada</option>
+                  <option value="4" <?php if(empty($tblRh->grado_escolaridad)): ?>   <?php else: ?>  <?php echo e(($tblRh->grado_escolaridad==4) ? 'selected' : ''); ?> <?php endif; ?>>Posgrado</option>
+                  <option value="5" <?php if(empty($tblRh->grado_escolaridad)): ?>   <?php else: ?>  <?php echo e(($tblRh->grado_escolaridad==5) ? 'selected' : ''); ?> <?php endif; ?>>Nada</option>
                 </select>
               </div>
             </div>
@@ -295,14 +300,13 @@
               <label class="col-md-3 label-control" for="userinput2">Relación con el colaborador / Parentesco </label>
               <div class="col-md-9">
                 <select class="form-control " style="width: 100%" name="relacion" id="relacion" >
-                  <option value="0">Seleccione una opci&oacute;n</option>
-                    <option value="1" <?php echo e(($tblRh->relacion==1) ? 'selected' : ''); ?>>Padre</option>
-                    <option value="2" <?php echo e(($tblRh->relacion==2) ? 'selected' : ''); ?>>Madre</option>
-                    <option value="3" <?php echo e(($tblRh->relacion==3) ? 'selected' : ''); ?>>Hijo</option>
-                    <option value="4" <?php echo e(($tblRh->relacion==4) ? 'selected' : ''); ?>>Conyugue</option>
-                    <option value="5" <?php echo e(($tblRh->relacion==5) ? 'selected' : ''); ?>>Otro</option>
-
-
+                  <option value="0">Seleccione ...</option>
+                    <option value="1" <?php echo e(($tblRh->relacion==1) ? 'selected' : ''); ?>>Padres</option>
+                    <option value="2" <?php echo e(($tblRh->relacion==2) ? 'selected' : ''); ?>>Hijos</option>
+                    <option value="3" <?php echo e(($tblRh->relacion==3) ? 'selected' : ''); ?>>Pareja</option>
+                    <option value="4" <?php echo e(($tblRh->relacion==4) ? 'selected' : ''); ?>>Cónyuge</option>
+                    <option value="5" <?php echo e(($tblRh->relacion==5) ? 'selected' : ''); ?>>Familiar</option>
+                    <option value="6" <?php echo e(($tblRh->relacion==6) ? 'selected' : ''); ?>>Otro</option>
                 </select>
               </div>
             </div>
@@ -351,14 +355,13 @@
               <label class="col-md-3 label-control" for="userinput2">Relación con el colaborador / Parentesco </label>
               <div class="col-md-9">
                 <select class="form-control " style="width: 100%" name="relacion2" id="relacion2" >
-                  <option value="0">Seleccione una opci&oacute;n</option>
-                    <option value="1" <?php echo e(($tblRh->relacion2==1) ? 'selected' : ''); ?>>Padre</option>
-                    <option value="2" <?php echo e(($tblRh->relacion2==2) ? 'selected' : ''); ?>>Madre</option>
-                    <option value="3" <?php echo e(($tblRh->relacion2==3) ? 'selected' : ''); ?>>Hijo</option>
-                    <option value="4" <?php echo e(($tblRh->relacion2==4) ? 'selected' : ''); ?>>Conyugue</option>
-                    <option value="5" <?php echo e(($tblRh->relacion2==5) ? 'selected' : ''); ?>>Otro</option>
-
-
+                  <option value="0">Seleccione...</option>
+                  <option value="1" <?php echo e(($tblRh->relacion==1) ? 'selected' : ''); ?>>Padres</option>
+                  <option value="2" <?php echo e(($tblRh->relacion==2) ? 'selected' : ''); ?>>Hijos</option>
+                  <option value="3" <?php echo e(($tblRh->relacion==3) ? 'selected' : ''); ?>>Pareja</option>
+                  <option value="4" <?php echo e(($tblRh->relacion==4) ? 'selected' : ''); ?>>Cónyuge</option>
+                  <option value="5" <?php echo e(($tblRh->relacion==5) ? 'selected' : ''); ?>>Familiar</option>
+                  <option value="6" <?php echo e(($tblRh->relacion==6) ? 'selected' : ''); ?>>Otro</option>
                 </select>
               </div>
             </div>
@@ -475,8 +478,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Fecha de nacimiento beneficiario</label>
                   <div class="col-md-9">
-                    <input type="date" name="fecha_nacimiento_bene" id="fecha_nacimiento_bene" class="form-control" <?php if(empty($tblRh->fecha_nacimiento_bene)): ?> value=""  <?php else: ?>  value="<?php echo e(date_format($tblRh->fecha_nacimiento_bene, 'Y-m-d')); ?>" <?php endif; ?> >
-
+                    <input type="text" name="fecha_nacimiento_bene" id="fecha_nacimiento_bene" class="form-control jit-inputmask"  value="<?php echo e($tblRh->fecha_nacimiento_bene); ?>" >
                   </div> 
                 </div>
               </div>
@@ -574,7 +576,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Fecha de nacimiento beneficiario</label>
                   <div class="col-md-9">
-                    <input type="date" name="fecha_nacimiento_bene2" id="fecha_nacimiento_bene2" class="form-control" <?php if(empty($tblRh->fecha_nacimiento_bene2)): ?> value=""  <?php else: ?>  value="<?php echo e(date_format($tblRh->fecha_nacimiento_bene2, 'Y-m-d')); ?>" <?php endif; ?> >
+                    <input type="text" name="fecha_nacimiento_bene2" id="fecha_nacimiento_bene2" class="form-control jit-inputmask"  value="<?php echo e($tblRh->fecha_nacimiento_bene2); ?>" >
 
                   </div> 
                 </div>
@@ -673,8 +675,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Fecha de nacimiento beneficiario</label>
                   <div class="col-md-9">
-                    <input type="date" name="fecha_nacimiento_bene3" id="fecha_nacimiento_bene3" class="form-control" <?php if(empty($tblRh->fecha_nacimiento_bene3)): ?> value=""  <?php else: ?>  value="<?php echo e(date_format($tblRh->fecha_nacimiento_bene3, 'Y-m-d')); ?>" <?php endif; ?>>
-
+                    <input type="text" name="fecha_nacimiento_bene3" id="fecha_nacimiento_bene3" class="form-control jit-inputmask" value="<?php echo e($tblRh->fecha_nacimiento_bene3); ?>">
                   </div> 
                 </div>
               </div>
@@ -788,7 +789,7 @@
            <div class="form-group row">
               <label class="col-md-3 label-control" for="nombre">Fecha inicio</label>
               <div class="col-md-9">
-                    <input type="date" name="fecha_ingreso" id="fecha_ingreso" class="form-control" <?php if(empty($tblRh->fecha_ingreso)): ?> value=""  <?php else: ?>  value="<?php echo e(date_format($tblRh->fecha_ingreso, 'Y-m-d')); ?>" <?php endif; ?>>
+                    <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control jit-inputmask"  value="<?php echo e($tblRh->fecha_ingreso); ?>">
 
               </div> 
             </div>
@@ -797,7 +798,7 @@
            <div class="form-group row">
               <label class="col-md-3 label-control" for="nombre">Fecha fin</label>
               <div class="col-md-9">
-                    <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" <?php if(empty($tblRh->fecha_fin)): ?>  value="" <?php else: ?>  value="<?php echo e(date_format($tblRh->fecha_fin, 'Y-m-d')); ?>" <?php endif; ?>>
+                    <input type="text" name="fecha_fin" id="fecha_fin" class="form-control jit-inputmask" value="<?php echo e($tblRh->fecha_fin); ?>">
 
               </div> 
             </div>
@@ -808,7 +809,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Vencimiento Periodo Prueba</label>
                   <div class="col-md-9">
-                    <input type="date" name="Vencimiento_prueba" id="Vencimiento_prueba" class="form-control" <?php if(empty($tblRh->Vencimiento_prueba)): ?> value=""  <?php else: ?>  value="<?php echo e(date_format($tblRh->Vencimiento_prueba, 'Y-m-d')); ?>" <?php endif; ?>>
+                    <input type="text" name="Vencimiento_prueba" id="Vencimiento_prueba" class="form-control jit-inputmask" value="<?php echo e($tblRh->Vencimiento_prueba); ?>">
 
                   </div> 
                 </div>
@@ -817,75 +818,13 @@
                  <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Vencimiento de Contrato</label>
                   <div class="col-md-9">
-                    <input type="date" name="Vencimiento_contrato" id="Vencimiento_contrato" class="form-control" <?php if(empty($tblRh->Vencimiento_contrato)): ?>  value="" <?php else: ?>  value="<?php echo e(date_format($tblRh->Vencimiento_contrato, 'Y-m-d')); ?>" <?php endif; ?>>
+                    <input type="text" name="Vencimiento_contrato" id="Vencimiento_contrato" class="form-control jit-inputmask" value="<?php echo e($tblRh->Vencimiento_contrato); ?>">
 
                   </div> 
                 </div>
               </div>
-        </div>
-        <div class="row">
-             <div class="col-md-6">
-               <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Salario Mensual</label>
-                  <div class="col-md-9">
-                    <?php echo Form::text('salario_mensual', null, ['class' => 'form-control decimal-inputmask ','id'=>'salario_mensual','onchange'=>'calculo_salario()']); ?>
-
-                  </div> 
-                </div>
-              </div>
-              <div class="col-md-6">
-                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Salario Diario</label>
-                  <div class="col-md-9">
-                    <?php echo Form::text('salario_diario', null, ['class' => 'form-control decimal-inputmask text-right','id'=>'salario_diario','readonly']); ?>
-
-
-                  </div> 
-                </div>
-              </div>
-        </div>
-        <div class="row">
-              <!--
-              <div class="col-md-6">
-                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Reviciones</label>
-                  <div class="col-md-9">
-                    <?php echo Form::text('reviciones', null, ['class' => 'form-control']); ?>
-
-
-                  </div> 
-                </div>
-              </div>--->
-             <div class="col-md-6">
-               <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre"></label>
-                  <div class="col-md-9">
-
-                  </div>  
-                </div>
-              </div>
-        </div>
-        <div class="row">
-
-              <div class="col-md-6">
-                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Salario inicial</label>
-                  <div class="col-md-9">
-                    <?php echo Form::text('sal_ini', null, ['class' => 'form-control decimal-inputmask text-right']); ?>
-
-                  </div> 
-                </div>
-              </div>
-             <div class="col-md-6">
-               <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Fecha Salario inicial</label>
-                  <div class="col-md-9">
-                    <input type="text" readonly="" name="sal_ini_fecha" id="sal_ini_fecha" class="form-control" value="<?php echo e(substr($tblRh->sal_ini_fecha,0,10)); ?>">
-                  </div> 
-                </div>
-              </div>
-        </div>
-        <?php if($tblRh->sal_ini > 0 ): ?>
+        </div>   
+      
           <br><h3>Salario Mensual</h3> <br>  
             <div class="col-md-12" style="width: 100%">
                 <h1 class="pull-right">
@@ -896,7 +835,6 @@
             <div id="dic_sal">
             <?php echo $__env->make('tbl_rhs.salarios', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </div>
-          <?php endif; ?>
 
       </div>
 
@@ -904,41 +842,14 @@
 
   </div>
 
-
-
-
-
   <div class="tab-pane" id="link34" role="tabpanel" aria-labelledby="link-tab34" aria-expanded="false">
       <div class="col-md-12 text-left">
         <span class="btn btn-outline-success" data-toggle="modal" data-target="#primary"  onclick="ver_catalogo(3,0,1,'',<?php echo e($tblRh->id); ?>,1)"><i class="fa fa-plus"></i> Nuevo Documento</span>
       </div>
       <br><br>
-       <div class="col-md-12">
-         <h5>Expediente</h5>
-         <hr>
-         <table class="table table-striped table-bordered">
-           <tr class="btn-primary text-center">
-             <td><b>Documentos</b></td>
-             <td><b>SI</b></td>
-             <td><b>NO</b></td>
-             <td><b>NA</b></td>
-           </tr>
-           <?php $__currentLoopData = $docs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-           <tr class="text-center">
-             <td class="text-left"><?php echo e($doc->documento); ?></td>
-             <td><input type="radio" name="dc_<?php echo e($doc->id); ?>" value="1" <?php echo e($doc->existe ==1 ? 'checked' : ''); ?> onchange="guarda_check(<?php echo e($tblRh->id); ?>,1,<?php echo e($doc->id); ?>)"></td>
-             <td><input type="radio" name="dc_<?php echo e($doc->id); ?>" value="2" <?php echo e($doc->existe ==2 ? 'checked' : ''); ?> onchange="guarda_check(<?php echo e($tblRh->id); ?>,2,<?php echo e($doc->id); ?>)"></td>
-             <td><input type="radio" name="dc_<?php echo e($doc->id); ?>" value="3" <?php echo e($doc->existe ==3 ? 'checked' : ''); ?> onchange="guarda_check(<?php echo e($tblRh->id); ?>,3,<?php echo e($doc->id); ?>)"></td>
-           </tr>
-           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-           <tr>
-             <td colspan="4" style="border: 2px solid #518a87;"><?php if($expediente->archivo != ''): ?> <a id="doc2" href="<?php echo e($expediente->archivo); ?>" target="_blank" > <span><i class="fa fa-file-pdf-o"></i> <b >Expediente</b></span></a> <?php endif; ?></td>
-           </tr>
-         </table>
-       </div>
-       <div class="col-md-12" id="lista_docs">   
+      <div id="lista_docs" class="row">
           <?php echo $__env->make('tbl_rhs.lista_docs', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-      </div>  
+      </div>
  
   </div>
   <div class="tab-pane" id="link35" role="tabpanel" aria-labelledby="link-tab35" aria-expanded="false">

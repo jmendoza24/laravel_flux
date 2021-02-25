@@ -51,7 +51,13 @@
             <div class="form-group row">
               <label class="col-md-3 label-control" for="planta">Contrato</label>
               <div class="col-md-9">
-                  {!! Form::text('contrato', null, ['class' => 'form-control']) !!}
+                  <select class="form-control" name="contrato">
+                    <option value="">Seleccione...</option>
+                    <option value="1" {{ $tblRh->contrato==1 ?'selected':'' }}>Administrativo</option>
+                    <option value="2" {{ $tblRh->contrato==2 ?'selected':'' }}>Practicante</option>
+                    <option value="3" {{ $tblRh->contrato==3 ?'selected':'' }}>Sindicalizado</option>
+                    <option value="4" {{ $tblRh->contrato==4 ?'selected':'' }}>Operaciones</option>
+                  </select>
               </div>
             </div>
           </div>
@@ -121,10 +127,9 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="planta">Fecha nac.</label>
+              <label class="col-md-3 label-control" for="planta">Fecha Nac. (mm/dd/aaaa)</label>
               <div class="col-md-9">
-
-                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control" @if(empty($tblRh->fecha_nacimiento)) value="" @else  value="{{date_format($tblRh->fecha_nacimiento, 'Y-m-d') }}" @endif >
+                <input type="text" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control jit-inputmask" value="{{ $tblRh->fecha_nacimiento }}" >
               </div>
             </div>
           </div>
@@ -197,7 +202,8 @@
                   <option value="1" @if(empty($tblRh->grado_escolaridad))   @else  {{ ($tblRh->grado_escolaridad==1) ? 'selected' : '' }} @endif >Escuela Técnica</option>
                   <option value="2" @if(empty($tblRh->grado_escolaridad))   @else  {{ ($tblRh->grado_escolaridad==2) ? 'selected' : '' }} @endif>Preparatoria</option>
                   <option value="3" @if(empty($tblRh->grado_escolaridad))   @else  {{ ($tblRh->grado_escolaridad==3) ? 'selected' : '' }} @endif>Universidad</option>
-                  <option value="4" @if(empty($tblRh->grado_escolaridad))   @else  {{ ($tblRh->grado_escolaridad==4) ? 'selected' : '' }} @endif>Nada</option>
+                  <option value="4" @if(empty($tblRh->grado_escolaridad))   @else  {{ ($tblRh->grado_escolaridad==4) ? 'selected' : '' }} @endif>Posgrado</option>
+                  <option value="5" @if(empty($tblRh->grado_escolaridad))   @else  {{ ($tblRh->grado_escolaridad==5) ? 'selected' : '' }} @endif>Nada</option>
                 </select>
               </div>
             </div>
@@ -282,14 +288,13 @@
               <label class="col-md-3 label-control" for="userinput2">Relación con el colaborador / Parentesco </label>
               <div class="col-md-9">
                 <select class="form-control " style="width: 100%" name="relacion" id="relacion" >
-                  <option value="0">Seleccione una opci&oacute;n</option>
-                    <option value="1" {{ ($tblRh->relacion==1) ? 'selected' : '' }}>Padre</option>
-                    <option value="2" {{ ($tblRh->relacion==2) ? 'selected' : '' }}>Madre</option>
-                    <option value="3" {{ ($tblRh->relacion==3) ? 'selected' : '' }}>Hijo</option>
-                    <option value="4" {{ ($tblRh->relacion==4) ? 'selected' : '' }}>Conyugue</option>
-                    <option value="5" {{ ($tblRh->relacion==5) ? 'selected' : '' }}>Otro</option>
-
-
+                  <option value="0">Seleccione ...</option>
+                    <option value="1" {{ ($tblRh->relacion==1) ? 'selected' : '' }}>Padres</option>
+                    <option value="2" {{ ($tblRh->relacion==2) ? 'selected' : '' }}>Hijos</option>
+                    <option value="3" {{ ($tblRh->relacion==3) ? 'selected' : '' }}>Pareja</option>
+                    <option value="4" {{ ($tblRh->relacion==4) ? 'selected' : '' }}>Cónyuge</option>
+                    <option value="5" {{ ($tblRh->relacion==5) ? 'selected' : '' }}>Familiar</option>
+                    <option value="6" {{ ($tblRh->relacion==6) ? 'selected' : '' }}>Otro</option>
                 </select>
               </div>
             </div>
@@ -335,14 +340,13 @@
               <label class="col-md-3 label-control" for="userinput2">Relación con el colaborador / Parentesco </label>
               <div class="col-md-9">
                 <select class="form-control " style="width: 100%" name="relacion2" id="relacion2" >
-                  <option value="0">Seleccione una opci&oacute;n</option>
-                    <option value="1" {{ ($tblRh->relacion2==1) ? 'selected' : '' }}>Padre</option>
-                    <option value="2" {{ ($tblRh->relacion2==2) ? 'selected' : '' }}>Madre</option>
-                    <option value="3" {{ ($tblRh->relacion2==3) ? 'selected' : '' }}>Hijo</option>
-                    <option value="4" {{ ($tblRh->relacion2==4) ? 'selected' : '' }}>Conyugue</option>
-                    <option value="5" {{ ($tblRh->relacion2==5) ? 'selected' : '' }}>Otro</option>
-
-
+                  <option value="0">Seleccione...</option>
+                  <option value="1" {{ ($tblRh->relacion==1) ? 'selected' : '' }}>Padres</option>
+                  <option value="2" {{ ($tblRh->relacion==2) ? 'selected' : '' }}>Hijos</option>
+                  <option value="3" {{ ($tblRh->relacion==3) ? 'selected' : '' }}>Pareja</option>
+                  <option value="4" {{ ($tblRh->relacion==4) ? 'selected' : '' }}>Cónyuge</option>
+                  <option value="5" {{ ($tblRh->relacion==5) ? 'selected' : '' }}>Familiar</option>
+                  <option value="6" {{ ($tblRh->relacion==6) ? 'selected' : '' }}>Otro</option>
                 </select>
               </div>
             </div>
@@ -451,8 +455,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Fecha de nacimiento beneficiario</label>
                   <div class="col-md-9">
-                    <input type="date" name="fecha_nacimiento_bene" id="fecha_nacimiento_bene" class="form-control" @if(empty($tblRh->fecha_nacimiento_bene)) value=""  @else  value="{{   date_format($tblRh->fecha_nacimiento_bene, 'Y-m-d') }}" @endif >
-
+                    <input type="text" name="fecha_nacimiento_bene" id="fecha_nacimiento_bene" class="form-control jit-inputmask"  value="{{ $tblRh->fecha_nacimiento_bene}}" >
                   </div> 
                 </div>
               </div>
@@ -545,7 +548,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Fecha de nacimiento beneficiario</label>
                   <div class="col-md-9">
-                    <input type="date" name="fecha_nacimiento_bene2" id="fecha_nacimiento_bene2" class="form-control" @if(empty($tblRh->fecha_nacimiento_bene2)) value=""  @else  value="{{   date_format($tblRh->fecha_nacimiento_bene2, 'Y-m-d') }}" @endif >
+                    <input type="text" name="fecha_nacimiento_bene2" id="fecha_nacimiento_bene2" class="form-control jit-inputmask"  value="{{ $tblRh->fecha_nacimiento_bene2 }}" >
 
                   </div> 
                 </div>
@@ -639,8 +642,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Fecha de nacimiento beneficiario</label>
                   <div class="col-md-9">
-                    <input type="date" name="fecha_nacimiento_bene3" id="fecha_nacimiento_bene3" class="form-control" @if(empty($tblRh->fecha_nacimiento_bene3)) value=""  @else  value="{{   date_format($tblRh->fecha_nacimiento_bene3, 'Y-m-d') }}" @endif>
-
+                    <input type="text" name="fecha_nacimiento_bene3" id="fecha_nacimiento_bene3" class="form-control jit-inputmask" value="{{ $tblRh->fecha_nacimiento_bene3 }}">
                   </div> 
                 </div>
               </div>
@@ -750,7 +752,7 @@
            <div class="form-group row">
               <label class="col-md-3 label-control" for="nombre">Fecha inicio</label>
               <div class="col-md-9">
-                    <input type="date" name="fecha_ingreso" id="fecha_ingreso" class="form-control" @if(empty($tblRh->fecha_ingreso)) value=""  @else  value="{{   date_format($tblRh->fecha_ingreso, 'Y-m-d') }}" @endif>
+                    <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control jit-inputmask"  value="{{ $tblRh->fecha_ingreso }}">
 
               </div> 
             </div>
@@ -759,7 +761,7 @@
            <div class="form-group row">
               <label class="col-md-3 label-control" for="nombre">Fecha fin</label>
               <div class="col-md-9">
-                    <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" @if(empty($tblRh->fecha_fin))  value="" @else  value="{{   date_format($tblRh->fecha_fin, 'Y-m-d') }}" @endif>
+                    <input type="text" name="fecha_fin" id="fecha_fin" class="form-control jit-inputmask" value="{{ $tblRh->fecha_fin}}">
 
               </div> 
             </div>
@@ -770,7 +772,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Vencimiento Periodo Prueba</label>
                   <div class="col-md-9">
-                    <input type="date" name="Vencimiento_prueba" id="Vencimiento_prueba" class="form-control" @if(empty($tblRh->Vencimiento_prueba)) value=""  @else  value="{{   date_format($tblRh->Vencimiento_prueba, 'Y-m-d') }}" @endif>
+                    <input type="text" name="Vencimiento_prueba" id="Vencimiento_prueba" class="form-control jit-inputmask" value="{{ $tblRh->Vencimiento_prueba}}">
 
                   </div> 
                 </div>
@@ -779,71 +781,13 @@
                  <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Vencimiento de Contrato</label>
                   <div class="col-md-9">
-                    <input type="date" name="Vencimiento_contrato" id="Vencimiento_contrato" class="form-control" @if(empty($tblRh->Vencimiento_contrato))  value="" @else  value="{{   date_format($tblRh->Vencimiento_contrato, 'Y-m-d') }}" @endif>
+                    <input type="text" name="Vencimiento_contrato" id="Vencimiento_contrato" class="form-control jit-inputmask" value="{{ $tblRh->Vencimiento_contrato}}">
 
                   </div> 
                 </div>
               </div>
-        </div>
-        <div class="row">
-             <div class="col-md-6">
-               <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Salario Mensual</label>
-                  <div class="col-md-9">
-                    {!! Form::text('salario_mensual', null, ['class' => 'form-control decimal-inputmask ','id'=>'salario_mensual','onchange'=>'calculo_salario()']) !!}
-                  </div> 
-                </div>
-              </div>
-              <div class="col-md-6">
-                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Salario Diario</label>
-                  <div class="col-md-9">
-                    {!! Form::text('salario_diario', null, ['class' => 'form-control decimal-inputmask text-right','id'=>'salario_diario','readonly']) !!}
-
-                  </div> 
-                </div>
-              </div>
-        </div>
-        <div class="row">
-              <!--
-              <div class="col-md-6">
-                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Reviciones</label>
-                  <div class="col-md-9">
-                    {!! Form::text('reviciones', null, ['class' => 'form-control']) !!}
-
-                  </div> 
-                </div>
-              </div>--->
-             <div class="col-md-6">
-               <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre"></label>
-                  <div class="col-md-9">
-
-                  </div>  
-                </div>
-              </div>
-        </div>
-        <div class="row">
-
-              <div class="col-md-6">
-                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Salario inicial</label>
-                  <div class="col-md-9">
-                    {!! Form::text('sal_ini', null, ['class' => 'form-control decimal-inputmask text-right']) !!}
-                  </div> 
-                </div>
-              </div>
-             <div class="col-md-6">
-               <div class="form-group row">
-                  <label class="col-md-3 label-control" for="nombre">Fecha Salario inicial</label>
-                  <div class="col-md-9">
-                    <input type="text" readonly="" name="sal_ini_fecha" id="sal_ini_fecha" class="form-control" value="{{  substr($tblRh->sal_ini_fecha,0,10) }}">
-                  </div> 
-                </div>
-              </div>
-        </div>
-        @if($tblRh->sal_ini > 0 )
+        </div>   
+      
           <br><h3>Salario Mensual</h3> <br>  
             <div class="col-md-12" style="width: 100%">
                 <h1 class="pull-right">
@@ -854,7 +798,6 @@
             <div id="dic_sal">
             @include('tbl_rhs.salarios')
             </div>
-          @endif
 
       </div>
 
@@ -862,41 +805,14 @@
 
   </div>
 
-
-
-
-
   <div class="tab-pane" id="link34" role="tabpanel" aria-labelledby="link-tab34" aria-expanded="false">
       <div class="col-md-12 text-left">
         <span class="btn btn-outline-success" data-toggle="modal" data-target="#primary"  onclick="ver_catalogo(3,0,1,'',{{ $tblRh->id}},1)"><i class="fa fa-plus"></i> Nuevo Documento</span>
       </div>
       <br><br>
-       <div class="col-md-12">
-         <h5>Expediente</h5>
-         <hr>
-         <table class="table table-striped table-bordered">
-           <tr class="btn-primary text-center">
-             <td><b>Documentos</b></td>
-             <td><b>SI</b></td>
-             <td><b>NO</b></td>
-             <td><b>NA</b></td>
-           </tr>
-           @foreach($docs as $doc)
-           <tr class="text-center">
-             <td class="text-left">{{ $doc->documento}}</td>
-             <td><input type="radio" name="dc_{{$doc->id}}" value="1" {{ $doc->existe ==1 ? 'checked' : ''}} onchange="guarda_check({{ $tblRh->id }},1,{{$doc->id}})"></td>
-             <td><input type="radio" name="dc_{{$doc->id}}" value="2" {{ $doc->existe ==2 ? 'checked' : ''}} onchange="guarda_check({{ $tblRh->id }},2,{{$doc->id}})"></td>
-             <td><input type="radio" name="dc_{{$doc->id}}" value="3" {{ $doc->existe ==3 ? 'checked' : ''}} onchange="guarda_check({{ $tblRh->id }},3,{{$doc->id}})"></td>
-           </tr>
-           @endforeach
-           <tr>
-             <td colspan="4" style="border: 2px solid #518a87;">@if($expediente->archivo != '') <a id="doc2" href="{{ $expediente->archivo}}" target="_blank" > <span><i class="fa fa-file-pdf-o"></i> <b >Expediente</b></span></a> @endif</td>
-           </tr>
-         </table>
-       </div>
-       <div class="col-md-12" id="lista_docs">   
+      <div id="lista_docs" class="row">
           @include('tbl_rhs.lista_docs')
-      </div>  
+      </div>
  
   </div>
   <div class="tab-pane" id="link35" role="tabpanel" aria-labelledby="link-tab35" aria-expanded="false">

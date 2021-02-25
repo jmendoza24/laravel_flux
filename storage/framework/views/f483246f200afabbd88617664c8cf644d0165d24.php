@@ -15,7 +15,7 @@
     <?php if($ar->id_documento == 11): ?>
       <div class="col-md-2 text-center" > <a href="<?php echo e($ar->archivo); ?>" target="_blank"><i class="fa fa-file-pdf-o"></i> Evaluación de Periodo de Prueba</a></div>
     <?php endif; ?>
-<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 </div>
 <hr>
 <br> 

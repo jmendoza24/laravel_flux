@@ -17,6 +17,5 @@ class documentos_rh extends Model{
 
     public $table = 'documentos_rh';
     
-
     
 }

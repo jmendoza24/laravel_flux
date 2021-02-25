@@ -1,8 +1,9 @@
-  <table class="table table-striped table-bordered zero-configuration" style="" id="salarios-table" style="width: 100%">
+  <table class="table table-striped table-bordered" style="" id="salarios-table">
     <thead class="bg-success">
         <tr>
-            <th>Fecha Registro</th>
-            <th>Salario</th>
+            <th>Fecha</th>
+            <th>Mensual</th>
+            <th>Diario</th>
             <th></th>
         </tr>
     </thead>
@@ -11,6 +12,7 @@
             <tr>
                 <td><p>{!! $mes_salarios->fecha !!}<P></td>
                 <td style="text-align: right;"><p>$ {!! number_format($mes_salarios->salario,2) !!}<p></td>
+                <td style="text-align: right;"><p>$ {!! number_format($mes_salarios->salario_diario,2) !!}<p></td>
                 <td>
                     <div class='btn-group'>
                         <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(2,{{$mes_salarios->id}},2,'',{{$mes_salarios->id_empleado}})"  class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></span>

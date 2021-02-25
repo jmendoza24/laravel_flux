@@ -25,7 +25,7 @@
                     <div class='btn-group'>
 
                         <a href="{!! route('tblRhs.edit', [$tblRh->id]) !!}" class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></a>
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-float btn-outline-danger btn-round', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-float btn-outline-danger btn-round', 'onclick' => "return confirm('Estas seguro deseas borrar este registro?')"]) !!}
                     </div>
                     {!! Form::close() !!}
                 </td>

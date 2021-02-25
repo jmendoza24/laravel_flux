@@ -80,7 +80,8 @@ class tbl_rhRepository extends BaseRepository
         'puesto',
         'sal_ini_fecha',
         'sal_ini',
-        'reviciones'
+        'reviciones',
+        'notas'
     ];
 
     /**

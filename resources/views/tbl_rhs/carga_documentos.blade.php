@@ -1,3 +1,4 @@
+<?php date_default_timezone_set("America/New_York"); ?>
  <form enctype="multipart/form-data" id="catalogos_forma" action="">
   @csrf
 <input type="hidden" name="id_catalogo" value="3">
@@ -9,7 +10,7 @@
            <div class="form-group row">
             <label class="col-md-12">Tipo documento</label>
             <div class="col-md-12">
-              <select class="form-control" name="tipo_archivo">
+              <select class="form-control" name="tipo_archivo" id="tipo_archivo">
                @if($documentos->tipo ==1)
                 <option value="1">Expediente</option>
                 <option value="2">Accidente o Incidente</option>
@@ -30,13 +31,23 @@
           </div>
         </div>
         <div class="col-md-12"> 
-           <div class="form-group row">
+           <div class="form-group row"> 
             <label class="col-md-12">Descripción:</label>
             <div class="col-md-12">
               <textarea class="form-control" name="descripcion"></textarea>
             </div> 
           </div>
         </div>
+        @if($documentos->tipo ==1)
+        <div class="col-md-12"> 
+           <div class="form-group row">
+            <label class="col-md-12">Fecha:</label>
+            <div class="col-md-12">
+              <input type="text" name="fecha" class="form-control jit-inputmask"  id="fecha" >
+            </div> 
+          </div>
+        </div>
+        @endif
         <div class="col-md-12">
            <div class="form-group row">
             <label class="col-md-12">Archivo:</label>

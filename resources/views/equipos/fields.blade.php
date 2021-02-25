@@ -83,7 +83,7 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Ultima Calibración</label>
             <div class="col-md-9">
-              <input disabled="disabled" type="text" value="{{ $equipos->calibracion != '0000-00-00' ? date("m-d-Y",strtotime($equipos->calibracion)) :''}}"  name="calibracion" id="calibracion" class="form-control">
+              <input disabled="disabled" type="text" value="{{ $equipos->calibracion != '' ? date("m-d-Y",strtotime($equipos->calibracion)) :''}}"  name="calibracion" id="calibracion" class="form-control">
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@
             <label class="col-md-3 label-control" for="userinput1">Próximo Mtto.</label>
             <div class="col-md-9">
 
-              <input disabled="disabled" type="text" name="preventivo" value="{{ $equipos->preventivo != '0000-00-00' ? date("m-d-Y",strtotime($equipos->preventivo)) :''}}"   id="correctivo" class="form-control">
+              <input disabled="disabled" type="text" name="preventivo" value="{{ $equipos->preventivo != '' ? date("m-d-Y",strtotime($equipos->preventivo)) :''}}"   id="correctivo" class="form-control">
 
 
             </div>
@@ -131,7 +131,7 @@
           <div class="form-group row">
             <label class="col-md-3 label-control" for="userinput1">Ultimo Mtto. Correctivo</label>
             <div class="col-md-9">
-                <input disabled="disabled" type="text" name="correctivo" value="{{ $equipos->correctivo != '0000-00-00' ? date("m-d-Y",strtotime($equipos->correctivo)) :''}}"   class="form-control">
+                <input disabled="disabled" type="text" name="correctivo" value="{{ $equipos->correctivo != '' ? date("m-d-Y",strtotime($equipos->correctivo)) :''}}"   class="form-control">
             </div>
           </div>
         </div>

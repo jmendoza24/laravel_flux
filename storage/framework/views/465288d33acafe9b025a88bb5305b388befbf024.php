@@ -48,7 +48,6 @@
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="<?php echo e(url('assets/css/style.css')); ?>">
-
   <!-- END Custom CSS-->
 </head>
 
@@ -177,15 +176,15 @@
   <script src="<?php echo e(url('app-assets/js/scripts/customizer.js')); ?>" type="text/javascript"></script>
 
   <script src="<?php echo e(url('app-assets/vendors/js/extensions/jquery.steps.min.js')); ?>" type="text/javascript"></script>
-  <script src="<?php echo e(url('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js')); ?>" type="text/javascript"></script>
-  <script src="<?php echo e(url('app-assets/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')); ?>" type="text/javascript"></script>
+  <!--<script src="<?php echo e(url('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js')); ?>" type="text/javascript"></script>
+  <script src="<?php echo e(url('app-assets/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')); ?>" type="text/javascript"></script>--->
   <script src="<?php echo e(url('app-assets/vendors/js/pickers/pickadate/picker.js')); ?>" type="text/javascript"></script>
   <script src="<?php echo e(url('app-assets/vendors/js/pickers/pickadate/picker.date.js')); ?>" type="text/javascript"></script>
   <script src="<?php echo e(url('app-assets/vendors/js/pickers/pickadate/picker.time.js')); ?>" type="text/javascript"></script>
   <script src="<?php echo e(url('app-assets/vendors/js/pickers/pickadate/legacy.js')); ?>" type="text/javascript"></script>
   <script src="<?php echo e(url('app-assets/vendors/js/pickers/daterange/daterangepicker.js')); ?>" type="text/javascript"></script>
-  <script src="<?php echo e(url('app-assets/js/scripts/pickers/dateTime/bootstrap-datetime.js')); ?>" type="text/javascript"></script>
-  <script src="<?php echo e(url('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')); ?>" type="text/javascript"></script> 
+  <!--<script src="<?php echo e(url('app-assets/js/scripts/pickers/dateTime/bootstrap-datetime.js')); ?>" type="text/javascript"></script>
+  <script src="<?php echo e(url('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')); ?>" type="text/javascript"></script> -->
 
 
   <script src="<?php echo e(url('app-assets/vendors/js/forms/validation/jquery.validate.min.js')); ?>" type="text/javascript"></script>
@@ -211,6 +210,7 @@
   <script src="<?php echo e(url('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js')); ?>" type="text/javascript"></script>
   <script src="<?php echo e(url('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js')); ?>" type="text/javascript"></script>
   <script src="<?php echo e(url('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')); ?>" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
   <?php echo $__env->yieldContent('script'); ?>
 </body>
 </html>

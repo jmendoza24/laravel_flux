@@ -59,7 +59,8 @@ class CatalogosController extends Controller{
           if($request->tipo==1){
               $salarios = array('id'=>0,
                                 'id_empleado' =>$request->datos,
-                                'salario'=>'');
+                                'salario'=>'',
+                                'fecha'=>'');
               $salarios = (object)$salarios;
           }else if($request->tipo==2){
             $salarios = mes_salarios::where('id',$request->id)->get();
@@ -75,6 +76,7 @@ class CatalogosController extends Controller{
                                   'id_empleado' =>$request->datos);
               $documentos = (object)$documentos;
           }
+
 
           $options =  view('tbl_rhs.carga_documentos',compact('documentos','docs'))->render();
         }
@@ -165,13 +167,15 @@ class CatalogosController extends Controller{
             if($existe>0){
               mes_salarios::where('id',$request->id)
                           ->update(['salario'=>$request->salario,
-                                    'fecha'=>date('Y-m-d')]);
+                                    'salario_diario'=>($request->salario * 12 )/ 360,
+                                    'fecha'=>$request->fecha]);
             }else{
               mes_salarios::insert(['salario'=>$request->salario,
-                                    'fecha'=>date('Y-m-d'),
+                                    'salario_diario'=>($request->salario * 12 )/ 360,
+                                    'fecha'=>$request->fecha,
                                     'id_empleado'=>$request->id_empleado]);
             }
-            $mes_salarios  = mes_salarios::where('id_empleado',$request->id_empleado)->get();
+            $mes_salarios  = mes_salarios::where('id_empleado',$request->id_empleado)->orderby('fecha','desc')->get();
             $options = view('tbl_rhs.salarios',compact('mes_salarios'))->render();
         }else if($request->id_catalogo == 3){
 
@@ -182,59 +186,43 @@ class CatalogosController extends Controller{
                 $doc_prev2 = substr($img, $imgp, strlen($img)); 
 
                 $existe = documentos_rh::where([['id_empleado',$request->id_empleado],['id_documento',$request->tipo_archivo]])->count();
-                $dc =  array(6,7,8,9,10,11);
+                $dc =  array(1,6,7,8,9,10,11);
 
                 if($existe > 0 and in_array($request->tipo_archivo, $dc)){
                   documentos_rh::where([['id_empleado',$request->id_empleado],['id_documento',$request->tipo_archivo]])
                                 ->update(['archivo'=>$doc_prev2,
-                                          'fecha'=>date('Y-m-d')]);
+                                          'fecha'=>date('m-d-Y')]);
                 }else{
                   documentos_rh::insert(['id_empleado'=>$request->id_empleado,
                                        'id_documento'=>$request->tipo_archivo,
                                        'descripcion'=>$request->descripcion,
                                        'archivo'=>$doc_prev2,
-                                       'fecha'=>date('Y-m-d')]);
+                                       'fecha'=>$request->fecha == '' ? date('m-d-Y') : $request->fecha]);
                 }
               }
 
               if($request->tipo==1){
+                $docs = db::select('SELECT d.*, existe
+                            FROM documentos_lista d
+                            LEFT JOIN expediente_empleado e ON d.id = e.id_documento AND id_empleado= '.$request->id_empleado);
+
                 $documentos = documentos_rh::where('id_empleado',$request->id_empleado)->orderby('id_documento')->get();
-                $conteos = db::select('SELECT d2.id_empleado, doc2, doc3, doc4, doc5
-                                  FROM (
-                                      SELECT id_empleado, COUNT(*) AS doc2
-                                      FROM documentos_rh
-                                      WHERE id_empleado = '.$request->id_empleado.'
-                                      AND id_documento = 2
-                                      GROUP BY id_empleado) d2 
-                                  LEFT JOIN (
-                                      SELECT id_empleado, COUNT(*) AS doc3
-                                      FROM documentos_rh
-                                      WHERE id_empleado = '.$request->id_empleado.'
-                                      AND id_documento = 3
-                                      GROUP BY id_empleado) AS d3 ON d3.id_empleado = d2.id_empleado
-                                  LEFT JOIN (
-                                      SELECT id_empleado, COUNT(*) AS doc4
-                                      FROM documentos_rh
-                                      WHERE id_empleado = '.$request->id_empleado.'
-                                      AND id_documento = 4
-                                      GROUP BY id_empleado) AS d4 ON d4.id_empleado = d2.id_empleado
-                                  LEFT JOIN (
-                                      SELECT id_empleado, COUNT(*) AS doc5
-                                      FROM documentos_rh
-                                      WHERE id_empleado = '.$request->id_empleado.'
-                                      AND id_documento = 5
-                                      GROUP BY id_empleado) AS d5 ON d5.id_empleado = d2.id_empleado');
-                if(sizeof($conteos)>0){
-                  $conteos = $conteos[0];  
+                $id = $request->id_empleado;
+                $expediente = documentos_rh::where([['id_empleado',$id],['id_documento',1]])->get();
+                if(sizeof($expediente)>0){
+                  $expediente = $expediente[0];  
                 }else{
-                  $conteos = array('doc2'=>0,
-                                   'doc3'=>0,
-                                   'doc4'=>0,
-                                   'doc5'=>0);
-                  
-                  $conteos = (object)$conteos;
+                  $expediente = array('archivo'=>'');
+                  $expediente = (object)$expediente;
                 }
-                $options = view('tbl_rhs.lista_docs',compact('documentos','conteos'))->render();
+
+                $conteos = db::select('SELECT id_empleado, id_documento, COUNT(*) AS conteo
+                                        FROM documentos_rh
+                                        WHERE id_empleado = '.$request->id_empleado.'
+                                        AND id_documento IN (2,3,4,5)
+                                        GROUP BY id_documento, id_empleado');
+
+                $options = view('tbl_rhs.lista_docs',compact('documentos','conteos','docs','id','expediente'))->render();
               }else{
 
                 $archivos =  documentos_rh::where('id_empleado',$request->id_empleado)
@@ -279,6 +267,49 @@ class CatalogosController extends Controller{
           mes_salarios::where('id',$request->id)->delete();
           $mes_salarios  = mes_salarios::where('id_empleado',$request->dato)->get();
           $options = view('tbl_rhs.salarios',compact('mes_salarios'))->render();
+        }else if($request->catalogo==3){
+          documentos_rh::where('id',$request->id)->delete();
+          if($request->dato2==1){
+                $id = $request->dato;
+                $expediente = documentos_rh::where([['id_empleado',$request->dato],['id_documento',1]])->get();
+                if(sizeof($expediente)>0){
+                  $expediente = $expediente[0];  
+                }else{
+                  $expediente = array('archivo'=>'');
+                  $expediente = (object)$expediente;
+                }
+                $docs = db::select('SELECT d.*, existe
+                            FROM documentos_lista d
+                            LEFT JOIN expediente_empleado e ON d.id = e.id_documento AND id_empleado= '.$request->dato);
+
+                $documentos = documentos_rh::where('id_empleado',$request->dato)->orderby('id_documento')->get();
+                $conteos = db::select('SELECT id_empleado, id_documento, COUNT(*) AS conteo
+                                        FROM documentos_rh
+                                        WHERE id_empleado = '.$request->dato.'
+                                        AND id_documento IN (2,3,4,5)
+                                        GROUP BY id_documento, id_empleado');
+
+                $options = view('tbl_rhs.lista_docs',compact('documentos','conteos','id','expediente','docs'))->render();
+              }else{
+
+                $archivos =  documentos_rh::where('id_empleado',$request->dato)
+                                          ->whereIn('id_documento',[6,7,8,9,10,11,12])
+                                          ->orderby('fecha','desc')
+                                          ->get();
+                $virtus  = DB::table('virtus')
+                                ->where('id_empleado',$request->dato)
+                                ->get();
+                $virtus=$virtus[0];
+
+
+                $MyersBriggs  = DB::table('MyersBriggs')
+                                        ->where('id_empleado',$request->dato)
+                                        ->get();
+                $MyersBriggs=$MyersBriggs[0];
+                $tblRh =  db::select('SELECT * FROM tbl_rhs where id = '.$request->dato);
+                $tblRh = $tblRh[0];
+                $options = view('tbl_rhs.evaluaciones',compact('archivos','virtus','MyersBriggs','tblRh'))->render();
+              }
         }
 
         return json_encode($options);

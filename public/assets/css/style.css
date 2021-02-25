@@ -187,3 +187,30 @@ background: #518a87 !important;
 }
 
 
+
+
+.input_date {
+    position: relative;
+    width: 150px; height: 20px;
+    color: white;
+}
+
+.input_date:before {
+    position: absolute;
+    top: 3px; left: 3px;
+    content: attr(data-date);
+    display: inline-block;
+    color: black;
+}
+
+.input_date::-webkit-datetime-edit, .input_date::-webkit-inner-spin-button, .input_date::-webkit-clear-button {
+    display: none;
+}
+
+.input_date::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    color: black;
+    opacity: 1;
+}
