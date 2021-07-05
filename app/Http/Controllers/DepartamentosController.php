@@ -33,6 +33,8 @@ class DepartamentosController extends AppBaseController
         $departamentos = DB::table('departamentos as d')
                              ->leftjoin('familias as f','d.id_familia','f.id')
                              ->get();
+//        $departamentos = DB::table('departamentos')->get();
+
 
         return view('departamentos.index')
             ->with('departamentos', $departamentos);
@@ -45,7 +47,9 @@ class DepartamentosController extends AppBaseController
      */
     public function create(){
         $familias = DB::table('familias')->get();
-        return view('departamentos.create',compact('familias'));
+        $departamentos = array('id_familia'=>'');
+        $departamentos = (object)$departamentos;
+        return view('departamentos.create',compact('familias','departamentos'));
     }
 
     /**

@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class tbl_rh extends Model
 {
-    use SoftDeletes;
 
     public $table = 'tbl_rhs';
     

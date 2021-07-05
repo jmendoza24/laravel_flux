@@ -11,7 +11,8 @@
                 <li class="{{ Request::is('procesos*') ? 'active' : '' }}"><a href="{!! route('procesos.index') !!}">Procesos</span></a></li>
                 <li class="{{ Request::is('subprocesos*') ? 'active' : '' }}"><a href="{!! route('subprocesos.index') !!}"><span>Subprocesos</span></a></li>
                 <li class="{{ Request::is('puestos*') ? 'active' : '' }}"><a href="{!! route('puestos.index') !!}"><span>Puestos</span></a></li>
-                <li class="{{ Request::is('departamentos*') ? 'active' : '' }}"><a href="{!! route('departamentos.index') !!}"><span>Departamentos</span></a></li>
+                <li class="{{ Request::is('departamento*') ? 'active' : '' }}"><a href="{!! route('departamento.index') !!}"><span>Departamentos</span></a></li>
+                {{-- <li class="{{ Request::is('departamentos*') ? 'active' : '' }}"><a href="{!! route('departamentos.index') !!}"><span>Departamentos</span></a></li> --}}
                 <li class="{{ Request::is('familias*') ? 'active' : '' }}"><a href="{!! route('familias.index') !!}"><span>Familias</span></a></li>
                 <li class="{{ Request::is('tipoEquipos*') ? 'active' : '' }}"><a href="{!! route('tipoEquipos.index') !!}">Tipo de equipos</span></a></li>
                 <li class="{{ Request::is('tipoMaterials*') ? 'active' : '' }}"><a href="{!! route('tipoMaterials.index') !!}">Tipo de Materiales</span></a></li>

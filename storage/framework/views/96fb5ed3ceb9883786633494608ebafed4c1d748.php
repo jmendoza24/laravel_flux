@@ -3,8 +3,8 @@
         <tr style="background-color:#427874;color:white">
             <th>Responsable</th>
             <th>Descripción</th>
+            <th>Fecha inicio</th>
             <th>Vencimiento</th>
-            <th>Activo</th>
             <th colspan=""></th>
         </tr>
     </thead>
@@ -13,8 +13,8 @@
         <tr>
             <td><?php echo $equipoHistorial->responsable; ?></td>
             <td><?php echo $equipoHistorial->descripcion; ?></td>
+            <td><?php echo e($equipoHistorial->fecha); ?></td>
             <td><?php echo e($equipoHistorial->vencimiento != '' ? date("m-d-Y",strtotime(substr($equipoHistorial->vencimiento,0,10))) :''); ?></td>
-            <td><?php if($equipoHistorial->activo==1): ?> Si <?php else: ?> No <?php endif; ?></td>
             <td>
                 <div class='btn-group'>
                     <span data-toggle="modal" data-target="#primary" onclick="ver_catalogo(1,<?php echo e($equipoHistorial->id); ?>,2,'',<?php echo e($equipoHistorial->historial_tipo); ?>,<?php echo e($equipoHistorial->id); ?>)"  class='btn btn-float btn-outline-success btn-round'><i class="fa fa-edit"></i></span>

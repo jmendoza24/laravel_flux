@@ -16,9 +16,54 @@
        <td>{!! $tblRh->num_empleado !!}</td>
             <td>{!! $tblRh->nombre !!}</td>
             <td>{!! $tblRh->direccion !!}</td>
-            <td>{!! $tblRh->grado_escolaridad !!}</td>
-            <td>{!! $tblRh->edo_civil !!}</td>
-            <td>{!! $tblRh->imss !!}</td>
+            <td><?php
+                    switch ($tblRh->grado_escolaridad) {
+                      case "1":
+                        echo "Escuela Técnica";
+                        break;
+                      case "2":
+                        echo "Preparatoria";
+                        break;
+                      case "3":
+                        echo "Universidad";
+                        break;
+                      case "4":
+                        echo "Posgrado";
+                        break;
+                      case "5":
+                        echo "Nada";
+                        break;
+                      default:
+                        echo "";
+                    }
+                ?>
+                </td>
+                <td><?php
+                    switch ($tblRh->edo_civil) {
+                      case "1":
+                        echo "Soltero";
+                        break;
+                      case "2":
+                        echo "Casado";
+                        break;
+                      case "3":
+                        echo "Divorciado";
+                        break;
+                      case "4":
+                        echo "Viudo";
+                        break;
+                      case "5":
+                        echo "Concubinato";
+                        break;
+                      case "6":
+                        echo "Separado";
+                        break;
+                      default:
+                        echo "";
+                    }
+                ?>
+                </td>
+                <td>{!! $tblRh->imss !!}</td>
                 <td>
                     {!! Form::open(['route' => ['tblRhs.destroy', $tblRh->id], 'method' => 'delete']) !!}
 

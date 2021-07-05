@@ -1,7 +1,7 @@
   <table class="table table-striped table-bordered" style="" id="salarios-table">
     <thead class="bg-success">
         <tr>
-            <th>Fecha</th>
+            <th>Fecha Inicio</th>
             <th>Mensual</th>
             <th>Diario</th>
             <th></th>

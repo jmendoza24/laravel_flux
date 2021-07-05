@@ -724,7 +724,7 @@
   </div>  
 
 
-  </div>
+  </div> 
 
   <div class="tab-pane" id="link33" role="tabpanel" aria-labelledby="link-tab33" aria-expanded="false">
        <div class="form-body" style="">                        
@@ -787,7 +787,10 @@
         <div class="row">
           <div class="col-md-6">
            <div class="form-group row">
-              <label class="col-md-3 label-control" for="nombre">Fecha inicio</label>
+              <label class="col-md-3 label-control" for="nombre">Fecha inicio<br>
+              <span class="small">(MM/DD/AAAA)</span>
+            </label>
+
               <div class="col-md-9">
                     <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control jit-inputmask"  value="<?php echo e($tblRh->fecha_ingreso); ?>">
 
@@ -797,8 +800,9 @@
           <div class="col-md-6">
            <div class="form-group row">
               <label class="col-md-3 label-control" for="nombre">Fecha fin</label>
+
               <div class="col-md-9">
-                    <input type="text" name="fecha_fin" id="fecha_fin" class="form-control jit-inputmask" value="<?php echo e($tblRh->fecha_fin); ?>">
+                    <input type="text" name="fecha_fin" id="fecha_fin" onchange="valida_fechas('fecha_ingreso','fecha_fin')" class="form-control jit-inputmask" value="<?php echo e($tblRh->fecha_fin); ?>">
 
               </div> 
             </div>
@@ -809,7 +813,7 @@
                <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Vencimiento Periodo Prueba</label>
                   <div class="col-md-9">
-                    <input type="text" name="Vencimiento_prueba" id="Vencimiento_prueba" class="form-control jit-inputmask" value="<?php echo e($tblRh->Vencimiento_prueba); ?>">
+                    <input type="text" name="Vencimiento_prueba" id="Vencimiento_prueba" onchange="valida_fechas('fecha_ingreso','Vencimiento_prueba')" class="form-control jit-inputmask" value="<?php echo e($tblRh->Vencimiento_prueba); ?>">
 
                   </div> 
                 </div>
@@ -818,7 +822,7 @@
                  <div class="form-group row">
                   <label class="col-md-3 label-control" for="nombre">Vencimiento de Contrato</label>
                   <div class="col-md-9">
-                    <input type="text" name="Vencimiento_contrato" id="Vencimiento_contrato" class="form-control jit-inputmask" value="<?php echo e($tblRh->Vencimiento_contrato); ?>">
+                    <input type="text" name="Vencimiento_contrato" id="Vencimiento_contrato" onchange="valida_fechas('Vencimiento_prueba','Vencimiento_contrato')" class="form-control jit-inputmask" value="<?php echo e($tblRh->Vencimiento_contrato); ?>">
 
                   </div> 
                 </div>

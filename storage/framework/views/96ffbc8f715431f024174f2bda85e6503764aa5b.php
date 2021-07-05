@@ -11,7 +11,8 @@
                 <li class="<?php echo e(Request::is('procesos*') ? 'active' : ''); ?>"><a href="<?php echo route('procesos.index'); ?>">Procesos</span></a></li>
                 <li class="<?php echo e(Request::is('subprocesos*') ? 'active' : ''); ?>"><a href="<?php echo route('subprocesos.index'); ?>"><span>Subprocesos</span></a></li>
                 <li class="<?php echo e(Request::is('puestos*') ? 'active' : ''); ?>"><a href="<?php echo route('puestos.index'); ?>"><span>Puestos</span></a></li>
-                <li class="<?php echo e(Request::is('departamentos*') ? 'active' : ''); ?>"><a href="<?php echo route('departamentos.index'); ?>"><span>Departamentos</span></a></li>
+                <li class="<?php echo e(Request::is('departamento*') ? 'active' : ''); ?>"><a href="<?php echo route('departamento.index'); ?>"><span>Departamentos</span></a></li>
+                
                 <li class="<?php echo e(Request::is('familias*') ? 'active' : ''); ?>"><a href="<?php echo route('familias.index'); ?>"><span>Familias</span></a></li>
                 <li class="<?php echo e(Request::is('tipoEquipos*') ? 'active' : ''); ?>"><a href="<?php echo route('tipoEquipos.index'); ?>">Tipo de equipos</span></a></li>
                 <li class="<?php echo e(Request::is('tipoMaterials*') ? 'active' : ''); ?>"><a href="<?php echo route('tipoMaterials.index'); ?>">Tipo de Materiales</span></a></li>

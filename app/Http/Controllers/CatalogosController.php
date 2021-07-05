@@ -3,10 +3,14 @@ namespace App\Http\Controllers;
 
 use App\Models\mes_salarios;
 use Illuminate\Http\Request;
+use App\Mail\EnvioFlux; 
+use App\Models\tbl_rh;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use App\Models\equipo_historial;
 use App\Models\documentos_rh;
 use Storage;
+
 
 date_default_timezone_set("America/Mexico_City");
 
@@ -62,7 +66,7 @@ class CatalogosController extends Controller{
                                 'salario'=>'',
                                 'fecha'=>'');
               $salarios = (object)$salarios;
-          }else if($request->tipo==2){
+          }else if($request->tipo==2){ 
             $salarios = mes_salarios::where('id',$request->id)->get();
             $salarios = $salarios[0];
           }
@@ -175,7 +179,7 @@ class CatalogosController extends Controller{
                                     'fecha'=>$request->fecha,
                                     'id_empleado'=>$request->id_empleado]);
             }
-            $mes_salarios  = mes_salarios::where('id_empleado',$request->id_empleado)->orderby('fecha','desc')->get();
+            $mes_salarios  = mes_salarios::where('id_empleado',$request->id_empleado)->orderby('id','desc')->get();
             $options = view('tbl_rhs.salarios',compact('mes_salarios'))->render();
         }else if($request->id_catalogo == 3){
 
@@ -221,6 +225,36 @@ class CatalogosController extends Controller{
                                         WHERE id_empleado = '.$request->id_empleado.'
                                         AND id_documento IN (2,3,4,5)
                                         GROUP BY id_documento, id_empleado');
+                $enviados = array(2,3,4);
+                if(in_array($request->tipo_archivo,$enviados)){
+                  switch ($request->tipo_archivo) {
+                    case 2:
+                      $nombre  = "Accidente o Incidente";
+                      break;
+                    case 3:
+                      $nombre  = "Reporte de Conducta";
+                      break;
+                    case 4:
+                      $nombre  = "Reporte Médico";
+                      break;
+                    default:
+                      
+                      break;
+                  }
+                  $var1 =  tbl_rh::where('id',$request->id_empleado)->first();
+
+                  $content = "Se cargo el documento ". $nombre;
+
+                  $subjects = "RH Documentos";
+                  $to = "jacob.mendozaha@gmail.com";
+                  $copia = 'salvador@altermedia.mx';
+                  // here we add attachment, attachment must be an array
+                  $attachment = [];
+                  $vista = 'cotizaciones.CargaDoc';
+
+
+                  Mail::to($to)->cc($copia)->send(new EnvioFlux($subjects, $content,$attachment,$vista,$var1));
+                }
 
                 $options = view('tbl_rhs.lista_docs',compact('documentos','conteos','docs','id','expediente'))->render();
               }else{

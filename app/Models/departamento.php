@@ -14,11 +14,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class departamento extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
-    public $table = 'departamentos';
+    public $table = 'departamento';
     
-
+    public $timestamps = false;
     protected $dates = ['deleted_at'];
 
 

@@ -19,11 +19,13 @@ class EnvioFlux extends Mailable
      *
      * @return void
      */
-    public function __construct($subject, $content, $attachment)
+    public function __construct($subject, $content, $attachment,$vista,$var1)
     {
         $this->subject = $subject;
         $this->content = $content;
         $this->attachment = $attachment;
+        $this->vista = $vista;
+        $this->var1 = $var1;
     }
 
     /**
@@ -33,10 +35,11 @@ class EnvioFlux extends Mailable
      */
     public function build()
     {
-         $email = $this->markdown('cotizaciones.pruebaenvio')
+         $email = $this->markdown($this->vista)
                 ->from('ventas@fluxmetals.info')
                 ->subject($this->subject)
-                ->with('content', $this->content);
+                ->with('content', $this->content)
+                ->with('var1', $this->var1);
          foreach ($this->attachment as $item) {
             $email->attach($item);
         }

@@ -16,7 +16,8 @@ use App\Models\expediente_empleado;
 use DB;
 use Storage;
 use App\Models\tbl_rh;
-use App\Models\Departamentos;
+#use App\Models\Departamentos;
+use App\Models\departamento;
 
 
 class tbl_rhController extends AppBaseController
@@ -187,7 +188,7 @@ public function sal_actualiza(Request $request){
         
 
 
-       $mes_salarios  = mes_salarios::where('id_empleado',$id)->orderby('fecha','desc')->get();
+       $mes_salarios  = mes_salarios::where('id_empleado',$id)->orderby('id','desc')->get();
 
 
         $v  = DB::table('virtus')
@@ -233,7 +234,7 @@ public function sal_actualiza(Request $request){
         
 
         $puesto = puesto::all();
-        $Departamentos = departamentos::all();
+        $Departamentos = departamento::get();
 
         $documentos = db::table('documentos_rh as d')
                         ->join('documentos_lista as l','d.id_documento','l.id')

@@ -16,9 +16,54 @@
        <td><?php echo $tblRh->num_empleado; ?></td>
             <td><?php echo $tblRh->nombre; ?></td>
             <td><?php echo $tblRh->direccion; ?></td>
-            <td><?php echo $tblRh->grado_escolaridad; ?></td>
-            <td><?php echo $tblRh->edo_civil; ?></td>
-            <td><?php echo $tblRh->imss; ?></td>
+            <td><?php
+                    switch ($tblRh->grado_escolaridad) {
+                      case "1":
+                        echo "Escuela Técnica";
+                        break;
+                      case "2":
+                        echo "Preparatoria";
+                        break;
+                      case "3":
+                        echo "Universidad";
+                        break;
+                      case "4":
+                        echo "Posgrado";
+                        break;
+                      case "5":
+                        echo "Nada";
+                        break;
+                      default:
+                        echo "";
+                    }
+                ?>
+                </td>
+                <td><?php
+                    switch ($tblRh->edo_civil) {
+                      case "1":
+                        echo "Soltero";
+                        break;
+                      case "2":
+                        echo "Casado";
+                        break;
+                      case "3":
+                        echo "Divorciado";
+                        break;
+                      case "4":
+                        echo "Viudo";
+                        break;
+                      case "5":
+                        echo "Concubinato";
+                        break;
+                      case "6":
+                        echo "Separado";
+                        break;
+                      default:
+                        echo "";
+                    }
+                ?>
+                </td>
+                <td><?php echo $tblRh->imss; ?></td>
                 <td>
                     <?php echo Form::open(['route' => ['tblRhs.destroy', $tblRh->id], 'method' => 'delete']); ?>
 

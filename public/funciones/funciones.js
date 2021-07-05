@@ -23,6 +23,14 @@ function formato_fechas(campo){
   moment(val,'YYYY-MM-DD').format('YYYY-MM-DD');
 }
 
+function valida_fechas(campo1, campo2){
+  var fecha1 = $("#"+campo1).val();
+  var fecha2 = $("#"+campo2).val();
+  if(Date.parse(fecha1) > Date.parse(fecha2)){
+    $.alert("Ingresa una fecha correcta");
+    $("#"+campo2).val('');
+  }
+}
 
 function guarda_check(id_empleado, val, id_documento){
   var parameters = {'id_empleado':id_empleado,
@@ -113,7 +121,8 @@ function ver_catalogo(catalogo,id,tipo,data_table,datos1,datos2){
 function guardar_catalogos(catalogo,id,tipo,nom_table,dato){
     var formData = new FormData($("#catalogos_forma")[0]);
     var tipo_doc = $("#tipo_archivo").val();
-    if(catalogo == 3 && tipo_doc == 1){
+    var myarray = [1,6,7,8,9,10,11];
+    if(catalogo == 3 && (tipo_doc==1 || tipo_doc==6 || tipo_doc==7 || tipo_doc==8 || tipo_doc==9 || tipo_doc==10 || tipo_doc==11) ){
       $.confirm({
             title: 'Fluxmetals',
             content: 'Estas seguro deseas reemplazar este archivo?',

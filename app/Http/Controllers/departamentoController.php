@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatedepartamentoRequest;
 use App\Repositories\departamentoRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\Models\departamento;
 use Flash;
 use Response;
 
@@ -29,9 +30,9 @@ class departamentoController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $departamentos = $this->departamentoRepository->all();
+        $departamentos = departamento::all();
 
-        return view('departamentos.index')
+        return view('departamento.index')
             ->with('departamentos', $departamentos);
     }
 
@@ -42,7 +43,7 @@ class departamentoController extends AppBaseController
      */
     public function create()
     {
-        return view('departamentos.create');
+        return view('departamento.create');
     }
 
     /**
@@ -60,7 +61,7 @@ class departamentoController extends AppBaseController
 
         Flash::success('Departamento saved successfully.');
 
-        return redirect(route('departamentos.index'));
+        return redirect(route('departamento.index'));
     }
 
     /**
@@ -77,10 +78,10 @@ class departamentoController extends AppBaseController
         if (empty($departamento)) {
             Flash::error('Departamento not found');
 
-            return redirect(route('departamentos.index'));
+            return redirect(route('departamento.index'));
         }
 
-        return view('departamentos.show')->with('departamento', $departamento);
+        return view('departamentos.show')->with('departamentos', $departamento);
     }
 
     /**
@@ -92,15 +93,15 @@ class departamentoController extends AppBaseController
      */
     public function edit($id)
     {
-        $departamento = $this->departamentoRepository->find($id);
+        $departamentos = $this->departamentoRepository->find($id);
 
-        if (empty($departamento)) {
+        if (empty($departamentos)) {
             Flash::error('Departamento not found');
 
-            return redirect(route('departamentos.index'));
+            return redirect(route('departamento.index'));
         }
 
-        return view('departamentos.edit')->with('departamento', $departamento);
+        return view('departamento.edit')->with('departamentos', $departamentos);
     }
 
     /**
@@ -118,14 +119,14 @@ class departamentoController extends AppBaseController
         if (empty($departamento)) {
             Flash::error('Departamento not found');
 
-            return redirect(route('departamentos.index'));
+            return redirect(route('departamento.index'));
         }
 
         $departamento = $this->departamentoRepository->update($request->all(), $id);
 
         Flash::success('Departamento updated successfully.');
 
-        return redirect(route('departamentos.index'));
+        return redirect(route('departamento.index'));
     }
 
     /**
@@ -144,13 +145,13 @@ class departamentoController extends AppBaseController
         if (empty($departamento)) {
             Flash::error('Departamento not found');
 
-            return redirect(route('departamentos.index'));
+            return redirect(route('departamento.index'));
         }
 
         $this->departamentoRepository->delete($id);
 
         Flash::success('Departamento deleted successfully.');
 
-        return redirect(route('departamentos.index'));
+        return redirect(route('departamento.index'));
     }
 }
